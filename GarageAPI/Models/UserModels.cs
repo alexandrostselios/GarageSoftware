@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using GarageAPI.Enum;
 using GarageAPI.Models.CarManufacturers;
 using GarageAPI.Models.CarModelYears;
+using GarageAPI.Models.CarModelManufacturerYears;
 
 namespace GarageAPI.Models
 {

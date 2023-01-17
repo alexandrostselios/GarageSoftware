@@ -3,6 +3,7 @@ using GarageAPI.Models;
 using GarageAPI.Models.CarManufacturers;
 using GarageAPI.Models.CarModels;
 using GarageAPI.Models.CarModelYears;
+using GarageAPI.Models.CarModelManufacturerYears;
 
 namespace GarageAPI.Data
 {

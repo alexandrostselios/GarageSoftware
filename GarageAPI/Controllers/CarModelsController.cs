@@ -56,7 +56,7 @@ namespace GarageAPI.Controllers
 
         [HttpPut]
         [Route("UpdateCarModel/{id:long}")]
-        public async Task<IActionResult> UpdateCarModel([FromRoute] long id, UpdateCarModelYearRequest updateCarModelRequest)
+        public async Task<IActionResult> UpdateCarModel([FromRoute] long id, UpdateCarModelRequest updateCarModelRequest)
         {
             var carModel = await dbContext.CarModels.FindAsync(id);
             if(carModel != null)

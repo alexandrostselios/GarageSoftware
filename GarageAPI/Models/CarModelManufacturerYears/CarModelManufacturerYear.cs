@@ -3,11 +3,11 @@ using GarageAPI.Models.CarModels;
 using GarageAPI.Models.CarManufacturers;
 using GarageAPI.Models.CarModelYears;
 
-namespace GarageAPI.Models
+namespace GarageAPI.Models.CarModelManufacturerYears
 {
     public class CarModelManufacturerYear
     {
-        public long ID  { get; set; }
+        public long ID { get; set; }
 
         [NotNull]
         public CarManufacturer CarManufacturer { get; set; }
@@ -18,4 +18,4 @@ namespace GarageAPI.Models
         [NotNull]
         public CarModelYear CarModelYear { get; set; }
     }
- }
+}
