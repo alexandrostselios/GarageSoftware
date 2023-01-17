@@ -8206,11 +8206,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\alexa\\Desktop\\Visual Studio Projects\\GarageAPI\\GarageAPI.csproj",
+      "projectUniqueName": "C:\\Users\\alexa\\Desktop\\Visual Studio Projects\\GarageSoftware\\GarageAPI\\GarageAPI.csproj",
       "projectName": "GarageAPI",
-      "projectPath": "C:\\Users\\alexa\\Desktop\\Visual Studio Projects\\GarageAPI\\GarageAPI.csproj",
+      "projectPath": "C:\\Users\\alexa\\Desktop\\Visual Studio Projects\\GarageSoftware\\GarageAPI\\GarageAPI.csproj",
       "packagesPath": "C:\\Users\\alexa\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\alexa\\Desktop\\Visual Studio Projects\\GarageAPI\\obj\\",
+      "outputPath": "C:\\Users\\alexa\\Desktop\\Visual Studio Projects\\GarageSoftware\\GarageAPI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
