@@ -14,7 +14,7 @@ namespace GarageAPI.Data
         }
 
         public DbSet<CarModel> CarModels { get; set; }
-        public DbSet<CarManufacturer> CarManufacturer { get; set; }
+        public DbSet<CarManufacturers> CarManufacturer { get; set; }
         public DbSet<CarModelYear> CarModelYear { get; set; }
         public DbSet<CarModelManufacturerYear> CarModelManufacturerYear { get; set; }
         public DbSet<Users> Users { get; set; }

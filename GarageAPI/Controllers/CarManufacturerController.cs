@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace GarageAPI.Controllers
 {
     [ApiController]
-    [Route("api/CarManufacturer")]
+    [Route("api/CarManufacturers")]
     public class CarManufacturerController : Controller
     {
         private readonly GarageAPIDbContext dbContext;
@@ -43,7 +43,7 @@ namespace GarageAPI.Controllers
         [Route("AddCarManufacturer")]
         public async Task<IActionResult> AddCarManufacturer(AddCarManufacturerRequest addCarManufacturerRequest)
         {
-            var carModel = new CarManufacturer()
+            var carModel = new CarManufacturers()
             {
                 ManufacturerName = addCarManufacturerRequest.ManufacturerName
             };

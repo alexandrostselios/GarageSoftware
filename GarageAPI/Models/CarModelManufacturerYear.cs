@@ -10,7 +10,7 @@ namespace GarageAPI.Models
         public long ID  { get; set; }
 
         [NotNull]
-        public CarManufacturer CarManufacturer { get; set; }
+        public CarManufacturers.CarManufacturers CarManufacturer { get; set; }
 
         [NotNull]
         public CarModel CarModel { get; set; }

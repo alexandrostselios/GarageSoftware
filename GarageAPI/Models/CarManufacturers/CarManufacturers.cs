@@ -1,6 +1,6 @@
 ﻿namespace GarageAPI.Models.CarManufacturers
 {
-    public class CarManufacturer
+    public class CarManufacturers
     {
         public long ID { get; set; }
 

@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GarageAPI.Controllers
 {
+    [ApiController]
+    [Route("api/CarModelYear")]
     public class CarModelYearController : Controller
     {
         private readonly GarageAPIDbContext dbContext;
@@ -17,7 +19,7 @@ namespace GarageAPI.Controllers
 
 
         [HttpGet]
-        [Route("GetCarModelYears")]
+        [Route("GetCarModelYear")]
         public async Task<IActionResult> GetCarModelYear()
         {
             return Ok(await dbContext.CarModelYear.ToListAsync());
