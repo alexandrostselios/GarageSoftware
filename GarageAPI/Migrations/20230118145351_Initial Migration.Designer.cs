@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GarageAPI.Migrations
 {
     [DbContext(typeof(GarageAPIDbContext))]
-    [Migration("20230117195457_Initial Migration")]
+    [Migration("20230118145351_Initial Migration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -25,7 +25,7 @@ namespace GarageAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("GarageAPI.Models.CarManufacturer", b =>
+            modelBuilder.Entity("GarageAPI.Models.CarManufacturers.CarManufacturer", b =>
                 {
                     b.Property<long>("ID")
                         .ValueGeneratedOnAdd()
@@ -42,24 +42,7 @@ namespace GarageAPI.Migrations
                     b.ToTable("CarManufacturer");
                 });
 
-            modelBuilder.Entity("GarageAPI.Models.CarModel", b =>
-                {
-                    b.Property<long>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
-
-                    b.Property<string>("ModelName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("CarModels");
-                });
-
-            modelBuilder.Entity("GarageAPI.Models.CarModelManufacturerYear", b =>
+            modelBuilder.Entity("GarageAPI.Models.CarModelManufacturerYears.CarModelManufacturerYear", b =>
                 {
                     b.Property<long>("ID")
                         .ValueGeneratedOnAdd()
@@ -87,7 +70,7 @@ namespace GarageAPI.Migrations
                     b.ToTable("CarModelManufacturerYear");
                 });
 
-            modelBuilder.Entity("GarageAPI.Models.CarModelYear", b =>
+            modelBuilder.Entity("GarageAPI.Models.CarModelYears.CarModelYear", b =>
                 {
                     b.Property<long>("ID")
                         .ValueGeneratedOnAdd()
@@ -102,6 +85,23 @@ namespace GarageAPI.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("CarModelYear");
+                });
+
+            modelBuilder.Entity("GarageAPI.Models.CarModels.CarModel", b =>
+                {
+                    b.Property<long>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
+
+                    b.Property<string>("ModelName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("CarModels");
                 });
 
             modelBuilder.Entity("GarageAPI.Models.UserModels", b =>
@@ -121,13 +121,13 @@ namespace GarageAPI.Migrations
                     b.Property<string>("LicencePlate")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("ModelManufacturerYearIDID")
+                    b.Property<long>("ModelManufacturerYearID")
                         .HasColumnType("bigint");
 
                     b.Property<long>("ModelYearID")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("UserIDID")
+                    b.Property<int>("UsersID")
                         .HasColumnType("int");
 
                     b.Property<string>("VIN")
@@ -135,11 +135,11 @@ namespace GarageAPI.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("ModelManufacturerYearIDID");
+                    b.HasIndex("ModelManufacturerYearID");
 
                     b.HasIndex("ModelYearID");
 
-                    b.HasIndex("UserIDID");
+                    b.HasIndex("UsersID");
 
                     b.ToTable("UserModels");
                 });
@@ -188,21 +188,21 @@ namespace GarageAPI.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("GarageAPI.Models.CarModelManufacturerYear", b =>
+            modelBuilder.Entity("GarageAPI.Models.CarModelManufacturerYears.CarModelManufacturerYear", b =>
                 {
-                    b.HasOne("GarageAPI.Models.CarManufacturer", "CarManufacturer")
+                    b.HasOne("GarageAPI.Models.CarManufacturers.CarManufacturer", "CarManufacturer")
                         .WithMany()
                         .HasForeignKey("CarManufacturerID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GarageAPI.Models.CarModel", "CarModel")
+                    b.HasOne("GarageAPI.Models.CarModels.CarModel", "CarModel")
                         .WithMany()
                         .HasForeignKey("CarModelID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GarageAPI.Models.CarModelYear", "CarModelYear")
+                    b.HasOne("GarageAPI.Models.CarModelYears.CarModelYear", "CarModelYear")
                         .WithMany()
                         .HasForeignKey("CarModelYearID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -217,29 +217,29 @@ namespace GarageAPI.Migrations
 
             modelBuilder.Entity("GarageAPI.Models.UserModels", b =>
                 {
-                    b.HasOne("GarageAPI.Models.CarModelManufacturerYear", "ModelManufacturerYearID")
+                    b.HasOne("GarageAPI.Models.CarModelManufacturerYears.CarModelManufacturerYear", "ModelManufacturerYear")
                         .WithMany()
-                        .HasForeignKey("ModelManufacturerYearIDID")
+                        .HasForeignKey("ModelManufacturerYearID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GarageAPI.Models.CarModelYear", "ModelYear")
+                    b.HasOne("GarageAPI.Models.CarModelYears.CarModelYear", "ModelYear")
                         .WithMany()
                         .HasForeignKey("ModelYearID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GarageAPI.Models.Users", "UserID")
+                    b.HasOne("GarageAPI.Models.Users", "Users")
                         .WithMany()
-                        .HasForeignKey("UserIDID")
+                        .HasForeignKey("UsersID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ModelManufacturerYearID");
+                    b.Navigation("ModelManufacturerYear");
 
                     b.Navigation("ModelYear");
 
-                    b.Navigation("UserID");
+                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

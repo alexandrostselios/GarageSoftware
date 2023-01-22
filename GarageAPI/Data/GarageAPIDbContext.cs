@@ -20,7 +20,9 @@ namespace GarageAPI.Data
         public DbSet<CarModelManufacturerYear> CarModelManufacturerYear { get; set; }
         public DbSet<Users> Users { get; set; }
         public DbSet<UserModels> UserModels { get; set; }
-        
+
+        public virtual DbSet<CarModelManufacturerYearDTO> CarModelManufacturerYearDTO { get; set; }
+
     }
 }
 

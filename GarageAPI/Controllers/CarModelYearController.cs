@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 namespace GarageAPI.Controllers
 {
     [ApiController]
-    [Route("api/CarModelYear")]
     public class CarModelYearController : Controller
     {
         private readonly GarageAPIDbContext dbContext;
@@ -19,14 +18,14 @@ namespace GarageAPI.Controllers
 
 
         [HttpGet]
-        [Route("GetCarModelYears")]
+        [Route("api/GetCarModelYears")]
         public async Task<IActionResult> GetCarModelYear()
         {
             return Ok(await dbContext.CarModelYear.ToListAsync());
         }
 
         [HttpGet]
-        [Route("GetCarModelYearByID/{id:long}")]
+        [Route("api/GetCarModelYearByID/{id:long}")]
         public async Task<IActionResult> GetCarModelYear([FromRoute] long id)
         {
             var carModelYear = await dbContext.CarModelYear.FindAsync(id);
@@ -34,12 +33,11 @@ namespace GarageAPI.Controllers
             {
                 return NotFound();
             }
-
             return Ok(carModelYear);
         }
 
         [HttpPost]
-        [Route("AddCarModelYear")]
+        [Route("api/AddCarModelYear")]
         public async Task<IActionResult> AddCarModelYear(AddCarModelYearRequest addCarModelYearRequest)
         {
             var carModelYear = new CarModelYear()
@@ -48,12 +46,11 @@ namespace GarageAPI.Controllers
             };
             await dbContext.CarModelYear.AddAsync(carModelYear);
             await dbContext.SaveChangesAsync();
-
             return Ok(carModelYear);
         }
 
         [HttpPut]
-        [Route("UpdateCarModelYearByID/{id:long}")]
+        [Route("api/UpdateCarModelYearByID/{id:long}")]
         public async Task<IActionResult> UpdateCarModelYear([FromRoute] long id, UpdateCarModelYearRequest updateCarModelYearRequest)
         {
             var carModelYear = await dbContext.CarModelYear.FindAsync(id);
@@ -63,12 +60,11 @@ namespace GarageAPI.Controllers
                 await dbContext.SaveChangesAsync();
                 return Ok(carModelYear);
             }
-
             return NotFound();
         }
 
         [HttpDelete]
-        [Route("DeleteCarModelYearByID/{id:long}")]
+        [Route("api/DeleteCarModelYearByID/{id:long}")]
         public async Task<IActionResult> DeleteCarModelYearByID([FromRoute] long id)
         {
             var carModelYear = await dbContext.CarModelYear.FindAsync(id);

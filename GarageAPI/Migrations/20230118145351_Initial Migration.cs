@@ -110,8 +110,8 @@ namespace GarageAPI.Migrations
                 {
                     ID = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserIDID = table.Column<int>(type: "int", nullable: false),
-                    ModelManufacturerYearIDID = table.Column<long>(type: "bigint", nullable: false),
+                    UsersID = table.Column<int>(type: "int", nullable: false),
+                    ModelManufacturerYearID = table.Column<long>(type: "bigint", nullable: false),
                     ModelYearID = table.Column<long>(type: "bigint", nullable: false),
                     LicencePlate = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     VIN = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -122,8 +122,8 @@ namespace GarageAPI.Migrations
                 {
                     table.PrimaryKey("PK_UserModels", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_UserModels_CarModelManufacturerYear_ModelManufacturerYearIDID",
-                        column: x => x.ModelManufacturerYearIDID,
+                        name: "FK_UserModels_CarModelManufacturerYear_ModelManufacturerYearID",
+                        column: x => x.ModelManufacturerYearID,
                         principalTable: "CarModelManufacturerYear",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
@@ -134,11 +134,11 @@ namespace GarageAPI.Migrations
                         principalColumn: "ID",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
-                        name: "FK_UserModels_Users_UserIDID",
-                        column: x => x.UserIDID,
+                        name: "FK_UserModels_Users_UsersID",
+                        column: x => x.UsersID,
                         principalTable: "Users",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(
@@ -157,9 +157,9 @@ namespace GarageAPI.Migrations
                 column: "CarModelYearID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserModels_ModelManufacturerYearIDID",
+                name: "IX_UserModels_ModelManufacturerYearID",
                 table: "UserModels",
-                column: "ModelManufacturerYearIDID");
+                column: "ModelManufacturerYearID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserModels_ModelYearID",
@@ -167,9 +167,9 @@ namespace GarageAPI.Migrations
                 column: "ModelYearID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserModels_UserIDID",
+                name: "IX_UserModels_UsersID",
                 table: "UserModels",
-                column: "UserIDID");
+                column: "UsersID");
         }
 
         /// <inheritdoc />

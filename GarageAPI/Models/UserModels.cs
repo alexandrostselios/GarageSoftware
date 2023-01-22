@@ -11,9 +11,9 @@ namespace GarageAPI.Models
     {
         public long ID { get; set; }
 
-        public Users UserID { get; set; }
+        public Users Users { get; set; }
 
-        public CarModelManufacturerYear ModelManufacturerYearID { get; set; }
+        public CarModelManufacturerYear ModelManufacturerYear { get; set; }
 
         public CarModelYear ModelYear { get; set; }
 

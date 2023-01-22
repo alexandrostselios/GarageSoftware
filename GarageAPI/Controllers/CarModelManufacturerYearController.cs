@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 namespace GarageAPI.Controllers
 {
     [ApiController]
-    [Route("api/CarModels")]
     public class CarModelManufacturerYearController : Controller
     {
         private readonly GarageAPIDbContext dbContext;
@@ -19,14 +18,25 @@ namespace GarageAPI.Controllers
 
 
         [HttpGet]
-        [Route("CarModelManufacturerYear")]
-        public async Task<IActionResult> GetarModelManufacturerYear()
+        [Route("api/CarModelManufacturerYear")]
+        public async Task<IActionResult> GetCarModelManufacturerYear()
         {
-            return Ok(await dbContext.CarModelManufacturerYear.ToListAsync());
+            List<CarModelManufacturerYearDTO> carModelManufacturerYearDTOs = new List<CarModelManufacturerYearDTO>();
+            var list = await dbContext.CarModelManufacturerYear.ToListAsync();
+            foreach(var i in list)
+            {
+                carModelManufacturerYearDTOs.Add(new CarModelManufacturerYearDTO{
+                    ID = i.ID,
+                    CarManufacturerID = i.CarManufacturerID,
+                    CarModelID = i.CarModelID,
+                    CarModelYearID = i.CarModelYearID,
+                });
+            }
+            return Ok(carModelManufacturerYearDTOs);
         }
 
         [HttpGet]
-        [Route("GetCarModelManufacturerYearByID/{id:long}")]
+        [Route("api/GetCarModelManufacturerYearByID/{id:long}")]
         public async Task<IActionResult> GetCarModelManufacturerYearByID([FromRoute] long id)
         {
             var carModelManufacturerYear = await dbContext.CarModelManufacturerYear.FirstOrDefaultAsync(c => c.ID == id);
@@ -34,23 +44,29 @@ namespace GarageAPI.Controllers
             {
                 return NotFound();
             }
-
-            return Ok(carModelManufacturerYear);
+            CarModelManufacturerYearDTO carModelManufacturerYearDTO = new CarModelManufacturerYearDTO
+            {
+                ID = carModelManufacturerYear.ID,
+                CarManufacturerID = carModelManufacturerYear.CarManufacturerID,
+                CarModelID = carModelManufacturerYear.CarModelID,
+                CarModelYearID = carModelManufacturerYear.CarModelYearID
+            };
+            return Ok(carModelManufacturerYearDTO);
         }
 
-        //[HttpPost]
-        //[Route("AddCarModel")]
-        //public async Task<IActionResult> AddCarModel(AddCarModelManufacturerYearRequest addCarModelManufacturerYearRequest)
-        //{
-        //    var carModelManufacturerYear = new CarModelManufacturerYear()
-        //    {
-
-        //        CarManufacturer = addCarModelManufacturerYearRequest.
-        //    };
-        //    await dbContext.CarModels.AddAsync(carModelManufacturerYear);
-        //    await dbContext.SaveChangesAsync();
-
-        //    return Ok(carModelManufacturerYear);
-        //}
+        [HttpPost]
+        [Route("api/AddCarModelManufacturerYear")]
+        public async Task<IActionResult> AddCarModelManufacturerYear(AddCarModelManufacturerYearRequest addCarModelManufacturerYearRequest)
+        {
+            var carModelManufacturerYear = new CarModelManufacturerYear()
+            {
+                CarModelID = addCarModelManufacturerYearRequest.CarModelID,
+                CarManufacturerID = addCarModelManufacturerYearRequest.CarManufacturerID,
+                CarModelYearID = addCarModelManufacturerYearRequest.CarModelYearID,
+            };
+            await dbContext.CarModelManufacturerYear.AddAsync(carModelManufacturerYear);
+            await dbContext.SaveChangesAsync();
+            return Ok(carModelManufacturerYear);
+        }
     }
 }

@@ -5,10 +5,10 @@ namespace GarageAPI.Models.CarModelManufacturerYears
 {
     public class AddCarModelManufacturerYearRequest
     {
-        public CarModel CarModelID { get; set; }
+        public long CarModelID { get; set; }
 
-        public CarManufacturer CarManufacturerID { get; set; }
+        public long CarManufacturerID { get; set; }
 
-        public CarModelYear CarModelYearID { get; set; }
+        public long CarModelYearID { get; set; }
     }
 }
