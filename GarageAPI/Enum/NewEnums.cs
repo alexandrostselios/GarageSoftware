@@ -1,6 +1,6 @@
 ﻿namespace GarageAPI.Enum
 {
-    public enum yTest
+    public enum Test
     {
         Admin = 1,
         User = 2,

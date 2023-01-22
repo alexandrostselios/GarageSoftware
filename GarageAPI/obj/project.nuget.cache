@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "o28Nh/b5Kkt0lmbooegwioKl8BlKkhQYXkMMLnjgE4wJdV6fhzSmh992q+hjykx1il+PzVYXwmoj06Jyr/srUg==",
+  "dgSpecHash": "8ORi9Kjc8XdQ8dQWA8jKYTH0PZuFbkK/v5FK1O6czGmtlfZ/UJJMiusT4jQAE3YKL95WeavVqj9Mqb3yg1HbLg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\alexa\\Desktop\\Visual Studio Projects\\GarageAPI\\GarageAPI.csproj",
+  "projectFilePath": "C:\\Users\\alexa\\Desktop\\Visual Studio Projects\\GarageSoftware\\GarageAPI\\GarageAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\alexa\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\alexa\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
