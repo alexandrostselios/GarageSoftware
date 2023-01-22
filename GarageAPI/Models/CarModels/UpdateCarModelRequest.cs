@@ -1,6 +1,6 @@
 ﻿namespace GarageAPI.Models.CarModels
 {
-    public class UpdateCarModelRequest
+    public class UpdateCarModelYearRequest
     {
         public string ModelName { get; set; }
     }

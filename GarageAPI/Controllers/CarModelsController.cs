@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 namespace GarageAPI.Controllers
 {
     [ApiController]
+    [Route("api/CarModels")]
     public class CarModelsController : Controller
     {
         private readonly GarageAPIDbContext dbContext;
@@ -18,7 +19,7 @@ namespace GarageAPI.Controllers
         
 
         [HttpGet]
-        [Route("api/GetCarModels")]
+        [Route("GetCarModels")]
         public async Task<IActionResult> GetCarModels()
         {
             return Ok(await dbContext.CarModels.ToListAsync());
@@ -26,7 +27,7 @@ namespace GarageAPI.Controllers
         }
 
         [HttpGet]
-        [Route("api/GetCarModelsByID/{id:long}")]
+        [Route("GetCarModelsByID/{id:long}")]
         public async Task<IActionResult> GetCarModel([FromRoute] long id)
         {
             var carModel = await dbContext.CarModels.FindAsync(id);
@@ -34,11 +35,12 @@ namespace GarageAPI.Controllers
             {
                 return NotFound();
             }
+
             return Ok(carModel);
         }
 
         [HttpPost]
-        [Route("api/AddCarModel")]
+        [Route("AddCarModel")]
         public async Task<IActionResult> AddCarModel(AddCarModelRequest addCarModelRequest)
         {
             var carModel = new CarModel()
@@ -53,8 +55,8 @@ namespace GarageAPI.Controllers
         }
 
         [HttpPut]
-        [Route("api/UpdateCarModel/{id:long}")]
-        public async Task<IActionResult> UpdateCarModel([FromRoute] long id, UpdateCarModelRequest updateCarModelRequest)
+        [Route("UpdateCarModel/{id:long}")]
+        public async Task<IActionResult> UpdateCarModel([FromRoute] long id, UpdateCarModelYearRequest updateCarModelRequest)
         {
             var carModel = await dbContext.CarModels.FindAsync(id);
             if(carModel != null)
@@ -63,11 +65,12 @@ namespace GarageAPI.Controllers
                 await dbContext.SaveChangesAsync();
                 return Ok(carModel);
             }
+
             return NotFound();
         }
 
         [HttpDelete]
-        [Route("api/DeleteCarModel/{id:long}")]
+        [Route("DeleteCarModel/{id:long}")]
         public async Task<IActionResult> DeleteCarModel([FromRoute] long id)
         {
             var carModel = await dbContext.CarModels.FindAsync(id);
@@ -77,6 +80,7 @@ namespace GarageAPI.Controllers
                 await dbContext.SaveChangesAsync();
                 return Ok(carModel);
             }
+
             return NotFound();
         }
     }

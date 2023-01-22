@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 using GarageAPI.Enum;
 using GarageAPI.Models.CarManufacturers;
 using GarageAPI.Models.CarModelYears;
-using GarageAPI.Models.CarModelManufacturerYears;
 
 namespace GarageAPI.Models
 {
@@ -11,9 +10,9 @@ namespace GarageAPI.Models
     {
         public long ID { get; set; }
 
-        public Users Users { get; set; }
+        public Users UserID { get; set; }
 
-        public CarModelManufacturerYear ModelManufacturerYear { get; set; }
+        public CarModelManufacturerYear ModelManufacturerYearID { get; set; }
 
         public CarModelYear ModelYear { get; set; }
 

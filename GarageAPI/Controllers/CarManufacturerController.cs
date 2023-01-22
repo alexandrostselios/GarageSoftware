@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace GarageAPI.Controllers
 {
     [ApiController]
+    [Route("api/CarManufacturer")]
     public class CarManufacturerController : Controller
     {
         private readonly GarageAPIDbContext dbContext;
@@ -18,14 +19,14 @@ namespace GarageAPI.Controllers
 
 
         [HttpGet]
-        [Route("api/GetCarManufacturers")]
+        [Route("GetCarManufacturers")]
         public async Task<IActionResult> GetCarManufacturers()
         {
             return Ok(await dbContext.CarManufacturer.ToListAsync());
         }
 
         [HttpGet]
-        [Route("api/GetCarManufacturerByID/{id:long}")]
+        [Route("GetCarManufacturerByID/{id:long}")]
         public async Task<IActionResult> GetCarManufacturer([FromRoute] long id)
         {
             var carModel = await dbContext.CarManufacturer.FindAsync(id);
@@ -33,12 +34,13 @@ namespace GarageAPI.Controllers
             {
                 return NotFound();
             }
+
             return Ok(carModel);
         }
 
 
         [HttpPost]
-        [Route("api/AddCarManufacturer")]
+        [Route("AddCarManufacturer")]
         public async Task<IActionResult> AddCarManufacturer(AddCarManufacturerRequest addCarManufacturerRequest)
         {
             var carModel = new CarManufacturer()
@@ -47,11 +49,12 @@ namespace GarageAPI.Controllers
             };
             await dbContext.CarManufacturer.AddAsync(carModel);
             await dbContext.SaveChangesAsync();
+
             return Ok(carModel);
         }
 
         [HttpPut]
-        [Route("api/UpdateCarManufacturerByID/{id:long}")]
+        [Route("UpdateCarManufacturerByID/{id:long}")]
         public async Task<IActionResult> UpdateCarManufacturer([FromRoute] long id, UpdateCarManufacturerRequest updateCarManufacturerRequest)
         {
             var carManufacturer = await dbContext.CarManufacturer.FindAsync(id);
@@ -66,7 +69,7 @@ namespace GarageAPI.Controllers
         }
 
         [HttpDelete]
-        [Route("api/DeleteCarManufacturerByID/{id:long}")]
+        [Route("DeleteCarManufacturerByID/{id:long}")]
         public async Task<IActionResult> DeleteCarManufacturer([FromRoute] long id)
         {
             var carManufacturer = await dbContext.CarManufacturer.FindAsync(id);

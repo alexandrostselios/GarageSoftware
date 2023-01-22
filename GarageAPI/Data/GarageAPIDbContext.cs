@@ -3,7 +3,6 @@ using GarageAPI.Models;
 using GarageAPI.Models.CarManufacturers;
 using GarageAPI.Models.CarModels;
 using GarageAPI.Models.CarModelYears;
-using GarageAPI.Models.CarModelManufacturerYears;
 
 namespace GarageAPI.Data
 {
@@ -20,9 +19,7 @@ namespace GarageAPI.Data
         public DbSet<CarModelManufacturerYear> CarModelManufacturerYear { get; set; }
         public DbSet<Users> Users { get; set; }
         public DbSet<UserModels> UserModels { get; set; }
-
-        public virtual DbSet<CarModelManufacturerYearDTO> CarModelManufacturerYearDTO { get; set; }
-
+        
     }
 }
 
