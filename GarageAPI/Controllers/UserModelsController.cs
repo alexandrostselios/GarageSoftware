@@ -10,6 +10,7 @@ using GarageAPI.Models;
 
 namespace GarageAPI.Controllers
 {
+    [ApiController]
     public class UserModelsController : Controller
     {
         private readonly GarageAPIDbContext dbContext;
@@ -27,7 +28,7 @@ namespace GarageAPI.Controllers
         }
 
         [HttpGet]
-        [Route("api/GetUserModelByUserID/{id:long}")]
+        [Route("api/GetUserModelByUserID1/{id:long}")]
         public async Task<IActionResult> GetUserModelByUserID([FromRoute] long id)
         {
             var user = await dbContext.Users.FindAsync(id);
@@ -38,6 +39,27 @@ namespace GarageAPI.Controllers
             }
 
             return Ok(userModel);
+        }
+
+        [HttpGet]
+        [Route("api/GetUserModelByUserOrCarID/{id:long}/{flag:int}")]
+        public async Task<IActionResult> GetUserModelByUserOrCarID([FromRoute] long id, int flag)
+        {
+            List<UserModels> user;
+            List<CustomerCars> customerCars = new List<CustomerCars>();
+            List<UserModels> userCars = new List<UserModels>();
+            if (flag == 0)
+            {
+                customerCars = new List<CustomerCars>();
+                user = dbContext.UserModels.Where(c => c.User.ID == id).ToList();
+            }
+            else
+            {
+                userCars = new List<UserModels>();
+                user = dbContext.UserModels.Where(c => c.ID == id).ToList();
+            }
+
+            return Ok(user);
         }
     }
 }
