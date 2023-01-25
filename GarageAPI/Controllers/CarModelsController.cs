@@ -7,7 +7,7 @@ using System.Security.Cryptography;
 namespace GarageAPI.Controllers
 {
     [ApiController]
-    [Route("api/CarModels")]
+    //[Route("api/CarModels")]
     public class CarModelsController : Controller
     {
         private readonly GarageAPIDbContext dbContext;
@@ -19,14 +19,14 @@ namespace GarageAPI.Controllers
         
 
         [HttpGet]
-        [Route("GetCarModels")]
+        [Route("api/GetCarModels")]
         public async Task<IActionResult> GetCarModels()
         {
             return Ok(await dbContext.CarModels.ToListAsync());
         }
 
         [HttpGet]
-        [Route("GetCarModelsByID/{id:long}")]
+        [Route("api/GetCarModelsByID/{id:long}")]
         public async Task<IActionResult> GetCarModel([FromRoute] long id)
         {
             var carModel = await dbContext.CarModels.FindAsync(id);
@@ -39,7 +39,7 @@ namespace GarageAPI.Controllers
         }
 
         [HttpPost]
-        [Route("AddCarModel")]
+        [Route("api/AddCarModel")]
         public async Task<IActionResult> AddCarModel(AddCarModelRequest addCarModelRequest)
         {
             var carModel = new CarModel()
@@ -54,7 +54,7 @@ namespace GarageAPI.Controllers
         }
 
         [HttpPut]
-        [Route("UpdateCarModel/{id:long}")]
+        [Route("api/UpdateCarModel/{id:long}")]
         public async Task<IActionResult> UpdateCarModel([FromRoute] long id, UpdateCarModelRequest updateCarModelRequest)
         {
             var carModel = await dbContext.CarModels.FindAsync(id);
@@ -69,7 +69,7 @@ namespace GarageAPI.Controllers
         }
 
         [HttpDelete]
-        [Route("DeleteCarModel/{id:long}")]
+        [Route("api/DeleteCarModel/{id:long}")]
         public async Task<IActionResult> DeleteCarModel([FromRoute] long id)
         {
             var carModel = await dbContext.CarModels.FindAsync(id);

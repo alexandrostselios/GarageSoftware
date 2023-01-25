@@ -8,11 +8,12 @@ namespace GarageAPI.Models
 {
     public class UserModels
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long ID { get; set; }
 
-        public Users UserID { get; set; }
+        public Users User { get; set; }
 
-        public CarModelManufacturerYear ModelManufacturerYearID { get; set; }
+        public CarModelManufacturerYear ModelManufacturerYear { get; set; }
 
         public CarModelYear ModelYear { get; set; }
 

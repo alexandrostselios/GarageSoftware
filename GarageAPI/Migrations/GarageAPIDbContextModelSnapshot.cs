@@ -22,7 +22,7 @@ namespace GarageAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("GarageAPI.Models.CarManufacturer", b =>
+            modelBuilder.Entity("GarageAPI.Models.CarManufacturers.CarManufacturer", b =>
                 {
                     b.Property<long>("ID")
                         .ValueGeneratedOnAdd()
@@ -37,23 +37,328 @@ namespace GarageAPI.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("CarManufacturer");
-                });
 
-            modelBuilder.Entity("GarageAPI.Models.CarModel", b =>
-                {
-                    b.Property<long>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
-
-                    b.Property<string>("ModelName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("CarModels");
+                    b.HasData(
+                        new
+                        {
+                            ID = 1L,
+                            ManufacturerName = "Abarth"
+                        },
+                        new
+                        {
+                            ID = 2L,
+                            ManufacturerName = "Alfa Romeo"
+                        },
+                        new
+                        {
+                            ID = 3L,
+                            ManufacturerName = "Aston Martin"
+                        },
+                        new
+                        {
+                            ID = 4L,
+                            ManufacturerName = "Audi"
+                        },
+                        new
+                        {
+                            ID = 5L,
+                            ManufacturerName = "Bentley"
+                        },
+                        new
+                        {
+                            ID = 6L,
+                            ManufacturerName = "BMW"
+                        },
+                        new
+                        {
+                            ID = 7L,
+                            ManufacturerName = "Bugatti"
+                        },
+                        new
+                        {
+                            ID = 8L,
+                            ManufacturerName = "Cadillac"
+                        },
+                        new
+                        {
+                            ID = 9L,
+                            ManufacturerName = "Chevrolet"
+                        },
+                        new
+                        {
+                            ID = 10L,
+                            ManufacturerName = "Chrysler"
+                        },
+                        new
+                        {
+                            ID = 11L,
+                            ManufacturerName = "Citroën"
+                        },
+                        new
+                        {
+                            ID = 12L,
+                            ManufacturerName = "Dacia"
+                        },
+                        new
+                        {
+                            ID = 13L,
+                            ManufacturerName = "Daewoo"
+                        },
+                        new
+                        {
+                            ID = 14L,
+                            ManufacturerName = "Daihatsu"
+                        },
+                        new
+                        {
+                            ID = 15L,
+                            ManufacturerName = "Dodge"
+                        },
+                        new
+                        {
+                            ID = 16L,
+                            ManufacturerName = "Donkervoort"
+                        },
+                        new
+                        {
+                            ID = 17L,
+                            ManufacturerName = "DS"
+                        },
+                        new
+                        {
+                            ID = 18L,
+                            ManufacturerName = "Ferrari"
+                        },
+                        new
+                        {
+                            ID = 19L,
+                            ManufacturerName = "Fiat"
+                        },
+                        new
+                        {
+                            ID = 20L,
+                            ManufacturerName = "Fisker"
+                        },
+                        new
+                        {
+                            ID = 21L,
+                            ManufacturerName = "Ford"
+                        },
+                        new
+                        {
+                            ID = 22L,
+                            ManufacturerName = "Honda"
+                        },
+                        new
+                        {
+                            ID = 23L,
+                            ManufacturerName = "Hummer"
+                        },
+                        new
+                        {
+                            ID = 24L,
+                            ManufacturerName = "Hyundai"
+                        },
+                        new
+                        {
+                            ID = 25L,
+                            ManufacturerName = "Infiniti"
+                        },
+                        new
+                        {
+                            ID = 26L,
+                            ManufacturerName = "Iveco"
+                        },
+                        new
+                        {
+                            ID = 27L,
+                            ManufacturerName = "Jaguar"
+                        },
+                        new
+                        {
+                            ID = 28L,
+                            ManufacturerName = "Jeep"
+                        },
+                        new
+                        {
+                            ID = 29L,
+                            ManufacturerName = "Kia"
+                        },
+                        new
+                        {
+                            ID = 30L,
+                            ManufacturerName = "KTM"
+                        },
+                        new
+                        {
+                            ID = 31L,
+                            ManufacturerName = "Lada"
+                        },
+                        new
+                        {
+                            ID = 32L,
+                            ManufacturerName = "Lamborghini"
+                        },
+                        new
+                        {
+                            ID = 33L,
+                            ManufacturerName = "Lancia"
+                        },
+                        new
+                        {
+                            ID = 34L,
+                            ManufacturerName = "Land Rover"
+                        },
+                        new
+                        {
+                            ID = 35L,
+                            ManufacturerName = "Landwind"
+                        },
+                        new
+                        {
+                            ID = 36L,
+                            ManufacturerName = "Lexus"
+                        },
+                        new
+                        {
+                            ID = 37L,
+                            ManufacturerName = "Lotus"
+                        },
+                        new
+                        {
+                            ID = 38L,
+                            ManufacturerName = "Maserati"
+                        },
+                        new
+                        {
+                            ID = 39L,
+                            ManufacturerName = "Maybach"
+                        },
+                        new
+                        {
+                            ID = 40L,
+                            ManufacturerName = "Mazda"
+                        },
+                        new
+                        {
+                            ID = 41L,
+                            ManufacturerName = "McLaren"
+                        },
+                        new
+                        {
+                            ID = 42L,
+                            ManufacturerName = "Mercedes-Benz"
+                        },
+                        new
+                        {
+                            ID = 43L,
+                            ManufacturerName = "MG"
+                        },
+                        new
+                        {
+                            ID = 44L,
+                            ManufacturerName = "Mini"
+                        },
+                        new
+                        {
+                            ID = 45L,
+                            ManufacturerName = "Mitsubishi"
+                        },
+                        new
+                        {
+                            ID = 46L,
+                            ManufacturerName = "Morgan"
+                        },
+                        new
+                        {
+                            ID = 47L,
+                            ManufacturerName = "Nissan"
+                        },
+                        new
+                        {
+                            ID = 48L,
+                            ManufacturerName = "Opel"
+                        },
+                        new
+                        {
+                            ID = 49L,
+                            ManufacturerName = "Peugeot"
+                        },
+                        new
+                        {
+                            ID = 50L,
+                            ManufacturerName = "Porsche"
+                        },
+                        new
+                        {
+                            ID = 51L,
+                            ManufacturerName = "Renault"
+                        },
+                        new
+                        {
+                            ID = 52L,
+                            ManufacturerName = "Rolls-Royce"
+                        },
+                        new
+                        {
+                            ID = 53L,
+                            ManufacturerName = "Rover"
+                        },
+                        new
+                        {
+                            ID = 54L,
+                            ManufacturerName = "Saab"
+                        },
+                        new
+                        {
+                            ID = 55L,
+                            ManufacturerName = "Seat"
+                        },
+                        new
+                        {
+                            ID = 56L,
+                            ManufacturerName = "Skoda"
+                        },
+                        new
+                        {
+                            ID = 57L,
+                            ManufacturerName = "Smart"
+                        },
+                        new
+                        {
+                            ID = 58L,
+                            ManufacturerName = "SsangYong"
+                        },
+                        new
+                        {
+                            ID = 59L,
+                            ManufacturerName = "Subaru"
+                        },
+                        new
+                        {
+                            ID = 60L,
+                            ManufacturerName = "Suzuki"
+                        },
+                        new
+                        {
+                            ID = 61L,
+                            ManufacturerName = "Tesla"
+                        },
+                        new
+                        {
+                            ID = 62L,
+                            ManufacturerName = "Toyota"
+                        },
+                        new
+                        {
+                            ID = 63L,
+                            ManufacturerName = "Volkswagen"
+                        },
+                        new
+                        {
+                            ID = 64L,
+                            ManufacturerName = "Volvo"
+                        });
                 });
 
             modelBuilder.Entity("GarageAPI.Models.CarModelManufacturerYear", b =>
@@ -84,7 +389,7 @@ namespace GarageAPI.Migrations
                     b.ToTable("CarModelManufacturerYear");
                 });
 
-            modelBuilder.Entity("GarageAPI.Models.CarModelYear", b =>
+            modelBuilder.Entity("GarageAPI.Models.CarModelYears.CarModelYear", b =>
                 {
                     b.Property<long>("ID")
                         .ValueGeneratedOnAdd()
@@ -99,6 +404,662 @@ namespace GarageAPI.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("CarModelYear");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1L,
+                            Description = "1950"
+                        },
+                        new
+                        {
+                            ID = 2L,
+                            Description = "1951"
+                        },
+                        new
+                        {
+                            ID = 3L,
+                            Description = "1952"
+                        },
+                        new
+                        {
+                            ID = 4L,
+                            Description = "1953"
+                        },
+                        new
+                        {
+                            ID = 5L,
+                            Description = "1954"
+                        },
+                        new
+                        {
+                            ID = 6L,
+                            Description = "1955"
+                        },
+                        new
+                        {
+                            ID = 7L,
+                            Description = "1956"
+                        },
+                        new
+                        {
+                            ID = 8L,
+                            Description = "1957"
+                        },
+                        new
+                        {
+                            ID = 9L,
+                            Description = "1958"
+                        },
+                        new
+                        {
+                            ID = 10L,
+                            Description = "1959"
+                        },
+                        new
+                        {
+                            ID = 11L,
+                            Description = "1960"
+                        },
+                        new
+                        {
+                            ID = 12L,
+                            Description = "1961"
+                        },
+                        new
+                        {
+                            ID = 13L,
+                            Description = "1962"
+                        },
+                        new
+                        {
+                            ID = 14L,
+                            Description = "1963"
+                        },
+                        new
+                        {
+                            ID = 15L,
+                            Description = "1964"
+                        },
+                        new
+                        {
+                            ID = 16L,
+                            Description = "1965"
+                        },
+                        new
+                        {
+                            ID = 17L,
+                            Description = "1966"
+                        },
+                        new
+                        {
+                            ID = 18L,
+                            Description = "1967"
+                        },
+                        new
+                        {
+                            ID = 19L,
+                            Description = "1968"
+                        },
+                        new
+                        {
+                            ID = 20L,
+                            Description = "1969"
+                        },
+                        new
+                        {
+                            ID = 21L,
+                            Description = "1970"
+                        },
+                        new
+                        {
+                            ID = 22L,
+                            Description = "1971"
+                        },
+                        new
+                        {
+                            ID = 23L,
+                            Description = "1972"
+                        },
+                        new
+                        {
+                            ID = 24L,
+                            Description = "1973"
+                        },
+                        new
+                        {
+                            ID = 25L,
+                            Description = "1974"
+                        },
+                        new
+                        {
+                            ID = 26L,
+                            Description = "1975"
+                        },
+                        new
+                        {
+                            ID = 27L,
+                            Description = "1976"
+                        },
+                        new
+                        {
+                            ID = 28L,
+                            Description = "1977"
+                        },
+                        new
+                        {
+                            ID = 29L,
+                            Description = "1978"
+                        },
+                        new
+                        {
+                            ID = 30L,
+                            Description = "1979"
+                        },
+                        new
+                        {
+                            ID = 31L,
+                            Description = "1980"
+                        },
+                        new
+                        {
+                            ID = 32L,
+                            Description = "1981"
+                        },
+                        new
+                        {
+                            ID = 33L,
+                            Description = "1982"
+                        },
+                        new
+                        {
+                            ID = 34L,
+                            Description = "1983"
+                        },
+                        new
+                        {
+                            ID = 35L,
+                            Description = "1984"
+                        },
+                        new
+                        {
+                            ID = 36L,
+                            Description = "1985"
+                        },
+                        new
+                        {
+                            ID = 37L,
+                            Description = "1986"
+                        },
+                        new
+                        {
+                            ID = 38L,
+                            Description = "1987"
+                        },
+                        new
+                        {
+                            ID = 39L,
+                            Description = "1988"
+                        },
+                        new
+                        {
+                            ID = 40L,
+                            Description = "1989"
+                        },
+                        new
+                        {
+                            ID = 41L,
+                            Description = "1990"
+                        },
+                        new
+                        {
+                            ID = 42L,
+                            Description = "1991"
+                        },
+                        new
+                        {
+                            ID = 43L,
+                            Description = "1992"
+                        },
+                        new
+                        {
+                            ID = 44L,
+                            Description = "1993"
+                        },
+                        new
+                        {
+                            ID = 45L,
+                            Description = "1994"
+                        },
+                        new
+                        {
+                            ID = 46L,
+                            Description = "1995"
+                        },
+                        new
+                        {
+                            ID = 47L,
+                            Description = "1996"
+                        },
+                        new
+                        {
+                            ID = 48L,
+                            Description = "1997"
+                        },
+                        new
+                        {
+                            ID = 49L,
+                            Description = "1998"
+                        },
+                        new
+                        {
+                            ID = 50L,
+                            Description = "1999"
+                        },
+                        new
+                        {
+                            ID = 51L,
+                            Description = "2000"
+                        },
+                        new
+                        {
+                            ID = 52L,
+                            Description = "2001"
+                        },
+                        new
+                        {
+                            ID = 53L,
+                            Description = "2002"
+                        },
+                        new
+                        {
+                            ID = 54L,
+                            Description = "2003"
+                        },
+                        new
+                        {
+                            ID = 55L,
+                            Description = "2004"
+                        },
+                        new
+                        {
+                            ID = 56L,
+                            Description = "2005"
+                        },
+                        new
+                        {
+                            ID = 57L,
+                            Description = "2006"
+                        },
+                        new
+                        {
+                            ID = 58L,
+                            Description = "2007"
+                        },
+                        new
+                        {
+                            ID = 59L,
+                            Description = "2008"
+                        },
+                        new
+                        {
+                            ID = 60L,
+                            Description = "2009"
+                        },
+                        new
+                        {
+                            ID = 61L,
+                            Description = "2010"
+                        },
+                        new
+                        {
+                            ID = 62L,
+                            Description = "2011"
+                        },
+                        new
+                        {
+                            ID = 63L,
+                            Description = "2012"
+                        },
+                        new
+                        {
+                            ID = 64L,
+                            Description = "2013"
+                        },
+                        new
+                        {
+                            ID = 65L,
+                            Description = "2014"
+                        },
+                        new
+                        {
+                            ID = 66L,
+                            Description = "2015"
+                        },
+                        new
+                        {
+                            ID = 67L,
+                            Description = "2016"
+                        },
+                        new
+                        {
+                            ID = 68L,
+                            Description = "2017"
+                        },
+                        new
+                        {
+                            ID = 69L,
+                            Description = "2018"
+                        },
+                        new
+                        {
+                            ID = 70L,
+                            Description = "2019"
+                        },
+                        new
+                        {
+                            ID = 71L,
+                            Description = "2020"
+                        },
+                        new
+                        {
+                            ID = 72L,
+                            Description = "2021"
+                        },
+                        new
+                        {
+                            ID = 73L,
+                            Description = "2022"
+                        },
+                        new
+                        {
+                            ID = 74L,
+                            Description = "2023"
+                        });
+                });
+
+            modelBuilder.Entity("GarageAPI.Models.CarModels.CarModel", b =>
+                {
+                    b.Property<long>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
+
+                    b.Property<string>("ModelName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("CarModels");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1L,
+                            ModelName = "Accent"
+                        },
+                        new
+                        {
+                            ID = 2L,
+                            ModelName = "Atos"
+                        },
+                        new
+                        {
+                            ID = 3L,
+                            ModelName = "Prime"
+                        },
+                        new
+                        {
+                            ID = 4L,
+                            ModelName = "Coupé"
+                        },
+                        new
+                        {
+                            ID = 5L,
+                            ModelName = "Elantra"
+                        },
+                        new
+                        {
+                            ID = 6L,
+                            ModelName = "Galloper"
+                        },
+                        new
+                        {
+                            ID = 7L,
+                            ModelName = "Genesis"
+                        },
+                        new
+                        {
+                            ID = 8L,
+                            ModelName = "Getz"
+                        },
+                        new
+                        {
+                            ID = 9L,
+                            ModelName = "Grandeur"
+                        },
+                        new
+                        {
+                            ID = 10L,
+                            ModelName = "H350"
+                        },
+                        new
+                        {
+                            ID = 11L,
+                            ModelName = "H1"
+                        },
+                        new
+                        {
+                            ID = 12L,
+                            ModelName = "H1Bus"
+                        },
+                        new
+                        {
+                            ID = 13L,
+                            ModelName = "H1Van"
+                        },
+                        new
+                        {
+                            ID = 14L,
+                            ModelName = "H200"
+                        },
+                        new
+                        {
+                            ID = 15L,
+                            ModelName = "i10"
+                        },
+                        new
+                        {
+                            ID = 16L,
+                            ModelName = "i20"
+                        },
+                        new
+                        {
+                            ID = 17L,
+                            ModelName = "i30"
+                        },
+                        new
+                        {
+                            ID = 18L,
+                            ModelName = "i30 CW"
+                        },
+                        new
+                        {
+                            ID = 19L,
+                            ModelName = "i40"
+                        },
+                        new
+                        {
+                            ID = 20L,
+                            ModelName = "i40 CW"
+                        },
+                        new
+                        {
+                            ID = 21L,
+                            ModelName = "ix20"
+                        },
+                        new
+                        {
+                            ID = 22L,
+                            ModelName = "ix35"
+                        },
+                        new
+                        {
+                            ID = 23L,
+                            ModelName = "ix55"
+                        },
+                        new
+                        {
+                            ID = 24L,
+                            ModelName = "Lantra"
+                        },
+                        new
+                        {
+                            ID = 25L,
+                            ModelName = "Matrix"
+                        },
+                        new
+                        {
+                            ID = 26L,
+                            ModelName = "SantaFe"
+                        },
+                        new
+                        {
+                            ID = 27L,
+                            ModelName = "Sonata"
+                        },
+                        new
+                        {
+                            ID = 28L,
+                            ModelName = "Terracan"
+                        },
+                        new
+                        {
+                            ID = 29L,
+                            ModelName = "Trajet"
+                        },
+                        new
+                        {
+                            ID = 30L,
+                            ModelName = "Tucson"
+                        },
+                        new
+                        {
+                            ID = 31L,
+                            ModelName = "Veloster"
+                        },
+                        new
+                        {
+                            ID = 32L,
+                            ModelName = "Kona"
+                        },
+                        new
+                        {
+                            ID = 33L,
+                            ModelName = "Tucson"
+                        },
+                        new
+                        {
+                            ID = 34L,
+                            ModelName = "Bayon"
+                        },
+                        new
+                        {
+                            ID = 35L,
+                            ModelName = "145"
+                        },
+                        new
+                        {
+                            ID = 36L,
+                            ModelName = "146"
+                        },
+                        new
+                        {
+                            ID = 37L,
+                            ModelName = "147"
+                        },
+                        new
+                        {
+                            ID = 38L,
+                            ModelName = "155"
+                        },
+                        new
+                        {
+                            ID = 39L,
+                            ModelName = "156"
+                        },
+                        new
+                        {
+                            ID = 40L,
+                            ModelName = "156 Sportwagon"
+                        },
+                        new
+                        {
+                            ID = 41L,
+                            ModelName = "159"
+                        },
+                        new
+                        {
+                            ID = 42L,
+                            ModelName = "159 Sportwagon"
+                        },
+                        new
+                        {
+                            ID = 43L,
+                            ModelName = "164"
+                        },
+                        new
+                        {
+                            ID = 44L,
+                            ModelName = "166"
+                        },
+                        new
+                        {
+                            ID = 45L,
+                            ModelName = "4C"
+                        },
+                        new
+                        {
+                            ID = 46L,
+                            ModelName = "Brera"
+                        },
+                        new
+                        {
+                            ID = 47L,
+                            ModelName = "GTV"
+                        },
+                        new
+                        {
+                            ID = 48L,
+                            ModelName = "MiTo"
+                        },
+                        new
+                        {
+                            ID = 49L,
+                            ModelName = "Crosswagon"
+                        },
+                        new
+                        {
+                            ID = 50L,
+                            ModelName = "Spider"
+                        },
+                        new
+                        {
+                            ID = 51L,
+                            ModelName = "GT"
+                        },
+                        new
+                        {
+                            ID = 52L,
+                            ModelName = "Giulietta"
+                        },
+                        new
+                        {
+                            ID = 53L,
+                            ModelName = "Giulia"
+                        });
                 });
 
             modelBuilder.Entity("GarageAPI.Models.UserModels", b =>
@@ -118,36 +1079,36 @@ namespace GarageAPI.Migrations
                     b.Property<string>("LicencePlate")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("ModelManufacturerYearIDID")
+                    b.Property<long>("ModelManufacturerYearID")
                         .HasColumnType("bigint");
 
                     b.Property<long>("ModelYearID")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("UserIDID")
-                        .HasColumnType("int");
+                    b.Property<long>("UserID")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("VIN")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("ModelManufacturerYearIDID");
+                    b.HasIndex("ModelManufacturerYearID");
 
                     b.HasIndex("ModelYearID");
 
-                    b.HasIndex("UserIDID");
+                    b.HasIndex("UserID");
 
                     b.ToTable("UserModels");
                 });
 
             modelBuilder.Entity("GarageAPI.Models.Users", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<long>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
 
                     b.Property<DateTime?>("CreationDate")
                         .HasColumnType("date");
@@ -183,23 +1144,69 @@ namespace GarageAPI.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1L,
+                            CreationDate = new DateTime(2023, 1, 25, 16, 4, 44, 577, DateTimeKind.Local).AddTicks(5182),
+                            Email = "atselios@classter.com",
+                            EnableAccess = 1,
+                            Name = "Alexandros",
+                            Password = "1",
+                            Surname = "Tselios",
+                            UserType = 1L
+                        },
+                        new
+                        {
+                            ID = 2L,
+                            CreationDate = new DateTime(2023, 1, 25, 16, 4, 44, 577, DateTimeKind.Local).AddTicks(5199),
+                            Email = "efi.vanni@gmail.com",
+                            EnableAccess = 1,
+                            Name = "Efthumia",
+                            Password = "f1234!",
+                            Surname = "Varvagianni",
+                            UserType = 1L
+                        },
+                        new
+                        {
+                            ID = 3L,
+                            CreationDate = new DateTime(2023, 1, 25, 16, 4, 44, 577, DateTimeKind.Local).AddTicks(5211),
+                            Email = "kkitsikou@hotmail.com",
+                            EnableAccess = 1,
+                            Name = "Kostas",
+                            Password = "gafa#$#",
+                            Surname = "Kitsikou",
+                            UserType = 1L
+                        },
+                        new
+                        {
+                            ID = 4L,
+                            CreationDate = new DateTime(2023, 1, 25, 16, 4, 44, 577, DateTimeKind.Local).AddTicks(5223),
+                            Email = "mpapadopoulos@yahoo.gr",
+                            EnableAccess = 1,
+                            Name = "Marios",
+                            Password = "DfG34#$%^",
+                            Surname = "Papadopoulos",
+                            UserType = 1L
+                        });
                 });
 
             modelBuilder.Entity("GarageAPI.Models.CarModelManufacturerYear", b =>
                 {
-                    b.HasOne("GarageAPI.Models.CarManufacturer", "CarManufacturer")
+                    b.HasOne("GarageAPI.Models.CarManufacturers.CarManufacturer", "CarManufacturer")
                         .WithMany()
                         .HasForeignKey("CarManufacturerID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GarageAPI.Models.CarModel", "CarModel")
+                    b.HasOne("GarageAPI.Models.CarModels.CarModel", "CarModel")
                         .WithMany()
                         .HasForeignKey("CarModelID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GarageAPI.Models.CarModelYear", "CarModelYear")
+                    b.HasOne("GarageAPI.Models.CarModelYears.CarModelYear", "CarModelYear")
                         .WithMany()
                         .HasForeignKey("CarModelYearID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -214,29 +1221,29 @@ namespace GarageAPI.Migrations
 
             modelBuilder.Entity("GarageAPI.Models.UserModels", b =>
                 {
-                    b.HasOne("GarageAPI.Models.CarModelManufacturerYear", "ModelManufacturerYearID")
+                    b.HasOne("GarageAPI.Models.CarModelManufacturerYear", "ModelManufacturerYear")
                         .WithMany()
-                        .HasForeignKey("ModelManufacturerYearIDID")
+                        .HasForeignKey("ModelManufacturerYearID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GarageAPI.Models.CarModelYear", "ModelYear")
+                    b.HasOne("GarageAPI.Models.CarModelYears.CarModelYear", "ModelYear")
                         .WithMany()
                         .HasForeignKey("ModelYearID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GarageAPI.Models.Users", "UserID")
+                    b.HasOne("GarageAPI.Models.Users", "User")
                         .WithMany()
-                        .HasForeignKey("UserIDID")
+                        .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ModelManufacturerYearID");
+                    b.Navigation("ModelManufacturerYear");
 
                     b.Navigation("ModelYear");
 
-                    b.Navigation("UserID");
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

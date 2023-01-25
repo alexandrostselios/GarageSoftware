@@ -2,6 +2,7 @@
 using GarageAPI.Models.CarModels;
 using GarageAPI.Models.CarManufacturers;
 using GarageAPI.Models.CarModelYears;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GarageAPI.Models
 {
@@ -10,7 +11,7 @@ namespace GarageAPI.Models
         public long ID  { get; set; }
 
         [NotNull]
-        public CarManufacturers.CarManufacturers CarManufacturer { get; set; }
+        public CarManufacturer CarManufacturer { get; set; }
 
         [NotNull]
         public CarModel CarModel { get; set; }

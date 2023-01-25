@@ -6,7 +6,8 @@ namespace GarageAPI.Models
 {
     public class Users
     {
-        public int ID { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long ID { get; set; }
         public string Name { get; set; }
 
         public string Surname { get; set; }
