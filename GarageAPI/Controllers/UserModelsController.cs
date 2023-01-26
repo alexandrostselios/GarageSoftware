@@ -28,7 +28,7 @@ namespace GarageAPI.Controllers
         }
 
         [HttpGet]
-        [Route("api/GetUserModelByUserID1/{id:long}")]
+        [Route("api/GetUserModelByUserID/{id:long}")]
         public async Task<IActionResult> GetUserModelByUserID([FromRoute] long id)
         {
             var user = await dbContext.Users.FindAsync(id);
