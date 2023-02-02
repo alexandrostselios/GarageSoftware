@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GarageAPI.Data;
 using GarageAPI.Models;
+using System.Net;
+using GarageAPI.Enum;
+
 
 namespace GarageAPI.Controllers
 {
@@ -40,12 +43,49 @@ namespace GarageAPI.Controllers
             return Ok(user);
         }
 
+        [HttpGet]
+        [Route("api/GetUserByEmailAndPassword/{email}/{password}")]
+        public async Task<IActionResult> GetUserByEmailAndPassword([FromRoute] string email, string password)
+        {
+            var user = await dbContext.Users.FirstOrDefaultAsync(c => c.Email == email && c.Password == password);
+            if (user == null)
+            {
+                return NotFound();
+            }
 
-        //// GET: Users
-        //public async Task<IActionResult> Index()
-        //{
-        //      return View(await dbContext.Users.ToListAsync());
-        //}
+            return Ok(user);
+        }
+
+        [HttpGet]
+        [Route("api/GetLogin/{email}/{password}")]
+        public async Task<IActionResult> GetLogin([FromRoute] string email, string password)
+        {
+            Users loginuser = await dbContext.Users.FirstOrDefaultAsync(c => c.Email == email && c.Password == password);
+            if (loginuser == null)
+            {
+                return new ContentResult() { Content = "No such user or wrong email", StatusCode = (int)ResponseCode.NoUserFound };
+            }
+            else
+            {
+                if (loginuser.Password == password)
+                {
+                    if (loginuser.EnableAccess == EnableAccess.Enable)
+                    {
+                        return new ContentResult() { Content = "Login", StatusCode = (int) ResponseCode.Success };
+                    }
+                    else
+                    {
+                        return new ContentResult() { Content = "This user has been blocked!!!", StatusCode = (int)ResponseCode.BlockedUser };
+                    }
+                }
+                else
+                {
+                    return new ContentResult() { Content = "Wrong Password.", StatusCode = (int)ResponseCode.WrongPassword };
+                }
+            }
+        }
+
+
 
         //// GET: Users/Details/5
         //public async Task<IActionResult> Details(int? id)

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace GarageAPI.Models
 {
+    [NotMapped]
     public partial class CustomerCars
     {
         public long id { get; set; }

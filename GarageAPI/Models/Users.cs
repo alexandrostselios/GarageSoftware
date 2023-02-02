@@ -16,15 +16,17 @@ namespace GarageAPI.Models
 
         public string Password { get; set; }
 
+        public long GarageID { get; set; }
+
         public long? UserType { get; set; }
 
-        [Column(TypeName = "date")]
+        [Column(TypeName = "datetime")]
         public DateTime? CreationDate { get; set; }
 
-        [Column(TypeName = "date")]
+        [Column(TypeName = "datetime")]
         public DateTime? ModifiedDate { get; set; }
 
-        [Column(TypeName = "date")]
+        [Column(TypeName = "datetime")]
         public DateTime? LastLoginDate { get; set; }
 
         public EnableAccess EnableAccess { get; set; }

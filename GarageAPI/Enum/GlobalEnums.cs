@@ -19,6 +19,14 @@
         Document = 2
     }
 
+    public enum ResponseCode
+    {
+        Success = 200,
+        NoUserFound = 801,
+        WrongPassword = 802,
+        BlockedUser = 803
+    }
+
     //public enum Color
     //{
     //    White = 0,

@@ -164,5 +164,9 @@ namespace GarageAPI.Data
             builder.Entity<Users>().HasData(new Users { ID = 3, Name = "Kostas", Surname = "Kitsikou", Email = "kkitsikou@hotmail.com", Password = "gafa#$#", UserType = 1, CreationDate = DateTime.Now, ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable });
             builder.Entity<Users>().HasData(new Users { ID = 4, Name = "Marios", Surname = "Papadopoulos", Email = "mpapadopoulos@yahoo.gr", Password = "DfG34#$%^", UserType = 1, CreationDate = DateTime.Now, ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable });
         }
+
+        public DbSet<GarageAPI.Models.CustomerCars> CustomerCars { get; set; }
+
+        public DbSet<GarageAPI.Models.Output> Output { get; set; }
     }
 }

@@ -62,10 +62,11 @@ namespace GarageAPI.Migrations
                     Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    GarageID = table.Column<long>(type: "bigint", nullable: false),
                     UserType = table.Column<long>(type: "bigint", nullable: true),
-                    CreationDate = table.Column<DateTime>(type: "date", nullable: true),
-                    ModifiedDate = table.Column<DateTime>(type: "date", nullable: true),
-                    LastLoginDate = table.Column<DateTime>(type: "date", nullable: true),
+                    CreationDate = table.Column<DateTime>(type: "datetime", nullable: true),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime", nullable: true),
+                    LastLoginDate = table.Column<DateTime>(type: "datetime", nullable: true),
                     EnableAccess = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -97,7 +98,7 @@ namespace GarageAPI.Migrations
                         column: x => x.CarModelYearID,
                         principalTable: "CarModelYear",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_CarModelManufacturerYear_CarModels_CarModelID",
                         column: x => x.CarModelID,
@@ -134,7 +135,7 @@ namespace GarageAPI.Migrations
                         column: x => x.ModelYearID,
                         principalTable: "CarModelYear",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_UserModels_Users_UserID",
                         column: x => x.UserID,
@@ -357,13 +358,13 @@ namespace GarageAPI.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "ID", "CreationDate", "Email", "EnableAccess", "LastLoginDate", "ModifiedDate", "Name", "Password", "Surname", "UserType" },
+                columns: new[] { "ID", "CreationDate", "Email", "EnableAccess", "LastLoginDate", "ModifiedDate", "Name", "Password", "Surname", "UserType", "GarageID" },
                 values: new object[,]
                 {
-                    { 1L, new DateTime(2023, 1, 25, 16, 4, 44, 577, DateTimeKind.Local).AddTicks(5182), "atselios@classter.com", 1, null, null, "Alexandros", "1", "Tselios", 1L },
-                    { 2L, new DateTime(2023, 1, 25, 16, 4, 44, 577, DateTimeKind.Local).AddTicks(5199), "efi.vanni@gmail.com", 1, null, null, "Efthumia", "f1234!", "Varvagianni", 1L },
-                    { 3L, new DateTime(2023, 1, 25, 16, 4, 44, 577, DateTimeKind.Local).AddTicks(5211), "kkitsikou@hotmail.com", 1, null, null, "Kostas", "gafa#$#", "Kitsikou", 1L },
-                    { 4L, new DateTime(2023, 1, 25, 16, 4, 44, 577, DateTimeKind.Local).AddTicks(5223), "mpapadopoulos@yahoo.gr", 1, null, null, "Marios", "DfG34#$%^", "Papadopoulos", 1L }
+                    { 1L, new DateTime(2021, 1, 25, 10, 04, 5, 768, DateTimeKind.Local).AddTicks(127), "atselios@classter.com", 1, new DateTime(2023, 1, 27, 15, 37, 7, 125, DateTimeKind.Local).AddTicks(342), null, "Alexandros", "1", "Tselios",(long)Enum.EnableAccess.Enable,1L },
+                    { 2L, new DateTime(2021, 1, 26, 12, 46, 7, 456, DateTimeKind.Local).AddTicks(144), "efi.vanni@gmail.com", 1, new DateTime(2022, 11, 15, 13, 26, 8, 256, DateTimeKind.Local).AddTicks(699), null, "Efthumia", "f1234!", "Varvagianni", (long)Enum.EnableAccess.Enable,1L },
+                    { 3L, new DateTime(2022, 9, 30, 16, 56, 3, 125, DateTimeKind.Local).AddTicks(156), "kkitsikou@hotmail.com", 1, new DateTime(2022, 7, 9, 12, 05, 4, 368, DateTimeKind.Local).AddTicks(456), null, "Kostas", "gafa#$#", "Kitsikou", (long)Enum.EnableAccess.Enable,2L },
+                    { 4L, new DateTime(2022, 12, 16, 20, 00, 1, 929, DateTimeKind.Local).AddTicks(169), "mpapadopoulos@yahoo.gr", 1, new DateTime(2022, 6, 4, 22, 00, 1, 789, DateTimeKind.Local).AddTicks(768), null, "Marios", "DfG34#$%^", "Papadopoulos", (long)Enum.EnableAccess.Disable, 3L }
                 });
 
             migrationBuilder.InsertData(
@@ -371,12 +372,12 @@ namespace GarageAPI.Migrations
                 columns: new[] { "ID", "CarManufacturerID", "CarModelID", "CarModelYearID" },
                 values: new object[,]
                 {
-                    { 1L, 24L, 2L, 61L },
-                    { 2L, 24L, 2L, 62L },
-                    { 3L, 24L, 2L, 63L },
-                    { 4L, 24L, 15L, 61L },
-                    { 5L, 24L, 16L, 62L },
-                    { 6L, 24L, 17L, 63L }
+                                { 1L, 24L, 2L, 61L },
+                                { 2L, 24L, 2L, 62L },
+                                { 3L, 24L, 2L, 63L },
+                                { 4L, 24L, 15L, 61L },
+                                { 5L, 24L, 16L, 62L },
+                                { 6L, 24L, 17L, 63L }
                 });
 
             migrationBuilder.InsertData(
@@ -388,9 +389,55 @@ namespace GarageAPI.Migrations
                     {2L, 1L, 3L, 67L, "EYB7174", "VNKKG3D330A048555", 142, 27450},
                     {3L, 1L, 4L, 67L, "NIZ2654", "NLHBA51BABZ014926", 4, 88956},
                     {4L, 2L, 5L, 68L, "XEZ6532", "KHX94000007259841", 5, 220653},
-                    {5L, 2L, 6L, 72L, "KBH1452", null, 6, 65402},
-                    {6L, 3L, 6L, 73L, "AHZ1495", null, 6, 9563}
+                    {5L, 2L, 6L, 72L, "KBH1452", "JNKCV61E09M303716", 6, 65402},
+                    {6L, 3L, 6L, 73L, "AHZ1495", "JH4DA9460MS032070", 6, 9563}
                 });
+
+            var GetCustomerCars = @"CREATE PROCEDURE GetCustomerCars
+                    -- Add the parameters for the stored procedure here
+                    @UserID BIGINT
+                    AS
+                        BEGIN
+                            SET NOCOUNT ON;
+                            SELECT UM.ID, 
+                                   UM.UserID, 
+                                   CMAN.ManufacturerName, 
+                                   CM.ModelName, 
+                                   UM.LicencePlate, 
+                                   UM.VIN, 
+                                   UM.Color, 
+                                   UM.Kilometer
+                            FROM UserModels UM
+                                 INNER JOIN CarModelManufacturerYear CMMY ON CMMY.ID = um.ModelManufacturerYearID
+                                 INNER JOIN CarModels CM ON CM.ID = CMMY.CarModelID
+                                 INNER JOIN CarManufacturer CMAN ON CMAN.ID = CMMY.CarModelID
+                            WHERE UserId = @UserID;
+                        END";
+
+            migrationBuilder.Sql(GetCustomerCars);
+
+            var GetCustomerCar = @"CREATE PROCEDURE GetCustomerCar
+                    -- Add the parameters for the stored procedure here
+                    @UserModelID BIGINT
+                    AS
+                        BEGIN
+                            SET NOCOUNT ON;
+                            SELECT UM.ID, 
+                                   UM.UserID, 
+                                   CMAN.ManufacturerName, 
+                                   CM.ModelName, 
+                                   UM.LicencePlate, 
+                                   UM.VIN, 
+                                   UM.Color, 
+                                   UM.Kilometer
+                            FROM UserModels UM
+                                 INNER JOIN CarModelManufacturerYear CMMY ON CMMY.ID = um.ModelManufacturerYearID
+                                 INNER JOIN CarModels CM ON CM.ID = CMMY.CarModelID
+                                 INNER JOIN CarManufacturer CMAN ON CMAN.ID = CMMY.CarModelID
+                            WHERE UM.ID = @UserModelID;
+                        END";
+
+            migrationBuilder.Sql(GetCustomerCar);
 
             migrationBuilder.CreateIndex(
                 name: "IX_CarModelManufacturerYear_CarManufacturerID",

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GarageAPI.Data;
 using GarageAPI.Models;
+using System.Web.Http.Dependencies;
 
 namespace GarageAPI.Controllers
 {
@@ -28,38 +29,32 @@ namespace GarageAPI.Controllers
         }
 
         [HttpGet]
-        [Route("api/GetUserModelByUserID1/{id:long}")]
+        [Route("api/GetUserModelByUserID/{id:long}")]
         public async Task<IActionResult> GetUserModelByUserID([FromRoute] long id)
         {
-            var user = await dbContext.Users.FindAsync(id);
-            var userModel = await Task.Run(() => dbContext.UserModels.Where(c => c.User == user).ToList());
-            if (userModel == null)
+            string StoredProc = "exec GetCustomerCars @UserID = " + id;
+            List<Output> userModelCars = await dbContext.Output.FromSqlRaw(StoredProc).ToListAsync();
+            //List<OutputsController> outt = new OutputsController(dbContext).Getoutput();
+
+            if (userModelCars == null)
             {
                 return NotFound();
             }
-
-            return Ok(userModel);
+            return Ok(userModelCars);
         }
 
         [HttpGet]
-        [Route("api/GetUserModelByUserOrCarID/{id:long}/{flag:int}")]
-        public async Task<IActionResult> GetUserModelByUserOrCarID([FromRoute] long id, int flag)
+        [Route("api/GetUserModelByCarID/{id:long}")]
+        public async Task<IActionResult> GetUserModelByUserOrCarID([FromRoute] long id)
         {
-            List<UserModels> user;
-            List<CustomerCars> customerCars = new List<CustomerCars>();
-            List<UserModels> userCars = new List<UserModels>();
-            if (flag == 0)
-            {
-                customerCars = new List<CustomerCars>();
-                user = dbContext.UserModels.Where(c => c.User.ID == id).ToList();
-            }
-            else
-            {
-                userCars = new List<UserModels>();
-                user = dbContext.UserModels.Where(c => c.ID == id).ToList();
-            }
+            string StoredProc = "exec GetCustomerCar @UserModelID = " + id;
+            List<Output> userModelCar = await dbContext.Output.FromSqlRaw(StoredProc).ToListAsync();
 
-            return Ok(user);
+            if (userModelCar == null)
+            {
+                return NotFound();
+            }
+            return Ok(userModelCar);
         }
     }
 }

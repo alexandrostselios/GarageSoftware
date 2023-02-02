@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GarageAPI.Migrations
 {
     [DbContext(typeof(GarageAPIDbContext))]
-    [Migration("20230125140444_InitialMigration")]
+    [Migration("20230202124046_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -1114,7 +1114,7 @@ namespace GarageAPI.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
 
                     b.Property<DateTime?>("CreationDate")
-                        .HasColumnType("date");
+                        .HasColumnType("datetime");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -1123,11 +1123,14 @@ namespace GarageAPI.Migrations
                     b.Property<int>("EnableAccess")
                         .HasColumnType("int");
 
+                    b.Property<long>("GarageID")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime?>("LastLoginDate")
-                        .HasColumnType("date");
+                        .HasColumnType("datetime");
 
                     b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("date");
+                        .HasColumnType("datetime");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -1152,9 +1155,10 @@ namespace GarageAPI.Migrations
                         new
                         {
                             ID = 1L,
-                            CreationDate = new DateTime(2023, 1, 25, 16, 4, 44, 577, DateTimeKind.Local).AddTicks(5182),
+                            CreationDate = new DateTime(2023, 2, 2, 14, 40, 46, 672, DateTimeKind.Local).AddTicks(4465),
                             Email = "atselios@classter.com",
                             EnableAccess = 1,
+                            GarageID = 0L,
                             Name = "Alexandros",
                             Password = "1",
                             Surname = "Tselios",
@@ -1163,9 +1167,10 @@ namespace GarageAPI.Migrations
                         new
                         {
                             ID = 2L,
-                            CreationDate = new DateTime(2023, 1, 25, 16, 4, 44, 577, DateTimeKind.Local).AddTicks(5199),
+                            CreationDate = new DateTime(2023, 2, 2, 14, 40, 46, 672, DateTimeKind.Local).AddTicks(4483),
                             Email = "efi.vanni@gmail.com",
                             EnableAccess = 1,
+                            GarageID = 0L,
                             Name = "Efthumia",
                             Password = "f1234!",
                             Surname = "Varvagianni",
@@ -1174,9 +1179,10 @@ namespace GarageAPI.Migrations
                         new
                         {
                             ID = 3L,
-                            CreationDate = new DateTime(2023, 1, 25, 16, 4, 44, 577, DateTimeKind.Local).AddTicks(5211),
+                            CreationDate = new DateTime(2023, 2, 2, 14, 40, 46, 672, DateTimeKind.Local).AddTicks(4495),
                             Email = "kkitsikou@hotmail.com",
                             EnableAccess = 1,
+                            GarageID = 0L,
                             Name = "Kostas",
                             Password = "gafa#$#",
                             Surname = "Kitsikou",
@@ -1185,9 +1191,10 @@ namespace GarageAPI.Migrations
                         new
                         {
                             ID = 4L,
-                            CreationDate = new DateTime(2023, 1, 25, 16, 4, 44, 577, DateTimeKind.Local).AddTicks(5223),
+                            CreationDate = new DateTime(2023, 2, 2, 14, 40, 46, 672, DateTimeKind.Local).AddTicks(4508),
                             Email = "mpapadopoulos@yahoo.gr",
                             EnableAccess = 1,
+                            GarageID = 0L,
                             Name = "Marios",
                             Password = "DfG34#$%^",
                             Surname = "Papadopoulos",
