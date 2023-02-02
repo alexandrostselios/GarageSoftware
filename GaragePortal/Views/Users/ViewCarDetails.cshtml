@@ -1,0 +1,65 @@
+﻿@model IEnumerable<GarageManagementSoftwarePortal.Models.CustomerCars>
+@{
+    ViewData["Title"] = "View Car Details";
+}
+
+@if (@ViewBag.UserType == GarageManagementSoftwarePortal.Enum.UserType.Admin.ToString())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Manufacturer
+                </th>
+                <th>
+                    Model
+                </th>
+                <th>
+                    Year
+                </th>
+                <th>
+                    Licence Plate
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Color)
+                </th>
+                <th>
+                    VIN Number
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Kilometer)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ManufacturerDescription)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ModelDescription)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ModelYear)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LicencePlate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Color)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.VIN)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Kilometer)
+                    </td>
+                    <td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

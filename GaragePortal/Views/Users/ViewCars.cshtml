@@ -1,0 +1,70 @@
+﻿@model IEnumerable<GarageManagementSoftwarePortal.Models.CustomerCars>
+@{
+    ViewData["Title"] = "List of User Cars";
+}
+
+@if (@ViewBag.UserType == GarageManagementSoftwarePortal.Enum.UserType.Admin.ToString())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ManufacturerDescription)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ModelDescription)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ModelYear)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Color)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LicencePlate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Kilometer)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.id)
+                    </td>
+                                        <td>
+                        @Html.DisplayFor(modelItem => item.ManufacturerDescription)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ModelDescription)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ModelYear)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Color)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LicencePlate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Kilometer)
+                    </td>
+                    <td>
+                        <a class="af" asp-action="EditCar" asp-route-id="@item.id" asp-route-flag="1">Edit Car Details</a>
+                    </td>
+                    <td>
+                        <a class="af" asp-action="ViewCarDetails" asp-route-id="@item.id">View Car History</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

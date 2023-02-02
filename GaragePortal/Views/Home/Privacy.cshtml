@@ -1,0 +1,51 @@
+﻿@model IEnumerable<GarageManagementSoftwarePortal.Models.UserModels>
+@{
+    ViewData["Title"] = "Privacy Policy55";
+}
+
+
+@if (@ViewBag.UserType == GarageManagementSoftwarePortal.Enum.UserType.Admin.ToString())
+{
+    <p>Welcome @ViewBag.UserType - @ViewBag.ID - @ViewBag.Name - @ViewBag.Surname</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ModelManufacturerID)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ModelManufacturerID)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else if (@ViewBag.UserType == GarageManagementSoftwarePortal.Enum.UserType.User.ToString())
+{
+    <p>Welcome user: @ViewBag.Name - @ViewBag.Surname</p>
+
+}
+else
+{
+    <p>You need to login first</p>
+}

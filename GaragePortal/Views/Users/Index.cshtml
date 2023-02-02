@@ -1,0 +1,67 @@
+﻿@model IEnumerable<GarageManagementSoftwarePortal.Models.Users>
+@{
+    ViewData["Title"] = "List of Customers";
+}
+
+<p>
+    @*<a class="af" asp-action="Create">Add New User</a>*@
+    <form asp-action="Create">
+        <input type="submit" value="Add New Customer" class="btn btn-primary" />
+    </form>
+</p>
+@if (@ViewBag.UserType == GarageManagementSoftwarePortal.Enum.UserType.Admin.ToString())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Surname)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreationDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ModifiedDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LastLoginDate)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Surname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        <a class="af" asp-action="EditProfile" asp-route-id="@item.ID">Edit Profile</a>
+                    </td>
+                    <td>
+                        <a class="af" asp-action="ViewCars" asp-route-id="@item.ID">View Cars</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

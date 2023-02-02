@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar bg-dark border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><i class="fa fa-car" aria-hidden="true"></i> Garage Management Software</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index"><i class="fa fa-fw fa-home"></i> Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy"><i class="fa fa-shield" aria-hidden="true"></i> Privacy</a>
+                        </li>
+                        @if (@ViewBag.UserType == null || @ViewBag.UserType == GarageManagementSoftwarePortal.Enum.UserType.Guest.ToString())
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="Login"><i class="fa fa-fw fa-sign-in"></i> Login</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="Create"><i class="fa fa-user-plus"></i> Register</a>
+                            </li>
+                        }
+                        @if (@ViewBag.UserType == GarageManagementSoftwarePortal.Enum.UserType.Admin.ToString())
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="Index"><i class="fa fa-user-circle-o" aria-hidden="true"></i> Customers</a>
+                            </li>
+@*                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Followers" asp-controller="Followers" asp-action="Create"><i class="fa fa-users" aria-hidden="true"></i> Followers</a>
+                            </li>*@
+                        }
+                        @if (@ViewBag.UserType == GarageManagementSoftwarePortal.Enum.UserType.Admin.ToString() || @ViewBag.UserType == GarageManagementSoftwarePortal.Enum.UserType.User.ToString())
+                        {
+@*                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Followers" asp-controller="Followers" asp-action="Index"><i class="fa fa-list" aria-hidden="true"></i> Follower's List</a>
+                            </li>*@
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="MyProfile"><i class="fa fa-user" aria-hidden="true"></i> My Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="Logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2022 - Garage Management Software - <a class="af" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
