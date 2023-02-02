@@ -17,7 +17,6 @@ namespace GarageAPI.Controllers
             this.dbContext = dbContext;
         }
 
-
         [HttpGet]
         [Route("api/GetCarManufacturers")]
         public async Task<IActionResult> GetCarManufacturers()
