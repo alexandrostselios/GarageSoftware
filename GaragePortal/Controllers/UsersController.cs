@@ -11,7 +11,7 @@ using GaragePortal.Enum;
 using Newtonsoft.Json;
 using System.Net.Http.Json;
 
-namespace GarageManagementSoftwarePortal.Models
+namespace GaragePortal.Models
 {
     public class UsersController : Controller
     {

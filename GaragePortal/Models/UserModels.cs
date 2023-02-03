@@ -1,7 +1,7 @@
 ﻿using GaragePortal.Enum;
 using System.ComponentModel;
 
-namespace GarageManagementSoftwarePortal.Models
+namespace GaragePortal.Models
 {
     public class UserModels
     {

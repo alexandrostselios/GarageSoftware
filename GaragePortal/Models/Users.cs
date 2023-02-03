@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using GaragePortal.Enum;
 
-namespace GarageManagementSoftwarePortal.Models
+namespace GaragePortal.Models
 {
     public class Users
     {
@@ -22,12 +22,15 @@ namespace GarageManagementSoftwarePortal.Models
         public long? UserType { get; set; }
 
         [Column(TypeName = "datetime")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}")]
         public DateTime? CreationDate { get; set; }
 
         [Column(TypeName = "datetime")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}")]
         public DateTime? ModifiedDate { get; set; }
 
         [Column(TypeName = "datetime")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}")]
         public DateTime? LastLoginDate { get; set; }
 
         public EnableAccess EnableAccess { get; set; }

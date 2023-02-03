@@ -1,4 +1,4 @@
-﻿@model IEnumerable<GarageManagementSoftwarePortal.Models.Users>
+﻿@model IEnumerable<GaragePortal.Models.Users>
 @{
     ViewData["Title"] = "List of Customers";
 }
@@ -53,6 +53,15 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreationDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ModifiedDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastLoginDate)
                     </td>
                     <td>
                         <a class="af" asp-action="EditProfile" asp-route-id="@item.ID">Edit Profile</a>

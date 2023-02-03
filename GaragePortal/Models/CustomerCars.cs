@@ -3,7 +3,7 @@ using GaragePortal.Enum;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace GarageManagementSoftwarePortal.Models
+namespace GaragePortal.Models
 {
     public class CustomerCars
     {

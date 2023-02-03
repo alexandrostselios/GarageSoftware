@@ -1,6 +1,6 @@
 using System;
 
-namespace SocialNetwork.Models
+namespace GaragePortal.Models
 {
     public class ErrorViewModel
     {

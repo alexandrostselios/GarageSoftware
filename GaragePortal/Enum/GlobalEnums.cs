@@ -19,17 +19,6 @@
         Document = 2
     }
 
-    //public enum Color
-    //{
-    //    White = 0,
-    //    Black = 1,
-    //    Red = 2,
-    //    Green = 3,
-    //    Blue = 4,
-    //    Yellow = 5,
-    //    Purple = 6
-    //}
-
     public enum FileExtension
     {
         PDF = 1,

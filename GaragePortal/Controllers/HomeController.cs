@@ -1,8 +1,8 @@
-﻿using GarageManagementSoftwarePortal.Models;
+﻿using GaragePortal.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using SocialNetwork.Models;
+using GaragePortal.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Net.Http;
 
 
-namespace SocialNetwork.Controllers
+namespace GaragePortal.Controllers
 {
     public class HomeController : Controller
     {

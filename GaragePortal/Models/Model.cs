@@ -1,4 +1,4 @@
-﻿namespace GarageManagementSoftwarePortal.Models
+﻿namespace GaragePortal.Models
 {
     public class Model
     {

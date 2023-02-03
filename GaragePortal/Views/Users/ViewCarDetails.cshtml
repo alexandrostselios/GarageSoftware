@@ -1,4 +1,4 @@
-﻿@model IEnumerable<GarageManagementSoftwarePortal.Models.CustomerCars>
+﻿@model IEnumerable<GaragePortal.Models.CustomerCars>
 @{
     ViewData["Title"] = "View Car Details";
 }
@@ -29,6 +29,9 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Kilometer)
                 </th>
+                <th>
+                    Service History
+                </th>
                 <th></th>
             </tr>
         </thead>
@@ -56,6 +59,9 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Kilometer)
+                    </td>
+                    <td>
+                        "allagi ladiwn"
                     </td>
                     <td>
                 </tr>
