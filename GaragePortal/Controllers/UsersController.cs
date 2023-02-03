@@ -7,8 +7,7 @@ using System.Web.Http.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using GarageManagementSoftwarePortal.Data;
-using GarageManagementSoftwarePortal.Enum;
+using GaragePortal.Enum;
 using Newtonsoft.Json;
 using System.Net.Http.Json;
 
@@ -20,7 +19,7 @@ namespace GarageManagementSoftwarePortal.Models
 
         Uri baseAddress = new Uri("https://localhost:7096/api");
         HttpClient client;
-        public UsersController(GarageManagementSoftwarePortalContext context)
+        public UsersController()
         {
             client = new HttpClient();
             client.BaseAddress = baseAddress;
@@ -64,7 +63,6 @@ namespace GarageManagementSoftwarePortal.Models
             IEnumerable<Users> users = null;
             Users u = null;
             HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/GetLogin/"+loginUser.Email+"/"+loginUser.Password).Result;
-            //HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/GetLogin/" + loginUser.Email + "/" + loginUser.Password).Result;
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
@@ -80,7 +78,6 @@ namespace GarageManagementSoftwarePortal.Models
                         var readTask = result.Content.ReadAsAsync<Users>();
                         readTask.Wait();
                         u = readTask.Result;
-                        //loginUser = users.First(c => c.Email == loginUser.Email && c.Password == loginUser.Password);
                         SetSessionProperties(u);
                         return RedirectToAction("Index", "Users");
                     }
@@ -92,19 +89,15 @@ namespace GarageManagementSoftwarePortal.Models
                         return RedirectToAction("Login", "Users");
                     }
                 }
-            }
-            else if ((int)response.StatusCode == 801)
+            }else if ((int)response.StatusCode == 801)
             {
                 ModelState.AddModelError("", @"No such user or wrong email");
                 return View("Login", loginUser);
-            }
-            else if ((int)response.StatusCode == 802)
+            }else if ((int)response.StatusCode == 802)
             {
                 ModelState.AddModelError("", @"Wrong Password.");
                 return View("Login", loginUser);
-            }
-            else
-            {
+            }else{
                 ModelState.AddModelError("", @"This user has been blocked!!!");
                 return View("Login", loginUser);
             }
@@ -125,11 +118,11 @@ namespace GarageManagementSoftwarePortal.Models
             {
                 return NotFound();
             }
-            IEnumerable<CustomerCars> userCars = null;
-            var responseTask = client.GetAsync(client.BaseAddress + "/GetUserModelsDetailsByUserOrCarID/" + id + "/" + 0);
+            IEnumerable<UserModels> userCars = null;
+            var responseTask = client.GetAsync(client.BaseAddress + "/GetUserModelByUserID/" + id);
             responseTask.Wait();
             var result = responseTask.Result;
-            var readTask = result.Content.ReadAsAsync<IList<CustomerCars>>();
+            var readTask = result.Content.ReadAsAsync<IList<UserModels>>();
             readTask.Wait();
             userCars = readTask.Result;
 
@@ -148,7 +141,7 @@ namespace GarageManagementSoftwarePortal.Models
                 return NotFound();
             }
             IEnumerable<CustomerCars> userCars = null;
-            var responseTask = client.GetAsync(client.BaseAddress + "/GetUserModelsDetailsByUserOrCarID/" + id + "/" + 1);
+            var responseTask = client.GetAsync(client.BaseAddress + "/GetUserModelByCarID/" + id);
             responseTask.Wait();
             var result = responseTask.Result;
             var readTask = result.Content.ReadAsAsync<IList<CustomerCars>>();

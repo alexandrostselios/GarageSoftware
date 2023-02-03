@@ -1,4 +1,5 @@
-﻿using GarageManagementSoftwarePortal.Enum;
+﻿using GaragePortal.Enum;
+using System.ComponentModel;
 
 namespace GarageManagementSoftwarePortal.Models
 {
@@ -6,11 +7,16 @@ namespace GarageManagementSoftwarePortal.Models
     {
         public int ID { get; set; }
 
-        public int UserID { get; set; }
+        public long  UserID { get; set; }
 
-        public int ModelManufacturerID { get; set; }
+        [DisplayName("Model Manufacturer")]
+        public string ManufacturerName { get; set; }
 
-        public int ModelYear { get; set; }
+        [DisplayName("Model Name")]
+        public string ModelName { get; set; }
+
+        [DisplayName("Model Year")]
+        public string ModelYear { get; set; }
 
         public string? LicencePlate { get; set; }
 

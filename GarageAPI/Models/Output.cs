@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GarageAPI.Models
 {
-    [NotMapped]
     public class Output
     {
         public long id { get; set; }
@@ -15,5 +14,6 @@ namespace GarageAPI.Models
         public long Kilometer { get; set; }
         public string ModelName { get; set; }
         public string ManufacturerName { get; set; }
+        public string ModelYear { get; set; }
     }
 }

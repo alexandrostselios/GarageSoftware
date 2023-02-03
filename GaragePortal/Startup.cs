@@ -9,9 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using GarageManagementSoftwarePortal.Data;
 
-namespace SocialNetwork
+namespace GaragePortal
 {
     public class Startup
     {
@@ -27,8 +26,8 @@ namespace SocialNetwork
         {
             services.AddControllersWithViews();
 
-            services.AddDbContext<GarageManagementSoftwarePortalContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("SocialNetworkContext")));
+            //services.AddDbContext<GarageManagementSoftwarePortalContext>(options =>
+            //        options.UseSqlServer(Configuration.GetConnectionString("SocialNetworkContext")));
             // Default Session Timeout is 10 minutes.
             services.AddSession(options =>
             {

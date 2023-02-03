@@ -1,21 +1,21 @@
-﻿@model IEnumerable<GarageManagementSoftwarePortal.Models.CustomerCars>
+﻿@model IEnumerable<GarageManagementSoftwarePortal.Models.UserModels>
 @{
     ViewData["Title"] = "List of User Cars";
 }
 
-@if (@ViewBag.UserType == GarageManagementSoftwarePortal.Enum.UserType.Admin.ToString())
+@if (@ViewBag.UserType == GaragePortal.Enum.UserType.Admin.ToString())
 {
     <table class="table">
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.id)
+                    @Html.DisplayNameFor(model => model.ID)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.ManufacturerDescription)
+                    @Html.DisplayNameFor(model => model.ManufacturerName)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.ModelDescription)
+                    @Html.DisplayNameFor(model => model.ModelName)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.ModelYear)
@@ -37,13 +37,13 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.id)
+                        @Html.DisplayFor(modelItem => item.ID)
                     </td>
                                         <td>
-                        @Html.DisplayFor(modelItem => item.ManufacturerDescription)
+                        @Html.DisplayFor(modelItem => item.ManufacturerName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.ModelDescription)
+                        @Html.DisplayFor(modelItem => item.ModelName)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.ModelYear)
@@ -58,10 +58,10 @@
                         @Html.DisplayFor(modelItem => item.Kilometer)
                     </td>
                     <td>
-                        <a class="af" asp-action="EditCar" asp-route-id="@item.id" asp-route-flag="1">Edit Car Details</a>
+                        <a class="af" asp-action="EditCar" asp-route-id="@item.ID" asp-route-flag="1">Edit Car Details</a>
                     </td>
                     <td>
-                        <a class="af" asp-action="ViewCarDetails" asp-route-id="@item.id">View Car History</a>
+                        <a class="af" asp-action="ViewCarDetails" asp-route-id="@item.ID">View Car History</a>
                     </td>
                 </tr>
             }

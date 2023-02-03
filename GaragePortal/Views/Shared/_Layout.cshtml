@@ -25,7 +25,7 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy"><i class="fa fa-shield" aria-hidden="true"></i> Privacy</a>
                         </li>
-                        @if (@ViewBag.UserType == null || @ViewBag.UserType == GarageManagementSoftwarePortal.Enum.UserType.Guest.ToString())
+                        @if (@ViewBag.UserType == null || @ViewBag.UserType == GaragePortal.Enum.UserType.Guest.ToString())
                         {
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="Login"><i class="fa fa-fw fa-sign-in"></i> Login</a>
@@ -35,7 +35,7 @@
                                 <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="Create"><i class="fa fa-user-plus"></i> Register</a>
                             </li>
                         }
-                        @if (@ViewBag.UserType == GarageManagementSoftwarePortal.Enum.UserType.Admin.ToString())
+                        @if (@ViewBag.UserType == GaragePortal.Enum.UserType.Admin.ToString())
                         {
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="Index"><i class="fa fa-user-circle-o" aria-hidden="true"></i> Customers</a>
@@ -44,7 +44,7 @@
                                 <a class="nav-link" asp-area="Followers" asp-controller="Followers" asp-action="Create"><i class="fa fa-users" aria-hidden="true"></i> Followers</a>
                             </li>*@
                         }
-                        @if (@ViewBag.UserType == GarageManagementSoftwarePortal.Enum.UserType.Admin.ToString() || @ViewBag.UserType == GarageManagementSoftwarePortal.Enum.UserType.User.ToString())
+                        @if (@ViewBag.UserType == GaragePortal.Enum.UserType.Admin.ToString() || @ViewBag.UserType == GaragePortal.Enum.UserType.User.ToString())
                         {
 @*                            <li class="nav-item">
                                 <a class="nav-link" asp-area="Followers" asp-controller="Followers" asp-action="Index"><i class="fa fa-list" aria-hidden="true"></i> Follower's List</a>

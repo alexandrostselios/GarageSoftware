@@ -18,7 +18,7 @@ namespace GarageAPI.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            initDatabase(builder);
+            //initDatabase(builder);
 
             base.OnModelCreating(builder);
         }
@@ -28,6 +28,8 @@ namespace GarageAPI.Data
         public DbSet<CarModelManufacturerYear> CarModelManufacturerYear { get; set; }
         public DbSet<Users> Users { get; set; }
         public DbSet<UserModels> UserModels { get; set; }
+        public DbSet<CustomerCars> CustomerCars { get; set; }
+        public DbSet<Output> Output { get; set; }
 
         private void initDatabase(ModelBuilder builder)
         {
@@ -165,8 +167,6 @@ namespace GarageAPI.Data
             builder.Entity<Users>().HasData(new Users { ID = 4, Name = "Marios", Surname = "Papadopoulos", Email = "mpapadopoulos@yahoo.gr", Password = "DfG34#$%^", UserType = 1, CreationDate = DateTime.Now, ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable });
         }
 
-        public DbSet<GarageAPI.Models.CustomerCars> CustomerCars { get; set; }
 
-        public DbSet<GarageAPI.Models.Output> Output { get; set; }
     }
 }

@@ -7,7 +7,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "GarageManagementSoftwarePortal": {
+    "GaragePortal": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

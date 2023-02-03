@@ -1,4 +1,4 @@
-﻿namespace GarageManagementSoftwarePortal.Enum
+﻿namespace GaragePortal.Enum
 {
     public enum UserType
     {

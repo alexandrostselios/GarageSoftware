@@ -4,7 +4,7 @@
 }
 
 
-@if (@ViewBag.UserType == GarageManagementSoftwarePortal.Enum.UserType.Admin.ToString())
+@if (@ViewBag.UserType == GaragePortal.Enum.UserType.Admin.ToString())
 {
     <p>Welcome @ViewBag.UserType - @ViewBag.ID - @ViewBag.Name - @ViewBag.Surname</p>
     <table class="table">
@@ -17,7 +17,7 @@
                     @Html.DisplayNameFor(model => model.UserID)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.ModelManufacturerID)
+                    @Html.DisplayNameFor(model => model.ModelName)
                 </th>
                 <th></th>
             </tr>
@@ -33,14 +33,14 @@
                         @Html.DisplayFor(modelItem => item.UserID)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.ModelManufacturerID)
+                        @Html.DisplayFor(modelItem => item.ModelName)
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 }
-else if (@ViewBag.UserType == GarageManagementSoftwarePortal.Enum.UserType.User.ToString())
+else if (@ViewBag.UserType == GaragePortal.Enum.UserType.User.ToString())
 {
     <p>Welcome user: @ViewBag.Name - @ViewBag.Surname</p>
 
