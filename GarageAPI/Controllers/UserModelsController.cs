@@ -33,7 +33,7 @@ namespace GarageAPI.Controllers
         public async Task<IActionResult> GetUserModelByUserID([FromRoute] long id)
         {
             string StoredProc = "exec GetCustomerCars @UserID = " + id;
-            List<Output> userModelCars = await dbContext.Output.FromSqlRaw(StoredProc).ToListAsync();
+            List<UserModelsDTO> userModelCars = await dbContext.Output.FromSqlRaw(StoredProc).ToListAsync();
             //List<OutputsController> outt = new OutputsController(dbContext).Getoutput();
 
             if (userModelCars == null)
@@ -48,7 +48,7 @@ namespace GarageAPI.Controllers
         public async Task<IActionResult> GetUserModelByUserOrCarID([FromRoute] long id)
         {
             string StoredProc = "exec GetCustomerCar @UserModelID = " + id;
-            List<Output> userModelCar = await dbContext.Output.FromSqlRaw(StoredProc).ToListAsync();
+            List<UserModelsDTO> userModelCar = await dbContext.Output.FromSqlRaw(StoredProc).ToListAsync();
 
             if (userModelCar == null)
             {

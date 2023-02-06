@@ -33,7 +33,7 @@ namespace GaragePortal.Models
             IEnumerable<Users> users = null;
             using (client)
             {
-                var responseTask = client.GetAsync(client.BaseAddress + "/GetUsers/");
+                var responseTask = client.GetAsync(client.BaseAddress + "/GetUsers/1");
                 responseTask.Wait();
                 var result = responseTask.Result;
                 if (result.IsSuccessStatusCode)
@@ -110,7 +110,7 @@ namespace GaragePortal.Models
             return RedirectToAction("Login", "Users");
         }
 
-        public IActionResult ViewCars(long id)
+        public IActionResult ViewCustomerCars(long id)
         {
             GetSessionProperties();
             string userID = string.Format(ViewBag.ID);
@@ -140,18 +140,18 @@ namespace GaragePortal.Models
             {
                 return NotFound();
             }
-            IEnumerable<CustomerCars> userCars = null;
-            var responseTask = client.GetAsync(client.BaseAddress + "/GetUserModelByCarID/" + id);
+            IEnumerable<ServiceHistory> carServiceHsitory = null;
+            var responseTask = client.GetAsync(client.BaseAddress + "/GetCarServiceHistoryByUserModelsID/" + id);
             responseTask.Wait();
             var result = responseTask.Result;
-            var readTask = result.Content.ReadAsAsync<IList<CustomerCars>>();
+            var readTask = result.Content.ReadAsAsync<IList<ServiceHistory>>();
             readTask.Wait();
-            userCars = readTask.Result;
-            if (userCars == null)
+            carServiceHsitory = readTask.Result;
+            if (carServiceHsitory == null)
             {
                 return NotFound();
             }
-            return View(userCars);
+            return View(carServiceHsitory);
             //var users = null;
             //if (users == null)
             //{

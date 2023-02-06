@@ -18,7 +18,9 @@ namespace GarageAPI.Models
 
         public long GarageID { get; set; }
 
-        public long? UserType { get; set; }
+        public UserType UserType { get; set; }
+
+        public long? Speciality { get; set; }
 
         [Column(TypeName = "datetime")]
         public DateTime? CreationDate { get; set; }

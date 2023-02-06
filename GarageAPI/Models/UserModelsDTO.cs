@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GarageAPI.Models
 {
-    public class Output
+    public class UserModelsDTO
     {
         public long id { get; set; }
         public long UserID { get; set; }

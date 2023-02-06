@@ -24,10 +24,15 @@ namespace GarageAPI.Controllers
         }
 
         [HttpGet]
-        [Route("api/GetUsers")]
-        public async Task<IActionResult> GetUsers()
+        [Route("api/GetUsers/{flag:long}")]
+        public async Task<IActionResult> GetUsers([FromRoute] long flag)
         {
-            return Ok(await dbContext.Users.ToListAsync());
+            if(flag == 0)
+            {
+                return Ok(await dbContext.Users.ToListAsync());
+            }
+            return Ok(await dbContext.Users.Where(c => c.UserType == Enum.UserType.Customer || c.UserType == Enum.UserType.Admin).ToListAsync());
+
         }
 
         [HttpGet]

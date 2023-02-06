@@ -44,7 +44,6 @@ namespace GarageAPI.Controllers
         {
             var carModel = new CarModel()
             {
-                
                 ModelName = addCarModelRequest.ModelName
             };
             await dbContext.CarModels.AddAsync(carModel);

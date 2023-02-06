@@ -1,4 +1,4 @@
-﻿@model IEnumerable<GaragePortal.Models.CustomerCars>
+﻿@model IEnumerable<GaragePortal.Models.ServiceHistory>
 @{
     ViewData["Title"] = "View Car Details";
 }
@@ -9,25 +9,25 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.ManufacturerName)
+                    Manufacturer
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.ModelName)
+                    Model
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.ModelYear)
+                    Year
                 </th>
                 <th>
                     Licence Plate
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Color)
+                    Service Date
                 </th>
                 <th>
-                    VIN Number
+                   Engineer
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Kilometer)
+                    Kilometer at Service
                 </th>
                 <th>
                     Service History
@@ -52,16 +52,16 @@
                         @Html.DisplayFor(modelItem => item.LicencePlate)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Color)
+                        @Html.DisplayFor(modelItem => item.ServiceDate)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.VIN)
+                        @Html.DisplayFor(modelItem => item.Surname) @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Kilometer)
+                        @Html.DisplayFor(modelItem => item.ServiceKilometer)
                     </td>
                     <td>
-                        "allagi ladiwn"
+                        @Html.DisplayFor(modelItem => item.Description)
                     </td>
                     <td>
                 </tr>

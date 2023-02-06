@@ -3,8 +3,9 @@
     public enum UserType
     {
         Admin = 1,
-        User = 2,
-        Guest = 3
+        Customer = 2,
+        Engineer = 3,
+        Guest = 4
     }
 
     public enum EnableAccess
