@@ -1311,29 +1311,29 @@ namespace GarageAPI.Migrations
                 });
 
             migrationBuilder.InsertData(
-    table: "CarModelManufacturerYear",
-    columns: new[] { "ID", "CarManufacturerID", "CarModelID", "CarModelYearID" },
-    values: new object[,]
-    {
-        { 1L, 2L, 51L, 66L },
-        { 2L, 24L, 2L, 62L },
-        { 3L, 62L, 84L, 69L },
-        { 4L, 24L, 16L, 61L },
-        { 5L, 24L, 16L, 62L },
-        { 6L, 24L, 17L, 63L }
-    });
+                table: "CarModelManufacturerYear",
+                columns: new[] { "ID", "CarManufacturerID", "CarModelID", "CarModelYearID" },
+                values: new object[,]
+                {
+                    { 1L, 2L, 51L, 66L },
+                    { 2L, 24L, 2L, 62L },
+                    { 3L, 62L, 84L, 69L },
+                    { 4L, 24L, 16L, 61L },
+                    { 5L, 24L, 16L, 62L },
+                    { 6L, 24L, 17L, 63L }
+                });
 
             migrationBuilder.InsertData(
                 table: "UserModels",
                 columns: new[] { "ID", "UserID", "ModelManufacturerYearID", "ModelYearID", "LicencePlate", "VIN", "Color", "Kilometer" },
                 values: new object[,]
                 {
-        {1L, 1L, 1L, 66L, "KBT5670", "ZAR94000007368150", 101, 156125},
-        {2L, 1L, 3L, 67L, "EYB7174", "VNKKG3D330A048555", 142, 27450},
-        {3L, 1L, 4L, 67L, "NIZ2654", "NLHBA51BABZ014926", 4, 88956},
-        {4L, 2L, 5L, 68L, "XEZ6532", "KHX94000007259841", 5, 220653},
-        {5L, 2L, 6L, 72L, "KBH1452", "JNKCV61E09M303716", 6, 65402},
-        {6L, 3L, 6L, 73L, "AHZ1495", "JH4DA9460MS032070", 6, 9563}
+                    {1L, 1L, 1L, 66L, "KBT5670", "ZAR94000007368150", 101, 156125},
+                    {2L, 1L, 3L, 67L, "EYB7174", "VNKKG3D330A048555", 142, 27450},
+                    {3L, 1L, 4L, 67L, "NIZ2654", "NLHBA51BABZ014926", 4, 88956},
+                    {4L, 2L, 5L, 68L, "XEZ6532", "KHX94000007259841", 5, 220653},
+                    {5L, 2L, 6L, 72L, "KBH1452", "JNKCV61E09M303716", 6, 65402},
+                    {6L, 3L, 6L, 73L, "AHZ1495", "JH4DA9460MS032070", 6, 9563}
                 });
 
             migrationBuilder.InsertData(
@@ -1341,89 +1341,89 @@ namespace GarageAPI.Migrations
                 columns: new[] { "Description", "ServiceDate", "UserModelsID", "ServiceKilometer", "EngineerID", "StartPrice", "FinalPrice", "StartingDate", "FinishingTime", "FinishingDate" },
                 values: new object[,]
                 {
-        {"Αλλαγή ιμάντα χρονισμού", new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Local).AddTicks(858), 1L, 65080, 5L, 95, 95, new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Local).AddTicks(858),new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Local).AddTicks(858),new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Local).AddTicks(858)},
-        {"Αλλαγή λαδιών", new DateTime(2022, 12, 6, 20, 40, 10, 552, DateTimeKind.Local).AddTicks(858), 1L, 70898, 5L, 55, 55, new DateTime(2022, 12, 7, 13, 24, 10, 552, DateTimeKind.Local).AddTicks(858),new DateTime(2022, 12, 7, 13, 24, 10, 552, DateTimeKind.Local).AddTicks(858),new DateTime(2022, 12, 7, 13, 24, 10, 552, DateTimeKind.Local).AddTicks(858)}
+                    {"Αλλαγή ιμάντα χρονισμού", new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Local).AddTicks(858), 1L, 65080, 5L, 95, 95, new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Local).AddTicks(858),new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Local).AddTicks(858),new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Local).AddTicks(858)},
+                    {"Αλλαγή λαδιών", new DateTime(2022, 12, 6, 20, 40, 10, 552, DateTimeKind.Local).AddTicks(858), 1L, 70898, 5L, 55, 55, new DateTime(2022, 12, 7, 13, 24, 10, 552, DateTimeKind.Local).AddTicks(858),new DateTime(2022, 12, 7, 13, 24, 10, 552, DateTimeKind.Local).AddTicks(858),new DateTime(2022, 12, 7, 13, 24, 10, 552, DateTimeKind.Local).AddTicks(858)}
                 });
 
             var GetCustomerCars = @"CREATE PROCEDURE GetCustomerCars
--- Add the parameters for the stored procedure here
-@UserID BIGINT
-AS
-BEGIN
-	SET NOCOUNT ON;
-	SELECT UM.ID, 
-		   UM.UserID, 
-		   CMAN.ManufacturerName, 
-		   CM.ModelName, 
-		   CMY.Description AS ModelYear, 
-		   UM.LicencePlate, 
-		   UM.VIN, 
-		   UM.Color, 
-		   UM.Kilometer
-	FROM UserModels UM
-		 INNER JOIN CarModelManufacturerYear CMMY ON CMMY.ID = um.ModelManufacturerYearID
-		 INNER JOIN CarModels CM ON CM.ID = CMMY.CarModelID
-		 INNER JOIN CarManufacturer CMAN ON CMAN.ID = CMMY.CarManufacturerID
-		 INNER JOIN CarModelYear CMY ON CMY.ID = CMMY.CarModelYearID
-	WHERE UserId = @UserID;
-END";
+                -- Add the parameters for the stored procedure here
+                @UserID BIGINT
+                AS
+                BEGIN
+	                SET NOCOUNT ON;
+	                SELECT UM.ID, 
+		                   UM.UserID, 
+		                   CMAN.ManufacturerName, 
+		                   CM.ModelName, 
+		                   CMY.Description AS ModelYear, 
+		                   UM.LicencePlate, 
+		                   UM.VIN, 
+		                   UM.Color, 
+		                   UM.Kilometer
+	                FROM UserModels UM
+		                 INNER JOIN CarModelManufacturerYear CMMY ON CMMY.ID = um.ModelManufacturerYearID
+		                 INNER JOIN CarModels CM ON CM.ID = CMMY.CarModelID
+		                 INNER JOIN CarManufacturer CMAN ON CMAN.ID = CMMY.CarManufacturerID
+		                 INNER JOIN CarModelYear CMY ON CMY.ID = CMMY.CarModelYearID
+	                WHERE UserId = @UserID;
+                END";
 
             migrationBuilder.Sql(GetCustomerCars);
 
             var GetCustomerCar = @"CREATE PROCEDURE GetCustomerCar
--- Add the parameters for the stored procedure here
-@UserModelID BIGINT
-AS
-BEGIN
-	SET NOCOUNT ON;
-	SELECT UM.ID, 
-		   UM.UserID, 
-		   CMAN.ManufacturerName, 
-		   CM.ModelName, 
-		   CMY.Description AS ModelYear, 
-		   UM.LicencePlate, 
-		   UM.VIN, 
-		   UM.Color, 
-		   UM.Kilometer
-	FROM UserModels UM
-		 INNER JOIN CarModelManufacturerYear CMMY ON CMMY.ID = um.ModelManufacturerYearID
-		 INNER JOIN CarModels CM ON CM.ID = CMMY.CarModelID
-		 INNER JOIN CarManufacturer CMAN ON CMAN.ID = CMMY.CarManufacturerID
-		 INNER JOIN CarModelYear CMY ON CMY.ID = CMMY.CarModelYearID
-	WHERE UM.ID = @UserModelID;
-END";
+                -- Add the parameters for the stored procedure here
+                @UserModelID BIGINT
+                AS
+                BEGIN
+	                SET NOCOUNT ON;
+	                SELECT UM.ID, 
+		                   UM.UserID, 
+		                   CMAN.ManufacturerName, 
+		                   CM.ModelName, 
+		                   CMY.Description AS ModelYear, 
+		                   UM.LicencePlate, 
+		                   UM.VIN, 
+		                   UM.Color, 
+		                   UM.Kilometer
+	                FROM UserModels UM
+		                 INNER JOIN CarModelManufacturerYear CMMY ON CMMY.ID = um.ModelManufacturerYearID
+		                 INNER JOIN CarModels CM ON CM.ID = CMMY.CarModelID
+		                 INNER JOIN CarManufacturer CMAN ON CMAN.ID = CMMY.CarManufacturerID
+		                 INNER JOIN CarModelYear CMY ON CMY.ID = CMMY.CarModelYearID
+	                WHERE UM.ID = @UserModelID;
+                END";
 
             migrationBuilder.Sql(GetCustomerCar);
 
             var GetCarServiceHistory = @"CREATE PROCEDURE[dbo].[GetCarServiceHistory]
--- Add the parameters for the stored procedure here
-@UserModelsID BIGINT
-AS
-BEGIN
-	SET NOCOUNT ON;
-		SELECT SH.Description, 
-		   SH.ServiceDate, 
-		   SH.ServiceKilometer, 
-		   SH.StartPrice, 
-		   UE.Surname, 
-		   UE.Name, 
-		   CMAN.ManufacturerName, 
-		   CM.ModelName, 
-		   CMY.Description AS ModelYear, 
-		   UM.LicencePlate, 
-		   UM.VIN, 
-		   UM.Color, 
-		   UM.Kilometer
-	FROM ServiceHistory SH
-		 INNER JOIN Users UE ON UE.ID = EngineerID
-		 INNER JOIN UserModels UM ON UM.ID = SH.UserModelsID
-		 INNER JOIN CarModelManufacturerYear CMMY ON CMMY.ID = um.ModelManufacturerYearID
-		 INNER JOIN CarModels CM ON CM.ID = CMMY.CarModelID
-		 INNER JOIN CarManufacturer CMAN ON CMAN.ID = CMMY.CarManufacturerID
-		 INNER JOIN CarModelYear CMY ON CMY.ID = CMMY.CarModelYearID
-	WHERE SH.UserModelsID = @UserModelsID
-	ORDER BY SH.ServiceDate ASC;
-END;";
+                -- Add the parameters for the stored procedure here
+                @UserModelsID BIGINT
+                AS
+                BEGIN
+	                SET NOCOUNT ON;
+		                SELECT SH.Description, 
+		                   SH.ServiceDate, 
+		                   SH.ServiceKilometer, 
+		                   SH.StartPrice, 
+		                   UE.Surname, 
+		                   UE.Name, 
+		                   CMAN.ManufacturerName, 
+		                   CM.ModelName, 
+		                   CMY.Description AS ModelYear, 
+		                   UM.LicencePlate, 
+		                   UM.VIN, 
+		                   UM.Color, 
+		                   UM.Kilometer
+	                FROM ServiceHistory SH
+		                 INNER JOIN Users UE ON UE.ID = EngineerID
+		                 INNER JOIN UserModels UM ON UM.ID = SH.UserModelsID
+		                 INNER JOIN CarModelManufacturerYear CMMY ON CMMY.ID = um.ModelManufacturerYearID
+		                 INNER JOIN CarModels CM ON CM.ID = CMMY.CarModelID
+		                 INNER JOIN CarManufacturer CMAN ON CMAN.ID = CMMY.CarManufacturerID
+		                 INNER JOIN CarModelYear CMY ON CMY.ID = CMMY.CarModelYearID
+	                WHERE SH.UserModelsID = @UserModelsID
+	                ORDER BY SH.ServiceDate ASC;
+                END;";
 
             migrationBuilder.Sql(GetCarServiceHistory);
 
