@@ -7,7 +7,7 @@ using GarageAPI.Models.EngineerSpeciality;
 
 namespace GarageAPI.Data
 {
-    public class GarageAPIDbContext: DbContext
+    public class GarageAPIDbContext : DbContext
     {
         public GarageAPIDbContext(DbContextOptions options) : base(options)
         {
@@ -16,7 +16,7 @@ namespace GarageAPI.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            initDatabase(builder);
+            //initDatabase(builder);
             builder.Entity<ServiceHistoryDTO>().HasNoKey();
             base.OnModelCreating(builder);
         }
@@ -997,7 +997,8 @@ namespace GarageAPI.Data
 
 
             int k = 1;
-            for(int i= 1950; i <= DateTime.Now.Year; i++){
+            for (int i = 1950; i <= DateTime.Now.Year; i++)
+            {
                 builder.Entity<CarModelYear>().HasData(new CarModelYear { ID = k, Description = i.ToString() });
                 k++;
             }
@@ -1011,8 +1012,9 @@ namespace GarageAPI.Data
             builder.Entity<Users>().HasData(new Users { ID = 2, Name = "Efthumia", Surname = "Varvagianni", Email = "efi.vanni@gmail.com", Password = "f1234!", UserType = Enum.UserType.Customer, CreationDate = DateTime.Parse("2022-02-06 09:19:46.369"), ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable });
             builder.Entity<Users>().HasData(new Users { ID = 3, Name = "Kostas", Surname = "Kitsikou", Email = "kkitsikou@hotmail.com", Password = "gafa#$#", UserType = Enum.UserType.Customer, CreationDate = DateTime.Parse("2022-12-15 22:19:46.456"), ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable });
             builder.Entity<Users>().HasData(new Users { ID = 4, Name = "Marios", Surname = "Papadopoulos", Email = "mpapadopoulos@yahoo.gr", Password = "MP1234@?", UserType = Enum.UserType.Customer, CreationDate = DateTime.Parse("2022-12-24 13:42:34.566"), ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Disable });
-            builder.Entity<Users>().HasData(new Users { ID = 5, Name = "Κωνσταντίνος", Surname = "Παπαδόπουλος", Email = "konpapa@yahoo.gr", Password = "DfG34#$%^", UserType = Enum.UserType.Engineer, CreationDate = DateTime.Parse("2023-02-03 20:08:23.860"), ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable,Speciality=3 });
-            builder.Entity<Users>().HasData(new Users { ID = 6, Name = "Μιχάλης", Surname = "Μιχαήλ", Email = "mmichail@gmail.com", Password = "KavMixalis$%", UserType = Enum.UserType.Engineer, CreationDate = DateTime.Now, ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable,Speciality=2 });
-        } 
+            builder.Entity<Users>().HasData(new Users { ID = 5, Name = "Κωνσταντίνος", Surname = "Παπαδόπουλος", Email = "konpapa@yahoo.gr", Password = "DfG34#$%^", UserType = Enum.UserType.Engineer, CreationDate = DateTime.Parse("2023-02-03 20:08:23.860"), ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable, Speciality = 3 });
+            builder.Entity<Users>().HasData(new Users { ID = 6, Name = "Μιχάλης", Surname = "Μιχαήλ", Email = "mmichail@gmail.com", Password = "KavMixalis$%", UserType = Enum.UserType.Engineer, CreationDate = DateTime.Now, ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable, Speciality = 2 });
+
+        }
     }
 }

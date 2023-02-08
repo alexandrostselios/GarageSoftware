@@ -57,6 +57,7 @@ namespace GaragePortal.Models
             return View("Login");
         }
 
+
         [HttpPost]
         public async Task<IActionResult> LoginHelper([Bind("Email,Password")] Users loginUser)
         {
@@ -205,28 +206,33 @@ namespace GaragePortal.Models
         //    return View(users);
         //}
 
-        //public IActionResult Create()
-        //{
-        //    GetSessionProperties();
-        //    return View();
-        //}
+        public IActionResult Create()
+        {
+            GetSessionProperties();
+            return View();
+        }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult Create([Bind("ID,Name,Surname,Email,Age,Password,ConfirmPassword")] Users createUser)
-        //{
-        //    GetSessionProperties();
-        //    if (ModelState.IsValid)
-        //    {
-        //        createUser.UserType = UserType.User;
-        //        createUser.CreationDate = DateTime.Now;
-        //        createUser.EnableAccess = EnableAccess.Enable;
-        //        _context.Add(createUser);
-        //        _context.SaveChanges();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(createUser);
-        //}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create([Bind("ID,Name,Surname,Email,Age,Password,ConfirmPassword")] Users createUser)
+        {
+            GetSessionProperties();
+            //if (ModelState.IsValid)
+            if (!(createUser.Email is null) && ModelState.IsValid)
+            {
+                createUser.UserType = 2;
+                createUser.CreationDate = DateTime.Now;
+                createUser.EnableAccess = createUser.EnableAccess;
+                string data = JsonConvert.SerializeObject(createUser);
+                var contentdata = new StringContent(data);
+                HttpResponseMessage response = client.PostAsJsonAsync(client.BaseAddress + "/AddUser/", createUser).Result;
+
+                //_context.Add(createUser);
+                //_context.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(createUser);
+        }
 
         //public IActionResult EditProfile(long id)
         //{

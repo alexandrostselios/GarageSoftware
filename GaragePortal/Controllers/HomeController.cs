@@ -33,7 +33,7 @@ namespace GaragePortal.Controllers
             IEnumerable<UserModels> userModels = null;
             using (var client = new HttpClient())
             {
-                Uri baseAddress = new Uri("https://localhost:44374/api");
+                Uri baseAddress = new Uri("https://localhost:7096/api");
                 client.BaseAddress = baseAddress;
                 var responseUserModels = client.GetAsync(client.BaseAddress + "/GetUserModelsByUserID/1");
                 responseUserModels.Wait();

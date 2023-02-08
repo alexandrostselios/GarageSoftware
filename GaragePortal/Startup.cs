@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Http;
+using System.Net;
 
 namespace GaragePortal
 {
@@ -24,6 +26,11 @@ namespace GaragePortal
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, errors) =>
+            {
+                // local dev, just approve all certs
+                return true;
+            };
             services.AddControllersWithViews();
 
             //services.AddDbContext<GarageManagementSoftwarePortalContext>(options =>
@@ -48,6 +55,7 @@ namespace GaragePortal
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
 
             app.UseSession();
             app.UseHttpsRedirection();

@@ -220,6 +220,27 @@ namespace GarageAPI.Controllers
         //    return RedirectToAction(nameof(Index));
         //}
 
+        [HttpPost]
+        [Route("api/AddUser")]
+        public async Task<IActionResult> AddUser(AddUserRequest addUserRequest)
+        {
+            var user = new Users()
+            {
+                Name = addUserRequest.Name,
+                Surname = addUserRequest.Surname,
+                Email = addUserRequest.Email,  
+                Password = addUserRequest.Password, 
+                GarageID = 0,
+                CreationDate = DateTime.Now,
+                UserType = UserType.Customer,
+                EnableAccess = EnableAccess.Enable,
+            };
+            await dbContext.Users.AddAsync(user);
+            await dbContext.SaveChangesAsync();
+
+            return Ok(user);
+        }
+
         private bool UsersExists(int id)
         {
           return dbContext.Users.Any(e => e.ID == id);

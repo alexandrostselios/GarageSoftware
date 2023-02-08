@@ -15,6 +15,8 @@ namespace GaragePortal.Models
 
         public float StartPrice { get; set; }
 
+        public float FinalPrice { get; set; }
+
         public string Name { get; set; }
 
         public string Surname { get; set; }

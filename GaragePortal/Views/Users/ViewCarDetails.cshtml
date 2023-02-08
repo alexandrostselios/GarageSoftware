@@ -8,7 +8,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th>
+                @*<th>
                     Manufacturer
                 </th>
                 <th>
@@ -19,7 +19,7 @@
                 </th>
                 <th>
                     Licence Plate
-                </th>
+                </th>*@
                 <th>
                     Service Date
                 </th>
@@ -28,6 +28,12 @@
                 </th>
                 <th>
                     Kilometer at Service
+                </th>
+                <th>
+                    Starting Price of Service
+                </th>
+                <th>
+                    Final Price of Service
                 </th>
                 <th>
                     Service History
@@ -39,7 +45,7 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>
+@*                    <td>
                         @Html.DisplayFor(modelItem => item.ManufacturerName)
                     </td>
                     <td>
@@ -50,7 +56,7 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.LicencePlate)
-                    </td>
+                    </td>*@
                     <td>
                         @Html.DisplayFor(modelItem => item.ServiceDate)
                     </td>
@@ -59,6 +65,12 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.ServiceKilometer)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StartPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FinalPrice)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Description)

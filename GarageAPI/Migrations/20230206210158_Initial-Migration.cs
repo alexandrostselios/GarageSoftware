@@ -1341,9 +1341,9 @@ namespace GarageAPI.Migrations
                 columns: new[] { "Description", "ServiceDate", "UserModelsID", "ServiceKilometer", "EngineerID", "StartPrice", "FinalPrice", "StartingDate", "FinishingTime", "FinishingDate" },
                 values: new object[,]
                 {
-                    {"Αλλαγή ιμάντα χρονισμού", new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Local).AddTicks(858), 1L, 65080, 5L, 95, 95, new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Local).AddTicks(858),new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Local).AddTicks(858),new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Local).AddTicks(858)},
-                    {"Αλλαγή λαδιών", new DateTime(2022, 12, 6, 20, 40, 10, 552, DateTimeKind.Local).AddTicks(858), 1L, 70898, 5L, 55, 55, new DateTime(2022, 12, 7, 13, 24, 10, 552, DateTimeKind.Local).AddTicks(858),new DateTime(2022, 12, 7, 13, 24, 10, 552, DateTimeKind.Local).AddTicks(858),new DateTime(2022, 12, 7, 13, 24, 10, 552, DateTimeKind.Local).AddTicks(858)}
-                });
+                    {"Αλλαγή λαδιών", new DateTime(2022, 12, 6, 20, 40, 10, 552, DateTimeKind.Local).AddTicks(858), 1L, 65080, 5L, 55, 55, new DateTime(2022, 12, 7, 13, 24, 10, 552, DateTimeKind.Local).AddTicks(858),new DateTime(2022, 12, 7, 13, 24, 10, 552, DateTimeKind.Local).AddTicks(858),new DateTime(2022, 12, 7, 13, 24, 10, 552, DateTimeKind.Local).AddTicks(858)},
+                    {"Αλλαγή ιμάντα χρονισμού", new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Local).AddTicks(858), 1L, 70898, 5L, 95, 95, new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Local).AddTicks(858),new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Local).AddTicks(858),new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Local).AddTicks(858)}
+                }); 
 
             var GetCustomerCars = @"CREATE PROCEDURE GetCustomerCars
                 -- Add the parameters for the stored procedure here
@@ -1405,6 +1405,7 @@ namespace GarageAPI.Migrations
 		                   SH.ServiceDate, 
 		                   SH.ServiceKilometer, 
 		                   SH.StartPrice, 
+                           SH.FinalPrice,
 		                   UE.Surname, 
 		                   UE.Name, 
 		                   CMAN.ManufacturerName, 
@@ -1422,7 +1423,7 @@ namespace GarageAPI.Migrations
 		                 INNER JOIN CarManufacturer CMAN ON CMAN.ID = CMMY.CarManufacturerID
 		                 INNER JOIN CarModelYear CMY ON CMY.ID = CMMY.CarModelYearID
 	                WHERE SH.UserModelsID = @UserModelsID
-	                ORDER BY SH.ServiceDate ASC;
+	                ORDER BY SH.ServiceDate DESC;
                 END;";
 
             migrationBuilder.Sql(GetCarServiceHistory);
