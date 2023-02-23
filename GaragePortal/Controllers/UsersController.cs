@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using GaragePortal.Enum;
 using Newtonsoft.Json;
 using System.Net.Http.Json;
+using System.IO;
 
 namespace GaragePortal.Models
 {
@@ -214,7 +215,7 @@ namespace GaragePortal.Models
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("ID,Name,Surname,Email,Age,Password,ConfirmPassword")] Users createUser)
+        public IActionResult Create([Bind("ID,Name,Surname,Email,Age,Password,ConfirmPassword,UserPhoto")] Users createUser, IFormFile Image)
         {
             GetSessionProperties();
             //if (ModelState.IsValid)
@@ -223,6 +224,11 @@ namespace GaragePortal.Models
                 createUser.UserType = 2;
                 createUser.CreationDate = DateTime.Now;
                 createUser.EnableAccess = createUser.EnableAccess;
+                using (var stream = new MemoryStream()) {
+                    Image.CopyToAsync(stream);
+                    byte[] temp = stream.ToArray();
+                    createUser.UserPhoto = temp; 
+                }
                 string data = JsonConvert.SerializeObject(createUser);
                 var contentdata = new StringContent(data);
                 HttpResponseMessage response = client.PostAsJsonAsync(client.BaseAddress + "/AddUser/", createUser).Result;
@@ -234,74 +240,78 @@ namespace GaragePortal.Models
             return View(createUser);
         }
 
-        //public IActionResult EditProfile(long id)
-        //{
-        //    GetSessionProperties();
-        //    string userID = string.Format(ViewBag.ID);
-        //    if (userID == null)
-        //    {
-        //        return NotFound();
-        //    }
+        public IActionResult EditProfile(long id)
+        {
+            GetSessionProperties();
+            string userID = string.Format(ViewBag.ID);
+            if (userID == null)
+            {
+                return NotFound();
+            }
 
-        //    var users = _context.Users.Find(long.Parse(userID));
-        //    if (users == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(users);
-        //}
+            return View(null);
+        }
 
 
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(long id, [Bind("ID,Name,Surname,Email,Age,Password,ConfirmPassword,UserType,CreationDate,ModifiedDate,LastLoginDate,ChangePassword,ConvertUser,EnableAccess")] Users editUser)
-        //{
-        //    if (id != editUser.ID)
-        //    {
-        //        return NotFound();
-        //    }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(long id, [Bind("ID,Name,Surname,Email,Age,Password,ConfirmPassword,UserType,CreationDate,ModifiedDate,LastLoginDate,ChangePassword,ConvertUser,EnableAccess")] Users editUser, IFormFile Image)
+        {
+            if (id != editUser.ID)
+            {
+                return NotFound();
+            }
 
-        //    var dbUser = await _context.Users.FindAsync(editUser.ID);
-        //    if (editUser.ChangePassword == false)
-        //    {
-        //        editUser.Password = dbUser.Password;
-        //    }
-        //    if (editUser.ConvertUser == true)
-        //    {
-        //        if (dbUser.UserType == UserType.Admin)
-        //        {
-        //            editUser.UserType = UserType.User;
-        //        }
-        //        else if (dbUser.UserType == UserType.User)
-        //        {
-        //            editUser.UserType = UserType.User;
-        //        }
-        //    }
-        //    _context.Entry(dbUser).State = EntityState.Detached;
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            editUser.ModifiedDate = DateTime.Now;
-        //            _context.Update(editUser);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!UsersExists(editUser.ID))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(editUser);
-        //}
+            using (var stream = new MemoryStream())
+            {
+                Image.CopyToAsync(stream);
+                byte[] temp = stream.ToArray();
+                editUser.UserPhoto = temp;
+            }
+            HttpResponseMessage response = client.PutAsJsonAsync(client.BaseAddress + "/UpdateUser/"+editUser.ID, editUser).Result;
+
+                //var dbUser = await _context.Users.FindAsync(editUser.ID);
+                //if (editUser.ChangePassword == false)
+                //{
+                //    editUser.Password = dbUser.Password;
+                //}
+                //if (editUser.ConvertUser == true)
+                //{
+                //    if (dbUser.UserType == UserType.Admin)
+                //    {
+                //        editUser.UserType = UserType.User;
+                //    }
+                //    else if (dbUser.UserType == UserType.User)
+                //    {
+                //        editUser.UserType = UserType.User;
+                //    }
+                //}
+                //_context.Entry(dbUser).State = EntityState.Detached;
+                //if (ModelState.IsValid)
+                //{
+                //    try
+                //    {
+                //        editUser.ModifiedDate = DateTime.Now;
+                //        _context.Update(editUser);
+                //        await _context.SaveChangesAsync();
+                //    }
+                //    catch (DbUpdateConcurrencyException)
+                //    {
+                //        if (!UsersExists(editUser.ID))
+                //        {
+                //            return NotFound();
+                //        }
+                //        else
+                //        {
+                //            throw;
+                //        }
+                //    }
+                //    return RedirectToAction(nameof(Index));
+                //}
+                return RedirectToAction(nameof(Index));
+            //return View(editUser);
+        }
 
         //private bool UsersExists(long iD)
         //{

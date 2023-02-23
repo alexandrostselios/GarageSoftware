@@ -32,5 +32,7 @@ namespace GarageAPI.Models
         public DateTime? LastLoginDate { get; set; }
 
         public EnableAccess EnableAccess { get; set; }
+
+        public byte[]? UserPhoto { get; set; }
     }
 }

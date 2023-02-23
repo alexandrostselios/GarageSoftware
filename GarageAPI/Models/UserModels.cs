@@ -24,5 +24,7 @@ namespace GarageAPI.Models
         public long? Color { get; set; }
 
         public long? Kilometer { get; set; }
+
+        public byte[]? CarImage { get; set; }
     }
 }

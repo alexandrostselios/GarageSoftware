@@ -234,11 +234,33 @@ namespace GarageAPI.Controllers
                 CreationDate = DateTime.Now,
                 UserType = UserType.Customer,
                 EnableAccess = EnableAccess.Enable,
+                UserPhoto = addUserRequest.UserPhoto
             };
             await dbContext.Users.AddAsync(user);
             await dbContext.SaveChangesAsync();
 
             return Ok(user);
+        }
+
+        [HttpPut]
+        [Route("api/UpdateUser/{id:long}")]
+        public async Task<IActionResult> UpdateUser([FromRoute] long id, UpdateUserRequest updateUserRequest)
+        {
+            var user = await dbContext.Users.FindAsync(id);
+            if (user != null)
+            {
+                
+                user.Name = updateUserRequest.Name;
+                //user.Surname = updateUserRequest.Surname;   
+                //user.Email = updateUserRequest.Email;
+                //user.Password = updateUserRequest.Password;
+                user.UserPhoto = updateUserRequest.UserPhoto;
+                //user.EnableAccess = updateUserRequest.EnableAccess;
+                await dbContext.SaveChangesAsync();
+                return Ok(user);
+            }
+
+            return NotFound();
         }
 
         private bool UsersExists(int id)

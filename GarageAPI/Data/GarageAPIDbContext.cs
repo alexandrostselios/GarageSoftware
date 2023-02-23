@@ -16,7 +16,7 @@ namespace GarageAPI.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            //initDatabase(builder);
+            initDatabase(builder);
             builder.Entity<ServiceHistoryDTO>().HasNoKey();
             base.OnModelCreating(builder);
         }

@@ -35,6 +35,9 @@
                 <th>
                     @Html.DisplayNameFor(model => model.LastLoginDate)
                 </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserPhoto)
+                </th>
                 <th></th>
             </tr>
         </thead>
@@ -62,6 +65,11 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.LastLoginDate)
+                    </td>
+                    <td>
+                        @if (!(item.UserPhoto is null)){
+                            <img src="data:image/jpg;base64, @Convert.ToBase64String(item.UserPhoto)" width="50" height="50" />
+                        }
                     </td>
                     <td>
                         <a class="af" asp-action="EditProfile" asp-route-id="@item.ID">Edit Profile</a>
