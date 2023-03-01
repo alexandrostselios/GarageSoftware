@@ -34,8 +34,6 @@ namespace GarageAPI.Controllers
             string StoredProc = "exec GetCarServiceHistory @UserModelsID = " + id;
             List<ServiceHistoryDTO> carServiceHistory = await dbContext.ServiceHistoryDTO.FromSqlRaw(StoredProc).ToListAsync();
 
-            var i = 10;//List<OutputsController> outt = new OutputsController(dbContext).Getoutput();
-
             if (carServiceHistory == null)
             {
                 return NotFound();

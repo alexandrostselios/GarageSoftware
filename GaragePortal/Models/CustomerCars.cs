@@ -20,13 +20,18 @@ namespace GaragePortal.Models
         [DisplayName("Model Year")]
         public string ModelYear { get; set; }
 
+        [DisplayName("Licence Plate")]
         public string? LicencePlate { get; set; }
 
+        [DisplayName("VIN Number")]
         public string? VIN { get; set; }
 
         public Colors Color { get; set; }
 
         public long? Kilometer { get; set; }
+
+        [DisplayName("Car Image")]
+        public byte[]? CarImage { get; set; }
 
     }
 }

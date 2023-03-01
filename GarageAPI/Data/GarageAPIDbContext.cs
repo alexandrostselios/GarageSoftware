@@ -4,6 +4,7 @@ using GarageAPI.Models.CarManufacturers;
 using GarageAPI.Models.CarModels;
 using GarageAPI.Models.CarModelYears;
 using GarageAPI.Models.EngineerSpeciality;
+using GarageAPI.Models.UserModels;
 
 namespace GarageAPI.Data
 {
@@ -16,7 +17,7 @@ namespace GarageAPI.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            initDatabase(builder);
+            //initDatabase(builder);
             builder.Entity<ServiceHistoryDTO>().HasNoKey();
             base.OnModelCreating(builder);
         }
@@ -1008,13 +1009,23 @@ namespace GarageAPI.Data
             builder.Entity<EngineerSpeciality>().HasData(new EngineerSpeciality { ID = 3, Speciality = "Βαφέας" });
             builder.Entity<EngineerSpeciality>().HasData(new EngineerSpeciality { ID = 4, Speciality = "Τεχνικός Παρμπρίζ" });
 
-            builder.Entity<Users>().HasData(new Users { ID = 1, Name = "Alexandros", Surname = "Tselios", Email = "atselios@classter.com", Password = "1", UserType = Enum.UserType.Admin, CreationDate = DateTime.Parse("2022-01-06 14:05:14.258"), ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable });
+            builder.Entity<Users>().HasData(new Users { ID = 1, Name = "Alexandros", Surname = "Tselios", Email = "atselios@classter.com", Password = "1", UserType = Enum.UserType.Admin, CreationDate = DateTime.Parse("2022-01-06 14:05:14.258"), ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable});
             builder.Entity<Users>().HasData(new Users { ID = 2, Name = "Efthumia", Surname = "Varvagianni", Email = "efi.vanni@gmail.com", Password = "f1234!", UserType = Enum.UserType.Customer, CreationDate = DateTime.Parse("2022-02-06 09:19:46.369"), ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable });
             builder.Entity<Users>().HasData(new Users { ID = 3, Name = "Kostas", Surname = "Kitsikou", Email = "kkitsikou@hotmail.com", Password = "gafa#$#", UserType = Enum.UserType.Customer, CreationDate = DateTime.Parse("2022-12-15 22:19:46.456"), ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable });
             builder.Entity<Users>().HasData(new Users { ID = 4, Name = "Marios", Surname = "Papadopoulos", Email = "mpapadopoulos@yahoo.gr", Password = "MP1234@?", UserType = Enum.UserType.Customer, CreationDate = DateTime.Parse("2022-12-24 13:42:34.566"), ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Disable });
             builder.Entity<Users>().HasData(new Users { ID = 5, Name = "Κωνσταντίνος", Surname = "Παπαδόπουλος", Email = "konpapa@yahoo.gr", Password = "DfG34#$%^", UserType = Enum.UserType.Engineer, CreationDate = DateTime.Parse("2023-02-03 20:08:23.860"), ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable, Speciality = 3 });
             builder.Entity<Users>().HasData(new Users { ID = 6, Name = "Μιχάλης", Surname = "Μιχαήλ", Email = "mmichail@gmail.com", Password = "KavMixalis$%", UserType = Enum.UserType.Engineer, CreationDate = DateTime.Now, ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable, Speciality = 2 });
 
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID= 1L,  CarManufacturerID = 2, CarModelID = 51 , CarModelYearID = 66 });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 2L, CarManufacturerID = 24, CarModelID = 2, CarModelYearID = 62 });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 3L, CarManufacturerID = 62, CarModelID = 84, CarModelYearID = 69 });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 4L, CarManufacturerID = 24, CarModelID = 16, CarModelYearID = 61 });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 5L, CarManufacturerID = 24, CarModelID = 16, CarModelYearID = 62 });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 6L, CarManufacturerID = 24, CarModelID = 17, CarModelYearID = 63 });
+
+        
+            builder.Entity<ServiceHistory>().HasData(new ServiceHistory { ID = 1L, UserModelsID = 1L, Description = "Αλλαγή λαδιών", ServiceDate = DateTime.Parse("2022-12-06 20:40:10.552"), ServiceKilometer = 65080, EngineerID = 5, StartPrice = 55, FinalPrice = 55,StartingDate = DateTime.Parse("2022-12-07 13:24:10.552"), FinishingTime = DateTime.Parse("2022-12-07 13:24:10.552"), FinishingDate = DateTime.Parse("2022-12-07 13:24:10.552")});
+            builder.Entity<ServiceHistory>().HasData(new ServiceHistory { ID = 2L, UserModelsID = 1L, Description = "Αλλαγή ιμάντα χρονισμού", ServiceDate = DateTime.Parse("2023-02-06 20:40:10.552"), ServiceKilometer = 70898, EngineerID = 5, StartPrice = 95, FinalPrice = 95, StartingDate = DateTime.Parse("2023-02-06 15:38:10.552"), FinishingTime = DateTime.Parse("2023-02-06 20:40:10.552"), FinishingDate = DateTime.Parse("2023-02-06 20:40:10.552") });
         }
     }
 }

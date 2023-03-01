@@ -6,8 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GarageAPI.Data;
-using GarageAPI.Models;
 using System.Web.Http.Dependencies;
+using GarageAPI.Enum;
+using GarageAPI.Models.UserModels;
+using GarageAPI.Models;
 
 namespace GarageAPI.Controllers
 {
@@ -55,6 +57,58 @@ namespace GarageAPI.Controllers
                 return NotFound();
             }
             return Ok(userModelCar);
+        }
+
+        [HttpPost]
+        [Route("api/AddUserModel")]
+        public async Task<IActionResult> AddUserModel(AddUserModelRequest addUserModelRequest)
+        {
+            var userModel = new UserModels()
+            {
+                User = await dbContext.Users.FindAsync(addUserModelRequest.UserID),
+                ModelManufacturerYear = await dbContext.CarModelManufacturerYear.FindAsync(addUserModelRequest.ModelManufacturerYear),
+                ModelYear = await dbContext.CarModelYear.FindAsync(addUserModelRequest.ModelYear),
+                LicencePlate = addUserModelRequest.LicencePlate,
+                VIN = addUserModelRequest.VIN,
+                Color = addUserModelRequest.Color,
+                Kilometer = addUserModelRequest.Kilometer,
+            };
+            await dbContext.UserModels.AddAsync(userModel);
+            await dbContext.SaveChangesAsync();
+
+            return Ok(userModel);
+        }
+
+
+        [HttpPut]
+        [Route("api/UpdateUserModel/{id:long}")]
+        public async Task<IActionResult> UpdateUserModelByCarID([FromRoute] long id, UpdateUserModelRequest updateUserModelRequest)
+        {
+            var userModel = await dbContext.UserModels.FindAsync(id);
+            if (userModel != null)
+            {
+                userModel.Color = updateUserModelRequest.Color;
+                userModel.CarImage = updateUserModelRequest.CarImage;
+                await dbContext.SaveChangesAsync();
+                return Ok(userModel);
+            }
+
+            return Ok(userModel);
+        }
+
+        [HttpDelete]
+        [Route("api/DeleteUserModel/{id:long}")]
+        public async Task<IActionResult> DeleteUserModel([FromRoute] long id)
+        {
+            var userModel = await dbContext.UserModels.FindAsync(id);
+            if (userModel != null)
+            {
+                dbContext.Remove(userModel);
+                await dbContext.SaveChangesAsync();
+                return Ok();
+            }
+
+            return NotFound();
         }
     }
 }

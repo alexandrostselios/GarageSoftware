@@ -4,7 +4,7 @@ using GarageAPI.Enum;
 using GarageAPI.Models.CarManufacturers;
 using GarageAPI.Models.CarModelYears;
 
-namespace GarageAPI.Models
+namespace GarageAPI.Models.UserModels
 {
     public class UserModels
     {

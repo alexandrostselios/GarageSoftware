@@ -38,6 +38,9 @@
                 <th>
                     Service History
                 </th>
+                <th>
+                    Car Image
+                </th>
                 <th></th>
             </tr>
         </thead>
@@ -76,6 +79,8 @@
                         @Html.DisplayFor(modelItem => item.Description)
                     </td>
                     <td>
+                        <img src="data:image/jpg;base64, @Convert.ToBase64String(item.CarImage)" width="50" height="50" />
+                    </td>
                 </tr>
             }
         </tbody>

@@ -3,20 +3,17 @@ using System.ComponentModel;
 
 namespace GaragePortal.Models
 {
-    public class UserModels
+    public class UserModelsDTO
     {
         public int ID { get; set; }
 
         public long  UserID { get; set; }
 
         [DisplayName("Model Manufacturer")]
-        public string ManufacturerName { get; set; }
-
-        [DisplayName("Model Name")]
-        public string ModelName { get; set; }
+        public long ModelManufacturerYear { get; set; }
 
         [DisplayName("Model Year")]
-        public string ModelYear { get; set; }
+        public long ModelYear { get; set; }
 
         [DisplayName("Licence Plate")]
         public string? LicencePlate { get; set; }

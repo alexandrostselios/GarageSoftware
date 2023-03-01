@@ -75,7 +75,7 @@
                         <a class="af" asp-action="EditProfile" asp-route-id="@item.ID">Edit Profile</a>
                     </td>
                     <td>
-                        <a class="af" asp-action="ViewCustomerCars" asp-route-id="@item.ID">View Cars</a>
+                        <a class="af" asp-controller="UserModels" asp-action="ViewCustomerCars" asp-route-id="@item.ID">View Cars</a>
                     </td>
                 </tr>
             }

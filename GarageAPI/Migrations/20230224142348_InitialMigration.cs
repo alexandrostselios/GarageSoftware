@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace GarageAPI.Migrations
 {
     /// <inheritdoc />
@@ -228,56 +230,14 @@ namespace GarageAPI.Migrations
                         column: x => x.UserModelsID,
                         principalTable: "UserModels",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_ServiceHistory_Users_EngineerID",
                         column: x => x.EngineerID,
                         principalTable: "Users",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CarModelManufacturerYear_CarManufacturerID",
-                table: "CarModelManufacturerYear",
-                column: "CarManufacturerID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CarModelManufacturerYear_CarModelID",
-                table: "CarModelManufacturerYear",
-                column: "CarModelID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CarModelManufacturerYear_CarModelYearID",
-                table: "CarModelManufacturerYear",
-                column: "CarModelYearID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ServiceHistory_EngineerID",
-                table: "ServiceHistory",
-                column: "EngineerID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ServiceHistory_UserModelsID",
-                table: "ServiceHistory",
-                column: "UserModelsID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserModels_ModelManufacturerYearID",
-                table: "UserModels",
-                column: "ModelManufacturerYearID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserModels_ModelYearID",
-                table: "UserModels",
-                column: "ModelYearID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserModels_UserID",
-                table: "UserModels",
-                column: "UserID");
-
-
 
             migrationBuilder.InsertData(
                 table: "CarManufacturer",
@@ -1342,15 +1302,15 @@ namespace GarageAPI.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "ID", "CreationDate", "Email", "EnableAccess", "GarageID", "LastLoginDate", "ModifiedDate", "Name", "Password", "Speciality", "Surname", "UserType"},
+                columns: new[] { "ID", "CreationDate", "Email", "EnableAccess", "GarageID", "LastLoginDate", "ModifiedDate", "Name", "Password", "Speciality", "Surname", "UserPhoto", "UserType" },
                 values: new object[,]
                 {
-                    { 1L, new DateTime(2022, 1, 6, 14, 5, 14, 258, DateTimeKind.Unspecified), "atselios@classter.com", 1, 0L, null, null, "Alexandros", "1", null, "Tselios", 1 },
-                    { 2L, new DateTime(2022, 2, 6, 9, 19, 46, 369, DateTimeKind.Unspecified), "efi.vanni@gmail.com", 1, 0L, null, null, "Efthumia", "f1234!", null, "Varvagianni", 2 },
-                    { 3L, new DateTime(2022, 12, 15, 22, 19, 46, 456, DateTimeKind.Unspecified), "kkitsikou@hotmail.com", 1, 0L, null, null, "Kostas", "gafa#$#", null, "Kitsikou", 2 },
-                    { 4L, new DateTime(2022, 12, 24, 13, 42, 34, 566, DateTimeKind.Unspecified), "mpapadopoulos@yahoo.gr", 2, 0L, null, null, "Marios", "MP1234@?", null, "Papadopoulos", 2 },
-                    { 5L, new DateTime(2023, 2, 3, 20, 8, 23, 860, DateTimeKind.Unspecified), "konpapa@yahoo.gr", 1, 0L, null, null, "Κωνσταντίνος", "DfG34#$%^", 3L, "Παπαδόπουλος", 3 },
-                    { 6L, new DateTime(2023, 2, 6, 23, 1, 57, 810, DateTimeKind.Local).AddTicks(8996), "mmichail@gmail.com", 1, 0L, null, null, "Μιχάλης", "KavMixalis$%", 2L, "Μιχαήλ", 3 }
+                    { 1L, new DateTime(2022, 1, 6, 14, 5, 14, 258, DateTimeKind.Unspecified), "atselios@classter.com", 1, 0L, null, null, "Alexandros", "1", null, "Tselios", null, 1 },
+                    { 2L, new DateTime(2022, 2, 6, 9, 19, 46, 369, DateTimeKind.Unspecified), "efi.vanni@gmail.com", 1, 0L, null, null, "Efthumia", "f1234!", null, "Varvagianni", null, 2 },
+                    { 3L, new DateTime(2022, 12, 15, 22, 19, 46, 456, DateTimeKind.Unspecified), "kkitsikou@hotmail.com", 1, 0L, null, null, "Kostas", "gafa#$#", null, "Kitsikou", null, 2 },
+                    { 4L, new DateTime(2022, 12, 24, 13, 42, 34, 566, DateTimeKind.Unspecified), "mpapadopoulos@yahoo.gr", 2, 0L, null, null, "Marios", "MP1234@?", null, "Papadopoulos", null, 2 },
+                    { 5L, new DateTime(2023, 2, 3, 20, 8, 23, 860, DateTimeKind.Unspecified), "konpapa@yahoo.gr", 1, 0L, null, null, "Κωνσταντίνος", "DfG34#$%^", 3L, "Παπαδόπουλος", null, 3 },
+                    { 6L, new DateTime(2023, 2, 24, 16, 23, 48, 155, DateTimeKind.Local).AddTicks(1405), "mmichail@gmail.com", 1, 0L, null, null, "Μιχάλης", "KavMixalis$%", 2L, "Μιχαήλ", null, 3 }
                 });
 
             migrationBuilder.InsertData(
@@ -1366,6 +1326,7 @@ namespace GarageAPI.Migrations
                     { 6L, 24L, 17L, 63L }
                 });
 
+
             migrationBuilder.InsertData(
                 table: "UserModels",
                 columns: new[] { "ID", "UserID", "ModelManufacturerYearID", "ModelYearID", "LicencePlate", "VIN", "Color", "Kilometer" },
@@ -1378,14 +1339,13 @@ namespace GarageAPI.Migrations
                     {5L, 2L, 6L, 72L, "KBH1452", "JNKCV61E09M303716", 6, 65402},
                     {6L, 3L, 6L, 73L, "AHZ1495", "JH4DA9460MS032070", 6, 9563}
                 });
-
             migrationBuilder.InsertData(
                 table: "ServiceHistory",
-                columns: new[] { "Description", "ServiceDate", "UserModelsID", "ServiceKilometer", "EngineerID", "StartPrice", "FinalPrice", "StartingDate", "FinishingTime", "FinishingDate" },
+                columns: new[] { "ID", "Description", "DiscountPercentage", "DiscountPrice", "EngineerID", "FinalPrice", "FinishingDate", "FinishingTime", "ServiceDate", "ServiceKilometer", "StartPrice", "StartingDate", "StartingTime", "UserModelsID" },
                 values: new object[,]
                 {
-                    {"Αλλαγή λαδιών", new DateTime(2022, 12, 6, 20, 40, 10, 552, DateTimeKind.Local).AddTicks(858), 1L, 65080, 5L, 55, 55, new DateTime(2022, 12, 7, 13, 24, 10, 552, DateTimeKind.Local).AddTicks(858),new DateTime(2022, 12, 7, 13, 24, 10, 552, DateTimeKind.Local).AddTicks(858),new DateTime(2022, 12, 7, 13, 24, 10, 552, DateTimeKind.Local).AddTicks(858)},
-                    {"Αλλαγή ιμάντα χρονισμού", new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Local).AddTicks(858), 1L, 70898, 5L, 95, 95, new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Local).AddTicks(858),new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Local).AddTicks(858),new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Local).AddTicks(858)}
+                    { 1L, "Αλλαγή λαδιών", null, null, 5L, 55f, new DateTime(2022, 12, 7, 13, 24, 10, 552, DateTimeKind.Unspecified), new DateTime(2022, 12, 7, 13, 24, 10, 552, DateTimeKind.Unspecified), new DateTime(2022, 12, 6, 20, 40, 10, 552, DateTimeKind.Unspecified), 65080L, 55f, new DateTime(2022, 12, 7, 13, 24, 10, 552, DateTimeKind.Unspecified), null, 1L },
+                    { 2L, "Αλλαγή ιμάντα χρονισμού", null, null, 5L, 95f, new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Unspecified), new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Unspecified), new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Unspecified), 70898L, 95f, new DateTime(2023, 2, 6, 15, 38, 10, 552, DateTimeKind.Unspecified), null, 1L }
                 });
 
             var GetCustomerCars = @"CREATE PROCEDURE GetCustomerCars
@@ -1402,7 +1362,8 @@ namespace GarageAPI.Migrations
 		                   UM.LicencePlate, 
 		                   UM.VIN, 
 		                   UM.Color, 
-		                   UM.Kilometer
+		                   UM.Kilometer,
+						   UM.CarImage
 	                FROM UserModels UM
 		                 INNER JOIN CarModelManufacturerYear CMMY ON CMMY.ID = um.ModelManufacturerYearID
 		                 INNER JOIN CarModels CM ON CM.ID = CMMY.CarModelID
@@ -1427,7 +1388,8 @@ namespace GarageAPI.Migrations
 		                   UM.LicencePlate, 
 		                   UM.VIN, 
 		                   UM.Color, 
-		                   UM.Kilometer
+		                   UM.Kilometer,
+						   UM.CarImage
 	                FROM UserModels UM
 		                 INNER JOIN CarModelManufacturerYear CMMY ON CMMY.ID = um.ModelManufacturerYearID
 		                 INNER JOIN CarModels CM ON CM.ID = CMMY.CarModelID
@@ -1457,7 +1419,8 @@ namespace GarageAPI.Migrations
 		                   UM.LicencePlate, 
 		                   UM.VIN, 
 		                   UM.Color, 
-		                   UM.Kilometer
+		                   UM.Kilometer,
+						   UM.CarImage
 	                FROM ServiceHistory SH
 		                 INNER JOIN Users UE ON UE.ID = EngineerID
 		                 INNER JOIN UserModels UM ON UM.ID = SH.UserModelsID
@@ -1470,6 +1433,46 @@ namespace GarageAPI.Migrations
                 END;";
 
             migrationBuilder.Sql(GetCarServiceHistory);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CarModelManufacturerYear_CarManufacturerID",
+                table: "CarModelManufacturerYear",
+                column: "CarManufacturerID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CarModelManufacturerYear_CarModelID",
+                table: "CarModelManufacturerYear",
+                column: "CarModelID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CarModelManufacturerYear_CarModelYearID",
+                table: "CarModelManufacturerYear",
+                column: "CarModelYearID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ServiceHistory_EngineerID",
+                table: "ServiceHistory",
+                column: "EngineerID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ServiceHistory_UserModelsID",
+                table: "ServiceHistory",
+                column: "UserModelsID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserModels_ModelManufacturerYearID",
+                table: "UserModels",
+                column: "ModelManufacturerYearID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserModels_ModelYearID",
+                table: "UserModels",
+                column: "ModelYearID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserModels_UserID",
+                table: "UserModels",
+                column: "UserID");
         }
 
         /// <inheritdoc />

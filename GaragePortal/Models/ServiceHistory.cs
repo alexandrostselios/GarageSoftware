@@ -32,5 +32,7 @@ namespace GaragePortal.Models
         public string ManufacturerName { get; set; }
 
         public string ModelYear { get; set; }
+
+        public byte[]? CarImage { get; set; }
     }
 }

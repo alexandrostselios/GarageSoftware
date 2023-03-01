@@ -112,7 +112,7 @@ namespace GaragePortal.Models
             return RedirectToAction("Login", "Users");
         }
 
-        public IActionResult ViewCustomerCars(long id)
+        public async Task<IActionResult> MyProfile()
         {
             GetSessionProperties();
             string userID = string.Format(ViewBag.ID);
@@ -120,92 +120,16 @@ namespace GaragePortal.Models
             {
                 return NotFound();
             }
-            IEnumerable<UserModels> userCars = null;
-            var responseTask = client.GetAsync(client.BaseAddress + "/GetUserModelByUserID/" + id);
-            responseTask.Wait();
-            var result = responseTask.Result;
-            var readTask = result.Content.ReadAsAsync<IList<UserModels>>();
-            readTask.Wait();
-            userCars = readTask.Result;
+            return View();
 
-            if (userCars == null)
-            {
-                return NotFound();
-            }
-            return View(userCars);
-        }
-
-        public IActionResult ViewCarDetails(long id)
-        {
-            GetSessionProperties();
-            if (id == null)
-            {
-                return NotFound();
-            }
-            IEnumerable<ServiceHistory> carServiceHsitory = null;
-            var responseTask = client.GetAsync(client.BaseAddress + "/GetCarServiceHistoryByUserModelsID/" + id);
-            responseTask.Wait();
-            var result = responseTask.Result;
-            var readTask = result.Content.ReadAsAsync<IList<ServiceHistory>>();
-            readTask.Wait();
-            carServiceHsitory = readTask.Result;
-            if (carServiceHsitory == null)
-            {
-                return NotFound();
-            }
-            return View(carServiceHsitory);
-            //var users = null;
+            //var users = await _context.Users
+            //    .FirstOrDefaultAsync(m => m.ID == long.Parse(userID));
             //if (users == null)
             //{
             //    return NotFound();
             //}
             //return View(users);
         }
-
-        //public IActionResult EditCarView(long id)
-        //{
-        //    return View();
-        //}
-
-        public IActionResult EditCar(long id,Colors color,int flag)
-        {
-            GetSessionProperties();
-            IEnumerable<UserModels> userCars = null;
-            var responseTask = client.GetAsync(client.BaseAddress + "/GetUserModelsDetailsByUserOrCarID/" + id + "/" + 1);
-            responseTask.Wait();
-            var result = responseTask.Result;
-            var readTask = result.Content.ReadAsAsync<IList<UserModels>>();
-            readTask.Wait();
-            userCars = readTask.Result;
-            UserModels e = userCars.FirstOrDefault(c => c.ID == id);
-            if(flag == 0)
-            {
-                e.Color = color;
-            }
-            
-            JsonContent content = JsonContent.Create(e);
-
-            responseTask = client.PostAsync(client.BaseAddress + "/PostUserModel/", content);
-            return View();
-
-        }
-        //public async Task<IActionResult> MyProfile()
-        //{
-        //    GetSessionProperties();
-        //    string userID = string.Format(ViewBag.ID);
-        //    if (userID == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var users = await _context.Users
-        //        .FirstOrDefaultAsync(m => m.ID == long.Parse(userID));
-        //    if (users == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(users);
-        //}
 
         public IActionResult Create()
         {

@@ -3,8 +3,15 @@
     ViewData["Title"] = "List of User Cars";
 }
 
+
 @if (@ViewBag.UserType == GaragePortal.Enum.UserType.Admin.ToString())
 {
+    <p>
+        @*<a class="af" asp-action="Create">Add New User</a>*@
+        <form asp-action="Create">
+            <input type="submit" value="Add New Car" class="btn btn-primary" />
+        </form>
+    </p>
     <table class="table">
         <thead>
             <tr>
@@ -28,6 +35,9 @@
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Kilometer)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CarImage)
                 </th>
                 <th></th>
             </tr>
@@ -57,11 +67,17 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Kilometer)
                     </td>
-                    <td>
-                        <a class="af" asp-action="EditCar" asp-route-id="@item.ID" asp-route-flag="1">Edit Car Details</a>
+                     <td>
+                        @if (!(item.CarImage is null))
+                        {
+                            <img src="data:image/jpg;base64, @Convert.ToBase64String(item.CarImage)" width="50" height="50" />
+                        }
                     </td>
                     <td>
-                        <a class="af" asp-action="ViewCarDetails" asp-route-id="@item.ID">View Car History</a>
+                        <a class="af" asp-controller="UserModels" asp-action="EditCarDetails" asp-route-id="@item.ID" asp-route-flag="1">Edit Car Details</a>
+                    </td>
+                    <td>
+                        <a class="af" asp-controller="UserModels" asp-action="ViewCarDetails" asp-route-id="@item.ID">View Car History</a>
                     </td>
                 </tr>
             }

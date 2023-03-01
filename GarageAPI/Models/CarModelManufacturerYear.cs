@@ -10,11 +10,20 @@ namespace GarageAPI.Models
     {
         public long ID  { get; set; }
 
+        [ForeignKey("CarManufacturer")]
+        public long CarManufacturerID { get; set; }
+
         [NotNull]
         public CarManufacturer CarManufacturer { get; set; }
 
+        [ForeignKey("CarModel")]
+        public long CarModelID { get; set; }
+
         [NotNull]
         public CarModel CarModel { get; set; }
+
+        [ForeignKey("CarModelYear")]
+        public long CarModelYearID { get; set; }
 
         [NotNull]
         public CarModelYear CarModelYear { get; set; }
