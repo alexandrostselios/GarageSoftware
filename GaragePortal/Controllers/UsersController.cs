@@ -16,16 +16,13 @@ namespace GaragePortal.Models
 {
     public class UsersController : Controller
     {
-        //private readonly GarageManagementSoftwarePortalContext _context;
-
         Uri baseAddress = new Uri("https://localhost:7096/api");
         HttpClient client;
+
         public UsersController()
         {
             client = new HttpClient();
             client.BaseAddress = baseAddress;
-            //_context = context;
-            //_context = null;
         }
 
         public ActionResult Index()
@@ -58,7 +55,6 @@ namespace GaragePortal.Models
             return View("Login");
         }
 
-
         [HttpPost]
         public async Task<IActionResult> LoginHelper([Bind("Email,Password")] Users loginUser)
         {
@@ -81,6 +77,7 @@ namespace GaragePortal.Models
                         readTask.Wait();
                         u = readTask.Result;
                         SetSessionProperties(u);
+
                         return RedirectToAction("Index", "Users");
                     }
                     else //web api sent error response 
@@ -88,19 +85,23 @@ namespace GaragePortal.Models
                         //log response status here..
                         users = Enumerable.Empty<Users>();
                         ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+
                         return RedirectToAction("Login", "Users");
                     }
                 }
             }else if ((int)response.StatusCode == 801)
             {
                 ModelState.AddModelError("", @"No such user or wrong email");
+
                 return View("Login", loginUser);
             }else if ((int)response.StatusCode == 802)
             {
                 ModelState.AddModelError("", @"Wrong Password.");
+
                 return View("Login", loginUser);
             }else{
                 ModelState.AddModelError("", @"This user has been blocked!!!");
+
                 return View("Login", loginUser);
             }
         }
@@ -109,6 +110,7 @@ namespace GaragePortal.Models
         {
             SetSessionProperties(new Users { UserType = (long) UserType.Guest, ID = -1, Name = "None", Surname = "None" });
             GetSessionProperties();
+
             return RedirectToAction("Login", "Users");
         }
 
@@ -120,15 +122,8 @@ namespace GaragePortal.Models
             {
                 return NotFound();
             }
-            return View();
 
-            //var users = await _context.Users
-            //    .FirstOrDefaultAsync(m => m.ID == long.Parse(userID));
-            //if (users == null)
-            //{
-            //    return NotFound();
-            //}
-            //return View(users);
+            return View();
         }
 
         public IActionResult Create()
@@ -157,10 +152,9 @@ namespace GaragePortal.Models
                 var contentdata = new StringContent(data);
                 HttpResponseMessage response = client.PostAsJsonAsync(client.BaseAddress + "/AddUser/", createUser).Result;
 
-                //_context.Add(createUser);
-                //_context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
+
             return View(createUser);
         }
 
@@ -175,8 +169,6 @@ namespace GaragePortal.Models
 
             return View(null);
         }
-
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -195,81 +187,8 @@ namespace GaragePortal.Models
             }
             HttpResponseMessage response = client.PutAsJsonAsync(client.BaseAddress + "/UpdateUser/"+editUser.ID, editUser).Result;
 
-                //var dbUser = await _context.Users.FindAsync(editUser.ID);
-                //if (editUser.ChangePassword == false)
-                //{
-                //    editUser.Password = dbUser.Password;
-                //}
-                //if (editUser.ConvertUser == true)
-                //{
-                //    if (dbUser.UserType == UserType.Admin)
-                //    {
-                //        editUser.UserType = UserType.User;
-                //    }
-                //    else if (dbUser.UserType == UserType.User)
-                //    {
-                //        editUser.UserType = UserType.User;
-                //    }
-                //}
-                //_context.Entry(dbUser).State = EntityState.Detached;
-                //if (ModelState.IsValid)
-                //{
-                //    try
-                //    {
-                //        editUser.ModifiedDate = DateTime.Now;
-                //        _context.Update(editUser);
-                //        await _context.SaveChangesAsync();
-                //    }
-                //    catch (DbUpdateConcurrencyException)
-                //    {
-                //        if (!UsersExists(editUser.ID))
-                //        {
-                //            return NotFound();
-                //        }
-                //        else
-                //        {
-                //            throw;
-                //        }
-                //    }
-                //    return RedirectToAction(nameof(Index));
-                //}
-                return RedirectToAction(nameof(Index));
-            //return View(editUser);
+            return RedirectToAction(nameof(Index));
         }
-
-        //private bool UsersExists(long iD)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public async Task<IActionResult> Delete(long id)
-        //{
-        //    GetSessionProperties();
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var users = await _context.Users
-        //        .FirstOrDefaultAsync(m => m.ID == id);
-        //    if (users == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(users);
-        //}
-
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(long id)
-        //{
-        //    GetSessionProperties();
-        //    var users = _context.Users.Find(id);
-        //    _context.Users.Remove(users);
-        //    _context.SaveChanges();
-        //    return RedirectToAction(nameof(Index));
-        //}
 
         private void SetSessionProperties(Users dbUser)
         {

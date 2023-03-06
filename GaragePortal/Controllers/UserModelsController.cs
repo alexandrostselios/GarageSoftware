@@ -20,12 +20,11 @@ namespace GaragePortal.Controllers
     {
         Uri baseAddress = new Uri("https://localhost:7096/api");
         HttpClient client;
+
         public UserModelsController()
         {
             client = new HttpClient();
             client.BaseAddress = baseAddress;
-            //_context = context;
-            //_context = null;
         }
 
         // GET: UserModels
@@ -54,6 +53,7 @@ namespace GaragePortal.Controllers
             {
                 return NotFound();
             }
+
             return View(userCars);
         }
 
@@ -118,8 +118,8 @@ namespace GaragePortal.Controllers
                 }
             }
             JsonContent content = JsonContent.Create(e);
-
             responseTask = client.PutAsync(client.BaseAddress + "/UpdateUserModel/" + id, content);
+
             return View(cc);
 
         }
@@ -139,16 +139,8 @@ namespace GaragePortal.Controllers
             {
                 return NotFound();
             }
-            return NotFound();
-            //var userModels = null;
-            ////var userModels = await _context.UserModels
-            ////    .FirstOrDefaultAsync(m => m.ID == id);
-            //if (userModels == null)
-            //{
-            //    return NotFound();
-            //}
 
-            //return View(userModels);
+            return NotFound();
         }
 
         // GET: UserModels/Create
@@ -158,21 +150,42 @@ namespace GaragePortal.Controllers
         }
 
         // POST: UserModels/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("UserID,ModelManufacturerYear,ModelYear,LicencePlate,VIN,Color,Kilometer")] UserModelsDTO userModels)
         {
+            GetSessionProperties();
             if (ModelState.IsValid && userModels.UserID > 0)
             {
                 JsonContent content = JsonContent.Create(userModels);
-
                 HttpResponseMessage response = client.PostAsJsonAsync(client.BaseAddress + "/AddUserModel/", userModels).Result;
-                //return RedirectToAction(nameof(ViewCustomerCars+'1'));
+
                 return View();
             }
+
             return View(userModels);
+        }
+
+        //public IActionResult CreateServiceHistory(long UserModelsID)
+        //{
+        //    GetSessionProperties();
+        //    return View();
+        //}
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateUserModelServiceHistory(long UserModelsID, [Bind("UserModelsID", "Description", "ServiceDate", "ServiceKilometer", "EngineerID", "StartPrice", "DiscountPrice", "DiscountPercentage", "FinalPrice", "StartingDate", "StartingTime", "FinishingDate", "FinishingTime")] ServiceHistoryDTO serviceHistoryDTO)
+        {
+            GetSessionProperties();
+            if (ModelState.IsValid && serviceHistoryDTO.UserModelsID > 0 && !(serviceHistoryDTO.ServiceDate is null))
+            {
+                JsonContent content = JsonContent.Create(serviceHistoryDTO);
+                HttpResponseMessage response = client.PostAsJsonAsync(client.BaseAddress + "/AddUserModelServiceHistory/", serviceHistoryDTO).Result;
+
+                return View();
+            }
+
+            return View("CreateUserModelServiceHistory");
         }
 
         // GET: UserModels/Edit/5
@@ -182,18 +195,11 @@ namespace GaragePortal.Controllers
             {
                 return NotFound();
             }
+
             return NotFound();
-            //var userModels = null //await _context.UserModels.FindAsync(id);
-            //if (userModels == null)
-            //{
-            //    return NotFound();
-            //}
-            //return View(userModels);
         }
 
         // POST: UserModels/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,UserID,ModelID,ModelYear")] UserModels userModels)
@@ -202,29 +208,8 @@ namespace GaragePortal.Controllers
             {
                 return NotFound();
             }
-            return NotFound();
 
-            //if (ModelState.IsValid)
-            //{
-            //    try
-            //    {
-            //        _context.Update(userModels);
-            //        await _context.SaveChangesAsync();
-            //    }
-            //    catch (DbUpdateConcurrencyException)
-            //    {
-            //        if (!UserModelsExists(userModels.ID))
-            //        {
-            //            return NotFound();
-            //        }
-            //        else
-            //        {
-            //            throw;
-            //        }
-            //    }
-            //    return RedirectToAction(nameof(Index));
-            //}
-            //return View(userModels);
+            return NotFound();
         }
 
         // GET: UserModels/Delete/5
@@ -234,15 +219,8 @@ namespace GaragePortal.Controllers
             {
                 return NotFound();
             }
-            return NotFound();
-            //var userModels = await _context.UserModels
-            //    .FirstOrDefaultAsync(m => m.ID == id);
-            //if (userModels == null)
-            //{
-            //    return NotFound();
-            //}
 
-            //return View(userModels);
+            return NotFound();
         }
 
         // POST: UserModels/Delete/5
@@ -250,16 +228,12 @@ namespace GaragePortal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            //var userModels = await _context.UserModels.FindAsync(id);
-            //_context.UserModels.Remove(userModels);
-            //await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool UserModelsExists(int id)
         {
             return true;
-           // return _context.UserModels.Any(e => e.ID == id);
         }
     }
 }

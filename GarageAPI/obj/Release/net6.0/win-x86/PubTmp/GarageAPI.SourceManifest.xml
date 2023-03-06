@@ -1,5 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sitemanifest>
   <IisApp path="C:\Users\alexa\Desktop\Visual Studio Projects\GarageSoftware\GarageAPI\obj\Release\net6.0\win-x86\PubTmp\Out\" />
-  <dbfullsql path="C:\Users\alexa\Desktop\Visual Studio Projects\GarageSoftware\GarageAPI\obj\Release\net6.0\win-x86\PubTmp\EFSQLScripts\GarageAPI.Data.GarageAPIDbContext.sql" />
 </sitemanifest>

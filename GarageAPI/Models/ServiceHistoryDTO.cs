@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GarageAPI.Models
 {
+    [NotMapped]
     public class ServiceHistoryDTO
     {
         public string Description { get; set; }

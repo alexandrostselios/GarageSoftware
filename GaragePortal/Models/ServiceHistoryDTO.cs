@@ -2,17 +2,11 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace GarageAPI.Models.UserModels
+namespace GaragePortal.Models
 {
-    public class ServiceHistory
+    public class ServiceHistoryDTO
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long ID { get; set; }
-
-        [ForeignKey("UserModels")]
         public long UserModelsID { get; set; }
-
-        public UserModels UserModels { get; set; }
 
         public string Description { get; set; }
 
@@ -21,11 +15,8 @@ namespace GarageAPI.Models.UserModels
 
         public long ServiceKilometer { get; set; }
 
-        [ForeignKey("Engineer")]
         public long EngineerID { get; set; }
 
-        public Users Engineer { get; set; }
-        
         public float StartPrice { get; set; }
 
         public float? DiscountPrice { get; set; }

@@ -1,0 +1,95 @@
+﻿@model GaragePortal.Models.ServiceHistoryDTO
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<h1>Create</h1>
+
+<h4>UserModels</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateUserModelServiceHistory">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="UserModelsID" value="1"/>
+@*             <div class="form-group">
+                <label asp-for="UserModelsID" class="control-label"></label>
+                <input asp-for="UserModelsID" class="form-control"/>
+                <span asp-validation-for="UserModelsID" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="ServiceDate" class="control-label"></label>
+                <input asp-for="ServiceDate" class="form-control" />
+                <span asp-validation-for="ServiceDate" class="text-danger"></span>
+            </div>
+             <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ServiceKilometer" class="control-label"></label>
+                <input asp-for="ServiceKilometer" class="form-control" />
+                <span asp-validation-for="ServiceKilometer" class="text-danger"></span>
+            </div>
+             <div class="form-group">
+                <label asp-for="EngineerID" class="control-label"></label>
+                <input asp-for="EngineerID" class="form-control" />
+                <span asp-validation-for="EngineerID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartPrice" class="control-label"></label>
+                <input asp-for="StartPrice" class="form-control" />
+                <span asp-validation-for="StartPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DiscountPrice" class="control-label"></label>
+                <input asp-for="DiscountPrice" class="form-control" />
+                <span asp-validation-for="DiscountPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DiscountPercentage" class="control-label"></label>
+                <input asp-for="DiscountPercentage" class="form-control" />
+                <span asp-validation-for="DiscountPercentage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FinalPrice" class="control-label"></label>
+                <input asp-for="FinalPrice" class="form-control" />
+                <span asp-validation-for="FinalPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartingDate" class="control-label"></label>
+                <input asp-for="StartingDate" class="form-control" />
+                <span asp-validation-for="StartingDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartingTime" class="control-label"></label>
+                <input asp-for="StartingTime" class="form-control" />
+                <span asp-validation-for="StartingTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FinishingDate" class="control-label"></label>
+                <input asp-for="FinishingDate" class="form-control" />
+                <span asp-validation-for="FinishingDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FinishingTime" class="control-label"></label>
+                <input asp-for="FinishingTime" class="form-control" />
+                <span asp-validation-for="FinishingTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

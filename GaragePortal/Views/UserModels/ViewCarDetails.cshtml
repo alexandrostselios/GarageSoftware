@@ -5,6 +5,11 @@
 
 @if (@ViewBag.UserType == GaragePortal.Enum.UserType.Admin.ToString())
 {
+    <p>
+        <form asp-action="CreateUserModelServiceHistory" asp-route-UserModelsID="1" }>
+            <input type="submit" value="Add Service History" class="btn btn-primary"/>
+        </form>
+    </p>
     <table class="table">
         <thead>
             <tr>

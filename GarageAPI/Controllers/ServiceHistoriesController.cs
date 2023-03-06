@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GarageAPI.Data;
 using GarageAPI.Models;
+using GarageAPI.Models.UserModels;
 
 namespace GarageAPI.Controllers
 {
@@ -39,6 +40,33 @@ namespace GarageAPI.Controllers
                 return NotFound();
             }
             return Ok(carServiceHistory);
+        }
+
+        [HttpPost]
+        [Route("api/AddUserModelServiceHistory")]
+        public async Task<IActionResult> AddUserModelServiceHistory(AddUserModelServiceHistoryRequest addUserModelServiceHistoryRequest)
+        {
+            var serviceHistory = new ServiceHistory()
+            {
+               UserModels = await dbContext.UserModels.FindAsync(addUserModelServiceHistoryRequest.UserModelsID),
+               ServiceDate = addUserModelServiceHistoryRequest.ServiceDate,
+               Description = addUserModelServiceHistoryRequest.Description,
+               ServiceKilometer = addUserModelServiceHistoryRequest.ServiceKilometer,
+               Engineer = await dbContext.Users.FindAsync(addUserModelServiceHistoryRequest.EngineerID),
+               StartPrice = addUserModelServiceHistoryRequest.StartPrice,
+               DiscountPrice = addUserModelServiceHistoryRequest.DiscountPrice,
+               DiscountPercentage = addUserModelServiceHistoryRequest.DiscountPercentage,
+               FinalPrice = addUserModelServiceHistoryRequest.FinalPrice,
+               StartingDate = addUserModelServiceHistoryRequest.StartingDate,
+               StartingTime = addUserModelServiceHistoryRequest.StartingTime,
+               FinishingDate = addUserModelServiceHistoryRequest.FinishingDate,
+               FinishingTime = addUserModelServiceHistoryRequest.FinishingTime
+
+            };
+            await dbContext.ServiceHistory.AddAsync(serviceHistory);
+            await dbContext.SaveChangesAsync();
+
+            return Ok(serviceHistory);
         }
     }
 }
