@@ -1,6 +1,8 @@
 ﻿@model GaragePortal.Models.Users
+@inject LanguageService Resource
+
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = @Resource.GetKey("Login");
 }
 
 

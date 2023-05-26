@@ -11,11 +11,16 @@ using GaragePortal.Enum;
 using Newtonsoft.Json;
 using System.Net.Http.Json;
 using System.IO;
+using System.Runtime.ConstrainedExecution;
+using Microsoft.Extensions.Localization;
+using System.Resources;
 
 namespace GaragePortal.Models
 {
     public class UsersController : Controller
     {
+        //Uri baseAddress = new Uri("https://garageapi20230516165317.azurewebsites.net/api");
+        //Uri baseAddress = new Uri("https://alefhome.ddns.net:5002/api");
         Uri baseAddress = new Uri("https://localhost:7096/api");
         HttpClient client;
 
@@ -58,6 +63,9 @@ namespace GaragePortal.Models
         [HttpPost]
         public async Task<IActionResult> LoginHelper([Bind("Email,Password")] Users loginUser)
         {
+
+            
+
             IEnumerable<Users> users = null;
             Users u = null;
             HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/GetLogin/"+loginUser.Email+"/"+loginUser.Password).Result;

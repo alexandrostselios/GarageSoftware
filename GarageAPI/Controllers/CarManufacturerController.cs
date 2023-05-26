@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 namespace GarageAPI.Controllers
 {
     [ApiController]
-    //[Route("api/CarManufacturers")]
     public class CarManufacturerController : Controller
     {
         private readonly GarageAPIDbContext dbContext;
@@ -33,7 +32,6 @@ namespace GarageAPI.Controllers
             {
                 return NotFound();
             }
-
             return Ok(carModel);
         }
 
@@ -63,7 +61,6 @@ namespace GarageAPI.Controllers
                 await dbContext.SaveChangesAsync();
                 return Ok(carManufacturer);
             }
-
             return NotFound();
         }
 
@@ -78,7 +75,6 @@ namespace GarageAPI.Controllers
                 await dbContext.SaveChangesAsync();
                 return Ok(carManufacturer);
             }
-
             return NotFound();
         }
     }

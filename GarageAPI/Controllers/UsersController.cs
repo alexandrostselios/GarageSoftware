@@ -24,6 +24,13 @@ namespace GarageAPI.Controllers
         }
 
         [HttpGet]
+        [Route("api/GetUsersExist/{id:long}")]
+        public async Task<IActionResult> GetUsersExist([FromRoute] long id)
+        {
+            return Ok(dbContext.Users.Any(e => e.ID == id));
+        }
+
+        [HttpGet]
         [Route("api/GetUsers/{flag:long}")]
         public async Task<IActionResult> GetUsers([FromRoute] long flag)
         {
@@ -44,7 +51,6 @@ namespace GarageAPI.Controllers
             {
                 return NotFound();
             }
-
             return Ok(user);
         }
 
@@ -57,7 +63,6 @@ namespace GarageAPI.Controllers
             {
                 return NotFound();
             }
-
             return Ok(user);
         }
 
@@ -89,8 +94,6 @@ namespace GarageAPI.Controllers
                 }
             }
         }
-
-
 
         //// GET: Users/Details/5
         //public async Task<IActionResult> Details(int? id)
@@ -250,22 +253,17 @@ namespace GarageAPI.Controllers
             if (user != null)
             {
                 
-                user.Name = updateUserRequest.Name;
-                //user.Surname = updateUserRequest.Surname;   
-                //user.Email = updateUserRequest.Email;
+                if (!(updateUserRequest.Name is null )) user.Name = updateUserRequest.Name;
+                if (!(updateUserRequest.Surname is null)) user.Surname = updateUserRequest.Surname;
+                if (!(updateUserRequest.Email is null)) user.Email = updateUserRequest.Email;
                 //user.Password = updateUserRequest.Password;
-                user.UserPhoto = updateUserRequest.UserPhoto;
+                if (!(updateUserRequest.UserPhoto is null)) user.UserPhoto = updateUserRequest.UserPhoto;
+                //user.UserPhoto = updateUserRequest.UserPhoto;
                 //user.EnableAccess = updateUserRequest.EnableAccess;
                 await dbContext.SaveChangesAsync();
                 return Ok(user);
             }
-
             return NotFound();
-        }
-
-        private bool UsersExists(int id)
-        {
-          return dbContext.Users.Any(e => e.ID == id);
         }
     }
 }

@@ -78,7 +78,8 @@ namespace GarageAPI.Migrations
                     Kilometer = table.Column<long>(type: "bigint", nullable: false),
                     ModelName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ManufacturerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ModelYear = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    ModelYear = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CarImage = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -101,7 +102,8 @@ namespace GarageAPI.Migrations
                     Color = table.Column<long>(type: "bigint", nullable: false),
                     ModelName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ManufacturerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ModelYear = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    ModelYear = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CarImage = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -155,7 +157,7 @@ namespace GarageAPI.Migrations
                         column: x => x.CarModelYearID,
                         principalTable: "CarModelYear",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_CarModelManufacturerYear_CarModels_CarModelID",
                         column: x => x.CarModelID,
@@ -217,9 +219,7 @@ namespace GarageAPI.Migrations
                     DiscountPrice = table.Column<float>(type: "real", nullable: true),
                     DiscountPercentage = table.Column<float>(type: "real", nullable: true),
                     FinalPrice = table.Column<float>(type: "real", nullable: false),
-                    StartingTime = table.Column<DateTime>(type: "datetime", nullable: true),
                     StartingDate = table.Column<DateTime>(type: "datetime", nullable: true),
-                    FinishingTime = table.Column<DateTime>(type: "datetime", nullable: true),
                     FinishingDate = table.Column<DateTime>(type: "datetime", nullable: true)
                 },
                 constraints: table =>
@@ -236,7 +236,7 @@ namespace GarageAPI.Migrations
                         column: x => x.EngineerID,
                         principalTable: "Users",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.InsertData(
@@ -1310,7 +1310,7 @@ namespace GarageAPI.Migrations
                     { 3L, new DateTime(2022, 12, 15, 22, 19, 46, 456, DateTimeKind.Unspecified), "kkitsikou@hotmail.com", 1, 0L, null, null, "Kostas", "gafa#$#", null, "Kitsikou", null, 2 },
                     { 4L, new DateTime(2022, 12, 24, 13, 42, 34, 566, DateTimeKind.Unspecified), "mpapadopoulos@yahoo.gr", 2, 0L, null, null, "Marios", "MP1234@?", null, "Papadopoulos", null, 2 },
                     { 5L, new DateTime(2023, 2, 3, 20, 8, 23, 860, DateTimeKind.Unspecified), "konpapa@yahoo.gr", 1, 0L, null, null, "Κωνσταντίνος", "DfG34#$%^", 3L, "Παπαδόπουλος", null, 3 },
-                    { 6L, new DateTime(2023, 2, 24, 16, 23, 48, 155, DateTimeKind.Local).AddTicks(1405), "mmichail@gmail.com", 1, 0L, null, null, "Μιχάλης", "KavMixalis$%", 2L, "Μιχαήλ", null, 3 }
+                    { 6L, new DateTime(2023, 3, 7, 16, 32, 16, 548, DateTimeKind.Local).AddTicks(7090), "mmichail@gmail.com", 1, 0L, null, null, "Μιχάλης", "KavMixalis$%", 2L, "Μιχαήλ", null, 3 }
                 });
 
             migrationBuilder.InsertData(
@@ -1326,26 +1326,27 @@ namespace GarageAPI.Migrations
                     { 6L, 24L, 17L, 63L }
                 });
 
-
             migrationBuilder.InsertData(
                 table: "UserModels",
                 columns: new[] { "ID", "UserID", "ModelManufacturerYearID", "ModelYearID", "LicencePlate", "VIN", "Color", "Kilometer" },
                 values: new object[,]
                 {
-                    {1L, 1L, 1L, 66L, "KBT5670", "ZAR94000007368150", 101, 156125},
-                    {2L, 1L, 3L, 67L, "EYB7174", "VNKKG3D330A048555", 142, 27450},
-                    {3L, 1L, 4L, 67L, "NIZ2654", "NLHBA51BABZ014926", 4, 88956},
-                    {4L, 2L, 5L, 68L, "XEZ6532", "KHX94000007259841", 5, 220653},
-                    {5L, 2L, 6L, 72L, "KBH1452", "JNKCV61E09M303716", 6, 65402},
-                    {6L, 3L, 6L, 73L, "AHZ1495", "JH4DA9460MS032070", 6, 9563}
+                                {1L, 1L, 1L, 66L, "KBT5670", "ZAR94000007368150", 101, 156125},
+                                {2L, 1L, 3L, 67L, "EYB7174", "VNKKG3D330A048555", 142, 27450},
+                                {3L, 1L, 4L, 67L, "NIZ2654", "NLHBA51BABZ014926", 4, 88956},
+                                {4L, 2L, 5L, 68L, "XEZ6532", "KHX94000007259841", 5, 220653},
+                                {5L, 2L, 6L, 72L, "KBH1452", "JNKCV61E09M303716", 6, 65402},
+                                {6L, 3L, 6L, 73L, "AHZ1495", "JH4DA9460MS032070", 6, 9563}
                 });
+
             migrationBuilder.InsertData(
                 table: "ServiceHistory",
-                columns: new[] { "ID", "Description", "DiscountPercentage", "DiscountPrice", "EngineerID", "FinalPrice", "FinishingDate", "FinishingTime", "ServiceDate", "ServiceKilometer", "StartPrice", "StartingDate", "StartingTime", "UserModelsID" },
+                columns: new[] { "ID", "Description", "DiscountPercentage", "DiscountPrice", "EngineerID", "FinalPrice", "FinishingDate", "ServiceDate", "ServiceKilometer", "StartPrice", "StartingDate", "UserModelsID" },
                 values: new object[,]
                 {
-                    { 1L, "Αλλαγή λαδιών", null, null, 5L, 55f, new DateTime(2022, 12, 7, 13, 24, 10, 552, DateTimeKind.Unspecified), new DateTime(2022, 12, 7, 13, 24, 10, 552, DateTimeKind.Unspecified), new DateTime(2022, 12, 6, 20, 40, 10, 552, DateTimeKind.Unspecified), 65080L, 55f, new DateTime(2022, 12, 7, 13, 24, 10, 552, DateTimeKind.Unspecified), null, 1L },
-                    { 2L, "Αλλαγή ιμάντα χρονισμού", null, null, 5L, 95f, new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Unspecified), new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Unspecified), new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Unspecified), 70898L, 95f, new DateTime(2023, 2, 6, 15, 38, 10, 552, DateTimeKind.Unspecified), null, 1L }
+                    { 1L, "Αλλαγή λαδιών", null, null, 5L, 55f, new DateTime(2022, 12, 7, 13, 24, 10, 552, DateTimeKind.Unspecified), new DateTime(2022, 12, 6, 20, 40, 10, 552, DateTimeKind.Unspecified), 65080L, 55f, new DateTime(2022, 12, 7, 13, 24, 10, 552, DateTimeKind.Unspecified), 1L },
+                    { 2L, "Αλλαγή ιμάντα χρονισμού", null, null, 5L, 95f, new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Unspecified), new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Unspecified), 70898L, 95f, new DateTime(2023, 2, 6, 15, 38, 10, 552, DateTimeKind.Unspecified), 1L },
+                    { 3L, "Αλλαγή Ελαστικων", null, null, 5L, 100f, new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Unspecified), new DateTime(2023, 4, 6, 20, 40, 10, 552, DateTimeKind.Unspecified), 85365L, 100f, new DateTime(2023, 4, 6, 15, 38, 10, 552, DateTimeKind.Unspecified), 1L }
                 });
 
             var GetCustomerCars = @"CREATE PROCEDURE GetCustomerCars
@@ -1406,31 +1407,34 @@ namespace GarageAPI.Migrations
                 AS
                 BEGIN
 	                SET NOCOUNT ON;
-		                SELECT SH.Description, 
-		                   SH.ServiceDate, 
-		                   SH.ServiceKilometer, 
-		                   SH.StartPrice, 
-                           SH.FinalPrice,
-		                   UE.Surname, 
-		                   UE.Name, 
-		                   CMAN.ManufacturerName, 
-		                   CM.ModelName, 
-		                   CMY.Description AS ModelYear, 
-		                   UM.LicencePlate, 
-		                   UM.VIN, 
-		                   UM.Color, 
-		                   UM.Kilometer,
-						   UM.CarImage
-	                FROM ServiceHistory SH
-		                 INNER JOIN Users UE ON UE.ID = EngineerID
-		                 INNER JOIN UserModels UM ON UM.ID = SH.UserModelsID
-		                 INNER JOIN CarModelManufacturerYear CMMY ON CMMY.ID = um.ModelManufacturerYearID
-		                 INNER JOIN CarModels CM ON CM.ID = CMMY.CarModelID
-		                 INNER JOIN CarManufacturer CMAN ON CMAN.ID = CMMY.CarManufacturerID
-		                 INNER JOIN CarModelYear CMY ON CMY.ID = CMMY.CarModelYearID
-	                WHERE SH.UserModelsID = @UserModelsID
-	                ORDER BY SH.ServiceDate DESC;
-                END;";
+                    SELECT SH.Description, 
+                           SH.ServiceDate, 
+                           SH.StartingDate, 
+                           SH.FinishingDate, 
+                           SH.ServiceKilometer, 
+                           SH.StartPrice, 
+                           SH.FinalPrice, 
+                           UE.Surname, 
+                           UE.Name, 
+                           CMAN.ManufacturerName, 
+                           CM.ModelName, 
+                           CMY.Description AS ModelYear, 
+                           UM.ID AS UserModelsID, 
+                           UM.LicencePlate, 
+                           UM.VIN, 
+                           UM.Color, 
+                           UM.Kilometer, 
+                           UM.CarImage
+                    FROM UserModels UM
+                         INNER JOIN CarModelManufacturerYear CMMY ON CMMY.ID = um.ModelManufacturerYearID
+                         INNER JOIN CarModels CM ON CM.ID = CMMY.CarModelID
+                         INNER JOIN CarManufacturer CMAN ON CMAN.ID = CMMY.CarManufacturerID
+                         INNER JOIN CarModelYear CMY ON CMY.ID = CMMY.CarModelYearID
+                         LEFT OUTER JOIN ServiceHistory SH ON UM.ID = SH.UserModelsID
+                         LEFT OUTER JOIN Users UE ON UE.ID = EngineerID
+                    WHERE SH.UserModelsID = @UserModelsID
+                    ORDER BY SH.ServiceDate DESC;
+                END";
 
             migrationBuilder.Sql(GetCarServiceHistory);
 

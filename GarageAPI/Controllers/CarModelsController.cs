@@ -7,7 +7,6 @@ using System.Security.Cryptography;
 namespace GarageAPI.Controllers
 {
     [ApiController]
-    //[Route("api/CarModels")]
     public class CarModelsController : Controller
     {
         private readonly GarageAPIDbContext dbContext;
@@ -34,7 +33,6 @@ namespace GarageAPI.Controllers
             {
                 return NotFound();
             }
-
             return Ok(carModel);
         }
 
@@ -63,7 +61,6 @@ namespace GarageAPI.Controllers
                 await dbContext.SaveChangesAsync();
                 return Ok(carModel);
             }
-
             return NotFound();
         }
 
@@ -78,7 +75,6 @@ namespace GarageAPI.Controllers
                 await dbContext.SaveChangesAsync();
                 return Ok(carModel);
             }
-
             return NotFound();
         }
     }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GarageAPI.Migrations
 {
     [DbContext(typeof(GarageAPIDbContext))]
-    [Migration("20230224142348_InitialMigration")]
+    [Migration("20230307143216_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -5338,95 +5338,11 @@ namespace GarageAPI.Migrations
                         });
                 });
 
-            modelBuilder.Entity("GarageAPI.Models.ServiceHistory", b =>
-                {
-                    b.Property<long>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<float?>("DiscountPercentage")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("DiscountPrice")
-                        .HasColumnType("real");
-
-                    b.Property<long>("EngineerID")
-                        .HasColumnType("bigint");
-
-                    b.Property<float>("FinalPrice")
-                        .HasColumnType("real");
-
-                    b.Property<DateTime?>("FinishingDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<DateTime?>("FinishingTime")
-                        .HasColumnType("datetime");
-
-                    b.Property<DateTime?>("ServiceDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<long>("ServiceKilometer")
-                        .HasColumnType("bigint");
-
-                    b.Property<float>("StartPrice")
-                        .HasColumnType("real");
-
-                    b.Property<DateTime?>("StartingDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<DateTime?>("StartingTime")
-                        .HasColumnType("datetime");
-
-                    b.Property<long>("UserModelsID")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("EngineerID");
-
-                    b.HasIndex("UserModelsID");
-
-                    b.ToTable("ServiceHistory");
-
-                    b.HasData(
-                        new
-                        {
-                            ID = 1L,
-                            Description = "Αλλαγή λαδιών",
-                            EngineerID = 5L,
-                            FinalPrice = 55f,
-                            FinishingDate = new DateTime(2022, 12, 7, 13, 24, 10, 552, DateTimeKind.Unspecified),
-                            FinishingTime = new DateTime(2022, 12, 7, 13, 24, 10, 552, DateTimeKind.Unspecified),
-                            ServiceDate = new DateTime(2022, 12, 6, 20, 40, 10, 552, DateTimeKind.Unspecified),
-                            ServiceKilometer = 65080L,
-                            StartPrice = 55f,
-                            StartingDate = new DateTime(2022, 12, 7, 13, 24, 10, 552, DateTimeKind.Unspecified),
-                            UserModelsID = 1L
-                        },
-                        new
-                        {
-                            ID = 2L,
-                            Description = "Αλλαγή ιμάντα χρονισμού",
-                            EngineerID = 5L,
-                            FinalPrice = 95f,
-                            FinishingDate = new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Unspecified),
-                            FinishingTime = new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Unspecified),
-                            ServiceDate = new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Unspecified),
-                            ServiceKilometer = 70898L,
-                            StartPrice = 95f,
-                            StartingDate = new DateTime(2023, 2, 6, 15, 38, 10, 552, DateTimeKind.Unspecified),
-                            UserModelsID = 1L
-                        });
-                });
-
             modelBuilder.Entity("GarageAPI.Models.ServiceHistoryDTO", b =>
                 {
+                    b.Property<byte[]>("CarImage")
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<long>("Color")
                         .HasColumnType("bigint");
 
@@ -5477,7 +5393,99 @@ namespace GarageAPI.Migrations
                     b.ToTable("ServiceHistoryDTO");
                 });
 
-            modelBuilder.Entity("GarageAPI.Models.UserModels", b =>
+            modelBuilder.Entity("GarageAPI.Models.UserModels.ServiceHistory", b =>
+                {
+                    b.Property<long>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float?>("DiscountPercentage")
+                        .HasColumnType("real");
+
+                    b.Property<float?>("DiscountPrice")
+                        .HasColumnType("real");
+
+                    b.Property<long>("EngineerID")
+                        .HasColumnType("bigint");
+
+                    b.Property<float>("FinalPrice")
+                        .HasColumnType("real");
+
+                    b.Property<DateTime?>("FinishingDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime?>("ServiceDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<long>("ServiceKilometer")
+                        .HasColumnType("bigint");
+
+                    b.Property<float>("StartPrice")
+                        .HasColumnType("real");
+
+                    b.Property<DateTime?>("StartingDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<long>("UserModelsID")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("EngineerID");
+
+                    b.HasIndex("UserModelsID");
+
+                    b.ToTable("ServiceHistory");
+
+                    //b.HasData(
+                    //    new
+                    //    {
+                    //        ID = 1L,
+                    //        Description = "Αλλαγή λαδιών",
+                    //        EngineerID = 5L,
+                    //        FinalPrice = 55f,
+                    //        FinishingDate = new DateTime(2022, 12, 7, 13, 24, 10, 552, DateTimeKind.Unspecified),
+                    //        ServiceDate = new DateTime(2022, 12, 6, 20, 40, 10, 552, DateTimeKind.Unspecified),
+                    //        ServiceKilometer = 65080L,
+                    //        StartPrice = 55f,
+                    //        StartingDate = new DateTime(2022, 12, 7, 13, 24, 10, 552, DateTimeKind.Unspecified)
+                    //       // UserModelsID = 1L
+                    //    },
+                    //    new
+                    //    {
+                    //        ID = 2L,
+                    //        Description = "Αλλαγή ιμάντα χρονισμού",
+                    //        EngineerID = 5L,
+                    //        FinalPrice = 95f,
+                    //        FinishingDate = new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Unspecified),
+                    //        ServiceDate = new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Unspecified),
+                    //        ServiceKilometer = 70898L,
+                    //        StartPrice = 95f,
+                    //        StartingDate = new DateTime(2023, 2, 6, 15, 38, 10, 552, DateTimeKind.Unspecified)
+                    //       // UserModelsID = 1L
+                    //    },
+                    //    new
+                    //    {
+                    //        ID = 3L,
+                    //        Description = "Αλλαγή Ελαστικων",
+                    //        EngineerID = 5L,
+                    //        FinalPrice = 100f,
+                    //        FinishingDate = new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Unspecified),
+                    //        ServiceDate = new DateTime(2023, 4, 6, 20, 40, 10, 552, DateTimeKind.Unspecified),
+                    //        ServiceKilometer = 85365L,
+                    //        StartPrice = 100f,
+                    //        StartingDate = new DateTime(2023, 4, 6, 15, 38, 10, 552, DateTimeKind.Unspecified)
+                    //        //UserModelsID = 1L
+                    //    });
+                });
+
+            modelBuilder.Entity("GarageAPI.Models.UserModels.UserModels", b =>
                 {
                     b.Property<long>("ID")
                         .ValueGeneratedOnAdd()
@@ -5520,13 +5528,16 @@ namespace GarageAPI.Migrations
                     b.ToTable("UserModels");
                 });
 
-            modelBuilder.Entity("GarageAPI.Models.UserModelsDTO", b =>
+            modelBuilder.Entity("GarageAPI.Models.UserModels.UserModelsDTO", b =>
                 {
                     b.Property<long>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("id"));
+
+                    b.Property<byte[]>("CarImage")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<long>("Color")
                         .HasColumnType("bigint");
@@ -5679,7 +5690,7 @@ namespace GarageAPI.Migrations
                         new
                         {
                             ID = 6L,
-                            CreationDate = new DateTime(2023, 2, 24, 16, 23, 48, 155, DateTimeKind.Local).AddTicks(1405),
+                            CreationDate = new DateTime(2023, 3, 7, 16, 32, 16, 548, DateTimeKind.Local).AddTicks(7090),
                             Email = "mmichail@gmail.com",
                             EnableAccess = 1,
                             GarageID = 0L,
@@ -5718,7 +5729,7 @@ namespace GarageAPI.Migrations
                     b.Navigation("CarModelYear");
                 });
 
-            modelBuilder.Entity("GarageAPI.Models.ServiceHistory", b =>
+            modelBuilder.Entity("GarageAPI.Models.UserModels.ServiceHistory", b =>
                 {
                     b.HasOne("GarageAPI.Models.Users", "Engineer")
                         .WithMany()
@@ -5726,10 +5737,10 @@ namespace GarageAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GarageAPI.Models.UserModels", "UserModels")
+                    b.HasOne("GarageAPI.Models.UserModels.UserModels", "UserModels")
                         .WithMany()
                         .HasForeignKey("UserModelsID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Engineer");
@@ -5737,7 +5748,7 @@ namespace GarageAPI.Migrations
                     b.Navigation("UserModels");
                 });
 
-            modelBuilder.Entity("GarageAPI.Models.UserModels", b =>
+            modelBuilder.Entity("GarageAPI.Models.UserModels.UserModels", b =>
                 {
                     b.HasOne("GarageAPI.Models.CarModelManufacturerYear", "ModelManufacturerYear")
                         .WithMany()

@@ -34,7 +34,6 @@ namespace GarageAPI.Controllers
             {
                 return NotFound();
             }
-
             return Ok(carModelYear);
         }
 
@@ -63,7 +62,6 @@ namespace GarageAPI.Controllers
                 await dbContext.SaveChangesAsync();
                 return Ok(carModelYear);
             }
-
             return NotFound();
         }
 

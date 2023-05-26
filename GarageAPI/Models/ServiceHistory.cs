@@ -35,13 +35,7 @@ namespace GarageAPI.Models.UserModels
         public float FinalPrice { get; set; }
 
         [Column(TypeName = "datetime")]
-        public DateTime? StartingTime { get; set; }
-
-        [Column(TypeName = "datetime")]
         public DateTime? StartingDate { get; set; }
-
-        [Column(TypeName = "datetime")]
-        public DateTime? FinishingTime { get; set; }
 
         [Column(TypeName = "datetime")]
         public DateTime? FinishingDate { get; set; }

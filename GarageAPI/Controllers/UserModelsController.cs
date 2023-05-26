@@ -92,7 +92,6 @@ namespace GarageAPI.Controllers
                 await dbContext.SaveChangesAsync();
                 return Ok(userModel);
             }
-
             return Ok(userModel);
         }
 
@@ -107,7 +106,6 @@ namespace GarageAPI.Controllers
                 await dbContext.SaveChangesAsync();
                 return Ok();
             }
-
             return NotFound();
         }
     }

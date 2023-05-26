@@ -58,10 +58,7 @@ namespace GarageAPI.Controllers
                DiscountPercentage = addUserModelServiceHistoryRequest.DiscountPercentage,
                FinalPrice = addUserModelServiceHistoryRequest.FinalPrice,
                StartingDate = addUserModelServiceHistoryRequest.StartingDate,
-               StartingTime = addUserModelServiceHistoryRequest.StartingTime,
-               FinishingDate = addUserModelServiceHistoryRequest.FinishingDate,
-               FinishingTime = addUserModelServiceHistoryRequest.FinishingTime
-
+               FinishingDate = addUserModelServiceHistoryRequest.FinishingDate
             };
             await dbContext.ServiceHistory.AddAsync(serviceHistory);
             await dbContext.SaveChangesAsync();

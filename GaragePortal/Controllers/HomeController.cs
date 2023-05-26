@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
-
+using Microsoft.AspNetCore.Localization;
 
 namespace GaragePortal.Controllers
 {
@@ -26,6 +26,19 @@ namespace GaragePortal.Controllers
             GetSessionProperties();
             return View();
         }
+
+        /* Language Selector */
+        public IActionResult ChangeLanguage(string culture)
+        {
+            Response.Cookies.Append(CookieRequestCultureProvider.DefaultCookieName,CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),new CookieOptions()
+            {
+                Expires = DateTimeOffset.UtcNow.AddHours(1)
+            });
+
+            return Redirect(Request.Headers["Referer"].ToString());
+        }
+
+        /* Language Selector */
 
         public IActionResult Privacy()
         {

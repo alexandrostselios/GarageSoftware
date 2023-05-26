@@ -6,20 +6,22 @@ namespace GarageAPI.Models
     [NotMapped]
     public class ServiceHistoryDTO
     {
-        public string Description { get; set; }
+        public long UserModelsID { get; set; }
+
+        public string? Description { get; set; }
 
         [Column(TypeName = "datetime")]
         public DateTime? ServiceDate { get; set; }
 
-        public long ServiceKilometer { get; set; }
+        public long? ServiceKilometer { get; set; }
 
-        public float StartPrice { get; set; }
+        public float? StartPrice { get; set; }
 
-        public float FinalPrice { get; set; }
+        public float? FinalPrice { get; set; }
 
-        public string Name { get; set; }    
+        public string? Name { get; set; }    
 
-        public string Surname { get; set; }
+        public string? Surname { get; set; }
 
         public string LicencePlate { get; set; }
 

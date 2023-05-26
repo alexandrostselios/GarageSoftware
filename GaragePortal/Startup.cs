@@ -11,6 +11,12 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Net.Http;
 using System.Net;
+using GaragePortal.Models;
+using System.Reflection;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.CodeAnalysis.Options;
+using Microsoft.Extensions.Options;
 
 namespace GaragePortal
 {
@@ -32,6 +38,41 @@ namespace GaragePortal
                 return true;
             };
             services.AddControllersWithViews();
+
+
+
+            /* Language Locale */
+
+            services.AddSingleton<LanguageService>();
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+            services.AddMvc()
+                .AddViewLocalization()
+                .AddDataAnnotationsLocalization(options =>
+                {
+                    options.DataAnnotationLocalizerProvider = (type, factory) =>
+                    {
+                        var assemblyName = new AssemblyName(typeof(ShareResource).GetTypeInfo().Assembly.FullName);
+                        return factory.Create("SharedResource", assemblyName.Name);
+                    };
+                });
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new List<CultureInfo>
+                {
+                    new CultureInfo("en-US"),
+                    new CultureInfo("en-GB"),
+                    new CultureInfo("el-GR")
+                };
+                options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture(culture: "en-US", uiCulture: "en-US");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+
+                options.RequestCultureProviders.Insert(0, new QueryStringRequestCultureProvider());
+            });
+
+
+            /* Language Locale */
+
 
             //services.AddDbContext<GarageManagementSoftwarePortalContext>(options =>
             //        options.UseSqlServer(Configuration.GetConnectionString("SocialNetworkContext")));
@@ -56,6 +97,10 @@ namespace GaragePortal
                 app.UseHsts();
             }
 
+            /* Language Locale */
+            var locOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+            app.UseRequestLocalization(locOptions.Value);
+            /* Language Locale */
 
             app.UseSession();
             app.UseHttpsRedirection();

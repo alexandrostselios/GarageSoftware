@@ -17,7 +17,7 @@ namespace GarageAPI.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            //initDatabase(builder);
+            initDatabase(builder);
             builder.Entity<ServiceHistoryDTO>().HasNoKey();
             base.OnModelCreating(builder);
         }
@@ -1024,8 +1024,9 @@ namespace GarageAPI.Data
             builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 6L, CarManufacturerID = 24, CarModelID = 17, CarModelYearID = 63 });
 
         
-            //builder.Entity<ServiceHistory>().HasData(new ServiceHistory { ID = 1L, UserModelsID = 1L, Description = "Αλλαγή λαδιών", ServiceDate = DateTime.Parse("2022-12-06 20:40:10.552"), ServiceKilometer = 65080, EngineerID = 5, StartPrice = 55, FinalPrice = 55,StartingDate = DateTime.Parse("2022-12-07 13:24:10.552"), FinishingTime = DateTime.Parse("2022-12-07 13:24:10.552"), FinishingDate = DateTime.Parse("2022-12-07 13:24:10.552")});
-            //builder.Entity<ServiceHistory>().HasData(new ServiceHistory { ID = 2L, UserModelsID = 1L, Description = "Αλλαγή ιμάντα χρονισμού", ServiceDate = DateTime.Parse("2023-02-06 20:40:10.552"), ServiceKilometer = 70898, EngineerID = 5, StartPrice = 95, FinalPrice = 95, StartingDate = DateTime.Parse("2023-02-06 15:38:10.552"), FinishingTime = DateTime.Parse("2023-02-06 20:40:10.552"), FinishingDate = DateTime.Parse("2023-02-06 20:40:10.552") });
+            //builder.Entity<ServiceHistory>().HasData(new ServiceHistory { ID = 1L, UserModelsID = 1L, Description = "Αλλαγή λαδιών", ServiceDate = DateTime.Parse("2022-12-06 20:40:10.552"), ServiceKilometer = 65080, EngineerID = 5, StartPrice = 55, FinalPrice = 55,StartingDate = DateTime.Parse("2022-12-07 13:24:10.552"), FinishingDate = DateTime.Parse("2022-12-07 13:24:10.552")});
+            //builder.Entity<ServiceHistory>().HasData(new ServiceHistory { ID = 2L, UserModelsID = 1L, Description = "Αλλαγή ιμάντα χρονισμού", ServiceDate = DateTime.Parse("2023-02-06 20:40:10.552"), ServiceKilometer = 70898, EngineerID = 5, StartPrice = 95, FinalPrice = 95, StartingDate = DateTime.Parse("2023-02-06 15:38:10.552"), FinishingDate = DateTime.Parse("2023-02-06 20:40:10.552") });
+            //builder.Entity<ServiceHistory>().HasData(new ServiceHistory { ID = 3L, UserModelsID = 1L, Description = "Αλλαγή Ελαστικων", ServiceDate = DateTime.Parse("2023-04-06 20:40:10.552"), ServiceKilometer = 85365, EngineerID = 5, StartPrice = 100, FinalPrice = 100, StartingDate = DateTime.Parse("2023-04-06 15:38:10.552"), FinishingDate = DateTime.Parse("2023-02-06 20:40:10.552") });
         }
     }
 }
