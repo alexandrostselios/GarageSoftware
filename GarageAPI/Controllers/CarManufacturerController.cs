@@ -1,6 +1,7 @@
 ﻿using GarageAPI.Data;
 using GarageAPI.Models;
 using GarageAPI.Models.CarManufacturers;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +16,17 @@ namespace GarageAPI.Controllers
         {
             this.dbContext = dbContext;
         }
+
+        /* TEST */
+        [HttpGet]
+        [Route("api/GetCarManufacturersTest")]
+        public Task<IActionResult> GetCarManufacturersTest()
+        {
+            List<CarManufacturer> modelManufacturer = dbContext.CarManufacturer.ToList();
+            return Task.FromResult<IActionResult>(Ok(modelManufacturer));
+        }
+        /* TEST*/
+
 
         [HttpGet]
         [Route("api/GetCarManufacturers")]

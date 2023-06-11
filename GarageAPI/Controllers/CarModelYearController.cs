@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 namespace GarageAPI.Controllers
 {
     [ApiController]
-    //[Route("api/CarModelYear")]
     public class CarModelYearController : Controller
     {
         private readonly GarageAPIDbContext dbContext;

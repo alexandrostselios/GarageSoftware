@@ -9,6 +9,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using Microsoft.AspNetCore.Localization;
+using GaragePortal.Enum;
+using Microsoft.EntityFrameworkCore;
 
 namespace GaragePortal.Controllers
 {
@@ -23,22 +25,14 @@ namespace GaragePortal.Controllers
 
         public IActionResult Index()
         {
+            /* REMOVE IN PRODUCTION */
+
+            SetSessionPropertiesAdmin();
+
+            /* REMOVE IN PRODUCTION */
             GetSessionProperties();
             return View();
         }
-
-        /* Language Selector */
-        public IActionResult ChangeLanguage(string culture)
-        {
-            Response.Cookies.Append(CookieRequestCultureProvider.DefaultCookieName,CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),new CookieOptions()
-            {
-                Expires = DateTimeOffset.UtcNow.AddHours(1)
-            });
-
-            return Redirect(Request.Headers["Referer"].ToString());
-        }
-
-        /* Language Selector */
 
         public IActionResult Privacy()
         {
@@ -76,6 +70,20 @@ namespace GaragePortal.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+
+        /* REMOVE IN PRODUCTION */
+
+        private void SetSessionPropertiesAdmin()
+        {
+            UserType u = UserType.Admin;
+            HttpContext.Session.SetString("UserType", u.ToString());
+            HttpContext.Session.SetString("ID", "1");
+            HttpContext.Session.SetString("Name", "Alexandros");
+            HttpContext.Session.SetString("Surname", "Tselios");
+        }
+
+        /* REMOVE IN PRODUCTION */
 
         private void GetSessionProperties()
         {

@@ -2,6 +2,63 @@
     ViewData["Title"] = "Garage Management Software";
 }
 
+@inject LanguageService Resource
+
+@*<script src="~/js/JavaScript.js" defer></script>
+
+<script type="text/javascript">
+    window.onload = function what() {
+        document.getElementById('ShowManufacturers').innerHTML = getManufacturers();
+    };
+</script>*@
+
+@*@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        <script src="~/js/JavaScript.js" defer></script>
+
+        //<script type="text/javascript">
+        //    window.onload = function whatManufacturer() {
+        //        document.getElementById('ShowManufacturers').innerHTML = getManufacturers();
+        //    };
+        //</script>
+        <script type="text/javascript">
+            window.onload = function what() {
+                document.getElementById('ShowEngineers').innerHTML = getEngineers();
+            };
+        </script>
+    }
+}*@
+
+@*<script type="text/javascript">
+    window.onload = function whatManufacturer() {
+        document.getElementById('ShowManufacturers').innerHTML = getManufacturers();
+    };
+</script>
+
+<select id="ShowManufacturers" onchange="getManufacturersForModel(getSelectedManufacturer())">
+    <option value='0'>--Select Manufacturer--</option>
+</select>
+
+<select id="ShowModels" onchange="getYearsForModel(getSelectedModel())">
+    <option value='0'>--@Resource.GetKey("Select_Model")--</option>
+</select>
+
+<select id="ShowYears">
+    <option value='0'>--@Resource.GetKey("Select_Year")--</option>
+</select>
+
+
+<script type="text/javascript">
+    window.onload = function what() {
+        document.getElementById('ShowEngineers').innerHTML = getEngineers();
+    };
+</script>
+
+<select id="ShowEngineers">
+    <option value='0'>--@Resource.GetKey("Select_Engineer")--</option>
+</select>*@
+
 
 
 @if (@ViewBag.UserType == GaragePortal.Enum.UserType.Guest.ToString() || @ViewBag.UserType == null)

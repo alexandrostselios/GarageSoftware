@@ -1,17 +1,20 @@
 ﻿@model IEnumerable<GaragePortal.Models.UserModels>
+@inject LanguageService Resource
 @{
-    ViewData["Title"] = "List of User Cars";
+    ViewData["Title"] = @Resource.GetKey("List_Of_User_Cars");
 }
 
 
 @if (@ViewBag.UserType == GaragePortal.Enum.UserType.Admin.ToString())
 {
+    ViewData["Title"] = @Resource.GetKey("List_Of_User_Cars");
     <p>
         @*<a class="af" asp-action="Create">Add New User</a>*@
-        <form asp-action="Create">
-            <input type="submit" value="Add New Car" class="btn btn-primary" />
+        <form asp-action="Create" asp-route-CustomerUserID="@ViewBag.CustomerUserID">
+            <input type="submit" value="@Resource.GetKey("Add_New_Car")" class="btn btn-primary" />
         </form>
     </p>
+
     <table class="table">
         <thead>
             <tr>
@@ -19,28 +22,28 @@
                     @Html.DisplayNameFor(model => model.ID)
                 </th>
                 <th>
-                    @*@Resources.ModelManufacturer*@
-                   @Html.DisplayNameFor(model => model.ManufacturerName)
+                    @Resource.GetKey("Model_Manufacturer")
                 </th>
                 <th>
-                    @*@Resource.ModelName*@
-                @*@Html.DisplayNameFor(model => model.ModelName)*@
+                    @Resource.GetKey("Model")
                 </th>
                 <th>
-                    @*@Resource.ModelYear*@
-                    @*@Html.DisplayNameFor(model => model.ModelYear)*@
+                    @Resource.GetKey("ModelYear")
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Color)
+                    @Resource.GetKey("Color")
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.LicencePlate)
+                    @Resource.GetKey("Licence_Plate")
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Kilometer)
+                    @Resource.GetKey("Kilometer")
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.CarImage)
+                    @Resource.GetKey("Car_Image")
+                </th>
+                <th>
+                    @Resource.GetKey("Engine_Type")
                 </th>
                 <th></th>
             </tr>
@@ -77,10 +80,84 @@
                         }
                     </td>
                     <td>
-                        <a class="af" asp-controller="UserModels" asp-action="EditCarDetails" asp-route-id="@item.ID" asp-route-flag="1">Edit Car Details</a>
+                        @Html.DisplayFor(modelItem => item.EngineType)
                     </td>
                     <td>
-                        <a class="af" asp-controller="UserModels" asp-action="ViewCarDetails" asp-route-id="@item.ID">View Car History</a>
+                        <a class="af" asp-controller="UserModels" asp-action="EditCarDetails" asp-route-id="@item.ID" asp-route-flag="1">@Resource.GetKey("Edit_Car_Details")</a>
+                    </td>
+                    <td>
+                        <a class="af" asp-controller="UserModels" asp-action="ViewCarDetails" asp-route-id="@item.ID">@Resource.GetKey("View_Car_History")</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else if (@ViewBag.UserType == GaragePortal.Enum.UserType.User.ToString()){
+    ViewData["Title"] = @Resource.GetKey("List_Of_MyCars");
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ID)
+                </th>
+                <th>
+                    @Resource.GetKey("Model_Manufacturer")
+                </th>
+                <th>
+                    @Resource.GetKey("Model")
+                </th>
+                <th>
+                    @Resource.GetKey("ModelYear")
+                </th>
+                <th>
+                    @Resource.GetKey("Color")
+                </th>
+                <th>
+                    @Resource.GetKey("Licence_Plate")
+                </th>
+                <th>
+                    @Resource.GetKey("Kilometer")
+                </th>
+                <th>
+                    @Resource.GetKey("Car_Image")
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ManufacturerName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ModelName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ModelYear)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Color)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LicencePlate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Kilometer)
+                    </td>
+                    <td>
+                        @if (!(item.CarImage is null))
+                        {
+                            <img src="data:image/jpg;base64, @Convert.ToBase64String(item.CarImage)" width="50" height="50" />
+                        }
+                    </td>
+                    <td>
+                        <a class="af" asp-controller="UserModels" asp-action="ViewCarDetails" asp-route-id="@item.ID">@Resource.GetKey("View_Car_History")</a>
                     </td>
                 </tr>
             }

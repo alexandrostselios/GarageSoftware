@@ -8,5 +8,10 @@ namespace GarageAPI.Models.CarModels
         public long ID { get; set; }
 
         public string ModelName { get; set; }
+
+        public static implicit operator CarModel(List<CarModel> v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

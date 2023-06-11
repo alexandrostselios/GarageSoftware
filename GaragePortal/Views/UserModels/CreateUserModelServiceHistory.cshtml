@@ -4,6 +4,7 @@
     ViewData["Title"] = "Create";
 }
 
+<script>console.log(@ViewBag.CarDetailsID)</script>
 
 <h1>Create</h1>
 
@@ -13,7 +14,7 @@
     <div class="col-md-4">
         <form asp-action="CreateUserModelServiceHistory">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="UserModelsID" value="1"/>
+            <input type="hidden" asp-for="UserModelsID" value="@ViewBag.CarDetailsID"/>
 @*             <div class="form-group">
                 <label asp-for="UserModelsID" class="control-label"></label>
                 <input asp-for="UserModelsID" class="form-control"/>
@@ -34,11 +35,21 @@
                 <input asp-for="ServiceKilometer" class="form-control" />
                 <span asp-validation-for="ServiceKilometer" class="text-danger"></span>
             </div>
-             <div class="form-group">
+            <div>
+                <label asp-for="EngineerID" class="control-label">Engineer</label>
+                <br />
+                <select id="ShowEngineers" asp-for="EngineerID">
+                    <option value='0'>--Select Engineer--</option>
+                </select>
+                <span asp-validation-for="EngineerID" class="text-danger"></span>
+                <br />
+            </div>
+           
+@*             <div class="form-group">
                 <label asp-for="EngineerID" class="control-label"></label>
                 <input asp-for="EngineerID" class="form-control" />
                 <span asp-validation-for="EngineerID" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <label asp-for="StartPrice" class="control-label"></label>
                 <input asp-for="StartPrice" class="form-control" />
@@ -90,6 +101,14 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        <script src="~/js/JavaScript.js" defer></script>
+        <script type="text/javascript">
+            window.onload = function what() {
+                document.getElementById('ShowEngineers').innerHTML = getEngineers();
+            };
+        </script>
+    }
 }

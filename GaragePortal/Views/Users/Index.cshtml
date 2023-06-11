@@ -2,17 +2,22 @@
 @inject LanguageService Resource
 
 @{
-    ViewData["Title"] = @Resource.GetKey("List of Customers");
+    ViewData["Title"] = @Resource.GetKey("List_of_Customers");
 }
 
-<p>
-    @*<a class="af" asp-action="Create">Add New User</a>*@
+@*<p>
     <form asp-action="Create">
-        <input type="submit" value="Add New Customer" class="btn btn-primary" />
+        <input type="submit" value="@Resource.GetKey("Add_New_Customer")" class="btn btn-primary" />
     </form>
-</p>
+</p>*@
 @if (@ViewBag.UserType == GaragePortal.Enum.UserType.Admin.ToString())
 {
+    <p>
+        @*<a class="af" asp-action="Create">Add New User</a>*@
+        <form asp-action="Create">
+            <input type="submit" value="@Resource.GetKey("Add_New_Customer")" class="btn btn-primary" />
+        </form>
+    </p>
     <table class="table">
         <thead>
             <tr>
@@ -74,13 +79,15 @@
                         }
                     </td>
                     <td>
-                        <a class="af" asp-action="EditProfile" asp-route-id="@item.ID">Edit Profile</a>
+                        <a class="af" asp-action="EditProfile" asp-route-id="@item.ID">@Resource.GetKey("Edit_Profile")</a>
                     </td>
                     <td>
-                        <a class="af" asp-controller="UserModels" asp-action="ViewCustomerCars" asp-route-id="@item.ID">View Cars</a>
+                        <a class="af" asp-controller="UserModels" asp-action="ViewCustomerCars" asp-route-id="@item.ID">@Resource.GetKey("View_Cars")</a>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
+}else{
+    <p><center>You are not authorized to access this page</center></p>
 }

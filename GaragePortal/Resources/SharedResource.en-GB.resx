@@ -117,25 +117,69 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Add New Customer" xml:space="preserve">
+  <data name="Add_New_Car" xml:space="preserve">
+    <value>Add New Car</value>
+    <comment>Add New Car</comment>
+  </data>
+  <data name="Add_New_Customer" xml:space="preserve">
     <value>Add New Customer</value>
     <comment>Add New Customer</comment>
+  </data>
+  <data name="Add_Service_History" xml:space="preserve">
+    <value>Add Service History</value>
+    <comment>Add Service History</comment>
+  </data>
+  <data name="Car_Image" xml:space="preserve">
+    <value>Car Image</value>
+    <comment>Car Image</comment>
+  </data>
+  <data name="Color" xml:space="preserve">
+    <value>Color</value>
+    <comment>Color</comment>
   </data>
   <data name="Customers" xml:space="preserve">
     <value>Customers</value>
     <comment>Customers</comment>
   </data>
+  <data name="Edit_Car_Details" xml:space="preserve">
+    <value>Edit Car Details</value>
+    <comment>Edit Car Details</comment>
+  </data>
+  <data name="Edit_Profile" xml:space="preserve">
+    <value>Edit Profile</value>
+    <comment>Edit Profile</comment>
+  </data>
+  <data name="Engine_Type" xml:space="preserve">
+    <value>Fuel</value>
+    <comment>Engine_Type</comment>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
     <comment>Home</comment>
+  </data>
+  <data name="Kilometer" xml:space="preserve">
+    <value>Kilometer</value>
+    <comment>Kilometer</comment>
   </data>
   <data name="Language" xml:space="preserve">
     <value>Language</value>
     <comment>Language</comment>
   </data>
-  <data name="List of Customers" xml:space="preserve">
+  <data name="Licence_Plate" xml:space="preserve">
+    <value>Licence Plate</value>
+    <comment>Licence Plate</comment>
+  </data>
+  <data name="List_of_Customers" xml:space="preserve">
     <value>List of Customers</value>
     <comment>List of Customers</comment>
+  </data>
+  <data name="List_Of_MyCars" xml:space="preserve">
+    <value>List_Of_MyCars</value>
+    <comment>List_Of_MyCars</comment>
+  </data>
+  <data name="List_Of_User_Cars" xml:space="preserve">
+    <value>List of User Cars</value>
+    <comment>List of User Cars</comment>
   </data>
   <data name="Login" xml:space="preserve">
     <value>Login</value>
@@ -149,7 +193,15 @@
     <value>Model</value>
     <comment>Model</comment>
   </data>
-  <data name="My Profile" xml:space="preserve">
+  <data name="ModelYear" xml:space="preserve">
+    <value>Year</value>
+    <comment>ModelYear</comment>
+  </data>
+  <data name="Model_Manufacturer" xml:space="preserve">
+    <value>Model Manufacturer</value>
+    <comment>Model Manufacturer</comment>
+  </data>
+  <data name="My_Profile" xml:space="preserve">
     <value>My Profile</value>
     <comment>My Profile</comment>
   </data>
@@ -160,5 +212,37 @@
   <data name="Register" xml:space="preserve">
     <value>Register</value>
     <comment>Register</comment>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+    <comment>Save</comment>
+  </data>
+  <data name="Select_Engineer" xml:space="preserve">
+    <value>Select Engineer</value>
+    <comment>Select_Engineer</comment>
+  </data>
+  <data name="Select_Manufacturer" xml:space="preserve">
+    <value>Select Manufacturer</value>
+    <comment>Select_Manufacturer</comment>
+  </data>
+  <data name="Select_Model" xml:space="preserve">
+    <value>Select Model</value>
+    <comment>Select_Model</comment>
+  </data>
+  <data name="Select_Year" xml:space="preserve">
+    <value>Select Year</value>
+    <comment>Select_Year</comment>
+  </data>
+  <data name="View_Cars" xml:space="preserve">
+    <value>View Cars</value>
+    <comment>View Cars</comment>
+  </data>
+  <data name="View_Car_Details" xml:space="preserve">
+    <value>View_Car_Details</value>
+    <comment>View_Car_Details</comment>
+  </data>
+  <data name="View_Car_History" xml:space="preserve">
+    <value>View Car History</value>
+    <comment>View Car History</comment>
   </data>
 </root>

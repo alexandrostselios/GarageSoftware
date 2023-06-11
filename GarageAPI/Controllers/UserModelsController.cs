@@ -63,15 +63,19 @@ namespace GarageAPI.Controllers
         [Route("api/AddUserModel")]
         public async Task<IActionResult> AddUserModel(AddUserModelRequest addUserModelRequest)
         {
+            //var temp = dbContext.CarModelManufacturerYear.Where(x => x.CarManufacturer.ID == addUserModelRequest.ModelManufacturer && x.CarModel.ID == addUserModelRequest.Model && x.CarModelYear.ID == addUserModelRequest.ModelYear);
+           
             var userModel = new UserModels()
             {
                 User = await dbContext.Users.FindAsync(addUserModelRequest.UserID),
-                ModelManufacturerYear = await dbContext.CarModelManufacturerYear.FindAsync(addUserModelRequest.ModelManufacturerYear),
-                ModelYear = await dbContext.CarModelYear.FindAsync(addUserModelRequest.ModelYear),
+                ModelManufacturerYear = dbContext.CarModelManufacturerYear.FirstOrDefault(x => x.CarManufacturer.ID == addUserModelRequest.ModelManufacturer 
+                        && x.CarModel.ID == addUserModelRequest.Model
+                        && x.CarModelYear.ID == addUserModelRequest.ModelYear),
                 LicencePlate = addUserModelRequest.LicencePlate,
                 VIN = addUserModelRequest.VIN,
                 Color = addUserModelRequest.Color,
                 Kilometer = addUserModelRequest.Kilometer,
+                CarImage = addUserModelRequest.CarImage
             };
             await dbContext.UserModels.AddAsync(userModel);
             await dbContext.SaveChangesAsync();

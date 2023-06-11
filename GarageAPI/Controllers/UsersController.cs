@@ -95,6 +95,23 @@ namespace GarageAPI.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("api/GetEngineers")]
+        public async Task<IActionResult> GetEngineers()
+        {
+            var carEngineers = await dbContext.Users.Where(c => c.UserType == UserType.Engineer).ToListAsync();
+            List<Users> carEngineersList = new List<Users>();
+            for (int i = 0; i < carEngineers.Count; i++)
+            {
+               // carEngineersList.Add(await dbContext.CarModels.Where(x => x.ID == carEngineers[i].ID).FirstOrDefaultAsync());
+            }
+            if (carEngineers == null)
+            {
+                return NotFound();
+            }
+            return Ok(carEngineers.OrderBy(x => x.Surname));
+        }
+
         //// GET: Users/Details/5
         //public async Task<IActionResult> Details(int? id)
         //{

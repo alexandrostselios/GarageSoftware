@@ -14,6 +14,19 @@ namespace GarageAPI.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "CarEngineType",
+                columns: table => new
+                {
+                    ID = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EngineType = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CarEngineType", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CarManufacturer",
                 columns: table => new
                 {
@@ -90,13 +103,14 @@ namespace GarageAPI.Migrations
                 name: "ServiceHistoryDTO",
                 columns: table => new
                 {
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserModelsID = table.Column<long>(type: "bigint", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ServiceDate = table.Column<DateTime>(type: "datetime", nullable: true),
-                    ServiceKilometer = table.Column<long>(type: "bigint", nullable: false),
-                    StartPrice = table.Column<float>(type: "real", nullable: false),
-                    FinalPrice = table.Column<float>(type: "real", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ServiceKilometer = table.Column<long>(type: "bigint", nullable: true),
+                    StartPrice = table.Column<float>(type: "real", nullable: true),
+                    FinalPrice = table.Column<float>(type: "real", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LicencePlate = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     VIN = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Color = table.Column<long>(type: "bigint", nullable: false),
@@ -157,7 +171,7 @@ namespace GarageAPI.Migrations
                         column: x => x.CarModelYearID,
                         principalTable: "CarModelYear",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_CarModelManufacturerYear_CarModels_CarModelID",
                         column: x => x.CarModelID,
@@ -174,7 +188,6 @@ namespace GarageAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserID = table.Column<long>(type: "bigint", nullable: false),
                     ModelManufacturerYearID = table.Column<long>(type: "bigint", nullable: false),
-                    ModelYearID = table.Column<long>(type: "bigint", nullable: false),
                     LicencePlate = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     VIN = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Color = table.Column<long>(type: "bigint", nullable: true),
@@ -191,17 +204,11 @@ namespace GarageAPI.Migrations
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserModels_CarModelYear_ModelYearID",
-                        column: x => x.ModelYearID,
-                        principalTable: "CarModelYear",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.NoAction);
-                    table.ForeignKey(
                         name: "FK_UserModels_Users_UserID",
                         column: x => x.UserID,
                         principalTable: "Users",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -237,6 +244,21 @@ namespace GarageAPI.Migrations
                         principalTable: "Users",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.InsertData(
+                table: "CarEngineType",
+                columns: new[] { "ID", "EngineType" },
+                values: new object[,]
+                {
+                    { 1L, "--" },
+                    { 2L, "Petrol" },
+                    { 3L, "Diesel" },
+                    { 4L, "Hybrid Petrol" },
+                    { 5L, "Hybrid Diesel" },
+                    { 6L, "LNG" },
+                    { 7L, "CNG" },
+                    { 8L, "Electric" }
                 });
 
             migrationBuilder.InsertData(
@@ -1310,7 +1332,7 @@ namespace GarageAPI.Migrations
                     { 3L, new DateTime(2022, 12, 15, 22, 19, 46, 456, DateTimeKind.Unspecified), "kkitsikou@hotmail.com", 1, 0L, null, null, "Kostas", "gafa#$#", null, "Kitsikou", null, 2 },
                     { 4L, new DateTime(2022, 12, 24, 13, 42, 34, 566, DateTimeKind.Unspecified), "mpapadopoulos@yahoo.gr", 2, 0L, null, null, "Marios", "MP1234@?", null, "Papadopoulos", null, 2 },
                     { 5L, new DateTime(2023, 2, 3, 20, 8, 23, 860, DateTimeKind.Unspecified), "konpapa@yahoo.gr", 1, 0L, null, null, "Κωνσταντίνος", "DfG34#$%^", 3L, "Παπαδόπουλος", null, 3 },
-                    { 6L, new DateTime(2023, 3, 7, 16, 32, 16, 548, DateTimeKind.Local).AddTicks(7090), "mmichail@gmail.com", 1, 0L, null, null, "Μιχάλης", "KavMixalis$%", 2L, "Μιχαήλ", null, 3 }
+                    { 6L, new DateTime(2023, 6, 2, 16, 37, 48, 180, DateTimeKind.Local).AddTicks(7589), "mmichail@gmail.com", 1, 0L, null, null, "Μιχάλης", "KavMixalis$%", 2L, "Μιχαήλ", null, 3 }
                 });
 
             migrationBuilder.InsertData(
@@ -1318,26 +1340,177 @@ namespace GarageAPI.Migrations
                 columns: new[] { "ID", "CarManufacturerID", "CarModelID", "CarModelYearID" },
                 values: new object[,]
                 {
-                    { 1L, 2L, 51L, 66L },
-                    { 2L, 24L, 2L, 62L },
-                    { 3L, 62L, 84L, 69L },
-                    { 4L, 24L, 16L, 61L },
-                    { 5L, 24L, 16L, 62L },
-                    { 6L, 24L, 17L, 63L }
+                    { 1L, 24L, 16L, 59L },
+                    { 2L, 24L, 16L, 60L },
+                    { 3L, 24L, 16L, 61L },
+                    { 4L, 24L, 16L, 62L },
+                    { 5L, 24L, 16L, 63L },
+                    { 6L, 24L, 16L, 64L },
+                    { 7L, 24L, 16L, 65L },
+                    { 8L, 24L, 16L, 66L },
+                    { 9L, 24L, 16L, 67L },
+                    { 10L, 24L, 16L, 68L },
+                    { 11L, 24L, 16L, 69L },
+                    { 12L, 24L, 16L, 70L },
+                    { 13L, 24L, 16L, 71L },
+                    { 14L, 24L, 16L, 72L },
+                    { 15L, 24L, 16L, 73L },
+                    { 16L, 24L, 16L, 74L },
+                    { 17L, 24L, 17L, 58L },
+                    { 18L, 24L, 17L, 59L },
+                    { 19L, 24L, 17L, 60L },
+                    { 20L, 24L, 17L, 61L },
+                    { 21L, 24L, 17L, 62L },
+                    { 22L, 24L, 17L, 63L },
+                    { 23L, 24L, 17L, 64L },
+                    { 24L, 24L, 17L, 65L },
+                    { 25L, 24L, 17L, 66L },
+                    { 26L, 24L, 17L, 67L },
+                    { 27L, 24L, 17L, 68L },
+                    { 28L, 24L, 17L, 69L },
+                    { 29L, 24L, 17L, 70L },
+                    { 30L, 24L, 17L, 71L },
+                    { 31L, 24L, 17L, 72L },
+                    { 32L, 24L, 17L, 73L },
+                    { 33L, 24L, 17L, 74L },
+                    { 34L, 24L, 15L, 58L },
+                    { 35L, 24L, 15L, 59L },
+                    { 36L, 24L, 15L, 60L },
+                    { 37L, 24L, 15L, 61L },
+                    { 38L, 24L, 15L, 62L },
+                    { 39L, 24L, 15L, 63L },
+                    { 40L, 24L, 15L, 64L },
+                    { 41L, 24L, 15L, 65L },
+                    { 42L, 24L, 15L, 66L },
+                    { 43L, 24L, 15L, 67L },
+                    { 44L, 24L, 15L, 68L },
+                    { 45L, 24L, 15L, 69L },
+                    { 46L, 24L, 15L, 70L },
+                    { 47L, 24L, 15L, 71L },
+                    { 48L, 24L, 15L, 72L },
+                    { 49L, 24L, 15L, 73L },
+                    { 50L, 24L, 15L, 74L },
+                    { 51L, 2L, 51L, 61L },
+                    { 52L, 2L, 51L, 62L },
+                    { 53L, 2L, 51L, 63L },
+                    { 54L, 2L, 51L, 64L },
+                    { 55L, 2L, 51L, 65L },
+                    { 56L, 2L, 51L, 66L },
+                    { 57L, 2L, 51L, 67L },
+                    { 58L, 2L, 51L, 68L },
+                    { 59L, 2L, 51L, 69L },
+                    { 60L, 2L, 51L, 70L },
+                    { 61L, 2L, 51L, 71L },
+                    { 62L, 62L, 84L, 50L },
+                    { 63L, 62L, 84L, 51L },
+                    { 64L, 62L, 84L, 52L },
+                    { 65L, 62L, 84L, 53L },
+                    { 66L, 62L, 84L, 54L },
+                    { 67L, 62L, 84L, 55L },
+                    { 68L, 62L, 84L, 56L },
+                    { 69L, 62L, 84L, 57L },
+                    { 70L, 62L, 84L, 58L },
+                    { 71L, 62L, 84L, 59L },
+                    { 72L, 62L, 84L, 60L },
+                    { 73L, 62L, 84L, 61L },
+                    { 74L, 62L, 84L, 62L },
+                    { 75L, 62L, 84L, 63L },
+                    { 76L, 62L, 84L, 64L },
+                    { 77L, 62L, 84L, 65L },
+                    { 78L, 62L, 84L, 66L },
+                    { 79L, 62L, 84L, 67L },
+                    { 80L, 62L, 84L, 68L },
+                    { 81L, 62L, 84L, 69L },
+                    { 82L, 62L, 84L, 70L },
+                    { 83L, 62L, 84L, 71L },
+                    { 84L, 62L, 84L, 72L },
+                    { 85L, 62L, 84L, 73L },
+                    { 86L, 62L, 84L, 74L },
+                    { 87L, 62L, 76L, 52L },
+                    { 88L, 62L, 76L, 53L },
+                    { 89L, 62L, 76L, 54L },
+                    { 90L, 62L, 76L, 55L },
+                    { 91L, 62L, 76L, 56L },
+                    { 92L, 62L, 76L, 57L },
+                    { 93L, 62L, 76L, 58L },
+                    { 94L, 62L, 76L, 59L },
+                    { 95L, 62L, 76L, 60L },
+                    { 96L, 62L, 76L, 61L },
+                    { 97L, 62L, 76L, 62L },
+                    { 98L, 62L, 76L, 63L },
+                    { 99L, 62L, 76L, 64L },
+                    { 100L, 62L, 76L, 65L },
+                    { 101L, 62L, 76L, 66L },
+                    { 102L, 62L, 76L, 67L },
+                    { 103L, 62L, 76L, 68L },
+                    { 104L, 62L, 76L, 69L },
+                    { 105L, 62L, 76L, 70L },
+                    { 106L, 62L, 76L, 71L },
+                    { 107L, 62L, 76L, 72L },
+                    { 108L, 62L, 76L, 73L },
+                    { 109L, 62L, 76L, 74L },
+                    { 110L, 2L, 34L, 1L },
+                    { 111L, 2L, 35L, 1L },
+                    { 112L, 2L, 36L, 1L },
+                    { 113L, 2L, 37L, 1L },
+                    { 114L, 2L, 38L, 1L },
+                    { 115L, 2L, 39L, 1L },
+                    { 116L, 2L, 40L, 1L },
+                    { 117L, 2L, 41L, 1L },
+                    { 118L, 2L, 42L, 1L },
+                    { 119L, 2L, 43L, 1L },
+                    { 120L, 2L, 44L, 1L },
+                    { 121L, 2L, 45L, 1L },
+                    { 122L, 2L, 46L, 1L },
+                    { 123L, 2L, 47L, 1L },
+                    { 124L, 2L, 48L, 1L },
+                    { 125L, 2L, 49L, 1L },
+                    { 126L, 2L, 50L, 1L },
+                    { 127L, 2L, 52L, 1L },
+                    { 128L, 24L, 1L, 1L },
+                    { 129L, 24L, 2L, 1L },
+                    { 130L, 24L, 3L, 1L },
+                    { 131L, 24L, 4L, 1L },
+                    { 132L, 24L, 5L, 1L },
+                    { 133L, 24L, 6L, 1L },
+                    { 134L, 24L, 7L, 1L },
+                    { 135L, 24L, 8L, 1L },
+                    { 136L, 24L, 9L, 1L },
+                    { 137L, 24L, 10L, 1L },
+                    { 138L, 24L, 11L, 1L },
+                    { 139L, 24L, 12L, 1L },
+                    { 140L, 24L, 13L, 1L },
+                    { 141L, 24L, 14L, 1L },
+                    { 142L, 24L, 18L, 1L },
+                    { 143L, 24L, 19L, 1L },
+                    { 144L, 24L, 20L, 1L },
+                    { 145L, 24L, 21L, 1L },
+                    { 146L, 24L, 22L, 1L },
+                    { 147L, 24L, 23L, 1L },
+                    { 148L, 24L, 24L, 1L },
+                    { 149L, 24L, 25L, 1L },
+                    { 150L, 24L, 26L, 1L },
+                    { 151L, 24L, 27L, 1L },
+                    { 152L, 24L, 28L, 1L },
+                    { 153L, 24L, 29L, 1L },
+                    { 154L, 24L, 30L, 1L },
+                    { 155L, 24L, 31L, 1L },
+                    { 156L, 24L, 32L, 1L },
+                    { 157L, 24L, 33L, 1L }
                 });
 
             migrationBuilder.InsertData(
-                table: "UserModels",
-                columns: new[] { "ID", "UserID", "ModelManufacturerYearID", "ModelYearID", "LicencePlate", "VIN", "Color", "Kilometer" },
-                values: new object[,]
-                {
-                                {1L, 1L, 1L, 66L, "KBT5670", "ZAR94000007368150", 101, 156125},
-                                {2L, 1L, 3L, 67L, "EYB7174", "VNKKG3D330A048555", 142, 27450},
-                                {3L, 1L, 4L, 67L, "NIZ2654", "NLHBA51BABZ014926", 4, 88956},
-                                {4L, 2L, 5L, 68L, "XEZ6532", "KHX94000007259841", 5, 220653},
-                                {5L, 2L, 6L, 72L, "KBH1452", "JNKCV61E09M303716", 6, 65402},
-                                {6L, 3L, 6L, 73L, "AHZ1495", "JH4DA9460MS032070", 6, 9563}
-                });
+    table: "UserModels",
+    columns: new[] { "ID", "UserID", "ModelManufacturerYearID", "LicencePlate", "VIN", "Color", "Kilometer" },
+    values: new object[,]
+    {
+                                {1L, 1L, 56L, "KBT5670", "ZAR94000007368150", 101, 156125},
+                                {2L, 1L, 81L, "EYB7174", "VNKKG3D330A048555", 142, 27450},
+                                {3L, 1L, 3L,"NIZ2654", "NLHBA51BABZ014926", 4, 88956},
+                                {4L, 2L, 5L,"XEZ6532", "KHX94000007259841", 5, 220653},
+                                {5L, 2L, 6L, "KBH1452", "JNKCV61E09M303716", 6, 65402},
+                                {6L, 3L, 6L, "AHZ1495", "JH4DA9460MS032070", 6, 9563}
+    });
 
             migrationBuilder.InsertData(
                 table: "ServiceHistory",
@@ -1469,11 +1642,6 @@ namespace GarageAPI.Migrations
                 column: "ModelManufacturerYearID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserModels_ModelYearID",
-                table: "UserModels",
-                column: "ModelYearID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_UserModels_UserID",
                 table: "UserModels",
                 column: "UserID");
@@ -1482,6 +1650,9 @@ namespace GarageAPI.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "CarEngineType");
+
             migrationBuilder.DropTable(
                 name: "EngineerSpeciality");
 

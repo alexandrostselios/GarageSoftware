@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GarageAPI.Migrations
 {
     [DbContext(typeof(GarageAPIDbContext))]
-    [Migration("20230307143216_InitialMigration")]
+    [Migration("20230602133748_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -24,6 +24,60 @@ namespace GarageAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("GarageAPI.Models.CarEngineType.CarEngineType", b =>
+                {
+                    b.Property<long>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
+
+                    b.Property<string>("EngineType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("CarEngineType");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1L,
+                            EngineType = "Petrol"
+                        },
+                        new
+                        {
+                            ID = 2L,
+                            EngineType = "Diesel"
+                        },
+                        new
+                        {
+                            ID = 3L,
+                            EngineType = "Hybrid Petrol"
+                        },
+                        new
+                        {
+                            ID = 4L,
+                            EngineType = "Hybrid Diesel"
+                        },
+                        new
+                        {
+                            ID = 5L,
+                            EngineType = "LNG"
+                        },
+                        new
+                        {
+                            ID = 6L,
+                            EngineType = "CNG"
+                        },
+                        new
+                        {
+                            ID = 7L,
+                            EngineType = "Electric"
+                        });
+                });
 
             modelBuilder.Entity("GarageAPI.Models.CarManufacturers.CarManufacturer", b =>
                 {
@@ -395,44 +449,1101 @@ namespace GarageAPI.Migrations
                         new
                         {
                             ID = 1L,
-                            CarManufacturerID = 2L,
-                            CarModelID = 51L,
-                            CarModelYearID = 66L
+                            CarManufacturerID = 24L,
+                            CarModelID = 16L,
+                            CarModelYearID = 59L
                         },
                         new
                         {
                             ID = 2L,
                             CarManufacturerID = 24L,
-                            CarModelID = 2L,
-                            CarModelYearID = 62L
+                            CarModelID = 16L,
+                            CarModelYearID = 60L
                         },
                         new
                         {
                             ID = 3L,
-                            CarManufacturerID = 62L,
-                            CarModelID = 84L,
-                            CarModelYearID = 69L
-                        },
-                        new
-                        {
-                            ID = 4L,
                             CarManufacturerID = 24L,
                             CarModelID = 16L,
                             CarModelYearID = 61L
                         },
                         new
                         {
-                            ID = 5L,
+                            ID = 4L,
                             CarManufacturerID = 24L,
                             CarModelID = 16L,
                             CarModelYearID = 62L
                         },
                         new
                         {
+                            ID = 5L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 16L,
+                            CarModelYearID = 63L
+                        },
+                        new
+                        {
                             ID = 6L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 16L,
+                            CarModelYearID = 64L
+                        },
+                        new
+                        {
+                            ID = 7L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 16L,
+                            CarModelYearID = 65L
+                        },
+                        new
+                        {
+                            ID = 8L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 16L,
+                            CarModelYearID = 66L
+                        },
+                        new
+                        {
+                            ID = 9L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 16L,
+                            CarModelYearID = 67L
+                        },
+                        new
+                        {
+                            ID = 10L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 16L,
+                            CarModelYearID = 68L
+                        },
+                        new
+                        {
+                            ID = 11L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 16L,
+                            CarModelYearID = 69L
+                        },
+                        new
+                        {
+                            ID = 12L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 16L,
+                            CarModelYearID = 70L
+                        },
+                        new
+                        {
+                            ID = 13L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 16L,
+                            CarModelYearID = 71L
+                        },
+                        new
+                        {
+                            ID = 14L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 16L,
+                            CarModelYearID = 72L
+                        },
+                        new
+                        {
+                            ID = 15L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 16L,
+                            CarModelYearID = 73L
+                        },
+                        new
+                        {
+                            ID = 16L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 16L,
+                            CarModelYearID = 74L
+                        },
+                        new
+                        {
+                            ID = 17L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 17L,
+                            CarModelYearID = 58L
+                        },
+                        new
+                        {
+                            ID = 18L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 17L,
+                            CarModelYearID = 59L
+                        },
+                        new
+                        {
+                            ID = 19L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 17L,
+                            CarModelYearID = 60L
+                        },
+                        new
+                        {
+                            ID = 20L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 17L,
+                            CarModelYearID = 61L
+                        },
+                        new
+                        {
+                            ID = 21L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 17L,
+                            CarModelYearID = 62L
+                        },
+                        new
+                        {
+                            ID = 22L,
                             CarManufacturerID = 24L,
                             CarModelID = 17L,
                             CarModelYearID = 63L
+                        },
+                        new
+                        {
+                            ID = 23L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 17L,
+                            CarModelYearID = 64L
+                        },
+                        new
+                        {
+                            ID = 24L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 17L,
+                            CarModelYearID = 65L
+                        },
+                        new
+                        {
+                            ID = 25L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 17L,
+                            CarModelYearID = 66L
+                        },
+                        new
+                        {
+                            ID = 26L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 17L,
+                            CarModelYearID = 67L
+                        },
+                        new
+                        {
+                            ID = 27L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 17L,
+                            CarModelYearID = 68L
+                        },
+                        new
+                        {
+                            ID = 28L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 17L,
+                            CarModelYearID = 69L
+                        },
+                        new
+                        {
+                            ID = 29L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 17L,
+                            CarModelYearID = 70L
+                        },
+                        new
+                        {
+                            ID = 30L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 17L,
+                            CarModelYearID = 71L
+                        },
+                        new
+                        {
+                            ID = 31L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 17L,
+                            CarModelYearID = 72L
+                        },
+                        new
+                        {
+                            ID = 32L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 17L,
+                            CarModelYearID = 73L
+                        },
+                        new
+                        {
+                            ID = 33L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 17L,
+                            CarModelYearID = 74L
+                        },
+                        new
+                        {
+                            ID = 34L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 15L,
+                            CarModelYearID = 58L
+                        },
+                        new
+                        {
+                            ID = 35L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 15L,
+                            CarModelYearID = 59L
+                        },
+                        new
+                        {
+                            ID = 36L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 15L,
+                            CarModelYearID = 60L
+                        },
+                        new
+                        {
+                            ID = 37L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 15L,
+                            CarModelYearID = 61L
+                        },
+                        new
+                        {
+                            ID = 38L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 15L,
+                            CarModelYearID = 62L
+                        },
+                        new
+                        {
+                            ID = 39L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 15L,
+                            CarModelYearID = 63L
+                        },
+                        new
+                        {
+                            ID = 40L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 15L,
+                            CarModelYearID = 64L
+                        },
+                        new
+                        {
+                            ID = 41L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 15L,
+                            CarModelYearID = 65L
+                        },
+                        new
+                        {
+                            ID = 42L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 15L,
+                            CarModelYearID = 66L
+                        },
+                        new
+                        {
+                            ID = 43L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 15L,
+                            CarModelYearID = 67L
+                        },
+                        new
+                        {
+                            ID = 44L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 15L,
+                            CarModelYearID = 68L
+                        },
+                        new
+                        {
+                            ID = 45L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 15L,
+                            CarModelYearID = 69L
+                        },
+                        new
+                        {
+                            ID = 46L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 15L,
+                            CarModelYearID = 70L
+                        },
+                        new
+                        {
+                            ID = 47L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 15L,
+                            CarModelYearID = 71L
+                        },
+                        new
+                        {
+                            ID = 48L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 15L,
+                            CarModelYearID = 72L
+                        },
+                        new
+                        {
+                            ID = 49L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 15L,
+                            CarModelYearID = 73L
+                        },
+                        new
+                        {
+                            ID = 50L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 15L,
+                            CarModelYearID = 74L
+                        },
+                        new
+                        {
+                            ID = 51L,
+                            CarManufacturerID = 2L,
+                            CarModelID = 51L,
+                            CarModelYearID = 61L
+                        },
+                        new
+                        {
+                            ID = 52L,
+                            CarManufacturerID = 2L,
+                            CarModelID = 51L,
+                            CarModelYearID = 62L
+                        },
+                        new
+                        {
+                            ID = 53L,
+                            CarManufacturerID = 2L,
+                            CarModelID = 51L,
+                            CarModelYearID = 63L
+                        },
+                        new
+                        {
+                            ID = 54L,
+                            CarManufacturerID = 2L,
+                            CarModelID = 51L,
+                            CarModelYearID = 64L
+                        },
+                        new
+                        {
+                            ID = 55L,
+                            CarManufacturerID = 2L,
+                            CarModelID = 51L,
+                            CarModelYearID = 65L
+                        },
+                        new
+                        {
+                            ID = 56L,
+                            CarManufacturerID = 2L,
+                            CarModelID = 51L,
+                            CarModelYearID = 66L
+                        },
+                        new
+                        {
+                            ID = 57L,
+                            CarManufacturerID = 2L,
+                            CarModelID = 51L,
+                            CarModelYearID = 67L
+                        },
+                        new
+                        {
+                            ID = 58L,
+                            CarManufacturerID = 2L,
+                            CarModelID = 51L,
+                            CarModelYearID = 68L
+                        },
+                        new
+                        {
+                            ID = 59L,
+                            CarManufacturerID = 2L,
+                            CarModelID = 51L,
+                            CarModelYearID = 69L
+                        },
+                        new
+                        {
+                            ID = 60L,
+                            CarManufacturerID = 2L,
+                            CarModelID = 51L,
+                            CarModelYearID = 70L
+                        },
+                        new
+                        {
+                            ID = 61L,
+                            CarManufacturerID = 2L,
+                            CarModelID = 51L,
+                            CarModelYearID = 71L
+                        },
+                        new
+                        {
+                            ID = 62L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 84L,
+                            CarModelYearID = 50L
+                        },
+                        new
+                        {
+                            ID = 63L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 84L,
+                            CarModelYearID = 51L
+                        },
+                        new
+                        {
+                            ID = 64L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 84L,
+                            CarModelYearID = 52L
+                        },
+                        new
+                        {
+                            ID = 65L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 84L,
+                            CarModelYearID = 53L
+                        },
+                        new
+                        {
+                            ID = 66L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 84L,
+                            CarModelYearID = 54L
+                        },
+                        new
+                        {
+                            ID = 67L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 84L,
+                            CarModelYearID = 55L
+                        },
+                        new
+                        {
+                            ID = 68L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 84L,
+                            CarModelYearID = 56L
+                        },
+                        new
+                        {
+                            ID = 69L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 84L,
+                            CarModelYearID = 57L
+                        },
+                        new
+                        {
+                            ID = 70L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 84L,
+                            CarModelYearID = 58L
+                        },
+                        new
+                        {
+                            ID = 71L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 84L,
+                            CarModelYearID = 59L
+                        },
+                        new
+                        {
+                            ID = 72L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 84L,
+                            CarModelYearID = 60L
+                        },
+                        new
+                        {
+                            ID = 73L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 84L,
+                            CarModelYearID = 61L
+                        },
+                        new
+                        {
+                            ID = 74L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 84L,
+                            CarModelYearID = 62L
+                        },
+                        new
+                        {
+                            ID = 75L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 84L,
+                            CarModelYearID = 63L
+                        },
+                        new
+                        {
+                            ID = 76L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 84L,
+                            CarModelYearID = 64L
+                        },
+                        new
+                        {
+                            ID = 77L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 84L,
+                            CarModelYearID = 65L
+                        },
+                        new
+                        {
+                            ID = 78L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 84L,
+                            CarModelYearID = 66L
+                        },
+                        new
+                        {
+                            ID = 79L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 84L,
+                            CarModelYearID = 67L
+                        },
+                        new
+                        {
+                            ID = 80L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 84L,
+                            CarModelYearID = 68L
+                        },
+                        new
+                        {
+                            ID = 81L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 84L,
+                            CarModelYearID = 69L
+                        },
+                        new
+                        {
+                            ID = 82L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 84L,
+                            CarModelYearID = 70L
+                        },
+                        new
+                        {
+                            ID = 83L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 84L,
+                            CarModelYearID = 71L
+                        },
+                        new
+                        {
+                            ID = 84L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 84L,
+                            CarModelYearID = 72L
+                        },
+                        new
+                        {
+                            ID = 85L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 84L,
+                            CarModelYearID = 73L
+                        },
+                        new
+                        {
+                            ID = 86L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 84L,
+                            CarModelYearID = 74L
+                        },
+                        new
+                        {
+                            ID = 87L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 76L,
+                            CarModelYearID = 52L
+                        },
+                        new
+                        {
+                            ID = 88L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 76L,
+                            CarModelYearID = 53L
+                        },
+                        new
+                        {
+                            ID = 89L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 76L,
+                            CarModelYearID = 54L
+                        },
+                        new
+                        {
+                            ID = 90L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 76L,
+                            CarModelYearID = 55L
+                        },
+                        new
+                        {
+                            ID = 91L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 76L,
+                            CarModelYearID = 56L
+                        },
+                        new
+                        {
+                            ID = 92L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 76L,
+                            CarModelYearID = 57L
+                        },
+                        new
+                        {
+                            ID = 93L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 76L,
+                            CarModelYearID = 58L
+                        },
+                        new
+                        {
+                            ID = 94L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 76L,
+                            CarModelYearID = 59L
+                        },
+                        new
+                        {
+                            ID = 95L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 76L,
+                            CarModelYearID = 60L
+                        },
+                        new
+                        {
+                            ID = 96L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 76L,
+                            CarModelYearID = 61L
+                        },
+                        new
+                        {
+                            ID = 97L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 76L,
+                            CarModelYearID = 62L
+                        },
+                        new
+                        {
+                            ID = 98L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 76L,
+                            CarModelYearID = 63L
+                        },
+                        new
+                        {
+                            ID = 99L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 76L,
+                            CarModelYearID = 64L
+                        },
+                        new
+                        {
+                            ID = 100L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 76L,
+                            CarModelYearID = 65L
+                        },
+                        new
+                        {
+                            ID = 101L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 76L,
+                            CarModelYearID = 66L
+                        },
+                        new
+                        {
+                            ID = 102L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 76L,
+                            CarModelYearID = 67L
+                        },
+                        new
+                        {
+                            ID = 103L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 76L,
+                            CarModelYearID = 68L
+                        },
+                        new
+                        {
+                            ID = 104L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 76L,
+                            CarModelYearID = 69L
+                        },
+                        new
+                        {
+                            ID = 105L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 76L,
+                            CarModelYearID = 70L
+                        },
+                        new
+                        {
+                            ID = 106L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 76L,
+                            CarModelYearID = 71L
+                        },
+                        new
+                        {
+                            ID = 107L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 76L,
+                            CarModelYearID = 72L
+                        },
+                        new
+                        {
+                            ID = 108L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 76L,
+                            CarModelYearID = 73L
+                        },
+                        new
+                        {
+                            ID = 109L,
+                            CarManufacturerID = 62L,
+                            CarModelID = 76L,
+                            CarModelYearID = 74L
+                        },
+                        new
+                        {
+                            ID = 110L,
+                            CarManufacturerID = 2L,
+                            CarModelID = 34L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 111L,
+                            CarManufacturerID = 2L,
+                            CarModelID = 35L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 112L,
+                            CarManufacturerID = 2L,
+                            CarModelID = 36L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 113L,
+                            CarManufacturerID = 2L,
+                            CarModelID = 37L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 114L,
+                            CarManufacturerID = 2L,
+                            CarModelID = 38L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 115L,
+                            CarManufacturerID = 2L,
+                            CarModelID = 39L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 116L,
+                            CarManufacturerID = 2L,
+                            CarModelID = 40L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 117L,
+                            CarManufacturerID = 2L,
+                            CarModelID = 41L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 118L,
+                            CarManufacturerID = 2L,
+                            CarModelID = 42L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 119L,
+                            CarManufacturerID = 2L,
+                            CarModelID = 43L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 120L,
+                            CarManufacturerID = 2L,
+                            CarModelID = 44L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 121L,
+                            CarManufacturerID = 2L,
+                            CarModelID = 45L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 122L,
+                            CarManufacturerID = 2L,
+                            CarModelID = 46L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 123L,
+                            CarManufacturerID = 2L,
+                            CarModelID = 47L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 124L,
+                            CarManufacturerID = 2L,
+                            CarModelID = 48L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 125L,
+                            CarManufacturerID = 2L,
+                            CarModelID = 49L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 126L,
+                            CarManufacturerID = 2L,
+                            CarModelID = 50L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 127L,
+                            CarManufacturerID = 2L,
+                            CarModelID = 52L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 128L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 1L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 129L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 2L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 130L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 3L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 131L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 4L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 132L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 5L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 133L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 6L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 134L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 7L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 135L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 8L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 136L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 9L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 137L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 10L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 138L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 11L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 139L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 12L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 140L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 13L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 141L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 14L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 142L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 18L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 143L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 19L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 144L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 20L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 145L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 21L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 146L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 22L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 147L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 23L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 148L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 24L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 149L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 25L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 150L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 26L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 151L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 27L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 152L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 28L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 153L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 29L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 154L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 30L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 155L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 31L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 156L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 32L,
+                            CarModelYearID = 1L
+                        },
+                        new
+                        {
+                            ID = 157L,
+                            CarManufacturerID = 24L,
+                            CarModelID = 33L,
+                            CarModelYearID = 1L
                         });
                 });
 
@@ -5347,10 +6458,9 @@ namespace GarageAPI.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float>("FinalPrice")
+                    b.Property<float?>("FinalPrice")
                         .HasColumnType("real");
 
                     b.Property<string>("LicencePlate")
@@ -5370,21 +6480,22 @@ namespace GarageAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("ServiceDate")
                         .HasColumnType("datetime");
 
-                    b.Property<long>("ServiceKilometer")
+                    b.Property<long?>("ServiceKilometer")
                         .HasColumnType("bigint");
 
-                    b.Property<float>("StartPrice")
+                    b.Property<float?>("StartPrice")
                         .HasColumnType("real");
 
                     b.Property<string>("Surname")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("UserModelsID")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("VIN")
                         .IsRequired()
@@ -5442,47 +6553,6 @@ namespace GarageAPI.Migrations
                     b.HasIndex("UserModelsID");
 
                     b.ToTable("ServiceHistory");
-
-                    //b.HasData(
-                    //    new
-                    //    {
-                    //        ID = 1L,
-                    //        Description = "Αλλαγή λαδιών",
-                    //        EngineerID = 5L,
-                    //        FinalPrice = 55f,
-                    //        FinishingDate = new DateTime(2022, 12, 7, 13, 24, 10, 552, DateTimeKind.Unspecified),
-                    //        ServiceDate = new DateTime(2022, 12, 6, 20, 40, 10, 552, DateTimeKind.Unspecified),
-                    //        ServiceKilometer = 65080L,
-                    //        StartPrice = 55f,
-                    //        StartingDate = new DateTime(2022, 12, 7, 13, 24, 10, 552, DateTimeKind.Unspecified)
-                    //       // UserModelsID = 1L
-                    //    },
-                    //    new
-                    //    {
-                    //        ID = 2L,
-                    //        Description = "Αλλαγή ιμάντα χρονισμού",
-                    //        EngineerID = 5L,
-                    //        FinalPrice = 95f,
-                    //        FinishingDate = new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Unspecified),
-                    //        ServiceDate = new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Unspecified),
-                    //        ServiceKilometer = 70898L,
-                    //        StartPrice = 95f,
-                    //        StartingDate = new DateTime(2023, 2, 6, 15, 38, 10, 552, DateTimeKind.Unspecified)
-                    //       // UserModelsID = 1L
-                    //    },
-                    //    new
-                    //    {
-                    //        ID = 3L,
-                    //        Description = "Αλλαγή Ελαστικων",
-                    //        EngineerID = 5L,
-                    //        FinalPrice = 100f,
-                    //        FinishingDate = new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Unspecified),
-                    //        ServiceDate = new DateTime(2023, 4, 6, 20, 40, 10, 552, DateTimeKind.Unspecified),
-                    //        ServiceKilometer = 85365L,
-                    //        StartPrice = 100f,
-                    //        StartingDate = new DateTime(2023, 4, 6, 15, 38, 10, 552, DateTimeKind.Unspecified)
-                    //        //UserModelsID = 1L
-                    //    });
                 });
 
             modelBuilder.Entity("GarageAPI.Models.UserModels.UserModels", b =>
@@ -5508,9 +6578,6 @@ namespace GarageAPI.Migrations
                     b.Property<long>("ModelManufacturerYearID")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("ModelYearID")
-                        .HasColumnType("bigint");
-
                     b.Property<long>("UserID")
                         .HasColumnType("bigint");
 
@@ -5520,8 +6587,6 @@ namespace GarageAPI.Migrations
                     b.HasKey("ID");
 
                     b.HasIndex("ModelManufacturerYearID");
-
-                    b.HasIndex("ModelYearID");
 
                     b.HasIndex("UserID");
 
@@ -5690,7 +6755,7 @@ namespace GarageAPI.Migrations
                         new
                         {
                             ID = 6L,
-                            CreationDate = new DateTime(2023, 3, 7, 16, 32, 16, 548, DateTimeKind.Local).AddTicks(7090),
+                            CreationDate = new DateTime(2023, 6, 2, 16, 37, 48, 180, DateTimeKind.Local).AddTicks(7589),
                             Email = "mmichail@gmail.com",
                             EnableAccess = 1,
                             GarageID = 0L,
@@ -5740,7 +6805,7 @@ namespace GarageAPI.Migrations
                     b.HasOne("GarageAPI.Models.UserModels.UserModels", "UserModels")
                         .WithMany()
                         .HasForeignKey("UserModelsID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Engineer");
@@ -5756,12 +6821,6 @@ namespace GarageAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GarageAPI.Models.CarModelYears.CarModelYear", "ModelYear")
-                        .WithMany()
-                        .HasForeignKey("ModelYearID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("GarageAPI.Models.Users", "User")
                         .WithMany()
                         .HasForeignKey("UserID")
@@ -5769,8 +6828,6 @@ namespace GarageAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("ModelManufacturerYear");
-
-                    b.Navigation("ModelYear");
 
                     b.Navigation("User");
                 });

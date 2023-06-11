@@ -22,6 +22,7 @@ namespace GaragePortal
 {
     public class Startup
     {
+        private String MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -59,27 +60,22 @@ namespace GaragePortal
             {
                 var supportedCultures = new List<CultureInfo>
                 {
-                    new CultureInfo("en-US"),
                     new CultureInfo("en-GB"),
                     new CultureInfo("el-GR")
                 };
-                options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture(culture: "en-US", uiCulture: "en-US");
+                options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture(culture: "el-GR", uiCulture: "el-GR");
                 options.SupportedCultures = supportedCultures;
                 options.SupportedUICultures = supportedCultures;
 
                 options.RequestCultureProviders.Insert(0, new QueryStringRequestCultureProvider());
             });
 
-
             /* Language Locale */
 
-
-            //services.AddDbContext<GarageManagementSoftwarePortalContext>(options =>
-            //        options.UseSqlServer(Configuration.GetConnectionString("SocialNetworkContext")));
             // Default Session Timeout is 10 minutes.
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromMinutes(10);
+                options.IdleTimeout = TimeSpan.FromMinutes(1440);
             });
         }
 
@@ -96,6 +92,8 @@ namespace GaragePortal
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            
 
             /* Language Locale */
             var locOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();

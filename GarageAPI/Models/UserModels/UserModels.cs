@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using GarageAPI.Enum;
 using GarageAPI.Models.CarManufacturers;
 using GarageAPI.Models.CarModelYears;
+using GarageAPI.Models.CarEngineTypes;
 
 namespace GarageAPI.Models.UserModels
 {
@@ -15,7 +16,7 @@ namespace GarageAPI.Models.UserModels
 
         public CarModelManufacturerYear ModelManufacturerYear { get; set; }
 
-        public CarModelYear ModelYear { get; set; }
+        public CarEngineType EngineType { get; set; }
 
         public string? LicencePlate { get; set; }
 

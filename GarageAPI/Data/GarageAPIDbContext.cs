@@ -5,6 +5,7 @@ using GarageAPI.Models.CarModels;
 using GarageAPI.Models.CarModelYears;
 using GarageAPI.Models.EngineerSpeciality;
 using GarageAPI.Models.UserModels;
+using GarageAPI.Models.CarEngineTypes;
 
 namespace GarageAPI.Data
 {
@@ -17,7 +18,7 @@ namespace GarageAPI.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            initDatabase(builder);
+            //initDatabase(builder);
             builder.Entity<ServiceHistoryDTO>().HasNoKey();
             base.OnModelCreating(builder);
         }
@@ -30,14 +31,24 @@ namespace GarageAPI.Data
         public DbSet<CustomerCars> CustomerCars { get; set; }
         public DbSet<UserModelsDTO> Output { get; set; }
         public DbSet<EngineerSpeciality> EngineerSpeciality { get; set; }
-
         public DbSet<ServiceHistory> ServiceHistory { get; set; }
         public DbSet<ServiceHistoryDTO> ServiceHistoryDTO { get; set; }
+        public DbSet<CarEngineType> CarEngineType { get; set; }
 
-        private void initDatabase(ModelBuilder builder)
+        private void SetCarEngineTypeData(ModelBuilder builder)
         {
-            builder.Entity<ServiceHistoryDTO>().HasNoKey();
+            builder.Entity<CarEngineType>().HasData(new CarEngineType { ID = 1L, EngineType = "--" });
+            builder.Entity<CarEngineType>().HasData(new CarEngineType { ID = 2L, EngineType = "Petrol" });
+            builder.Entity<CarEngineType>().HasData(new CarEngineType { ID = 3L, EngineType = "Diesel" });
+            builder.Entity<CarEngineType>().HasData(new CarEngineType { ID = 4L, EngineType = "Hybrid Petrol" });
+            builder.Entity<CarEngineType>().HasData(new CarEngineType { ID = 5L, EngineType = "Hybrid Diesel" });
+            builder.Entity<CarEngineType>().HasData(new CarEngineType { ID = 6L, EngineType = "LNG" });
+            builder.Entity<CarEngineType>().HasData(new CarEngineType { ID = 7L, EngineType = "CNG" });
+            builder.Entity<CarEngineType>().HasData(new CarEngineType { ID = 8L, EngineType = "Electric" });
+        }
 
+        private void SetCarManufacturerData(ModelBuilder builder)
+        {
             builder.Entity<CarManufacturer>().HasData(new CarManufacturer { ID = 1, ManufacturerName = "Abarth" });
             builder.Entity<CarManufacturer>().HasData(new CarManufacturer { ID = 2, ManufacturerName = "Alfa Romeo" });
             builder.Entity<CarManufacturer>().HasData(new CarManufacturer { ID = 3, ManufacturerName = "Aston Martin" });
@@ -102,8 +113,10 @@ namespace GarageAPI.Data
             builder.Entity<CarManufacturer>().HasData(new CarManufacturer { ID = 62, ManufacturerName = "Toyota" });
             builder.Entity<CarManufacturer>().HasData(new CarManufacturer { ID = 63, ManufacturerName = "Volkswagen" });
             builder.Entity<CarManufacturer>().HasData(new CarManufacturer { ID = 64, ManufacturerName = "Volvo" });
+        }
 
-
+        private void SetCarModelData(ModelBuilder builder)
+        {
             builder.Entity<CarModel>().HasData(new CarModel { ID = 1, ModelName = "Accent" });
             builder.Entity<CarModel>().HasData(new CarModel { ID = 2, ModelName = "Atos" });
             builder.Entity<CarModel>().HasData(new CarModel { ID = 3, ModelName = "Prime" });
@@ -995,7 +1008,204 @@ namespace GarageAPI.Data
             builder.Entity<CarModel>().HasData(new CarModel { ID = 889, ModelName = "Fortwo cabrio" });
             builder.Entity<CarModel>().HasData(new CarModel { ID = 890, ModelName = "Fortwo coupé" });
             builder.Entity<CarModel>().HasData(new CarModel { ID = 891, ModelName = "Roadster" });
+        }
 
+        private void SetCarModelManufacturerYear(ModelBuilder builder)
+        {
+            // Hyundai i20
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 1L, CarManufacturerID = 24L, CarModelID = 16L, CarModelYearID = 59L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 2L, CarManufacturerID = 24L, CarModelID = 16L, CarModelYearID = 60L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 3L, CarManufacturerID = 24L, CarModelID = 16L, CarModelYearID = 61L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 4L, CarManufacturerID = 24L, CarModelID = 16L, CarModelYearID = 62L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 5L, CarManufacturerID = 24L, CarModelID = 16L, CarModelYearID = 63L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 6L, CarManufacturerID = 24L, CarModelID = 16L, CarModelYearID = 64L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 7L, CarManufacturerID = 24L, CarModelID = 16L, CarModelYearID = 65L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 8L, CarManufacturerID = 24L, CarModelID = 16L, CarModelYearID = 66L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 9L, CarManufacturerID = 24L, CarModelID = 16L, CarModelYearID = 67L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 10L, CarManufacturerID = 24L, CarModelID = 16L, CarModelYearID = 68L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 11L, CarManufacturerID = 24L, CarModelID = 16L, CarModelYearID = 69L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 12L, CarManufacturerID = 24L, CarModelID = 16L, CarModelYearID = 70L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 13L, CarManufacturerID = 24L, CarModelID = 16L, CarModelYearID = 71L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 14L, CarManufacturerID = 24L, CarModelID = 16L, CarModelYearID = 72L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 15L, CarManufacturerID = 24L, CarModelID = 16L, CarModelYearID = 73L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 16L, CarManufacturerID = 24L, CarModelID = 16L, CarModelYearID = 74L });
+
+            // Hyundai i30
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 17L, CarManufacturerID = 24L, CarModelID = 17L, CarModelYearID = 58L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 18L, CarManufacturerID = 24L, CarModelID = 17L, CarModelYearID = 59L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 19L, CarManufacturerID = 24L, CarModelID = 17L, CarModelYearID = 60L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 20L, CarManufacturerID = 24L, CarModelID = 17L, CarModelYearID = 61L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 21L, CarManufacturerID = 24L, CarModelID = 17L, CarModelYearID = 62L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 22L, CarManufacturerID = 24L, CarModelID = 17L, CarModelYearID = 63L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 23L, CarManufacturerID = 24L, CarModelID = 17L, CarModelYearID = 64L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 24L, CarManufacturerID = 24L, CarModelID = 17L, CarModelYearID = 65L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 25L, CarManufacturerID = 24L, CarModelID = 17L, CarModelYearID = 66L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 26L, CarManufacturerID = 24L, CarModelID = 17L, CarModelYearID = 67L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 27L, CarManufacturerID = 24L, CarModelID = 17L, CarModelYearID = 68L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 28L, CarManufacturerID = 24L, CarModelID = 17L, CarModelYearID = 69L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 29L, CarManufacturerID = 24L, CarModelID = 17L, CarModelYearID = 70L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 30L, CarManufacturerID = 24L, CarModelID = 17L, CarModelYearID = 71L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 31L, CarManufacturerID = 24L, CarModelID = 17L, CarModelYearID = 72L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 32L, CarManufacturerID = 24L, CarModelID = 17L, CarModelYearID = 73L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 33L, CarManufacturerID = 24L, CarModelID = 17L, CarModelYearID = 74L });
+
+
+            // Hyundai i10
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 34L, CarManufacturerID = 24L, CarModelID = 15L, CarModelYearID = 58L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 35L, CarManufacturerID = 24L, CarModelID = 15L, CarModelYearID = 59L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 36L, CarManufacturerID = 24L, CarModelID = 15L, CarModelYearID = 60L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 37L, CarManufacturerID = 24L, CarModelID = 15L, CarModelYearID = 61L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 38L, CarManufacturerID = 24L, CarModelID = 15L, CarModelYearID = 62L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 39L, CarManufacturerID = 24L, CarModelID = 15L, CarModelYearID = 63L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 40L, CarManufacturerID = 24L, CarModelID = 15L, CarModelYearID = 64L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 41L, CarManufacturerID = 24L, CarModelID = 15L, CarModelYearID = 65L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 42L, CarManufacturerID = 24L, CarModelID = 15L, CarModelYearID = 66L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 43L, CarManufacturerID = 24L, CarModelID = 15L, CarModelYearID = 67L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 44L, CarManufacturerID = 24L, CarModelID = 15L, CarModelYearID = 68L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 45L, CarManufacturerID = 24L, CarModelID = 15L, CarModelYearID = 69L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 46L, CarManufacturerID = 24L, CarModelID = 15L, CarModelYearID = 70L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 47L, CarManufacturerID = 24L, CarModelID = 15L, CarModelYearID = 71L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 48L, CarManufacturerID = 24L, CarModelID = 15L, CarModelYearID = 72L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 49L, CarManufacturerID = 24L, CarModelID = 15L, CarModelYearID = 73L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 50L, CarManufacturerID = 24L, CarModelID = 15L, CarModelYearID = 74L });
+
+            // Alfa Romeo Guiletta
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 51L, CarManufacturerID = 2L, CarModelID = 51L, CarModelYearID = 61L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 52L, CarManufacturerID = 2L, CarModelID = 51L, CarModelYearID = 62L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 53L, CarManufacturerID = 2L, CarModelID = 51L, CarModelYearID = 63L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 54L, CarManufacturerID = 2L, CarModelID = 51L, CarModelYearID = 64L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 55L, CarManufacturerID = 2L, CarModelID = 51L, CarModelYearID = 65L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 56L, CarManufacturerID = 2L, CarModelID = 51L, CarModelYearID = 66L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 57L, CarManufacturerID = 2L, CarModelID = 51L, CarModelYearID = 67L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 58L, CarManufacturerID = 2L, CarModelID = 51L, CarModelYearID = 68L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 59L, CarManufacturerID = 2L, CarModelID = 51L, CarModelYearID = 69L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 60L, CarManufacturerID = 2L, CarModelID = 51L, CarModelYearID = 70L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 61L, CarManufacturerID = 2L, CarModelID = 51L, CarModelYearID = 71L });
+
+            // Toyota Yaris
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 62L, CarManufacturerID = 62L, CarModelID = 84L, CarModelYearID = 50L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 63L, CarManufacturerID = 62L, CarModelID = 84L, CarModelYearID = 51L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 64L, CarManufacturerID = 62L, CarModelID = 84L, CarModelYearID = 52L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 65L, CarManufacturerID = 62L, CarModelID = 84L, CarModelYearID = 53L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 66L, CarManufacturerID = 62L, CarModelID = 84L, CarModelYearID = 54L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 67L, CarManufacturerID = 62L, CarModelID = 84L, CarModelYearID = 55L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 68L, CarManufacturerID = 62L, CarModelID = 84L, CarModelYearID = 56L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 69L, CarManufacturerID = 62L, CarModelID = 84L, CarModelYearID = 57L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 70L, CarManufacturerID = 62L, CarModelID = 84L, CarModelYearID = 58L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 71L, CarManufacturerID = 62L, CarModelID = 84L, CarModelYearID = 59L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 72L, CarManufacturerID = 62L, CarModelID = 84L, CarModelYearID = 60L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 73L, CarManufacturerID = 62L, CarModelID = 84L, CarModelYearID = 61L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 74L, CarManufacturerID = 62L, CarModelID = 84L, CarModelYearID = 62L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 75L, CarManufacturerID = 62L, CarModelID = 84L, CarModelYearID = 63L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 76L, CarManufacturerID = 62L, CarModelID = 84L, CarModelYearID = 64L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 77L, CarManufacturerID = 62L, CarModelID = 84L, CarModelYearID = 65L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 78L, CarManufacturerID = 62L, CarModelID = 84L, CarModelYearID = 66L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 79L, CarManufacturerID = 62L, CarModelID = 84L, CarModelYearID = 67L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 80L, CarManufacturerID = 62L, CarModelID = 84L, CarModelYearID = 68L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 81L, CarManufacturerID = 62L, CarModelID = 84L, CarModelYearID = 69L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 82L, CarManufacturerID = 62L, CarModelID = 84L, CarModelYearID = 70L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 83L, CarManufacturerID = 62L, CarModelID = 84L, CarModelYearID = 71L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 84L, CarManufacturerID = 62L, CarModelID = 84L, CarModelYearID = 72L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 85L, CarManufacturerID = 62L, CarModelID = 84L, CarModelYearID = 73L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 86L, CarManufacturerID = 62L, CarModelID = 84L, CarModelYearID = 74L });
+
+            // Toyota Prius
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 87L, CarManufacturerID = 62L, CarModelID = 76L, CarModelYearID = 52L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 88L, CarManufacturerID = 62L, CarModelID = 76L, CarModelYearID = 53L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 89L, CarManufacturerID = 62L, CarModelID = 76L, CarModelYearID = 54L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 90L, CarManufacturerID = 62L, CarModelID = 76L, CarModelYearID = 55L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 91L, CarManufacturerID = 62L, CarModelID = 76L, CarModelYearID = 56L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 92L, CarManufacturerID = 62L, CarModelID = 76L, CarModelYearID = 57L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 93L, CarManufacturerID = 62L, CarModelID = 76L, CarModelYearID = 58L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 94L, CarManufacturerID = 62L, CarModelID = 76L, CarModelYearID = 59L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 95L, CarManufacturerID = 62L, CarModelID = 76L, CarModelYearID = 60L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 96L, CarManufacturerID = 62L, CarModelID = 76L, CarModelYearID = 61L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 97L, CarManufacturerID = 62L, CarModelID = 76L, CarModelYearID = 62L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 98L, CarManufacturerID = 62L, CarModelID = 76L, CarModelYearID = 63L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 99L, CarManufacturerID = 62L, CarModelID = 76L, CarModelYearID = 64L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 100L, CarManufacturerID = 62L, CarModelID = 76L, CarModelYearID = 65L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 101L, CarManufacturerID = 62L, CarModelID = 76L, CarModelYearID = 66L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 102L, CarManufacturerID = 62L, CarModelID = 76L, CarModelYearID = 67L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 103L, CarManufacturerID = 62L, CarModelID = 76L, CarModelYearID = 68L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 104L, CarManufacturerID = 62L, CarModelID = 76L, CarModelYearID = 69L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 105L, CarManufacturerID = 62L, CarModelID = 76L, CarModelYearID = 70L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 106L, CarManufacturerID = 62L, CarModelID = 76L, CarModelYearID = 71L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 107L, CarManufacturerID = 62L, CarModelID = 76L, CarModelYearID = 72L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 108L, CarManufacturerID = 62L, CarModelID = 76L, CarModelYearID = 73L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 109L, CarManufacturerID = 62L, CarModelID = 76L, CarModelYearID = 74L });
+
+            // All Alfa Romeo Models
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 110L, CarManufacturerID = 2L, CarModelID = 34L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 111L, CarManufacturerID = 2L, CarModelID = 35L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 112L, CarManufacturerID = 2L, CarModelID = 36L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 113L, CarManufacturerID = 2L, CarModelID = 37L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 114L, CarManufacturerID = 2L, CarModelID = 38L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 115L, CarManufacturerID = 2L, CarModelID = 39L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 116L, CarManufacturerID = 2L, CarModelID = 40L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 117L, CarManufacturerID = 2L, CarModelID = 41L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 118L, CarManufacturerID = 2L, CarModelID = 42L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 119L, CarManufacturerID = 2L, CarModelID = 43L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 120L, CarManufacturerID = 2L, CarModelID = 44L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 121L, CarManufacturerID = 2L, CarModelID = 45L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 122L, CarManufacturerID = 2L, CarModelID = 46L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 123L, CarManufacturerID = 2L, CarModelID = 47L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 124L, CarManufacturerID = 2L, CarModelID = 48L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 125L, CarManufacturerID = 2L, CarModelID = 49L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 126L, CarManufacturerID = 2L, CarModelID = 50L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 127L, CarManufacturerID = 2L, CarModelID = 52L, CarModelYearID = 1L });
+
+            // Hyundai All Models
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 128L, CarManufacturerID = 24L, CarModelID = 1L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 129L, CarManufacturerID = 24L, CarModelID = 2L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 130L, CarManufacturerID = 24L, CarModelID = 3L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 131L, CarManufacturerID = 24L, CarModelID = 4L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 132L, CarManufacturerID = 24L, CarModelID = 5L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 133L, CarManufacturerID = 24L, CarModelID = 6L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 134L, CarManufacturerID = 24L, CarModelID = 7L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 135L, CarManufacturerID = 24L, CarModelID = 8L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 136L, CarManufacturerID = 24L, CarModelID = 9L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 137L, CarManufacturerID = 24L, CarModelID = 10L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 138L, CarManufacturerID = 24L, CarModelID = 11L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 139L, CarManufacturerID = 24L, CarModelID = 12L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 140L, CarManufacturerID = 24L, CarModelID = 13L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 141L, CarManufacturerID = 24L, CarModelID = 14L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 142L, CarManufacturerID = 24L, CarModelID = 18L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 143L, CarManufacturerID = 24L, CarModelID = 19L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 144L, CarManufacturerID = 24L, CarModelID = 20L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 145L, CarManufacturerID = 24L, CarModelID = 21L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 146L, CarManufacturerID = 24L, CarModelID = 22L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 147L, CarManufacturerID = 24L, CarModelID = 23L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 148L, CarManufacturerID = 24L, CarModelID = 24L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 149L, CarManufacturerID = 24L, CarModelID = 25L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 150L, CarManufacturerID = 24L, CarModelID = 26L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 151L, CarManufacturerID = 24L, CarModelID = 27L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 152L, CarManufacturerID = 24L, CarModelID = 28L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 153L, CarManufacturerID = 24L, CarModelID = 29L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 154L, CarManufacturerID = 24L, CarModelID = 30L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 155L, CarManufacturerID = 24L, CarModelID = 31L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 156L, CarManufacturerID = 24L, CarModelID = 32L, CarModelYearID = 1L });
+            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 157L, CarManufacturerID = 24L, CarModelID = 33L, CarModelYearID = 1L });
+
+        }
+
+        private void SetUsersData(ModelBuilder builder)
+        {
+            builder.Entity<Users>().HasData(new Users { ID = 1, Name = "Alexandros", Surname = "Tselios", Email = "atselios@classter.com", Password = "1", UserType = Enum.UserType.Admin, CreationDate = DateTime.Parse("2022-01-06 14:05:14.258"), ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable });
+            builder.Entity<Users>().HasData(new Users { ID = 2, Name = "Efthumia", Surname = "Varvagianni", Email = "efi.vanni@gmail.com", Password = "f1234!", UserType = Enum.UserType.Customer, CreationDate = DateTime.Parse("2022-02-06 09:19:46.369"), ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable });
+            builder.Entity<Users>().HasData(new Users { ID = 3, Name = "Kostas", Surname = "Kitsikou", Email = "kkitsikou@hotmail.com", Password = "gafa#$#", UserType = Enum.UserType.Customer, CreationDate = DateTime.Parse("2022-12-15 22:19:46.456"), ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable });
+            builder.Entity<Users>().HasData(new Users { ID = 4, Name = "Marios", Surname = "Papadopoulos", Email = "mpapadopoulos@yahoo.gr", Password = "MP1234@?", UserType = Enum.UserType.Customer, CreationDate = DateTime.Parse("2022-12-24 13:42:34.566"), ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Disable });
+            builder.Entity<Users>().HasData(new Users { ID = 5, Name = "Κωνσταντίνος", Surname = "Παπαδόπουλος", Email = "konpapa@yahoo.gr", Password = "DfG34#$%^", UserType = Enum.UserType.Engineer, CreationDate = DateTime.Parse("2023-02-03 20:08:23.860"), ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable, Speciality = 3 });
+            builder.Entity<Users>().HasData(new Users { ID = 6, Name = "Μιχάλης", Surname = "Μιχαήλ", Email = "mmichail@gmail.com", Password = "KavMixalis$%", UserType = Enum.UserType.Engineer, CreationDate = DateTime.Now, ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable, Speciality = 2 });
+        }
+
+        private void initDatabase(ModelBuilder builder)
+        {
+            SetCarEngineTypeData(builder);
+            SetCarManufacturerData(builder);
+            SetCarModelData(builder);
+            SetCarModelManufacturerYear(builder);
+            SetUsersData(builder);
+            builder.Entity<ServiceHistoryDTO>().HasNoKey();
 
             int k = 1;
             for (int i = 1950; i <= DateTime.Now.Year; i++)
@@ -1009,21 +1219,7 @@ namespace GarageAPI.Data
             builder.Entity<EngineerSpeciality>().HasData(new EngineerSpeciality { ID = 3, Speciality = "Βαφέας" });
             builder.Entity<EngineerSpeciality>().HasData(new EngineerSpeciality { ID = 4, Speciality = "Τεχνικός Παρμπρίζ" });
 
-            builder.Entity<Users>().HasData(new Users { ID = 1, Name = "Alexandros", Surname = "Tselios", Email = "atselios@classter.com", Password = "1", UserType = Enum.UserType.Admin, CreationDate = DateTime.Parse("2022-01-06 14:05:14.258"), ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable});
-            builder.Entity<Users>().HasData(new Users { ID = 2, Name = "Efthumia", Surname = "Varvagianni", Email = "efi.vanni@gmail.com", Password = "f1234!", UserType = Enum.UserType.Customer, CreationDate = DateTime.Parse("2022-02-06 09:19:46.369"), ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable });
-            builder.Entity<Users>().HasData(new Users { ID = 3, Name = "Kostas", Surname = "Kitsikou", Email = "kkitsikou@hotmail.com", Password = "gafa#$#", UserType = Enum.UserType.Customer, CreationDate = DateTime.Parse("2022-12-15 22:19:46.456"), ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable });
-            builder.Entity<Users>().HasData(new Users { ID = 4, Name = "Marios", Surname = "Papadopoulos", Email = "mpapadopoulos@yahoo.gr", Password = "MP1234@?", UserType = Enum.UserType.Customer, CreationDate = DateTime.Parse("2022-12-24 13:42:34.566"), ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Disable });
-            builder.Entity<Users>().HasData(new Users { ID = 5, Name = "Κωνσταντίνος", Surname = "Παπαδόπουλος", Email = "konpapa@yahoo.gr", Password = "DfG34#$%^", UserType = Enum.UserType.Engineer, CreationDate = DateTime.Parse("2023-02-03 20:08:23.860"), ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable, Speciality = 3 });
-            builder.Entity<Users>().HasData(new Users { ID = 6, Name = "Μιχάλης", Surname = "Μιχαήλ", Email = "mmichail@gmail.com", Password = "KavMixalis$%", UserType = Enum.UserType.Engineer, CreationDate = DateTime.Now, ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable, Speciality = 2 });
 
-            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID= 1L,  CarManufacturerID = 2, CarModelID = 51 , CarModelYearID = 66 });
-            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 2L, CarManufacturerID = 24, CarModelID = 2, CarModelYearID = 62 });
-            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 3L, CarManufacturerID = 62, CarModelID = 84, CarModelYearID = 69 });
-            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 4L, CarManufacturerID = 24, CarModelID = 16, CarModelYearID = 61 });
-            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 5L, CarManufacturerID = 24, CarModelID = 16, CarModelYearID = 62 });
-            builder.Entity<CarModelManufacturerYear>().HasData(new CarModelManufacturerYear { ID = 6L, CarManufacturerID = 24, CarModelID = 17, CarModelYearID = 63 });
-
-        
             //builder.Entity<ServiceHistory>().HasData(new ServiceHistory { ID = 1L, UserModelsID = 1L, Description = "Αλλαγή λαδιών", ServiceDate = DateTime.Parse("2022-12-06 20:40:10.552"), ServiceKilometer = 65080, EngineerID = 5, StartPrice = 55, FinalPrice = 55,StartingDate = DateTime.Parse("2022-12-07 13:24:10.552"), FinishingDate = DateTime.Parse("2022-12-07 13:24:10.552")});
             //builder.Entity<ServiceHistory>().HasData(new ServiceHistory { ID = 2L, UserModelsID = 1L, Description = "Αλλαγή ιμάντα χρονισμού", ServiceDate = DateTime.Parse("2023-02-06 20:40:10.552"), ServiceKilometer = 70898, EngineerID = 5, StartPrice = 95, FinalPrice = 95, StartingDate = DateTime.Parse("2023-02-06 15:38:10.552"), FinishingDate = DateTime.Parse("2023-02-06 20:40:10.552") });
             //builder.Entity<ServiceHistory>().HasData(new ServiceHistory { ID = 3L, UserModelsID = 1L, Description = "Αλλαγή Ελαστικων", ServiceDate = DateTime.Parse("2023-04-06 20:40:10.552"), ServiceKilometer = 85365, EngineerID = 5, StartPrice = 100, FinalPrice = 100, StartingDate = DateTime.Parse("2023-04-06 15:38:10.552"), FinishingDate = DateTime.Parse("2023-02-06 20:40:10.552") });

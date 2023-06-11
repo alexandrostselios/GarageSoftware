@@ -14,7 +14,9 @@
 
         public long Kilometer { get; set; }
 
-        public long ModelManufacturerYear { get; set; }
+        public long ModelManufacturer { get; set; }
+
+        public long Model { get; set; }
 
         public long ModelYear { get; set; }
 

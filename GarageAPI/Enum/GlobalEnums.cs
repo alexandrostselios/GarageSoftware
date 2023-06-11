@@ -14,6 +14,17 @@
         Disable = 2
     }
 
+    public enum EngineType
+    {
+        Petrol = 1,
+        Diesel = 2,
+        HybridPetrol = 3,
+        HybdridDiesel = 4,
+        LNG = 5,
+        CNG = 6,
+        Electric = 7
+    }
+
     public enum FileType
     {
         Image = 1,

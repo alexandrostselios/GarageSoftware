@@ -10,7 +10,10 @@ namespace GaragePortal.Models
         public long  UserID { get; set; }
 
         [DisplayName("Model Manufacturer")]
-        public long ModelManufacturerYear { get; set; }
+        public long ModelManufacturer { get; set; }
+
+        [DisplayName("Model Name")]
+        public long Model { get; set; }
 
         [DisplayName("Model Year")]
         public long ModelYear { get; set; }

@@ -30,5 +30,8 @@ namespace GaragePortal.Models
 
         [DisplayName("Car Image")]
         public byte[]? CarImage { get; set; }
+
+        [DisplayName("Engine")]
+        public string EngineType { get; set; }
     }
 }

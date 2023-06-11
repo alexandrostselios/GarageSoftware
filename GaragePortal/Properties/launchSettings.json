@@ -13,7 +13,8 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "https://alefhome.ddns.net:5001;http://192.168.1.21:5000"
+      "applicationUrl": "http://localhost:5004"
+      //"applicationUrl": "https://alefhome.ddns.net:5001;http://192.168.1.21:5000"
     }
   },
   "iisSettings": {

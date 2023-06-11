@@ -36,11 +36,12 @@ namespace GaragePortal.Controllers
         public IActionResult ViewCustomerCars(long id)
         {
             GetSessionProperties();
-            string userID = string.Format(ViewBag.ID);
+            string userID = string.Format(id.ToString());
             if (userID == null)
             {
                 return NotFound();
             }
+            HttpContext.Session.SetString("CustomerUserID", id.ToString());
             IEnumerable<UserModels> userCars = null;
             var responseTask = client.GetAsync(client.BaseAddress + "/GetUserModelByUserID/" + id);
             responseTask.Wait();
@@ -64,6 +65,7 @@ namespace GaragePortal.Controllers
             {
                 return NotFound();
             }
+            HttpContext.Session.SetString("CarDetailsID",id.ToString());
             IEnumerable<ServiceHistory> carServiceHsitory = null;
             var responseTask = client.GetAsync(client.BaseAddress + "/GetCarServiceHistoryByUserModelsID/" + id);
             responseTask.Wait();
@@ -76,12 +78,6 @@ namespace GaragePortal.Controllers
                 return NotFound();
             }
             return View(carServiceHsitory);
-            //var users = null;
-            //if (users == null)
-            //{
-            //    return NotFound();
-            //}
-            //return View(users);
         }
 
         public IActionResult EditCarDetails(long id, Colors color, int flag, IFormFile Image)
@@ -121,7 +117,6 @@ namespace GaragePortal.Controllers
             responseTask = client.PutAsync(client.BaseAddress + "/UpdateUserModel/" + id, content);
 
             return View(cc);
-
         }
 
         private void GetSessionProperties()
@@ -130,6 +125,8 @@ namespace GaragePortal.Controllers
             ViewBag.ID = HttpContext.Session.GetString("ID");
             ViewBag.Name = HttpContext.Session.GetString("Name");
             ViewBag.Surname = HttpContext.Session.GetString("Surname");
+            ViewBag.CarDetailsID = HttpContext.Session.GetString("CarDetailsID");
+            ViewBag.CustomerUserID = HttpContext.Session.GetString("CustomerUserID");
         }
 
         // GET: UserModels/Details/5
@@ -152,7 +149,7 @@ namespace GaragePortal.Controllers
         // POST: UserModels/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserID,ModelManufacturerYear,ModelYear,LicencePlate,VIN,Color,Kilometer")] UserModelsDTO userModels)
+        public async Task<IActionResult> Create([Bind("UserID,ModelManufacturer,Model,ModelYear,LicencePlate,VIN,Color,Kilometer")] UserModelsDTO userModels)
         {
             GetSessionProperties();
             if (ModelState.IsValid && userModels.UserID > 0)
@@ -160,17 +157,10 @@ namespace GaragePortal.Controllers
                 JsonContent content = JsonContent.Create(userModels);
                 HttpResponseMessage response = client.PostAsJsonAsync(client.BaseAddress + "/AddUserModel/", userModels).Result;
 
-                return View();
+                return RedirectToAction("ViewCustomerCars", "UserModels", new {id = userModels.UserID});
             }
-
             return View(userModels);
         }
-
-        //public IActionResult CreateServiceHistory(long UserModelsID)
-        //{
-        //    GetSessionProperties();
-        //    return View();
-        //}
 
         [HttpPost]
         [ValidateAntiForgeryToken]
