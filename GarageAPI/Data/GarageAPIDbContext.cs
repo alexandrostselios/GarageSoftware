@@ -6,6 +6,8 @@ using GarageAPI.Models.CarModelYears;
 using GarageAPI.Models.EngineerSpeciality;
 using GarageAPI.Models.UserModels;
 using GarageAPI.Models.CarEngineTypes;
+using System.ComponentModel.DataAnnotations.Schema;
+using GarageAPI.Models.User;
 
 namespace GarageAPI.Data
 {
@@ -20,6 +22,7 @@ namespace GarageAPI.Data
         {
             //initDatabase(builder);
             builder.Entity<ServiceHistoryDTO>().HasNoKey();
+            builder.Entity<UsersDTO>().HasNoKey();
             base.OnModelCreating(builder);
         }
         public DbSet<CarModel> CarModels { get; set; }
@@ -27,13 +30,15 @@ namespace GarageAPI.Data
         public DbSet<CarModelYear> CarModelYear { get; set; }
         public DbSet<CarModelManufacturerYear> CarModelManufacturerYear { get; set; }
         public DbSet<Users> Users { get; set; }
-        public DbSet<UserModels> UserModels { get; set; }
+        public DbSet<UserModel> UserModels { get; set; }
         public DbSet<CustomerCars> CustomerCars { get; set; }
         public DbSet<UserModelsDTO> Output { get; set; }
         public DbSet<EngineerSpeciality> EngineerSpeciality { get; set; }
         public DbSet<ServiceHistory> ServiceHistory { get; set; }
         public DbSet<ServiceHistoryDTO> ServiceHistoryDTO { get; set; }
         public DbSet<CarEngineType> CarEngineType { get; set; }
+        public DbSet<UsersDTO> UsersDTO { get; set; }
+        public DbSet<Settings> Settings { get; set; }
 
         private void SetCarEngineTypeData(ModelBuilder builder)
         {

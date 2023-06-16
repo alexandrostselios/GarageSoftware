@@ -1,0 +1,32 @@
+﻿@model IEnumerable<GaragePortal.Models.UserModels>
+@inject LanguageService Resource
+@{
+    ViewData["Title"] = Resource.GetKey("Settings");
+}
+
+
+@if (@ViewBag.UserType == GaragePortal.Enum.UserType.Admin.ToString())
+{
+    <p>Welcome @ViewBag.UserType - @ViewBag.ID - @ViewBag.Name - @ViewBag.Surname</p>
+
+    <div>
+        <p>Default Language: </p>
+        <select>
+            <option>English</option>
+            <option>Greek</option>
+        </select>
+       @* <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" asp-controller="UILanguage" asp-action="ChangeLanguage" asp-route-culture="en-GB">English</a>
+            <a class="dropdown-item" asp-controller="UILanguage" asp-action="ChangeLanguage" asp-route-culture="el-GR">Greek</a>
+        </div>*@
+    </div>
+}
+else if (@ViewBag.UserType == GaragePortal.Enum.UserType.User.ToString())
+{
+    <p>Welcome user: @ViewBag.Name - @ViewBag.Surname</p>
+
+}
+else
+{
+    <p>You need to login first</p>
+}

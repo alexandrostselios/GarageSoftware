@@ -27,7 +27,7 @@ namespace GaragePortal.Controllers
         {
             /* REMOVE IN PRODUCTION */
 
-            SetSessionPropertiesAdmin();
+            //SetSessionPropertiesAdmin();
 
             /* REMOVE IN PRODUCTION */
             GetSessionProperties();
@@ -60,9 +60,34 @@ namespace GaragePortal.Controllers
                 }
             }
             return View(userModels);
+        }
 
+        public IActionResult Settings()
+        {
+            GetSessionProperties();
+            IEnumerable<UserModels> userModels = null;
+            using (var client = new HttpClient())
+            {
+                Uri baseAddress = new Uri("https://localhost:7096/api");
+                client.BaseAddress = baseAddress;
+                var responseUserModels = client.GetAsync(client.BaseAddress + "/GetUserModelsByUserID/1");
+                responseUserModels.Wait();
+                var resultUserModels = responseUserModels.Result;
+                if (resultUserModels.IsSuccessStatusCode)
+                {
+                    var readTaskUserModels = resultUserModels.Content.ReadAsAsync<IList<UserModels>>();
+                    readTaskUserModels.Wait();
+                    userModels = readTaskUserModels.Result;
 
-            //return View();
+                }
+                else //web api sent error response 
+                {
+                    //log response status here..
+                    userModels = Enumerable.Empty<UserModels>();
+                    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+                }
+            }
+            return View(userModels);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

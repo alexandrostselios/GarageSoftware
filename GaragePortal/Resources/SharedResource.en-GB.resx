@@ -125,6 +125,10 @@
     <value>Add New Customer</value>
     <comment>Add New Customer</comment>
   </data>
+  <data name="Add_New_Engineer" xml:space="preserve">
+    <value>Add New Engineer</value>
+    <comment>Add_New_Engineer</comment>
+  </data>
   <data name="Add_Service_History" xml:space="preserve">
     <value>Add Service History</value>
     <comment>Add Service History</comment>
@@ -137,6 +141,10 @@
     <value>Color</value>
     <comment>Color</comment>
   </data>
+  <data name="Creation_Date" xml:space="preserve">
+    <value>Creation Date</value>
+    <comment>Creation_Date</comment>
+  </data>
   <data name="Customers" xml:space="preserve">
     <value>Customers</value>
     <comment>Customers</comment>
@@ -148,6 +156,14 @@
   <data name="Edit_Profile" xml:space="preserve">
     <value>Edit Profile</value>
     <comment>Edit Profile</comment>
+  </data>
+  <data name="Engineers" xml:space="preserve">
+    <value>Engineers</value>
+    <comment>Engineers</comment>
+  </data>
+  <data name="Engineer_Speciality" xml:space="preserve">
+    <value>Speciality</value>
+    <comment>Engineer_Speciality</comment>
   </data>
   <data name="Engine_Type" xml:space="preserve">
     <value>Fuel</value>
@@ -165,6 +181,10 @@
     <value>Language</value>
     <comment>Language</comment>
   </data>
+  <data name="Last_Login_Date" xml:space="preserve">
+    <value>Last Login</value>
+    <comment>Last_Login_Date</comment>
+  </data>
   <data name="Licence_Plate" xml:space="preserve">
     <value>Licence Plate</value>
     <comment>Licence Plate</comment>
@@ -173,8 +193,12 @@
     <value>List of Customers</value>
     <comment>List of Customers</comment>
   </data>
+  <data name="List_Of_Engineers" xml:space="preserve">
+    <value>List Of Engineers</value>
+    <comment>List_Of_Engineers</comment>
+  </data>
   <data name="List_Of_MyCars" xml:space="preserve">
-    <value>List_Of_MyCars</value>
+    <value>List Of My Cars</value>
     <comment>List_Of_MyCars</comment>
   </data>
   <data name="List_Of_User_Cars" xml:space="preserve">
@@ -201,9 +225,17 @@
     <value>Model Manufacturer</value>
     <comment>Model Manufacturer</comment>
   </data>
+  <data name="Modified_Date" xml:space="preserve">
+    <value>Modified Date</value>
+    <comment>Modified_Date</comment>
+  </data>
   <data name="My_Profile" xml:space="preserve">
     <value>My Profile</value>
     <comment>My Profile</comment>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+    <comment>Name</comment>
   </data>
   <data name="Privacy" xml:space="preserve">
     <value>Privacy</value>
@@ -229,9 +261,25 @@
     <value>Select Model</value>
     <comment>Select_Model</comment>
   </data>
+  <data name="Select_Speciality" xml:space="preserve">
+    <value>Select Speciality</value>
+    <comment>Select_Speciality</comment>
+  </data>
   <data name="Select_Year" xml:space="preserve">
     <value>Select Year</value>
     <comment>Select_Year</comment>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+    <comment>Settings</comment>
+  </data>
+  <data name="Surname" xml:space="preserve">
+    <value>Surname</value>
+    <comment>Surname</comment>
+  </data>
+  <data name="User_Photo" xml:space="preserve">
+    <value>Photo</value>
+    <comment>User_Photo</comment>
   </data>
   <data name="View_Cars" xml:space="preserve">
     <value>View Cars</value>

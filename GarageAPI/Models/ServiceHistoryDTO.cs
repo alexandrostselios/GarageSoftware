@@ -19,7 +19,7 @@ namespace GarageAPI.Models
 
         public float? FinalPrice { get; set; }
 
-        public string? Name { get; set; }    
+        public string? Name { get; set; }
 
         public string? Surname { get; set; }
 

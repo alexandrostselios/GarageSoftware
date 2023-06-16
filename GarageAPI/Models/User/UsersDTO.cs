@@ -1,15 +1,14 @@
-﻿using System;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
-using GaragePortal.Enum;
+using GarageAPI.Enum;
 
-namespace GaragePortal.Models
+namespace GarageAPI.Models.User
 {
-    public class Users
+    [NotMapped]
+    public class UsersDTO
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long ID { get; set; }
-
         public string Name { get; set; }
 
         public string Surname { get; set; }
@@ -20,24 +19,23 @@ namespace GaragePortal.Models
 
         public long GarageID { get; set; }
 
-        public long? UserType { get; set; }
+        public UserType UserType { get; set; }
+
+        public long? Speciality { get; set; }
+
+        public string? EngineerSpeciality { get; set; }
 
         [Column(TypeName = "datetime")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}")]
         public DateTime? CreationDate { get; set; }
 
         [Column(TypeName = "datetime")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}")]
         public DateTime? ModifiedDate { get; set; }
 
         [Column(TypeName = "datetime")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}")]
         public DateTime? LastLoginDate { get; set; }
 
         public EnableAccess EnableAccess { get; set; }
 
         public byte[]? UserPhoto { get; set; }
-
-        public string? EngineerSpeciality { get; set; }
     }
 }

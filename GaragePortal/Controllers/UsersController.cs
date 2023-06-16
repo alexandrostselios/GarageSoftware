@@ -33,26 +33,49 @@ namespace GaragePortal.Models
         public ActionResult Index()
         {
             GetSessionProperties();
-            IEnumerable<Users> users = null;
+            IEnumerable<Users> customers = null;
             using (client)
             {
-                var responseTask = client.GetAsync(client.BaseAddress + "/GetUsers/1");
+                var responseTask = client.GetAsync(client.BaseAddress + "/GetCustomers");
                 responseTask.Wait();
                 var result = responseTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
                     var readTask = result.Content.ReadAsAsync<IList<Users>>();
                     readTask.Wait();
-                    users = readTask.Result;
+                    customers = readTask.Result;
                 }
-                else //web api sent error response 
+                else
                 {
-                    //log response status here..
-                    users = Enumerable.Empty<Users>();
+                    customers = Enumerable.Empty<Users>();
                     ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
                 }
             }
-            return View(users);
+            return View(customers);
+        }
+
+        public ActionResult Engineers()
+        {
+            GetSessionProperties();
+            IEnumerable<Users> engineers = null;
+            using (client)
+            {
+                var responseTask = client.GetAsync(client.BaseAddress + "/GetEngineers");
+                responseTask.Wait();
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<IList<Users>>();
+                    readTask.Wait();
+                    engineers = readTask.Result;
+                }
+                else
+                {
+                    engineers = Enumerable.Empty<Users>();
+                    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+                }
+            }
+            return View(engineers);
         }
 
         public IActionResult Login()
@@ -63,11 +86,8 @@ namespace GaragePortal.Models
         [HttpPost]
         public async Task<IActionResult> LoginHelper([Bind("Email,Password")] Users loginUser)
         {
-
-            
-
             IEnumerable<Users> users = null;
-            Users u = null;
+            Users logInUser = null;
             HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/GetLogin/"+loginUser.Email+"/"+loginUser.Password).Result;
             if (response.IsSuccessStatusCode)
             {
@@ -83,14 +103,22 @@ namespace GaragePortal.Models
                     {
                         var readTask = result.Content.ReadAsAsync<Users>();
                         readTask.Wait();
-                        u = readTask.Result;
-                        SetSessionProperties(u);
+                        logInUser = readTask.Result;
+                        SetSessionProperties(logInUser);
+                        logInUser.LastLoginDate = DateTime.Now;
+                        HttpResponseMessage loginResponse = client.PutAsJsonAsync(client.BaseAddress + "/UpdateUser/" + logInUser.ID, logInUser).Result;
 
-                        return RedirectToAction("Index", "Users");
+                        if(loginUser.UserType == (long) UserType.Admin)
+                        {
+                            return RedirectToAction("Index", "Users");
+                        }
+                        else
+                        {
+                            return RedirectToAction("Index", "Home");
+                        }
                     }
-                    else //web api sent error response 
+                    else
                     {
-                        //log response status here..
                         users = Enumerable.Empty<Users>();
                         ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
 
@@ -130,11 +158,23 @@ namespace GaragePortal.Models
             {
                 return NotFound();
             }
-
-            return View();
+            Users user = null;
+            using (client)
+            {
+                var responseTask = client.GetAsync(client.BaseAddress + "/GetCustomerByID/" + userID);
+                responseTask.Wait();
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<Users>();
+                    readTask.Wait();
+                    user = (Users)readTask.Result;
+                }
+            }
+            return View(user);
         }
 
-        public IActionResult Create()
+        public IActionResult CreateCustomer()
         {
             GetSessionProperties();
             return View();
@@ -142,15 +182,14 @@ namespace GaragePortal.Models
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("ID,Name,Surname,Email,Age,Password,ConfirmPassword,UserPhoto")] Users createUser, IFormFile Image)
+        public IActionResult CreateCustomer([Bind("ID,Name,Surname,Email,Age,Password,ConfirmPassword,UserPhoto")] Users createUser, IFormFile Image)
         {
             GetSessionProperties();
-            //if (ModelState.IsValid)
             if (!(createUser.Email is null) && ModelState.IsValid)
             {
                 createUser.UserType = 2;
                 createUser.CreationDate = DateTime.Now;
-                createUser.EnableAccess = createUser.EnableAccess;
+                createUser.EnableAccess = EnableAccess.Enable;
                 using (var stream = new MemoryStream()) {
                     Image.CopyToAsync(stream);
                     byte[] temp = stream.ToArray();
@@ -158,44 +197,159 @@ namespace GaragePortal.Models
                 }
                 string data = JsonConvert.SerializeObject(createUser);
                 var contentdata = new StringContent(data);
-                HttpResponseMessage response = client.PostAsJsonAsync(client.BaseAddress + "/AddUser/", createUser).Result;
+                HttpResponseMessage response = client.PostAsJsonAsync(client.BaseAddress + "/AddCustomer/", createUser).Result;
 
                 return RedirectToAction(nameof(Index));
             }
-
             return View(createUser);
         }
 
-        public IActionResult EditProfile(long id)
+        public IActionResult CreateEngineer()
         {
             GetSessionProperties();
-            string userID = string.Format(ViewBag.ID);
-            if (userID == null)
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateEngineer([Bind("ID,Name,Surname,Email,Age,Password,ConfirmPassword,UserPhoto,EngineerSpeciality")] Users createEngineer, IFormFile Image)
+        {
+            GetSessionProperties();
+            if (!(createEngineer.Email is null) && ModelState.IsValid)
+            {
+                createEngineer.UserType = 3;
+                createEngineer.CreationDate = DateTime.Now;
+                createEngineer.EnableAccess = EnableAccess.Enable;
+                if (!(createEngineer.UserPhoto is null))
+                {
+                    using (var stream = new MemoryStream())
+                    {
+                        Image.CopyToAsync(stream);
+                        byte[] temp = stream.ToArray();
+                        createEngineer.UserPhoto = temp;
+                    }
+                }
+                string data = JsonConvert.SerializeObject(createEngineer);
+                var contentdata = new StringContent(data);
+                HttpResponseMessage response = client.PostAsJsonAsync(client.BaseAddress + "/AddEngineer/", createEngineer).Result;
+
+                return RedirectToAction(nameof(Index));
+            }
+            return View(createEngineer);
+        }
+
+        public IActionResult EditCustomerProfile(long id)
+        {
+            GetSessionProperties();
+            string customerID = string.Format(ViewBag.ID);
+            if (customerID == null)
             {
                 return NotFound();
             }
-
             return View(null);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("ID,Name,Surname,Email,Age,Password,ConfirmPassword,UserType,CreationDate,ModifiedDate,LastLoginDate,ChangePassword,ConvertUser,EnableAccess")] Users editUser, IFormFile Image)
+        public async Task<IActionResult> EditCustomer(long id, [Bind("ID,Name,Surname,Email,Age,Password,ConfirmPassword,UserType,CreationDate,ModifiedDate,LastLoginDate,ChangePassword,ConvertUser,EnableAccess")] Users editCustomer, IFormFile Image)
         {
-            if (id != editUser.ID)
+            if (id != editCustomer.ID)
             {
                 return NotFound();
             }
 
-            using (var stream = new MemoryStream())
+            if (!(editCustomer.UserPhoto is null))
             {
-                Image.CopyToAsync(stream);
-                byte[] temp = stream.ToArray();
-                editUser.UserPhoto = temp;
+                using (var stream = new MemoryStream())
+                {
+                    Image.CopyToAsync(stream);
+                    byte[] temp = stream.ToArray();
+                    editCustomer.UserPhoto = temp;
+                }
             }
-            HttpResponseMessage response = client.PutAsJsonAsync(client.BaseAddress + "/UpdateUser/"+editUser.ID, editUser).Result;
+            editCustomer.ModifiedDate = DateTime.Now;
+            HttpResponseMessage response = client.PutAsJsonAsync(client.BaseAddress + "/UpdateUser/" + editCustomer.ID, editCustomer).Result;
 
             return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult EditMyProfile(long id)
+        {
+            GetSessionProperties();
+            string customerID = string.Format(ViewBag.ID);
+            if (customerID == null)
+            {
+                return NotFound();
+            }
+            return View(null);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditMyProfile(long id, [Bind("ID,Name,Surname,Email,Age,Password,ConfirmPassword,UserType,CreationDate,ModifiedDate,LastLoginDate,ChangePassword,ConvertUser,EnableAccess")] Users editCustomer, IFormFile Image)
+        {
+            GetSessionProperties();
+            if (id != editCustomer.ID)
+            {
+                return NotFound();
+            }
+
+            if (!(editCustomer.UserPhoto is null))
+            {
+                using (var stream = new MemoryStream())
+                {
+                    Image.CopyToAsync(stream);
+                    byte[] temp = stream.ToArray();
+                    editCustomer.UserPhoto = temp;
+                }
+            }
+            editCustomer.ModifiedDate = DateTime.Now;
+            editCustomer.UserType = (long?)(UserType)System.Enum.Parse(typeof(UserType), ViewBag.UserType.ToString());
+            HttpResponseMessage response = client.PutAsJsonAsync(client.BaseAddress + "/UpdateUser/" + editCustomer.ID, editCustomer).Result;
+
+            if (editCustomer.UserType == (long)UserType.Admin)
+            {
+                return RedirectToAction("Index", "Users");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        public IActionResult EditEngineerProfile(long id)
+        {
+            GetSessionProperties();
+            string engineerID = string.Format(ViewBag.ID);
+            if (engineerID == null)
+            {
+                return NotFound();
+            }
+            return View(null);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditEngineer(long id, [Bind("ID,Name,Surname,Email,Age,Password,ConfirmPassword,UserType,CreationDate,ModifiedDate,LastLoginDate,ChangePassword,ConvertUser,EnableAccess,EngineerSpeciality")] Users editEngineer, IFormFile Image)
+        {
+            if (id != editEngineer.ID)
+            {
+                return NotFound();
+            }
+            if (!(editEngineer.UserPhoto is null))
+            {
+                using (var stream = new MemoryStream())
+                {
+                    Image.CopyToAsync(stream);
+                    byte[] temp = stream.ToArray();
+                    editEngineer.UserPhoto = temp;
+                }
+            }
+            editEngineer.UserType = 3;
+            editEngineer.ModifiedDate = DateTime.Now;
+            HttpResponseMessage response = client.PutAsJsonAsync(client.BaseAddress + "/UpdateUser/" + editEngineer.ID, editEngineer).Result;
+
+            return RedirectToAction(nameof(Engineers));
         }
 
         private void SetSessionProperties(Users dbUser)

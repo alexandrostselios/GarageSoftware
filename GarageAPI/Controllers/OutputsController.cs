@@ -18,13 +18,5 @@ namespace GarageAPI.Controllers
         {
             _context = context;
         }
-
-        //public async Task<ActionResult<IEnumerable<Output>>> Getoutput()
-        //{
-        //    string StoredProc = "exec GetCustomerCars " +
-        //            "@UserID = " + "2";
-
-        //    return await _context.Output.FromSqlRaw(StoredProc).ToListAsync();
-        //}
     }
 }

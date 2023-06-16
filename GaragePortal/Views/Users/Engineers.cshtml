@@ -2,28 +2,22 @@
 @inject LanguageService Resource
 
 @{
-    ViewData["Title"] = @Resource.GetKey("List_of_Customers");
+    ViewData["Title"] = @Resource.GetKey("List_Of_Engineers");
 }
 
-@*<p>
-    <form asp-action="Create">
-        <input type="submit" value="@Resource.GetKey("Add_New_Customer")" class="btn btn-primary" />
-    </form>
-</p>*@
 @if (@ViewBag.UserType == GaragePortal.Enum.UserType.Admin.ToString())
 {
     <p>
-        @*<a class="af" asp-action="Create">Add New User</a>*@
-        <form asp-action="CreateCustomer">
-            <input type="submit" value="@Resource.GetKey("Add_New_Customer")" class="btn btn-primary" />
+        <form asp-action="CreateEngineer">
+            <input type="submit" value="@Resource.GetKey("Add_New_Engineer")" class="btn btn-primary" />
         </form>
     </p>
     <table class="table">
         <thead>
             <tr>
-                <th>
+@*                <th>
                     @Html.DisplayNameFor(model => model.ID)
-                </th>
+                </th>*@
                 <th>
                     @Resource.GetKey("Name")
                 </th>
@@ -45,6 +39,9 @@
                 <th>
                     @Resource.GetKey("User_Photo")
                 </th>
+                <th>
+                    @Resource.GetKey("Engineer_Speciality")
+                </th>
                 <th></th>
             </tr>
         </thead>
@@ -52,9 +49,9 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>
+@*                    <td>
                         @Html.DisplayFor(modelItem => item.ID)
-                    </td>
+                    </td>*@
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
@@ -79,10 +76,10 @@
                         }
                     </td>
                     <td>
-                        <a class="af" asp-action="EditCustomerProfile" asp-route-id="@item.ID">@Resource.GetKey("Edit_Profile")</a>
+                        @Html.DisplayFor(modelItem => item.EngineerSpeciality)
                     </td>
                     <td>
-                        <a class="af" asp-controller="UserModels" asp-action="ViewCustomerCars" asp-route-id="@item.ID">@Resource.GetKey("View_Cars")</a>
+                        <a class="af" asp-action="EditEngineerProfile" asp-route-id="@item.ID">@Resource.GetKey("Edit_Profile")</a>
                     </td>
                 </tr>
             }

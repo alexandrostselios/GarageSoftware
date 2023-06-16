@@ -1,24 +1,24 @@
-﻿@*@model Users
+﻿@model GaragePortal.Models.Users
+@inject LanguageService Resource
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = @Resource.GetKey("Add_New_Customer");
 }
 
-<h1>Create</h1>
+<h1>@Resource.GetKey("Add_New_Customer")</h1>
 
-<h4>Users</h4>
-<hr />
+<hr/>
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name" class="control-label">@Resource.GetKey("Surname")</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Surname" class="control-label"></label>
+                <label asp-for="Surname" class="control-label">@Resource.GetKey("Name")</label>
                 <input asp-for="Surname" class="form-control" />
                 <span asp-validation-for="Surname" class="text-danger"></span>
             </div>
@@ -27,35 +27,22 @@
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
+            
             <div class="form-group">
                 <label asp-for="Password" class="control-label"></label>
                 <input asp-for="Password" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UserType" class="control-label"></label>
-                <input asp-for="UserType" class="form-control" />
-                <span asp-validation-for="UserType" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreationDate" class="control-label"></label>
-                <input asp-for="CreationDate" class="form-control" />
-                <span asp-validation-for="CreationDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ModifiedDate" class="control-label"></label>
-                <input asp-for="ModifiedDate" class="form-control" />
-                <span asp-validation-for="ModifiedDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LastLoginDate" class="control-label"></label>
-                <input asp-for="LastLoginDate" class="form-control" />
-                <span asp-validation-for="LastLoginDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="EnableAccess" class="control-label"></label>
-                <select asp-for="EnableAccess" class="form-control"></select>
+                <input asp-for="EnableAccess" class="control-label" />
                 <span asp-validation-for="EnableAccess" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserPhoto" class="control-label">@Resource.GetKey("User_Photo")</label>
+                <input type="file" class="form-control-file form-control" id="files" asp-for="UserPhoto" name="Image" accept="image/*" onchange="previewImage()">
+                <span asp-validation-for="UserPhoto" class="text-danger"></span>
+                @Html.ValidationMessageFor(m => m.UserPhoto)
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -65,10 +52,9 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a class="af" asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-*@

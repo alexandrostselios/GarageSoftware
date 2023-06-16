@@ -65,7 +65,7 @@ namespace GarageAPI.Controllers
         {
             //var temp = dbContext.CarModelManufacturerYear.Where(x => x.CarManufacturer.ID == addUserModelRequest.ModelManufacturer && x.CarModel.ID == addUserModelRequest.Model && x.CarModelYear.ID == addUserModelRequest.ModelYear);
            
-            var userModel = new UserModels()
+            var userModel = new UserModel()
             {
                 User = await dbContext.Users.FindAsync(addUserModelRequest.UserID),
                 ModelManufacturerYear = dbContext.CarModelManufacturerYear.FirstOrDefault(x => x.CarManufacturer.ID == addUserModelRequest.ModelManufacturer 

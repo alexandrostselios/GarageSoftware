@@ -1,22 +1,4 @@
 ﻿/* Manufacturer */
-//function getManufacturersByButton() {
-//    $(document).ready(function () {
-//        // Send an AJAX request
-//        $("#getManufacturers").click(function () {
-//            $("#getManufacturers").unbind("click");
-//            $.getJSON('https://localhost:7096/api/GetCarManufacturersTest')
-//            .done(function (data) {
-//                // On success, 'data' contains a list of products.
-//                $.each(data, function (key, item) {
-//                    // Add a list item for the product.
-//                    $("#ShowManufacturersByButton").append($("<option></option>").val(item.id).html(item.manufacturerName));
-//                });
-                    
-//            });
-//        });
-//    });
-//}
-
 function getManufacturers() {
     $(document).ready(function () {
         // Send an AJAX request
@@ -100,6 +82,21 @@ function getEngineers() {
                 $.each(data, function (key, item) {
                     // Add a list item for the product.
                     $("#ShowEngineers").append($("<option></option>").val(item.id).html(item.surname +' '+ item.name));
+                });
+            });
+    });
+}
+
+function getEngineerSpeciality() {
+    $(document).ready(function () {
+        // Send an AJAX request
+        //$("#EngineerSpeciality").append($("<option></option>").val(0).html("--Select Speciality--"));
+        $.getJSON('https://localhost:7096/api/GetEngineerSpecialities')
+            .done(function (data) {
+                // On success, 'data' contains a list of products.
+                $.each(data, function (key, item) {
+                    // Add a list item for the product.
+                    $("#EngineerSpeciality").append($("<option></option>").val(item.id).html(item.speciality));
                 });
             });
     });

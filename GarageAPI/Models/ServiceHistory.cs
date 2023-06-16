@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using GarageAPI.Models.User;
+using GarageAPI.Models.UserModels;
 
-namespace GarageAPI.Models.UserModels
+namespace GarageAPI.Models
 {
     public class ServiceHistory
     {
@@ -12,7 +14,7 @@ namespace GarageAPI.Models.UserModels
         [ForeignKey("UserModels")]
         public long UserModelsID { get; set; }
 
-        public UserModels UserModels { get; set; }
+        public UserModel UserModels { get; set; }
 
         public string Description { get; set; }
 
@@ -25,7 +27,7 @@ namespace GarageAPI.Models.UserModels
         public long EngineerID { get; set; }
 
         public Users Engineer { get; set; }
-        
+
         public float StartPrice { get; set; }
 
         public float? DiscountPrice { get; set; }

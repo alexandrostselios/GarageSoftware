@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GarageAPI.Data;
-using GarageAPI.Models;
 using GarageAPI.Models.UserModels;
+using GarageAPI.Models;
 
 namespace GarageAPI.Controllers
 {

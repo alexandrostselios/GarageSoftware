@@ -4,10 +4,11 @@ using GarageAPI.Enum;
 using GarageAPI.Models.CarManufacturers;
 using GarageAPI.Models.CarModelYears;
 using GarageAPI.Models.CarEngineTypes;
+using GarageAPI.Models.User;
 
 namespace GarageAPI.Models.UserModels
 {
-    public class UserModels
+    public class UserModel
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long ID { get; set; }

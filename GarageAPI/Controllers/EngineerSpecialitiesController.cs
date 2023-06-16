@@ -4,6 +4,7 @@ using GarageAPI.Data;
 using GarageAPI.Models.EngineerSpeciality;
 using GarageAPI.Models;
 using GarageAPI.Models.CarModelYears;
+using System.Linq;
 
 namespace GarageAPI.Controllers
 {
@@ -22,7 +23,7 @@ namespace GarageAPI.Controllers
         // GET: EngineerSpecialities
         public async Task<IActionResult> GetEngineerSpecialities()
         {
-            return Ok(await dbContext.EngineerSpeciality.ToListAsync());
+            return Ok((await dbContext.EngineerSpeciality.ToListAsync()).OrderBy(x => x.Speciality));
         }
 
         [HttpGet]

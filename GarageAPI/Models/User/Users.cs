@@ -1,11 +1,13 @@
-﻿using GarageAPI.Enum;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
+using GarageAPI.Enum;
 
-namespace GarageAPI.Models
+namespace GarageAPI.Models.User
 {
-    public class AddUserRequest
+    public class Users
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long ID { get; set; }
         public string Name { get; set; }
 
         public string Surname { get; set; }

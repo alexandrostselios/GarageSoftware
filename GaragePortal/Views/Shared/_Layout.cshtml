@@ -38,23 +38,35 @@
                             }
                             @if (@ViewBag.UserType == GaragePortal.Enum.UserType.Admin.ToString() || @ViewBag.UserType == GaragePortal.Enum.UserType.User.ToString())
                             {
-                                <li class="nav-item">
+                                
                                 @switch (@ViewBag.UserType)
                                 {
                                     case "Admin":
-                                        <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="Index"><i class="fa fa-user-circle-o" aria-hidden="true"></i>@Resource.GetKey("Customers")</a>
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="Index"><i class="fa fa-users" aria-hidden="true"></i>@Resource.GetKey("Customers")</a>
+                                        </li>
+                                        <li class="nav-item">
+                                        <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="Engineers"><i class="fa fa-user-circle-o" aria-hidden="true"></i>@Resource.GetKey("Engineers")</a>
+                                        </li>
                                         break;
                                     case "User":
-                                        <a class="nav-link" asp-area="UserModels" asp-controller="UserModels" asp-action="ViewCustomerCars" asp-route-id="@ViewBag.ID"><i class="fa fa-car" aria-hidden="true"></i>@Resource.GetKey("List_Of_MyCars")</a>
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-area="UserModels" asp-controller="UserModels" asp-action="ViewCustomerCars" asp-route-id="@ViewBag.ID"><i class="fa fa-car" aria-hidden="true"></i>@Resource.GetKey("List_Of_MyCars")</a>
+                                        </li>
                                         break;
                                 }
-                                </li>
                                 <li class="nav-item">
                                     <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="MyProfile"><i class="fa fa-user" aria-hidden="true"></i>@Resource.GetKey("My_Profile")</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="Logout"><i class="fa fa-sign-out" aria-hidden="true"></i>@Resource.GetKey("Logout")</a>
                                 </li>
+                            }
+                            @if (@ViewBag.UserType == GaragePortal.Enum.UserType.Admin.ToString() || @ViewBag.UserType == GaragePortal.Enum.UserType.User.ToString())
+                            {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Home" asp-controller="Home" asp-action="Settings"><i class="fa fa-user" aria-hidden="true"></i>@Resource.GetKey("Settings")</a>
+                            </li>
                             }
                             <div class="dropdown show">
                                 <a class="btn btn-info dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

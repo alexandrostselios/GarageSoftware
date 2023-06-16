@@ -125,6 +125,10 @@
     <value>Εγγραφή Πελάτη</value>
     <comment>Add New Customer</comment>
   </data>
+  <data name="Add_New_Engineer" xml:space="preserve">
+    <value>Εγγραφή Μηχανικού</value>
+    <comment>Add_New_Engineer</comment>
+  </data>
   <data name="Add_Service_History" xml:space="preserve">
     <value>Προσθήκη Ιστορικού</value>
     <comment>Add Service History</comment>
@@ -137,6 +141,10 @@
     <value>Χρώμα</value>
     <comment>Color</comment>
   </data>
+  <data name="Creation_Date" xml:space="preserve">
+    <value>Ημερομηνία Εγγραφής</value>
+    <comment>Creation_Date</comment>
+  </data>
   <data name="Customers" xml:space="preserve">
     <value>Πελάτες</value>
     <comment>Customers</comment>
@@ -148,6 +156,14 @@
   <data name="Edit_Profile" xml:space="preserve">
     <value>Επεξεργασία Προφίλ</value>
     <comment>Edit Profile</comment>
+  </data>
+  <data name="Engineers" xml:space="preserve">
+    <value>Μηχανικοί</value>
+    <comment>Engineers</comment>
+  </data>
+  <data name="Engineer_Speciality" xml:space="preserve">
+    <value>Ειδικότητα</value>
+    <comment>Engineer_Speciality</comment>
   </data>
   <data name="Engine_Type" xml:space="preserve">
     <value>Καύσιμο</value>
@@ -165,6 +181,10 @@
     <value>Γλώσσα</value>
     <comment>Language</comment>
   </data>
+  <data name="Last_Login_Date" xml:space="preserve">
+    <value>Τελευταία Σύνδεση</value>
+    <comment>Last_Login_date</comment>
+  </data>
   <data name="Licence_Plate" xml:space="preserve">
     <value>Αρ. Πινακίδας</value>
     <comment>Licence Plate</comment>
@@ -172,6 +192,10 @@
   <data name="List_of_Customers" xml:space="preserve">
     <value>Λίστα Πελατών</value>
     <comment>List of Customers</comment>
+  </data>
+  <data name="List_Of_Engineers" xml:space="preserve">
+    <value>Λίστα Μηχανικών</value>
+    <comment>List_Of_Engineers</comment>
   </data>
   <data name="List_Of_MyCars" xml:space="preserve">
     <value>Τα Οχήματα Μου</value>
@@ -201,9 +225,17 @@
     <value>Κατασκευαστής</value>
     <comment>Model Manufacturer</comment>
   </data>
+  <data name="Modified_Date" xml:space="preserve">
+    <value>Ημερομηνία Τροποποίησης</value>
+    <comment>Modified_Date</comment>
+  </data>
   <data name="My_Profile" xml:space="preserve">
     <value>Το Προφίλ μου</value>
     <comment>My Profile</comment>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Όνομα</value>
+    <comment>Name</comment>
   </data>
   <data name="Privacy" xml:space="preserve">
     <value>Πολιτική Απορρήτου</value>
@@ -229,9 +261,25 @@
     <value>Επιλογή Μοντέλου</value>
     <comment>Select_Model</comment>
   </data>
+  <data name="Select_Speciality" xml:space="preserve">
+    <value>Επιλέξτε Ειδικότητα</value>
+    <comment>Select_Speciality</comment>
+  </data>
   <data name="Select_Year" xml:space="preserve">
     <value>Επιλογή Έτους</value>
     <comment>Select_Year</comment>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Ρυθμίσεις</value>
+    <comment>Settings</comment>
+  </data>
+  <data name="Surname" xml:space="preserve">
+    <value>Επώνυμο</value>
+    <comment>Surname</comment>
+  </data>
+  <data name="User_Photo" xml:space="preserve">
+    <value>Φωτογραφία</value>
+    <comment>User_Photo</comment>
   </data>
   <data name="View_Cars" xml:space="preserve">
     <value>Προβολή Οχημάτων</value>

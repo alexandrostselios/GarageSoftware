@@ -78,50 +78,50 @@ namespace GarageAPI.Migrations
                     table.PrimaryKey("PK_EngineerSpeciality", x => x.ID);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Output",
-                columns: table => new
-                {
-                    id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserID = table.Column<long>(type: "bigint", nullable: false),
-                    LicencePlate = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    VIN = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Color = table.Column<long>(type: "bigint", nullable: false),
-                    Kilometer = table.Column<long>(type: "bigint", nullable: false),
-                    ModelName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ManufacturerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ModelYear = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CarImage = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Output", x => x.id);
-                });
+            //migrationBuilder.CreateTable(
+            //    name: "Output",
+            //    columns: table => new
+            //    {
+            //        id = table.Column<long>(type: "bigint", nullable: false)
+            //            .Annotation("SqlServer:Identity", "1, 1"),
+            //        UserID = table.Column<long>(type: "bigint", nullable: false),
+            //        LicencePlate = table.Column<string>(type: "nvarchar(max)", nullable: false),
+            //        VIN = table.Column<string>(type: "nvarchar(max)", nullable: false),
+            //        Color = table.Column<long>(type: "bigint", nullable: false),
+            //        Kilometer = table.Column<long>(type: "bigint", nullable: false),
+            //        ModelName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+            //        ManufacturerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+            //        ModelYear = table.Column<string>(type: "nvarchar(max)", nullable: false),
+            //        CarImage = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
+            //    },
+            //    constraints: table =>
+            //    {
+            //        table.PrimaryKey("PK_Output", x => x.id);
+            //    });
 
-            migrationBuilder.CreateTable(
-                name: "ServiceHistoryDTO",
-                columns: table => new
-                {
-                    UserModelsID = table.Column<long>(type: "bigint", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ServiceDate = table.Column<DateTime>(type: "datetime", nullable: true),
-                    ServiceKilometer = table.Column<long>(type: "bigint", nullable: true),
-                    StartPrice = table.Column<float>(type: "real", nullable: true),
-                    FinalPrice = table.Column<float>(type: "real", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LicencePlate = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    VIN = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Color = table.Column<long>(type: "bigint", nullable: false),
-                    ModelName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ManufacturerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ModelYear = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CarImage = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                });
+            //migrationBuilder.CreateTable(
+            //    name: "ServiceHistoryDTO",
+            //    columns: table => new
+            //    {
+            //        UserModelsID = table.Column<long>(type: "bigint", nullable: false),
+            //        Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+            //        ServiceDate = table.Column<DateTime>(type: "datetime", nullable: true),
+            //        ServiceKilometer = table.Column<long>(type: "bigint", nullable: true),
+            //        StartPrice = table.Column<float>(type: "real", nullable: true),
+            //        FinalPrice = table.Column<float>(type: "real", nullable: true),
+            //        Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+            //        Surname = table.Column<string>(type: "nvarchar(max)", nullable: true),
+            //        LicencePlate = table.Column<string>(type: "nvarchar(max)", nullable: false),
+            //        VIN = table.Column<string>(type: "nvarchar(max)", nullable: false),
+            //        Color = table.Column<long>(type: "bigint", nullable: false),
+            //        ModelName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+            //        ManufacturerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+            //        ModelYear = table.Column<string>(type: "nvarchar(max)", nullable: false),
+            //        CarImage = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
+            //    },
+            //    constraints: table =>
+            //    {
+            //    });
 
             migrationBuilder.CreateTable(
                 name: "Users",

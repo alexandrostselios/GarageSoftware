@@ -6,10 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GarageAPI.Data;
-using GarageAPI.Models;
 using System.Net;
 using GarageAPI.Enum;
-
+using GarageAPI.Models.User;
 
 namespace GarageAPI.Controllers
 {
@@ -31,20 +30,16 @@ namespace GarageAPI.Controllers
         }
 
         [HttpGet]
-        [Route("api/GetUsers/{flag:long}")]
-        public async Task<IActionResult> GetUsers([FromRoute] long flag)
+        [Route("api/GetCustomers")]
+        public async Task<IActionResult> GetCustomers()
         {
-            if(flag == 0)
-            {
-                return Ok(await dbContext.Users.ToListAsync());
-            }
             return Ok(await dbContext.Users.Where(c => c.UserType == Enum.UserType.Customer || c.UserType == Enum.UserType.Admin).ToListAsync());
 
         }
 
         [HttpGet]
-        [Route("api/GetUserByID/{id:long}")]
-        public async Task<IActionResult> GetUserByID([FromRoute] long id)
+        [Route("api/GetCustomerByID/{id:long}")]
+        public async Task<IActionResult> GetCustomerByID([FromRoute] long id)
         {
             var user = await dbContext.Users.FindAsync(id);
             if (user == null)
@@ -99,150 +94,31 @@ namespace GarageAPI.Controllers
         [Route("api/GetEngineers")]
         public async Task<IActionResult> GetEngineers()
         {
-            var carEngineers = await dbContext.Users.Where(c => c.UserType == UserType.Engineer).ToListAsync();
-            List<Users> carEngineersList = new List<Users>();
-            for (int i = 0; i < carEngineers.Count; i++)
-            {
-               // carEngineersList.Add(await dbContext.CarModels.Where(x => x.ID == carEngineers[i].ID).FirstOrDefaultAsync());
-            }
+            string StoredProc = "exec GetEngineers";
+            List<UsersDTO> carEngineers = await dbContext.UsersDTO.FromSqlRaw(StoredProc).ToListAsync();
+
             if (carEngineers == null)
             {
                 return NotFound();
             }
-            return Ok(carEngineers.OrderBy(x => x.Surname));
+            return Ok(carEngineers);
         }
 
-        //// GET: Users/Details/5
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //    if (id == null || dbContext.Users == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var users = await dbContext.Users
-        //        .FirstOrDefaultAsync(m => m.ID == id);
-        //    if (users == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(users);
-        //}
-
-        //// GET: Users/Create
-        //public IActionResult Create()
-        //{
-        //    return View();
-        //}
-
-        //// POST: Users/Create
-        //// To protect from overposting attacks, enable the specific properties you want to bind to.
-        //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("ID,Name,Surname,Email,Password,UserType,CreationDate,ModifiedDate,LastLoginDate,EnableAccess")] Users users)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.Add(users);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(users);
-        //}
-
-        //// GET: Users/Edit/5
-        //public async Task<IActionResult> Edit(int? id)
-        //{
-        //    if (id == null || _context.Users == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var users = await _context.Users.FindAsync(id);
-        //    if (users == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(users);
-        //}
-
-        //// POST: Users/Edit/5
-        //// To protect from overposting attacks, enable the specific properties you want to bind to.
-        //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Surname,Email,Password,UserType,CreationDate,ModifiedDate,LastLoginDate,EnableAccess")] Users users)
-        //{
-        //    if (id != users.ID)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            _context.Update(users);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!UsersExists(users.ID))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(users);
-        //}
-
-        //// GET: Users/Delete/5
-        //public async Task<IActionResult> Delete(int? id)
-        //{
-        //    if (id == null || _context.Users == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var users = await _context.Users
-        //        .FirstOrDefaultAsync(m => m.ID == id);
-        //    if (users == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(users);
-        //}
-
-        //// POST: Users/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(int id)
-        //{
-        //    if (_context.Users == null)
-        //    {
-        //        return Problem("Entity set 'GarageAPIDbContext.Users'  is null.");
-        //    }
-        //    var users = await _context.Users.FindAsync(id);
-        //    if (users != null)
-        //    {
-        //        _context.Users.Remove(users);
-        //    }
-
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-        //}
+        [HttpGet]
+        [Route("api/GetEngineerByID/{id:long}")]
+        public async Task<IActionResult> GetEngineerByID([FromRoute] long id)
+        {
+            var engineer = await dbContext.Users.FindAsync(id);
+            if (engineer == null)
+            {
+                return NotFound();
+            }
+            return Ok(engineer);
+        }
 
         [HttpPost]
-        [Route("api/AddUser")]
-        public async Task<IActionResult> AddUser(AddUserRequest addUserRequest)
+        [Route("api/AddCustomer")]
+        public async Task<IActionResult> AddCustomer(AddUserRequest addUserRequest)
         {
             var user = new Users()
             {
@@ -250,16 +126,39 @@ namespace GarageAPI.Controllers
                 Surname = addUserRequest.Surname,
                 Email = addUserRequest.Email,  
                 Password = addUserRequest.Password, 
-                GarageID = 0,
-                CreationDate = DateTime.Now,
-                UserType = UserType.Customer,
-                EnableAccess = EnableAccess.Enable,
+                GarageID = addUserRequest.GarageID,
+                CreationDate = addUserRequest.CreationDate,
+                UserType = addUserRequest.UserType,
+                EnableAccess = addUserRequest.EnableAccess,
                 UserPhoto = addUserRequest.UserPhoto
             };
             await dbContext.Users.AddAsync(user);
             await dbContext.SaveChangesAsync();
 
             return Ok(user);
+        }
+
+        [HttpPost]
+        [Route("api/AddEngineer")]
+        public async Task<IActionResult> AddEngineer(AddEngineerRequest addEngineerRequest)
+        {
+            var engineer = new Users()
+            {
+                Name = addEngineerRequest.Name,
+                Surname = addEngineerRequest.Surname,
+                Email = addEngineerRequest.Email,
+                Password = addEngineerRequest.Password,
+                GarageID = addEngineerRequest.GarageID,
+                CreationDate = addEngineerRequest.CreationDate,
+                UserType = addEngineerRequest.UserType,
+                EnableAccess = addEngineerRequest.EnableAccess,
+                UserPhoto = addEngineerRequest.UserPhoto,
+                Speciality = addEngineerRequest.EngineerSpeciality
+            };
+            await dbContext.Users.AddAsync(engineer);
+            await dbContext.SaveChangesAsync();
+
+            return Ok(engineer);
         }
 
         [HttpPut]
@@ -269,14 +168,28 @@ namespace GarageAPI.Controllers
             var user = await dbContext.Users.FindAsync(id);
             if (user != null)
             {
-                
                 if (!(updateUserRequest.Name is null )) user.Name = updateUserRequest.Name;
                 if (!(updateUserRequest.Surname is null)) user.Surname = updateUserRequest.Surname;
                 if (!(updateUserRequest.Email is null)) user.Email = updateUserRequest.Email;
-                //user.Password = updateUserRequest.Password;
+                if (!(updateUserRequest.Password is null)) user.Password = updateUserRequest.Password;
+                if (!(updateUserRequest.LastLoginDate is null)) user.LastLoginDate = updateUserRequest.LastLoginDate;
+                if (!(updateUserRequest.ModifiedDate is null)) user.ModifiedDate = updateUserRequest.ModifiedDate;
+                if (updateUserRequest.UserType == UserType.Engineer) if (!(updateUserRequest.EngineerSpeciality is null)) user.Speciality = updateUserRequest.EngineerSpeciality;
                 if (!(updateUserRequest.UserPhoto is null)) user.UserPhoto = updateUserRequest.UserPhoto;
-                //user.UserPhoto = updateUserRequest.UserPhoto;
-                //user.EnableAccess = updateUserRequest.EnableAccess;
+                await dbContext.SaveChangesAsync();
+                return Ok(user);
+            }
+            return NotFound();
+        }
+
+        [HttpDelete]
+        [Route("api/DeleteUserByID/{id:long}")]
+        public async Task<IActionResult> DeleteUserByID([FromRoute] long id)
+        {
+            var user = await dbContext.Users.FindAsync(id);
+            if (user != null)
+            {
+                dbContext.Remove(user);
                 await dbContext.SaveChangesAsync();
                 return Ok(user);
             }
