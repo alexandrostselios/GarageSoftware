@@ -67,6 +67,9 @@
                             <img src="data:image/jpg;base64, @Convert.ToBase64String(item.CarImage)" width="50" height="50" />
                         }
                     </td>
+                    <td>
+                        <a class="af" asp-action="DeleteServiceHistory" asp-route-id="@ViewBag.ID">Delete</a>
+                    </td>  
                 </tr>
             }
         </tbody>

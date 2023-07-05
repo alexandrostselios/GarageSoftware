@@ -17,23 +17,22 @@ namespace GarageAPI.Controllers
             this.dbContext = dbContext;
         }
 
-        /* TEST */
-        [HttpGet]
-        [Route("api/GetCarManufacturersTest")]
-        public Task<IActionResult> GetCarManufacturersTest()
-        {
-            List<CarManufacturer> modelManufacturer = dbContext.CarManufacturer.ToList();
-            return Task.FromResult<IActionResult>(Ok(modelManufacturer));
-        }
-        /* TEST*/
-
-
         [HttpGet]
         [Route("api/GetCarManufacturers")]
         public async Task<IActionResult> GetCarManufacturers()
         {
             return Ok(await dbContext.CarManufacturer.ToListAsync());
         }
+
+        /* TEST */
+        [HttpGet]
+        [Route("api/GetCarManufacturersToList")]
+        public Task<IActionResult> GetCarManufacturersToList()
+        {
+            List<CarManufacturer> modelManufacturer = dbContext.CarManufacturer.ToList();
+            return Task.FromResult<IActionResult>(Ok(modelManufacturer));
+        }
+        /* TEST*/
 
         [HttpGet]
         [Route("api/GetCarManufacturerByID/{id:long}")]

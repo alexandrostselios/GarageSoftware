@@ -27,7 +27,7 @@ namespace GaragePortal.Controllers
         {
             /* REMOVE IN PRODUCTION */
 
-            //SetSessionPropertiesAdmin();
+            SetSessionPropertiesAdmin();
 
             /* REMOVE IN PRODUCTION */
             GetSessionProperties();

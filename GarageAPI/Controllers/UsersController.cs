@@ -116,6 +116,50 @@ namespace GarageAPI.Controllers
             return Ok(engineer);
         }
 
+        [HttpGet]
+        [Route("api/GetUsersByValue/{searchBy}/{usertype}/{value}")]
+        public async Task<IActionResult> GetUsersByValue([FromRoute] int searchBy,int usertype, string value)
+        {
+            var user = new List<Users>();
+            if (searchBy == 0 && usertype == 0)
+            {
+                user = await dbContext.Users.Where(c => c.Name.Contains(value) || c.Surname.Contains(value) || c.Email.Contains(value)).ToListAsync();
+            }
+            else if (searchBy == 0 && usertype == 3)
+            {
+                user = await dbContext.Users.Where(c => (c.Name.Contains(value) || c.Surname.Contains(value) || c.Email.Contains(value)) && c.UserType == UserType.Engineer).ToListAsync();
+            }
+            else if (searchBy == 1 && usertype == 0)
+            {
+                user = await dbContext.Users.Where(c => c.Name.Contains(value)).ToListAsync();
+            }
+            else if (searchBy == 1 && usertype == 3)
+            {
+                user = await dbContext.Users.Where(c => c.Name.Contains(value) && c.UserType == UserType.Engineer).ToListAsync();
+            }
+            else if (searchBy == 2 && usertype == 0)
+            {
+                user = await dbContext.Users.Where(c => c.Surname.Contains(value)).ToListAsync();
+            }
+            else if (searchBy == 2 && (usertype == 3))
+            {
+                user = await dbContext.Users.Where(c => c.Surname.Contains(value) && c.UserType == UserType.Engineer).ToListAsync();
+            }
+            else if(searchBy == 3 && usertype == 0)
+            {
+                user = await dbContext.Users.Where(c => c.Email.Contains(value)).ToListAsync();
+            }
+            else
+            {
+                user = await dbContext.Users.Where(c => c.Email.Contains(value) && c.UserType == UserType.Engineer).ToListAsync();
+            }
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return Ok(user);
+        }
+
         [HttpPost]
         [Route("api/AddCustomer")]
         public async Task<IActionResult> AddCustomer(AddUserRequest addUserRequest)

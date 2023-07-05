@@ -295,3 +295,8 @@ C:\Users\alexa\Desktop\Visual Studio Projects\GarageSoftware\GarageAPI\obj\Relea
 C:\Users\alexa\Desktop\Visual Studio Projects\GarageSoftware\GarageAPI\obj\Release\net6.0\GarageAPI.pdb
 C:\Users\alexa\Desktop\Visual Studio Projects\GarageSoftware\GarageAPI\obj\Release\net6.0\GarageAPI.genruntimeconfig.cache
 C:\Users\alexa\Desktop\Visual Studio Projects\GarageSoftware\GarageAPI\obj\Release\net6.0\ref\GarageAPI.dll
+C:\Users\alexa\Desktop\Visual Studio Projects\GarageSoftware\GarageAPI\obj\Release\net6.0\staticwebassets\msbuild.GarageAPI.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\alexa\Desktop\Visual Studio Projects\GarageSoftware\GarageAPI\obj\Release\net6.0\staticwebassets\msbuild.build.GarageAPI.props
+C:\Users\alexa\Desktop\Visual Studio Projects\GarageSoftware\GarageAPI\obj\Release\net6.0\staticwebassets\msbuild.buildMultiTargeting.GarageAPI.props
+C:\Users\alexa\Desktop\Visual Studio Projects\GarageSoftware\GarageAPI\obj\Release\net6.0\staticwebassets\msbuild.buildTransitive.GarageAPI.props
+C:\Users\alexa\Desktop\Visual Studio Projects\GarageSoftware\GarageAPI\obj\Release\net6.0\staticwebassets.pack.json

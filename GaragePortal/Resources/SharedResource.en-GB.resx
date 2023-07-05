@@ -169,6 +169,10 @@
     <value>Fuel</value>
     <comment>Engine_Type</comment>
   </data>
+  <data name="Enter_Details_for_Search" xml:space="preserve">
+    <value>Enter Details for Search</value>
+    <comment>Enter_Details_for_Search</comment>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
     <comment>Home</comment>
@@ -203,7 +207,7 @@
   </data>
   <data name="List_Of_User_Cars" xml:space="preserve">
     <value>List of User Cars</value>
-    <comment>List of User Cars</comment>
+    <comment>List_Of_User_Cars</comment>
   </data>
   <data name="Login" xml:space="preserve">
     <value>Login</value>
@@ -249,6 +253,10 @@
     <value>Save</value>
     <comment>Save</comment>
   </data>
+  <data name="SearchBy" xml:space="preserve">
+    <value>Search By</value>
+    <comment>SearchBy</comment>
+  </data>
   <data name="Select_Engineer" xml:space="preserve">
     <value>Select Engineer</value>
     <comment>Select_Engineer</comment>
@@ -283,7 +291,7 @@
   </data>
   <data name="View_Cars" xml:space="preserve">
     <value>View Cars</value>
-    <comment>View Cars</comment>
+    <comment>View_Cars</comment>
   </data>
   <data name="View_Car_Details" xml:space="preserve">
     <value>View_Car_Details</value>
@@ -291,6 +299,6 @@
   </data>
   <data name="View_Car_History" xml:space="preserve">
     <value>View Car History</value>
-    <comment>View Car History</comment>
+    <comment>View_Car_History</comment>
   </data>
 </root>

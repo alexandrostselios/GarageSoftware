@@ -18,8 +18,10 @@ namespace GaragePortal.Controllers
 {
     public class UserModelsController : Controller
     {
-        Uri baseAddress = new Uri("https://localhost:7096/api");
-        HttpClient client;
+        //Uri baseAddress = new Uri("https://localhost:7096/api");
+        //Uri baseAddress = new Uri("http://alefhome.ddns.net:8082/api");
+        readonly Uri baseAddress = new Uri(@Resources.SettingsResources.Uri);
+        readonly HttpClient client;
 
         public UserModelsController()
         {

@@ -7,11 +7,39 @@
 
 @if (@ViewBag.UserType == GaragePortal.Enum.UserType.Admin.ToString())
 {
-    <p>
+    <div>
         <form asp-action="CreateEngineer">
             <input type="submit" value="@Resource.GetKey("Add_New_Engineer")" class="btn btn-primary" />
         </form>
-    </p>
+        <br><br>
+        @using (Html.BeginForm("Engineers", "Users", FormMethod.Get))
+        {
+            <table>
+                <tr>
+                    <td>
+                        <span><b>@Resource.GetKey("SearchBy"): </b></span>
+                        @Html.RadioButton("searchBy","All",true)
+                        <text>All</text>
+                        @Html.RadioButton("searchBy","Name")
+                        <text>@Resource.GetKey("Name")</text>
+                        @Html.RadioButton("searchBy","Surname")
+                        <text>@Resource.GetKey("Surname")</text>
+                        @Html.RadioButton("searchBy","Email")
+                        <text>Email</text>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.TextBox("searchValue",null, new {Class = "form-control", placeholder=@Resource.GetKey("Enter_Details_for_Search")})
+                    </td>
+                    <td>
+                        <input type="submit" value="Search" class="btn btn-success" />
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+
     <table class="table">
         <thead>
             <tr>

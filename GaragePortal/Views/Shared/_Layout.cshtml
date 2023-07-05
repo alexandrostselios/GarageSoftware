@@ -38,7 +38,6 @@
                             }
                             @if (@ViewBag.UserType == GaragePortal.Enum.UserType.Admin.ToString() || @ViewBag.UserType == GaragePortal.Enum.UserType.User.ToString())
                             {
-                                
                                 @switch (@ViewBag.UserType)
                                 {
                                     case "Admin":
@@ -46,7 +45,7 @@
                                             <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="Index"><i class="fa fa-users" aria-hidden="true"></i>@Resource.GetKey("Customers")</a>
                                         </li>
                                         <li class="nav-item">
-                                        <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="Engineers"><i class="fa fa-user-circle-o" aria-hidden="true"></i>@Resource.GetKey("Engineers")</a>
+                                            <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="Engineers"><i class="fa fa-user-circle-o" aria-hidden="true"></i>@Resource.GetKey("Engineers")</a>
                                         </li>
                                         break;
                                     case "User":
@@ -59,20 +58,16 @@
                                     <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="MyProfile"><i class="fa fa-user" aria-hidden="true"></i>@Resource.GetKey("My_Profile")</a>
                                 </li>
                                 <li class="nav-item">
+                                    <a class="nav-link" asp-area="Home" asp-controller="Home" asp-action="Settings"><i class="fa fa-user" aria-hidden="true"></i>@Resource.GetKey("Settings")</a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="Logout"><i class="fa fa-sign-out" aria-hidden="true"></i>@Resource.GetKey("Logout")</a>
                                 </li>
-                            }
-                            @if (@ViewBag.UserType == GaragePortal.Enum.UserType.Admin.ToString() || @ViewBag.UserType == GaragePortal.Enum.UserType.User.ToString())
-                            {
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="Home" asp-controller="Home" asp-action="Settings"><i class="fa fa-user" aria-hidden="true"></i>@Resource.GetKey("Settings")</a>
-                            </li>
                             }
                             <div class="dropdown show">
                                 <a class="btn btn-info dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Language
                                 </a>
-
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                     <a class="dropdown-item" asp-controller="UILanguage" asp-action="ChangeLanguage" asp-route-culture="en-GB">English</a>
                                     <a class="dropdown-item" asp-controller="UILanguage" asp-action="ChangeLanguage" asp-route-culture="el-GR">Greek</a>

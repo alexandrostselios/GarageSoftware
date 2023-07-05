@@ -169,6 +169,10 @@
     <value>Καύσιμο</value>
     <comment>Engine_Type</comment>
   </data>
+  <data name="Enter_Details_for_Search" xml:space="preserve">
+    <value>Παρακαλώ Πληκτρολογήστε</value>
+    <comment>Enter_Details_for_Search</comment>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Αρχική</value>
     <comment>Home</comment>
@@ -203,7 +207,7 @@
   </data>
   <data name="List_Of_User_Cars" xml:space="preserve">
     <value>Λίστα Οχημάτων</value>
-    <comment>List of User Cars</comment>
+    <comment>List_Of_User_Cars</comment>
   </data>
   <data name="Login" xml:space="preserve">
     <value>Είσοδος</value>
@@ -249,6 +253,10 @@
     <value>Αποθήκευση</value>
     <comment>Save</comment>
   </data>
+  <data name="SearchBy" xml:space="preserve">
+    <value>Αναζήτηση με</value>
+    <comment>SearchBy</comment>
+  </data>
   <data name="Select_Engineer" xml:space="preserve">
     <value>Επιλογή Μηχανικού</value>
     <comment>Select_Engineer</comment>
@@ -283,7 +291,7 @@
   </data>
   <data name="View_Cars" xml:space="preserve">
     <value>Προβολή Οχημάτων</value>
-    <comment>View Cars</comment>
+    <comment>View_Cars</comment>
   </data>
   <data name="View_Car_Details" xml:space="preserve">
     <value>Προβολή Ιστορικού</value>
@@ -291,6 +299,6 @@
   </data>
   <data name="View_Car_History" xml:space="preserve">
     <value>Προβολή Ιστορικού</value>
-    <comment>View Car History</comment>
+    <comment>View_Car_History</comment>
   </data>
 </root>

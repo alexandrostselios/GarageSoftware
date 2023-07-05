@@ -20,9 +20,10 @@ namespace GaragePortal.Models
     public class UsersController : Controller
     {
         //Uri baseAddress = new Uri("https://garageapi20230516165317.azurewebsites.net/api");
-        //Uri baseAddress = new Uri("https://alefhome.ddns.net:5002/api");
-        Uri baseAddress = new Uri("https://localhost:7096/api");
-        HttpClient client;
+        //Uri baseAddress = new Uri("http://alefhome.ddns.net:8082/api");
+        // Uri baseAddress = new Uri("https://localhost:7096/api");
+        readonly Uri baseAddress = new Uri(@Resources.SettingsResources.Uri);
+        readonly HttpClient client;
 
         public UsersController()
         {
@@ -30,49 +31,124 @@ namespace GaragePortal.Models
             client.BaseAddress = baseAddress;
         }
 
-        public ActionResult Index()
+        public ActionResult Index(string searchBy, string searchValue)
         {
             GetSessionProperties();
             IEnumerable<Users> customers = null;
-            using (client)
+            var responseTask = client.GetAsync(client.BaseAddress);
+            if (string.IsNullOrEmpty(searchValue))
             {
-                var responseTask = client.GetAsync(client.BaseAddress + "/GetCustomers");
-                responseTask.Wait();
-                var result = responseTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    var readTask = result.Content.ReadAsAsync<IList<Users>>();
-                    readTask.Wait();
-                    customers = readTask.Result;
+                using (client){
+                    responseTask = client.GetAsync(client.BaseAddress + "/GetCustomers");
+                    responseTask.Wait();
+                    var result = responseTask.Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var readTask = result.Content.ReadAsAsync<IList<Users>>();
+                        readTask.Wait();
+                        customers = readTask.Result;
+                    }
+                    else
+                    {
+                        customers = Enumerable.Empty<Users>();
+                        ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+                    }
                 }
-                else
+            }
+            else
+            {
+                using (client)
                 {
-                    customers = Enumerable.Empty<Users>();
-                    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+                    if (searchBy.ToLower() == "all")
+                    {
+                        responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/0/0/" + searchValue);
+                    }
+                    else if (searchBy.ToLower() == "name")
+                    {
+                        responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/1/0/" + searchValue); 
+                    }else if (searchBy.ToLower() == "surname")
+                    {
+                        responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/2/0/" + searchValue);
+                    }else if (searchBy.ToLower() == "email")
+                    {
+                        responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/3/0/" + searchValue);
+                    }
+                    responseTask.Wait();
+                    var result = responseTask.Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var readTask = result.Content.ReadAsAsync<IList<Users>>();
+                        readTask.Wait();
+                        customers = readTask.Result;
+                    }
+                    else
+                    {
+                        customers = Enumerable.Empty<Users>();
+                        ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+                    }
                 }
             }
             return View(customers);
         }
 
-        public ActionResult Engineers()
+        public ActionResult Engineers(string searchBy, string searchValue)
         {
             GetSessionProperties();
             IEnumerable<Users> engineers = null;
-            using (client)
+            var responseTask = client.GetAsync(client.BaseAddress);
+            if (string.IsNullOrEmpty(searchValue))
             {
-                var responseTask = client.GetAsync(client.BaseAddress + "/GetEngineers");
-                responseTask.Wait();
-                var result = responseTask.Result;
-                if (result.IsSuccessStatusCode)
+                using (client)
                 {
-                    var readTask = result.Content.ReadAsAsync<IList<Users>>();
-                    readTask.Wait();
-                    engineers = readTask.Result;
+                    responseTask = client.GetAsync(client.BaseAddress + "/GetEngineers");
+                    responseTask.Wait();
+                    var result = responseTask.Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var readTask = result.Content.ReadAsAsync<IList<Users>>();
+                        readTask.Wait();
+                        engineers = readTask.Result;
+                    }
+                    else
+                    {
+                        engineers = Enumerable.Empty<Users>();
+                        ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+                    }
                 }
-                else
+            }
+            else
+            {
+                using (client)
                 {
-                    engineers = Enumerable.Empty<Users>();
-                    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+                    if (searchBy.ToLower() == "all")
+                    {
+                        responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/0/3/" + searchValue);
+                    }
+                    else if (searchBy.ToLower() == "name")
+                    {
+                        responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/1/3/" + searchValue);
+                    }
+                    else if (searchBy.ToLower() == "surname")
+                    {
+                        responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/2/3/" + searchValue);
+                    }
+                    else if (searchBy.ToLower() == "email")
+                    {
+                        responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/3/3/" + searchValue);
+                    }
+                    responseTask.Wait();
+                    var result = responseTask.Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var readTask = result.Content.ReadAsAsync<IList<Users>>();
+                        readTask.Wait();
+                        engineers = readTask.Result;
+                    }
+                    else
+                    {
+                        engineers = Enumerable.Empty<Users>();
+                        ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+                    }
                 }
             }
             return View(engineers);
@@ -201,6 +277,7 @@ namespace GaragePortal.Models
 
                 return RedirectToAction(nameof(Index));
             }
+            //return PartialView("_CreateCustomerPartialView");
             return View(createUser);
         }
 

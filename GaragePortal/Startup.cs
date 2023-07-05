@@ -63,7 +63,7 @@ namespace GaragePortal
                     new CultureInfo("en-GB"),
                     new CultureInfo("el-GR")
                 };
-                options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture(culture: "el-GR", uiCulture: "el-GR");
+                options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture(culture: "en-GB", uiCulture: "en-GB");
                 options.SupportedCultures = supportedCultures;
                 options.SupportedUICultures = supportedCultures;
 

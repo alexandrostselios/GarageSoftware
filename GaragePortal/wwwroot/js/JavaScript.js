@@ -3,7 +3,8 @@ function getManufacturers() {
     $(document).ready(function () {
         // Send an AJAX request
         $("#ShowManufacturers").append($("<option></option>").val(0).html("--Select Manufacturer--"));
-        $.getJSON('https://localhost:7096/api/GetCarManufacturersTest')
+        $.getJSON('https://localhost:7096/api/GetCarManufacturersToList')
+        //$.getJSON('http://alefhome.ddns.net:8082/api/GetCarManufacturersToList')
         .done(function (data) {
             // On success, 'data' contains a list of products.
             $.each(data, function (key, item) {
@@ -28,6 +29,7 @@ function getManufacturersForModel(manufacturerID) {
         clearDataModels();
         $("#ShowModels").append($("<option></option>").val(0).html("--Select Model--"));
         $.getJSON('https://localhost:7096/api/GetCarModelManufacturerYearByManufacturerID/' + manufacturerID)
+        //$.getJSON('http://alefhome.ddns.net:8082/api/GetCarModelManufacturerYearByManufacturerID/' + manufacturerID)
             .done(function (data) {
                 // On success, 'data' contains a list of products.
                 $.each(data, function (key, item) {
@@ -52,6 +54,7 @@ function getYearsForModel(modelID) {
         clearDataYears();
         $("#ShowYears").append($("<option></option>").val(0).html("--Select Year--"));
         $.getJSON('https://localhost:7096/api/GetCarModelManufacturerYearByModelID/' + modelID)
+        //$.getJSON('http://alefhome.ddns.net:8082/api/GetCarModelManufacturerYearByModelID/' + modelID)
             .done(function (data) {
                 // On success, 'data' contains a list of products.
                 $.each(data, function (key, item) {
@@ -77,6 +80,7 @@ function getEngineers() {
         // Send an AJAX request
         $("#ShowEngineers").append($("<option></option>").val(0).html("--Select Engineer--"));
         $.getJSON('https://localhost:7096/api/GetEngineers')
+        //$.getJSON('http://alefhome.ddns.net:8082/api/GetEngineers')
             .done(function (data) {
                 // On success, 'data' contains a list of products.
                 $.each(data, function (key, item) {
@@ -90,8 +94,8 @@ function getEngineers() {
 function getEngineerSpeciality() {
     $(document).ready(function () {
         // Send an AJAX request
-        //$("#EngineerSpeciality").append($("<option></option>").val(0).html("--Select Speciality--"));
         $.getJSON('https://localhost:7096/api/GetEngineerSpecialities')
+        //$.getJSON('http://alefhome.ddns.net:8082/GetEngineerSpecialities')
             .done(function (data) {
                 // On success, 'data' contains a list of products.
                 $.each(data, function (key, item) {
