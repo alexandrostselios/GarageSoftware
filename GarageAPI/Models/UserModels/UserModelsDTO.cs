@@ -27,5 +27,6 @@ namespace GarageAPI.Models.UserModels
         public byte[]? CarImage { get; set; }
 
         public string EngineType {get; set; }
+
     }
 }
