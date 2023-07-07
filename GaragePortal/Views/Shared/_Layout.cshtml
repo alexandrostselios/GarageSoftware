@@ -54,16 +54,36 @@
                                         </li>
                                         break;
                                 }
-                                <li class="nav-item">
+
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    @Resource.GetKey("My_Profile")
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="MyProfile"><i class="fa fa-user" aria-hidden="false"></i>@Resource.GetKey("My_Profile")</a>
+                                        <a class="nav-link" asp-area="Home" asp-controller="Home" asp-action="Settings"><i class="fa fa-user" aria-hidden="true"></i>@Resource.GetKey("Settings")</a>
+                                    </div>
+                                </li>
+@*                                <li class="nav-item">
                                     <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="MyProfile"><i class="fa fa-user" aria-hidden="true"></i>@Resource.GetKey("My_Profile")</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" asp-area="Home" asp-controller="Home" asp-action="Settings"><i class="fa fa-user" aria-hidden="true"></i>@Resource.GetKey("Settings")</a>
-                                </li>
+                                </li>*@
                                 <li class="nav-item">
                                     <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="Logout"><i class="fa fa-sign-out" aria-hidden="true"></i>@Resource.GetKey("Logout")</a>
                                 </li>
                             }
+                        @*<li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Dropdown link
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </li>*@
                             <div class="dropdown show">
                                 <a class="btn btn-info dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Language
@@ -92,6 +112,8 @@
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
+
+
         @RenderSection("Scripts", required: false)
     </body>
 </html>

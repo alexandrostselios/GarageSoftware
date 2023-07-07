@@ -13,6 +13,8 @@
         <form asp-action="Create" asp-route-CustomerUserID="@ViewBag.CustomerUserID">
             <input type="submit" value="@Resource.GetKey("Add_New_Car")" class="btn btn-primary" />
         </form>
+        <div id="AddCustomerCarPartial"></div>
+        <button type="button" class="btn btn-primary" data-bs-toggle="ajax-modal" data-bs-target="#AddMakes" data-url="@Url.Action("CreateCustomerCarPartial")" value="@Resource.GetKey("Add_New_Car")">@Resource.GetKey("Add_New_Car")</button>
     </p>
 
     <table class="table">
@@ -163,4 +165,35 @@ else if (@ViewBag.UserType == GaragePortal.Enum.UserType.User.ToString()){
             }
         </tbody>
     </table>
+}
+
+@section scripts{
+    <script type="text/javascript">
+
+        //Show Add Make Modal
+        $(function () {
+            var AddMakesElement = $('#AddCustomerCarPartial');
+
+            $('button[data-bs-toggle="ajax-modal"]').click(function (event) {
+                var url = $(this).data('url');
+                $.get(url).done(function (data) {
+                    AddMakesElement.html(data);
+                    AddMakesElement.find('.modal').modal('show');
+                })
+            })
+
+            //Save Add Makeform data
+            AddMakesElement.on('click', '[data-bs-save="modal"]', function (event) {
+
+                var form = $(this).parents('.modal').find('form');
+                var actionUrl = form.attr("action");
+                var sendData = form.serialize();
+                $.post(actionUrl, sendData).done(function (data) {
+                    AddMakesElement.find('.modal').modal('hide');
+                    location.reload(true);
+                })
+            })
+
+        })
+    </script>
 }

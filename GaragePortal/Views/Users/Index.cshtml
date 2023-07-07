@@ -7,10 +7,13 @@
 
 @if (@ViewBag.UserType == GaragePortal.Enum.UserType.Admin.ToString())
 {
+    <div id="AddCustomerPartial"></div>
+    <button type="button" class="btn btn-primary" data-bs-toggle="ajax-modal" data-bs-target="#AddMakes" data-url="@Url.Action("CreateCustomerPartial")" value="@Resource.GetKey("Add_New_Customer")">@Resource.GetKey("Add_New_Customer")</button>
+
     <div>
-        <form asp-action="CreateCustomer">
+@*        <form asp-action="CreateCustomer">
             <input type="submit" value="@Resource.GetKey("Add_New_Customer")" class="btn btn-primary" />
-        </form>
+        </form>*@
         <br><br>
         @using (Html.BeginForm("Index", "Users", FormMethod.Get))
         {
@@ -112,4 +115,36 @@
     </table>
 }else{
     <p><center>You are not authorized to access this page</center></p>
+}
+
+@section scripts{
+    <script type="text/javascript">
+
+        //Show Add Make Modal
+        $(function () {
+            var AddMakesElement = $('#AddCustomerPartial');
+
+            $('button[data-bs-toggle="ajax-modal"]').click(function (event) {
+                var url = $(this).data('url');
+                $.get(url).done(function (data) {
+                    AddMakesElement.html(data);
+                    AddMakesElement.find('.modal').modal('show');
+                })
+            })
+
+            //Save Add Makeform data
+            AddMakesElement.on('click', '[data-bs-save="modal"]', function (event) {
+
+                var form = $(this).parents('.modal').find('form');
+                var actionUrl = form.attr("action");
+                var sendData = form.serialize();
+                $.post(actionUrl, sendData).done(function (data) {
+                    AddMakesElement.find('.modal').modal('hide');
+                    location.reload(true);
+                })
+            })
+
+        })
+
+    </script>
 }

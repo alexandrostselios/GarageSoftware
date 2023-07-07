@@ -22,8 +22,6 @@
             <div class="form-group">
                 <label asp-for="ModelManufacturer" class="control-label"></label>
                 <br />
-@*                <input asp-for="ModelManufacturerYear" class="form-control" />
-                <span asp-validation-for="ModelManufacturerYear" class="text-danger"></span>*@
                 <select id="ShowManufacturers" onchange="getManufacturersForModel(getSelectedManufacturer())" asp-for="ModelManufacturer" class="form-control">
                     <option value='0'>--Select Manufacturer--</option>
                 </select>
@@ -32,21 +30,10 @@
              <div class="form-group">
                 <label asp-for="Model" class="control-label"></label>
                 <br />
-                @*<input asp-for="ModelYear" class="form-control" />
-                <span asp-validation-for="ModelYear" class="text-danger"></span>*@
                 <select id="ShowModels" onchange="getYearsForModel(getSelectedModel())" asp-for="Model" class="form-control">
                     <option value='0'>--Select Model--</option>
                 </select>
             </div>
-@*            <div class="form-group">
-                <label asp-for="Engine" class="control-label"></label>
-                <br />
-                <input asp-for="ModelYear" class="form-control" />
-                <span asp-validation-for="ModelYear" class="text-danger"></span>
-                <select id="ShowEngines" onchange="getYearsForModel(getSelectedModel())" asp-for="Engine" class="form-control">
-                    <option value='0'>--Select Model--</option>
-                </select>
-            </div>*@
             <div>
                 <label asp-for="ModelYear" class="control-label"></label>
                 <br />

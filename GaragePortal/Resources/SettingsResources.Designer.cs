@@ -68,5 +68,14 @@ namespace Resources {
                 return ResourceManager.GetString("Uri", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to http://alefhome.ddns.net:8082/api.
+        /// </summary>
+        public static string UriProduction {
+            get {
+                return ResourceManager.GetString("UriProduction", resourceCulture);
+            }
+        }
     }
 }

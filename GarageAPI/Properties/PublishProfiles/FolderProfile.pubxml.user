@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>C:\Publish\GarageAPI</_PublishTargetUrl>
-    <History>True|2023-06-18T14:04:48.6898896Z;</History>
+    <History>True|2023-07-07T08:25:51.6362590Z;True|2023-07-05T16:20:56.4973900+03:00;True|2023-06-18T17:04:48.6898896+03:00;</History>
     <LastFailureDetails />
   </PropertyGroup>
 </Project>

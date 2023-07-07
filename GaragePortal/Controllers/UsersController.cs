@@ -20,9 +20,8 @@ namespace GaragePortal.Models
     public class UsersController : Controller
     {
         //Uri baseAddress = new Uri("https://garageapi20230516165317.azurewebsites.net/api");
-        //Uri baseAddress = new Uri("http://alefhome.ddns.net:8082/api");
-        // Uri baseAddress = new Uri("https://localhost:7096/api");
         readonly Uri baseAddress = new Uri(@Resources.SettingsResources.Uri);
+        //readonly Uri baseAddress = new Uri(@Resources.SettingsResources.UriProduction);
         readonly HttpClient client;
 
         public UsersController()
@@ -256,6 +255,12 @@ namespace GaragePortal.Models
             return View();
         }
 
+        public IActionResult CreateCustomerPartial()
+        {
+            GetSessionProperties();
+            return PartialView("_CreateCustomerPartialView");
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult CreateCustomer([Bind("ID,Name,Surname,Email,Age,Password,ConfirmPassword,UserPhoto")] Users createUser, IFormFile Image)
@@ -277,7 +282,37 @@ namespace GaragePortal.Models
 
                 return RedirectToAction(nameof(Index));
             }
-            //return PartialView("_CreateCustomerPartialView");
+            //return RedirectToAction(nameof(Index));
+            return View(createUser);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateCustomerPartial([Bind("ID,Name,Surname,Email,Age,Password,ConfirmPassword,UserPhoto")] Users createUser, IFormFile Image)
+        {
+            GetSessionProperties();
+            if (!(createUser.Email is null) && ModelState.IsValid)
+            {
+                createUser.UserType = 2;
+                createUser.CreationDate = DateTime.Now;
+                createUser.EnableAccess = EnableAccess.Enable;
+                createUser.UserPhoto = null;
+                if (Image != null)
+                {
+                    using (var stream = new MemoryStream())
+                    {
+                        Image.CopyToAsync(stream);
+                        byte[] temp = stream.ToArray();
+                        createUser.UserPhoto = temp;
+                    }
+                }
+                string data = JsonConvert.SerializeObject(createUser);
+                var contentdata = new StringContent(data);
+                HttpResponseMessage response = client.PostAsJsonAsync(client.BaseAddress + "/AddCustomer/", createUser).Result;
+
+                return RedirectToAction(nameof(Index));
+            }
+            //return RedirectToAction(nameof(Index));
             return View(createUser);
         }
 

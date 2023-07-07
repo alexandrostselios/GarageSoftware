@@ -117,6 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Add_Customer_Details_Form" xml:space="preserve">
+    <value>Customer Details</value>
+    <comment>Add_Customer_Details_Form</comment>
+  </data>
   <data name="Add_New_Car" xml:space="preserve">
     <value>Add New Car</value>
     <comment>Add New Car</comment>
@@ -132,6 +136,10 @@
   <data name="Add_Service_History" xml:space="preserve">
     <value>Add Service History</value>
     <comment>Add Service History</comment>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+    <comment>Cancel</comment>
   </data>
   <data name="Car_Image" xml:space="preserve">
     <value>Car Image</value>
@@ -248,6 +256,10 @@
   <data name="Register" xml:space="preserve">
     <value>Register</value>
     <comment>Register</comment>
+  </data>
+  <data name="Register_Customer" xml:space="preserve">
+    <value>Register</value>
+    <comment>Register_Customer</comment>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
