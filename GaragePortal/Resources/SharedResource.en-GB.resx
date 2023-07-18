@@ -137,6 +137,10 @@
     <value>Add Service History</value>
     <comment>Add Service History</comment>
   </data>
+  <data name="All" xml:space="preserve">
+    <value>All</value>
+    <comment>All</comment>
+  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
     <comment>Cancel</comment>
@@ -229,17 +233,21 @@
     <value>Model</value>
     <comment>Model</comment>
   </data>
-  <data name="ModelYear" xml:space="preserve">
-    <value>Year</value>
-    <comment>ModelYear</comment>
-  </data>
   <data name="Model_Manufacturer" xml:space="preserve">
     <value>Model Manufacturer</value>
     <comment>Model Manufacturer</comment>
   </data>
+  <data name="Model_Year" xml:space="preserve">
+    <value>Year</value>
+    <comment>Model_Year</comment>
+  </data>
   <data name="Modified_Date" xml:space="preserve">
     <value>Modified Date</value>
     <comment>Modified_Date</comment>
+  </data>
+  <data name="My_Account" xml:space="preserve">
+    <value>My Account</value>
+    <comment>My_Account</comment>
   </data>
   <data name="My_Profile" xml:space="preserve">
     <value>My Profile</value>
@@ -312,5 +320,9 @@
   <data name="View_Car_History" xml:space="preserve">
     <value>View Car History</value>
     <comment>View_Car_History</comment>
+  </data>
+  <data name="VIN_Number" xml:space="preserve">
+    <value>VIN Number</value>
+    <comment>VIN_Number</comment>
   </data>
 </root>

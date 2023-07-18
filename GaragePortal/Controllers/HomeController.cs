@@ -18,6 +18,9 @@ namespace GaragePortal.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
+        readonly Uri baseAddress = new Uri(@Resources.SettingsResources.Uri);
+        //readonly Uri baseAddress = new Uri(@Resources.SettingsResources.UriProduction);
+
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -68,7 +71,7 @@ namespace GaragePortal.Controllers
             IEnumerable<UserModels> userModels = null;
             using (var client = new HttpClient())
             {
-                Uri baseAddress = new Uri("https://localhost:7096/api");
+                //Uri baseAddress = new Uri("https://localhost:7096/api");
                 client.BaseAddress = baseAddress;
                 var responseUserModels = client.GetAsync(client.BaseAddress + "/GetUserModelsByUserID/1");
                 responseUserModels.Wait();

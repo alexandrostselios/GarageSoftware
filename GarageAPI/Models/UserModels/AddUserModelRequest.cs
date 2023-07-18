@@ -1,4 +1,6 @@
-﻿namespace GarageAPI.Models.UserModels
+﻿using GarageAPI.Models.CarEngineTypes;
+
+namespace GarageAPI.Models.UserModels
 {
     public class AddUserModelRequest
     {
@@ -21,5 +23,7 @@
         public long ModelYear { get; set; }
 
         public byte[]? CarImage { get; set; }
+
+        public long EngineTypeID { get; set; }
     }
 }

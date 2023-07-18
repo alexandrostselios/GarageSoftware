@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Text.RegularExpressions;
 
 namespace GaragePortal.Controllers
 {
@@ -19,8 +21,13 @@ namespace GaragePortal.Controllers
             {
                 Expires = DateTimeOffset.UtcNow.AddHours(1)
             });
-
+            SetSessionProperties(culture);
             return Redirect(Request.Headers["Referer"].ToString());
+        }
+
+        private void SetSessionProperties(string culture)
+        {
+            HttpContext.Session.SetString("Culture", culture);
         }
 
         private void GetSessionProperties()

@@ -14,6 +14,7 @@ using System.IO;
 using System.Runtime.ConstrainedExecution;
 using Microsoft.Extensions.Localization;
 using System.Resources;
+using GaragePortal.Views.Shared;
 
 namespace GaragePortal.Models
 {
@@ -464,6 +465,21 @@ namespace GaragePortal.Models
             return RedirectToAction(nameof(Engineers));
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SendEmailToUser(long userID)
+        {
+            Email email = new Email
+            {
+                ReceiverID = userID,
+                Subject  = "Subject Test",
+                Message  = "Message Test"
+            };
+            HttpResponseMessage response = client.PostAsJsonAsync(client.BaseAddress + "/SendEmailToUserByID/", email).Result;
+
+            return null;
+        }
+
         private void SetSessionProperties(Users dbUser)
         {
             UserType u = (UserType)System.Enum.Parse(typeof(UserType), dbUser.UserType.ToString());
@@ -479,6 +495,7 @@ namespace GaragePortal.Models
             ViewBag.ID = HttpContext.Session.GetString("ID");
             ViewBag.Name = HttpContext.Session.GetString("Name");
             ViewBag.Surname = HttpContext.Session.GetString("Surname");
+            ViewBag.Culture = HttpContext.Session.GetString("Culture");
         }
     }
 }

@@ -1,9 +1,12 @@
-﻿/* Manufacturer */
+﻿var url = 'https://localhost:7096/api/'
+//var url = 'http://alefhome.ddns.net:8082/api/'
+
+/* Manufacturer */
 function getManufacturers() {
     $(document).ready(function () {
         // Send an AJAX request
         $("#ShowManufacturers").append($("<option></option>").val(0).html("--Select Manufacturer--"));
-        $.getJSON('https://localhost:7096/api/GetCarManufacturersToList')
+        $.getJSON(url+'GetCarManufacturersToList')
         //$.getJSON('http://alefhome.ddns.net:8082/api/GetCarManufacturersToList')
         .done(function (data) {
             // On success, 'data' contains a list of products.
@@ -23,12 +26,16 @@ function getSelectedManufacturer() {
     return value;
 }
 
-function getManufacturersForModel(manufacturerID) {
+function getManufacturersForModel(manufacturerID,culture) {
     $(document).ready(function () {
         // Send an AJAX request
         clearDataModels();
-        $("#ShowModels").append($("<option></option>").val(0).html("--Select Model--"));
-        $.getJSON('https://localhost:7096/api/GetCarModelManufacturerYearByManufacturerID/' + manufacturerID)
+        if (culture == 'el-GR') {
+            $("#ShowModels").append($("<option></option>").val(0).html("--Επιλογή Μοντέλου--"));
+        } else {
+            $("#ShowModels").append($("<option></option>").val(0).html("--Select Model--"));
+        }
+        $.getJSON(url +'GetCarModelManufacturerYearByManufacturerID/' + manufacturerID)
         //$.getJSON('http://alefhome.ddns.net:8082/api/GetCarModelManufacturerYearByManufacturerID/' + manufacturerID)
             .done(function (data) {
                 // On success, 'data' contains a list of products.
@@ -48,12 +55,16 @@ function getSelectedModel() {
     return value;
 }
 
-function getYearsForModel(modelID) {
+function getYearsForModel(modelID,culture) {
     $(document).ready(function () {
         // Send an AJAX request
         clearDataYears();
-        $("#ShowYears").append($("<option></option>").val(0).html("--Select Year--"));
-        $.getJSON('https://localhost:7096/api/GetCarModelManufacturerYearByModelID/' + modelID)
+        if (culture == 'el-GR') {
+            $("#ShowYears").append($("<option></option>").val(0).html("--Επιλογή Έτους--"));
+        } else {
+            $("#ShowYears").append($("<option></option>").val(0).html("--Select Year--"));
+        }
+        $.getJSON(url +'GetCarModelManufacturerYearByModelID/' + modelID)
         //$.getJSON('http://alefhome.ddns.net:8082/api/GetCarModelManufacturerYearByModelID/' + modelID)
             .done(function (data) {
                 // On success, 'data' contains a list of products.
@@ -79,8 +90,8 @@ function getEngineers() {
     $(document).ready(function () {
         // Send an AJAX request
         $("#ShowEngineers").append($("<option></option>").val(0).html("--Select Engineer--"));
-        $.getJSON('https://localhost:7096/api/GetEngineers')
-        //$.getJSON('http://alefhome.ddns.net:8082/api/GetEngineers')
+        //$.getJSON('https://localhost:7096/api/GetEngineers')
+        $.getJSON(url+'GetEngineers')
             .done(function (data) {
                 // On success, 'data' contains a list of products.
                 $.each(data, function (key, item) {
@@ -94,8 +105,8 @@ function getEngineers() {
 function getEngineerSpeciality() {
     $(document).ready(function () {
         // Send an AJAX request
-        $.getJSON('https://localhost:7096/api/GetEngineerSpecialities')
-        //$.getJSON('http://alefhome.ddns.net:8082/GetEngineerSpecialities')
+        //$.getJSON('https://localhost:7096/api/GetEngineerSpecialities')
+        $.getJSON(url +'GetEngineerSpecialities')
             .done(function (data) {
                 // On success, 'data' contains a list of products.
                 $.each(data, function (key, item) {

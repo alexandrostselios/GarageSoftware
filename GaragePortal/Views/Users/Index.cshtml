@@ -8,10 +8,9 @@
 @if (@ViewBag.UserType == GaragePortal.Enum.UserType.Admin.ToString())
 {
     <div id="AddCustomerPartial"></div>
-    <button type="button" class="btn btn-primary" data-bs-toggle="ajax-modal" data-bs-target="#AddMakes" data-url="@Url.Action("CreateCustomerPartial")" value="@Resource.GetKey("Add_New_Customer")">@Resource.GetKey("Add_New_Customer")</button>
-
+    <button class="btn btn-sm btn-primary m-2" id="btnAddCustomer" data-bs-toggle="ajax-modal" data-bs-target="#AddCustomer" data-url="@Url.Action("CreateCustomerPartial")">@Resource.GetKey("Add_New_Customer")</button>
     <div>
-@*        <form asp-action="CreateCustomer">
+        @*<form asp-action="CreateCustomer">
             <input type="submit" value="@Resource.GetKey("Add_New_Customer")" class="btn btn-primary" />
         </form>*@
         <br><br>
@@ -22,7 +21,7 @@
                     <td>
                         <span><b>@Resource.GetKey("SearchBy"): </b></span>
                         @Html.RadioButton("searchBy","All",true)
-                        <text>All</text>
+                        <text>@Resource.GetKey("All")</text>
                         @Html.RadioButton("searchBy","Name")
                         <text>@Resource.GetKey("Name")</text>
                         @Html.RadioButton("searchBy","Surname")
@@ -109,6 +108,9 @@
                     <td>
                         <a class="af" asp-controller="UserModels" asp-action="ViewCustomerCars" asp-route-id="@item.ID">@Resource.GetKey("View_Cars")</a>
                     </td>
+                    <td>
+                        <a class="af" asp-action="SendEmailToUser" asp-route-id="@item.ID">Send Email</a>
+                    </td>
                 </tr>
             }
         </tbody>
@@ -122,29 +124,28 @@
 
         //Show Add Make Modal
         $(function () {
-            var AddMakesElement = $('#AddCustomerPartial');
+            var AddCustomerCarElement = $('#AddCustomerPartial');
 
             $('button[data-bs-toggle="ajax-modal"]').click(function (event) {
                 var url = $(this).data('url');
                 $.get(url).done(function (data) {
-                    AddMakesElement.html(data);
-                    AddMakesElement.find('.modal').modal('show');
+                    AddCustomerCarElement.html(data);
+                    AddCustomerCarElement.find('.modal').modal('show');
                 })
             })
 
             //Save Add Makeform data
-            AddMakesElement.on('click', '[data-bs-save="modal"]', function (event) {
+            AddCustomerCarElement.on('click', '[data-bs-save="modal"]', function (event) {
 
                 var form = $(this).parents('.modal').find('form');
                 var actionUrl = form.attr("action");
                 var sendData = form.serialize();
                 $.post(actionUrl, sendData).done(function (data) {
-                    AddMakesElement.find('.modal').modal('hide');
+                    AddCustomerCarElement.find('.modal').modal('hide');
                     location.reload(true);
                 })
             })
 
         })
-
     </script>
 }

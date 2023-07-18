@@ -56,12 +56,14 @@
                                 }
 
                                 <li class="nav-item dropdown">
+                                <div class="dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    @Resource.GetKey("My_Profile")
+                                        @Resource.GetKey("My_Account")
                                     </a>
+                                </div>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                        <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="MyProfile"><i class="fa fa-user" aria-hidden="false"></i>@Resource.GetKey("My_Profile")</a>
-                                        <a class="nav-link" asp-area="Home" asp-controller="Home" asp-action="Settings"><i class="fa fa-user" aria-hidden="true"></i>@Resource.GetKey("Settings")</a>
+                                        <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="MyProfile"><i class="fa fa-user" aria-hidden="false"></i> @Resource.GetKey("My_Profile")</a>
+                                        <a class="nav-link" asp-area="Home" asp-controller="Home" asp-action="Settings"><i class="fa fa-user" aria-hidden="true"></i> @Resource.GetKey("Settings")</a>
                                     </div>
                                 </li>
 @*                                <li class="nav-item">
@@ -88,9 +90,9 @@
                                 <a class="btn btn-info dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Language
                                 </a>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <a class="dropdown-item" asp-controller="UILanguage" asp-action="ChangeLanguage" asp-route-culture="en-GB">English</a>
-                                    <a class="dropdown-item" asp-controller="UILanguage" asp-action="ChangeLanguage" asp-route-culture="el-GR">Greek</a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="background-color: yellow;">
+                                    <a class="nav-link" asp-controller="UILanguage" asp-action="ChangeLanguage" asp-route-culture="en-GB">English</a>
+                                    <a class="nav-link" asp-controller="UILanguage" asp-action="ChangeLanguage" asp-route-culture="el-GR">Greek</a>
                                 </div>
                             </div>
                         </ul>

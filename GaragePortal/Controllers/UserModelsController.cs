@@ -102,7 +102,7 @@ namespace GaragePortal.Controllers
                 ModelYear = e.ModelYear,
                 UserID = e.UserID,
                 VIN = e.VIN,
-                id = e.ID
+                id = e.ID,
             };
             e.Color = color;
             if (!(Image is null))
@@ -149,14 +149,16 @@ namespace GaragePortal.Controllers
 
         public IActionResult CreateCustomerCarPartial()
         {
+            GetSessionProperties();
             return PartialView("_CreateCustomerCarPartial");
         }
 
         // POST: UserModels/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserID,ModelManufacturer,Model,ModelYear,LicencePlate,VIN,Color,Kilometer")] UserModelsDTO userModels)
+        public async Task<IActionResult> Create([Bind("UserID,ModelManufacturer,Model,ModelYear,LicencePlate,VIN,Color,Kilometer,EngineTypeID")] UserModelsDTO userModels)
         {
+            userModels.EngineTypeID = 1;
             GetSessionProperties();
             if (ModelState.IsValid && userModels.UserID > 0)
             {

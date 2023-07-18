@@ -10,11 +10,15 @@
     ViewData["Title"] = @Resource.GetKey("List_Of_User_Cars");
     <p>
         @*<a class="af" asp-action="Create">Add New User</a>*@
-        <form asp-action="Create" asp-route-CustomerUserID="@ViewBag.CustomerUserID">
+@*        <form asp-action="Create" asp-route-CustomerUserID="@ViewBag.CustomerUserID">
             <input type="submit" value="@Resource.GetKey("Add_New_Car")" class="btn btn-primary" />
-        </form>
+        </form>*@
         <div id="AddCustomerCarPartial"></div>
-        <button type="button" class="btn btn-primary" data-bs-toggle="ajax-modal" data-bs-target="#AddMakes" data-url="@Url.Action("CreateCustomerCarPartial")" value="@Resource.GetKey("Add_New_Car")">@Resource.GetKey("Add_New_Car")</button>
+        @*<br>
+        <button type="button" class="btn btn-primary" data-bs-toggle="ajax-modal" data-bs-target="#AddMakes" data-url="@Url.Action("CreateCustomerCarPartial")" value="@Resource.GetKey("Add_New_Car")">@Resource.GetKey("Add_New_Car")</button>*@
+        <br>
+        <button class="btn btn-sm btn-primary m-2" id="btnAddCustomerCar" asp-route-CustomerUserID="@ViewBag.CustomerUserID" data-bs-toggle="ajax-modal" data-bs-target="#AddCustomerCar" data-url="@Url.Action("CreateCustomerCarPartial")">@Resource.GetKey("Add_New_Car")</button>
+
     </p>
 
     <table class="table">
@@ -30,7 +34,7 @@
                     @Resource.GetKey("Model")
                 </th>
                 <th>
-                    @Resource.GetKey("ModelYear")
+                    @Resource.GetKey("Model_Year")
                 </th>
                 <th>
                     @Resource.GetKey("Color")
@@ -110,7 +114,7 @@ else if (@ViewBag.UserType == GaragePortal.Enum.UserType.User.ToString()){
                     @Resource.GetKey("Model")
                 </th>
                 <th>
-                    @Resource.GetKey("ModelYear")
+                    @Resource.GetKey("Model_Year")
                 </th>
                 <th>
                     @Resource.GetKey("Color")
@@ -172,24 +176,24 @@ else if (@ViewBag.UserType == GaragePortal.Enum.UserType.User.ToString()){
 
         //Show Add Make Modal
         $(function () {
-            var AddMakesElement = $('#AddCustomerCarPartial');
+            var AddCustomerCarElement = $('#AddCustomerCarPartial');
 
             $('button[data-bs-toggle="ajax-modal"]').click(function (event) {
                 var url = $(this).data('url');
                 $.get(url).done(function (data) {
-                    AddMakesElement.html(data);
-                    AddMakesElement.find('.modal').modal('show');
+                    AddCustomerCarElement.html(data);
+                    AddCustomerCarElement.find('.modal').modal('show');
                 })
             })
 
             //Save Add Makeform data
-            AddMakesElement.on('click', '[data-bs-save="modal"]', function (event) {
+            AddCustomerCarElement.on('click', '[data-bs-save="modal"]', function (event) {
 
                 var form = $(this).parents('.modal').find('form');
                 var actionUrl = form.attr("action");
                 var sendData = form.serialize();
                 $.post(actionUrl, sendData).done(function (data) {
-                    AddMakesElement.find('.modal').modal('hide');
+                    AddCustomerCarElement.find('.modal').modal('hide');
                     location.reload(true);
                 })
             })

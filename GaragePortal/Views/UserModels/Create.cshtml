@@ -22,7 +22,7 @@
             <div class="form-group">
                 <label asp-for="ModelManufacturer" class="control-label"></label>
                 <br />
-                <select id="ShowManufacturers" onchange="getManufacturersForModel(getSelectedManufacturer())" asp-for="ModelManufacturer" class="form-control">
+                <select id="ShowManufacturers" onchange="getManufacturersForModel(getSelectedManufacturer(),@ViewBag.Culture)" asp-for="ModelManufacturer" class="form-control">
                     <option value='0'>--Select Manufacturer--</option>
                 </select>
                 <input asp-for"ModelManufacturer" type="hidden" />
@@ -30,7 +30,7 @@
              <div class="form-group">
                 <label asp-for="Model" class="control-label"></label>
                 <br />
-                <select id="ShowModels" onchange="getYearsForModel(getSelectedModel())" asp-for="Model" class="form-control">
+                <select id="ShowModels" onchange="getYearsForModel(getSelectedModel(),@ViewBag.Culture)" asp-for="Model" class="form-control">
                     <option value='0'>--Select Model--</option>
                 </select>
             </div>

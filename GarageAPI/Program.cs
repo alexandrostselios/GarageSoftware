@@ -1,3 +1,5 @@
+using GarageAPI;
+using GarageAPI.Controllers;
 using GarageAPI.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
@@ -9,6 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+/* Send Emails */
+builder.Services.AddTransient<IEmailSender, EmailSenderController>();
+/* Send Emails */
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

@@ -19,10 +19,10 @@ namespace GaragePortal.Models
         public long ModelYear { get; set; }
 
         [DisplayName("Licence Plate")]
-        public string? LicencePlate { get; set; }
+        public string LicencePlate { get; set; }
 
         [DisplayName("VIN Number")]
-        public string? VIN { get; set; }
+        public string VIN { get; set; }
 
         public Colors Color { get; set; }
 
@@ -30,5 +30,7 @@ namespace GaragePortal.Models
 
         [DisplayName("Car Image")]
         public byte[]? CarImage { get; set; }
+
+        public long EngineTypeID { get; set; }
     }
 }

@@ -126,16 +126,20 @@
     <comment>Add New Car</comment>
   </data>
   <data name="Add_New_Customer" xml:space="preserve">
-    <value>Εγγραφή Πελάτη</value>
+    <value>Καταχώρηση Πελάτη</value>
     <comment>Add New Customer</comment>
   </data>
   <data name="Add_New_Engineer" xml:space="preserve">
-    <value>Εγγραφή Μηχανικού</value>
+    <value>Καταχώρηση Μηχανικού</value>
     <comment>Add_New_Engineer</comment>
   </data>
   <data name="Add_Service_History" xml:space="preserve">
     <value>Προσθήκη Ιστορικού</value>
     <comment>Add Service History</comment>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>Όλα</value>
+    <comment>All</comment>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Ακύρωση</value>
@@ -229,17 +233,21 @@
     <value>Μοντέλο</value>
     <comment>Model</comment>
   </data>
-  <data name="ModelYear" xml:space="preserve">
-    <value>Έτος</value>
-    <comment>ModelYear</comment>
-  </data>
   <data name="Model_Manufacturer" xml:space="preserve">
     <value>Κατασκευαστής</value>
     <comment>Model Manufacturer</comment>
   </data>
+  <data name="Model_Year" xml:space="preserve">
+    <value>Έτος</value>
+    <comment>Model_Year</comment>
+  </data>
   <data name="Modified_Date" xml:space="preserve">
     <value>Ημερομηνία Τροποποίησης</value>
     <comment>Modified_Date</comment>
+  </data>
+  <data name="My_Account" xml:space="preserve">
+    <value>Ο Λογαριασμός μου</value>
+    <comment>My_Account</comment>
   </data>
   <data name="My_Profile" xml:space="preserve">
     <value>Προφίλ</value>
@@ -312,5 +320,9 @@
   <data name="View_Car_History" xml:space="preserve">
     <value>Προβολή Ιστορικού</value>
     <comment>View_Car_History</comment>
+  </data>
+  <data name="VIN_Number" xml:space="preserve">
+    <value>Αριθμός Πλαισίου</value>
+    <comment>VIN_Number</comment>
   </data>
 </root>

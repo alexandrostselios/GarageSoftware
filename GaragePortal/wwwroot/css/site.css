@@ -137,3 +137,16 @@ body {
 .dropdown:hover .dropbtn {
     background-color: #04AA6D;
 }
+
+.dropdown-menu {
+    background-color: #343a40 !important;
+}
+
+.dropdown:hover > .dropdown-menu {
+    display: block;
+}
+
+.dropdown > .dropdown-toggle:active {
+    /*Without this, clicking will make it sticky*/
+    pointer-events: none;
+}

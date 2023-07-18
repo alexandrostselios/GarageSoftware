@@ -9,6 +9,8 @@ using GarageAPI.Data;
 using System.Net;
 using GarageAPI.Enum;
 using GarageAPI.Models.User;
+using NuGet.Protocol.Plugins;
+using GarageAPI.Models;
 
 namespace GarageAPI.Controllers
 {
@@ -16,10 +18,12 @@ namespace GarageAPI.Controllers
     public class UsersController : Controller
     {
         private readonly GarageAPIDbContext dbContext;
+        private readonly IEmailSender _emailSender;
 
-        public UsersController(GarageAPIDbContext context)
+        public UsersController(GarageAPIDbContext context,IEmailSender emailSender)
         {
             dbContext = context;
+            this._emailSender = emailSender;
         }
 
         [HttpGet]
@@ -34,7 +38,6 @@ namespace GarageAPI.Controllers
         public async Task<IActionResult> GetCustomers()
         {
             return Ok(await dbContext.Users.Where(c => c.UserType == Enum.UserType.Customer || c.UserType == Enum.UserType.Admin).ToListAsync());
-
         }
 
         [HttpGet]
@@ -203,6 +206,37 @@ namespace GarageAPI.Controllers
             await dbContext.SaveChangesAsync();
 
             return Ok(engineer);
+        }
+
+        //[HttpPost]
+        //[Route("api/SendEmailToUser/{receiver}/{subject}/{message}")]
+        //public async void SendEmailToUser(string receiver, string subject, string message)
+        //{
+        //    Email email = new Email { 
+        //        //Receiver= receiver,
+        //        Subject=subject,
+        //        Message = message
+        //    };
+
+        //    await _emailSender.SendEmailAsync(email);
+        //}
+
+        [HttpPost]
+        [Route("api/SendEmailToUserByID")]
+        public async Task<IActionResult> SendEmailToUserByID(Email email)//, string subject, string message)
+        {
+            var user = await dbContext.Users.FindAsync(email.ReceiverID);
+            if(user!=null)
+            {
+                Email tempEmail = new Email {
+                   Receiver = user.Email,
+                   Subject = email.Subject,
+                   Message = email.Message
+                };
+                await _emailSender.SendEmailAsync(tempEmail);
+                return Ok(email);
+            }
+            return Ok();
         }
 
         [HttpPut]

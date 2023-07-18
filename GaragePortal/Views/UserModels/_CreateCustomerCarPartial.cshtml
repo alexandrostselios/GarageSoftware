@@ -2,68 +2,69 @@
 @inject LanguageService Resource
 
 <script src="~/js/JavaScript.js" defer></script>
+<script src="~/js/site.js" defer></script>
 
-<script type="text/javascript">
-    window.onload = function what() {
-        document.getElementById('ShowManufacturers').innerHTML = getManufacturers();
-    };
-</script>
 
-<div id="AddMakes" name="AddMakes" class="modal" tabindex="-1" role="dialog">
+<div id="AddCustomerCar" name="AddCustomerCar" class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">@Resource.GetKey("Add_Customer_Details_Form")</h5>
+                <h5 class="modal-title">@Resource.GetKey("Add_New_Car")<h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="post" asp-action="CreateCustomerPartial" asp-controller="Users" enctype="multipart/form-data">
+            <form method="post" asp-action="Create" asp-controller="UserModels" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="UserID" value="@ViewBag.CustomerUserID" />
                 <div class="modal-body">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
-                        <label asp-for="ModelManufacturer" class="control-label"></label>
+                        <label asp-for="ModelManufacturer" class="control-label">@Resource.GetKey("Model_Manufacturer")</label>
                         <br />
-                        <select id="ShowManufacturers" onchange="getManufacturersForModel(getSelectedManufacturer())" asp-for="ModelManufacturer" class="form-control">
-                            <option value='0'>--Select Manufacturer--</option>
+                        <select id="ShowManufacturers" onchange="getManufacturersForModel(getSelectedManufacturer(),@ViewBag.Culture)" asp-for="ModelManufacturer" class="form-control">
+                            <option value='0'>--@Resource.GetKey("Select_Manufacturer")--</option>
                         </select>
                         <input asp-for"ModelManufacturer" type="hidden" />
                     </div>
                     <div class="form-group">
-                        <label asp-for="Model" class="control-label"></label>
+                        <label asp-for="Model" class="control-label">@Resource.GetKey("Model")</label>
                         <br />
-                        <select id="ShowModels" onchange="getYearsForModel(getSelectedModel())" asp-for="Model" class="form-control">
-                            <option value='0'>--Select Model--</option>
+                        <select id="ShowModels" onchange="getYearsForModel(getSelectedModel(),@ViewBag.Culture)" asp-for="Model" class="form-control">
+                            <option value='0'>--@Resource.GetKey("Select_Model")--</option>
                         </select>
                     </div>
                     <div>
-                        <label asp-for="ModelYear" class="control-label"></label>
+                        <label asp-for="ModelYear" class="control-label">@Resource.GetKey("Model_Year")</label>
                         <br />
                         <select id="ShowYears" asp-for="ModelYear" class="form-control">
                             <option value='0'>--Select Year--</option>
                         </select>
                         <input asp-for"ModelYear" type="hidden" />
                     </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="LicencePlate" class="control-label">@Resource.GetKey("Licence_Plate")</label>
+                        <input asp-for="LicencePlate" class="form-control" />
+                        <span asp-validation-for="LicencePlate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="VIN" class="control-label">@Resource.GetKey("VIN_Number")</label>
+                        <input asp-for="VIN" class="form-control" />
+                        <span asp-validation-for="VIN" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Kilometer" class="control-label">@Resource.GetKey("Kilometer")</label>
+                        <input asp-for="Kilometer" class="form-control" />
+                        <span asp-validation-for="Kilometer" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Color" class="control-label">@Resource.GetKey("Color")</label>
+                        <input asp-for="Color" class="form-control" />
+                        <span asp-validation-for="Color" class="text-danger"></span>
+                    </div>
                     @*<div class="form-group">
-                        <label asp-for="Name" class="control-label">@Resource.GetKey("Name")</label>
-                        <input asp-for="Name" class="form-control" />
-                        <span asp-validation-for="Name" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Email" class="control-label"></label>
-                        <input asp-for="Email" class="form-control" />
-                        <span asp-validation-for="Email" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Password" class="control-label"></label>
-                        <input asp-for="Password" type="password" class="form-control" />
-                        <span asp-validation-for="Password" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="UserPhoto" class="control-label">@Resource.GetKey("User_Photo")</label>
-                        <input type="file" class="form-control-file form-control" id="files" asp-for="UserPhoto" name="Image" accept="image/*" onchange="previewImage()">
-                        <span asp-validation-for="UserPhoto" class="text-danger"></span>
-                        @Html.ValidationMessageFor(m => m.UserPhoto)
+                        <input type="submit" value="Create" class="btn btn-primary" />
                     </div>*@
                     <div class="modal-footer">
                         <button type="submit" value="Create" class="btn btn-success">@Resource.GetKey("Register_Customer")</button>

@@ -10,6 +10,7 @@ using System.Web.Http.Dependencies;
 using GarageAPI.Enum;
 using GarageAPI.Models.UserModels;
 using GarageAPI.Models;
+using GarageAPI.Models.CarEngineTypes;
 
 namespace GarageAPI.Controllers
 {
@@ -75,7 +76,8 @@ namespace GarageAPI.Controllers
                 VIN = addUserModelRequest.VIN,
                 Color = addUserModelRequest.Color,
                 Kilometer = addUserModelRequest.Kilometer,
-                CarImage = addUserModelRequest.CarImage
+                CarImage = addUserModelRequest.CarImage,
+                EngineType = await dbContext.CarEngineType.FindAsync(addUserModelRequest.EngineTypeID)
             };
             await dbContext.UserModels.AddAsync(userModel);
             await dbContext.SaveChangesAsync();
