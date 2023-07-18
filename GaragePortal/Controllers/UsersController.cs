@@ -465,9 +465,21 @@ namespace GaragePortal.Models
             return RedirectToAction(nameof(Engineers));
         }
 
+        public IActionResult SendEmailToUser(long id)
+        {
+            GetSessionProperties();
+            string customerID = string.Format(ViewBag.ID);
+            if (customerID == null)
+            {
+                return NotFound();
+            }
+            SendEmailToUser(id,customerID);
+            return View("Index");
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SendEmailToUser(long userID)
+        public async Task<IActionResult> SendEmailToUser(long userID,string test)
         {
             Email email = new Email
             {
