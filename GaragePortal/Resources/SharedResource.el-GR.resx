@@ -229,6 +229,10 @@
     <value>Έξοδος</value>
     <comment>Logout</comment>
   </data>
+  <data name="Message" xml:space="preserve">
+    <value>Μήνυμα</value>
+    <comment>Message</comment>
+  </data>
   <data name="Model" xml:space="preserve">
     <value>Μοντέλο</value>
     <comment>Model</comment>
@@ -246,7 +250,7 @@
     <comment>Modified_Date</comment>
   </data>
   <data name="My_Account" xml:space="preserve">
-    <value>Ο Λογαριασμός μου</value>
+    <value>Λογαριασμός</value>
     <comment>My_Account</comment>
   </data>
   <data name="My_Profile" xml:space="preserve">
@@ -297,9 +301,17 @@
     <value>Επιλογή Έτους</value>
     <comment>Select_Year</comment>
   </data>
+  <data name="Send_Email" xml:space="preserve">
+    <value>Αποστολή Email</value>
+    <comment>Send_Email</comment>
+  </data>
   <data name="Settings" xml:space="preserve">
     <value>Ρυθμίσεις</value>
     <comment>Settings</comment>
+  </data>
+  <data name="Subject" xml:space="preserve">
+    <value>Θέμα Μηνύματος</value>
+    <comment>Subject</comment>
   </data>
   <data name="Surname" xml:space="preserve">
     <value>Επώνυμο</value>

@@ -18,8 +18,8 @@ namespace GaragePortal.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        readonly Uri baseAddress = new Uri(@Resources.SettingsResources.Uri);
-        //readonly Uri baseAddress = new Uri(@Resources.SettingsResources.UriProduction);
+        //readonly Uri baseAddress = new Uri(@Resources.SettingsResources.Uri);
+        readonly Uri baseAddress = new Uri(@Resources.SettingsResources.UriProduction);
 
         public HomeController(ILogger<HomeController> logger)
         {

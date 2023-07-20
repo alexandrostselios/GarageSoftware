@@ -8,6 +8,7 @@
 @if (@ViewBag.UserType == GaragePortal.Enum.UserType.Admin.ToString())
 {
     <div id="AddCustomerPartial"></div>
+    <div id="SendEmailToUser"></div>
     <button class="btn btn-sm btn-primary m-2" id="btnAddCustomer" data-bs-toggle="ajax-modal" data-bs-target="#AddCustomer" data-url="@Url.Action("CreateCustomerPartial")">@Resource.GetKey("Add_New_Customer")</button>
     <div>
         @*<form asp-action="CreateCustomer">
@@ -109,7 +110,8 @@
                         <a class="af" asp-controller="UserModels" asp-action="ViewCustomerCars" asp-route-id="@item.ID">@Resource.GetKey("View_Cars")</a>
                     </td>
                     <td>
-                        <a class="af" asp-action="SendEmailToUser" asp-route-id="@item.ID">Send Email</a>
+                        @*<button class="btn btn-sm btn-primary m-2" id="btnSendEmail" data-bs-toggle="ajax-modal" data-bs-target="#SendEmailToUser" data-url="@Url.Action("SendEmailToUser")">@Resource.GetKey("Send_Email")</button>*@
+                        <a class="af" asp-controller="Email" asp-action="SendEmailToUser" asp-route-id="@item.ID">@Resource.GetKey("Send_Email")</a>
                     </td>
                 </tr>
             }
@@ -142,6 +144,31 @@
                 var sendData = form.serialize();
                 $.post(actionUrl, sendData).done(function (data) {
                     AddCustomerCarElement.find('.modal').modal('hide');
+                    location.reload(true);
+                })
+            })
+
+        })
+
+        $(function () {
+            var SendEmailToUserElement = $('#SendEmailToUser');
+
+            $('button[data-bs-toggle="ajax-modal"]').click(function (event) {
+                var url = $(this).data('url');
+                $.get(url).done(function (data) {
+                    SendEmailToUserElement.html(data);
+                    SendEmailToUserElement.find('.modal').modal('show');
+                })
+            })
+
+            //Save Add Makeform data
+            SendEmailToUserElement.on('click', '[data-bs-save="modal"]', function (event) {
+
+                var form = $(this).parents('.modal').find('form');
+                var actionUrl = form.attr("action");
+                var sendData = form.serialize();
+                $.post(actionUrl, sendData).done(function (data) {
+                    SendEmailToUserElement.find('.modal').modal('hide');
                     location.reload(true);
                 })
             })

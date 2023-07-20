@@ -12,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 /* Send Emails */
-builder.Services.AddTransient<IEmailSender, EmailSenderController>();
+builder.Services.AddTransient<IEmailSender, EmailController>();
 /* Send Emails */
 
 builder.Services.AddControllers();

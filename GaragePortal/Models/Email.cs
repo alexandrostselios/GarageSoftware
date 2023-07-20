@@ -1,4 +1,4 @@
-﻿namespace GaragePortal.Views.Shared
+﻿namespace GaragePortal.Models
 {
     public class Email
     {

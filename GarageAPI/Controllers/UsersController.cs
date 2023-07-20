@@ -208,19 +208,6 @@ namespace GarageAPI.Controllers
             return Ok(engineer);
         }
 
-        //[HttpPost]
-        //[Route("api/SendEmailToUser/{receiver}/{subject}/{message}")]
-        //public async void SendEmailToUser(string receiver, string subject, string message)
-        //{
-        //    Email email = new Email { 
-        //        //Receiver= receiver,
-        //        Subject=subject,
-        //        Message = message
-        //    };
-
-        //    await _emailSender.SendEmailAsync(email);
-        //}
-
         [HttpPost]
         [Route("api/SendEmailToUserByID")]
         public async Task<IActionResult> SendEmailToUserByID(Email email)//, string subject, string message)
@@ -229,11 +216,38 @@ namespace GarageAPI.Controllers
             if(user!=null)
             {
                 Email tempEmail = new Email {
+                   ReceiverID = email.ReceiverID,
                    Receiver = user.Email,
                    Subject = email.Subject,
-                   Message = email.Message
+                   Message = email.Message,
+                   InsDate = DateTime.Now
                 };
                 await _emailSender.SendEmailAsync(tempEmail);
+                await dbContext.Email.AddAsync(tempEmail);
+                await dbContext.SaveChangesAsync();
+                return Ok(email);
+            }
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("api/SendEmailToUsers")]
+        public async Task<IActionResult> SendEmailToUsers(Email email)//, string subject, string message)
+        {
+            var user = await dbContext.Users.FindAsync(email.ReceiverID);
+            if (user != null)
+            {
+                Email tempEmail = new Email
+                {
+                    ReceiverID = email.ReceiverID,
+                    Receiver = user.Email,
+                    Subject = email.Subject,
+                    Message = email.Message,
+                    InsDate = DateTime.Now
+                };
+                await _emailSender.SendEmailAsync(tempEmail);
+                await dbContext.Email.AddAsync(tempEmail);
+                await dbContext.SaveChangesAsync();
                 return Ok(email);
             }
             return Ok();

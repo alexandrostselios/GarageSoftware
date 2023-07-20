@@ -4,7 +4,7 @@ using System.Net.Mail;
 
 namespace GarageAPI.Controllers
 {
-    public class EmailSenderController : IEmailSender
+    public class EmailController : IEmailSender
     {
         public Task SendEmailAsync(Email email)
         {

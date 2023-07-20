@@ -14,7 +14,6 @@ using System.IO;
 using System.Runtime.ConstrainedExecution;
 using Microsoft.Extensions.Localization;
 using System.Resources;
-using GaragePortal.Views.Shared;
 
 namespace GaragePortal.Models
 {
