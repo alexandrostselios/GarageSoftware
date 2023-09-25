@@ -10,5 +10,10 @@ namespace GarageAPI.Models.EngineerSpeciality
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long ID { get; set; }
         public string Speciality { get; set; }
+
+        public static implicit operator string?(EngineerSpeciality? v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

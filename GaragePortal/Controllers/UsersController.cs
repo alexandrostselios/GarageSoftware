@@ -183,7 +183,7 @@ namespace GaragePortal.Models
                         logInUser.LastLoginDate = DateTime.Now;
                         HttpResponseMessage loginResponse = client.PutAsJsonAsync(client.BaseAddress + "/UpdateUser/" + logInUser.ID, logInUser).Result;
 
-                        if(loginUser.UserType == (long) UserType.Admin)
+                        if(logInUser.UserType == (long) UserType.Admin)
                         {
                             return RedirectToAction("Index", "Users");
                         }
@@ -315,6 +315,44 @@ namespace GaragePortal.Models
             //return RedirectToAction(nameof(Index));
             return View(createUser);
         }
+
+        public IActionResult CreateEngineerPartial()
+        {
+            GetSessionProperties();
+            return PartialView("_CreateEngineerPartialView");
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateEngineerPartial([Bind("ID,Name,Surname,Email,Age,Password,ConfirmPassword,UserPhoto")] Users createUser, IFormFile Image)
+        {
+            GetSessionProperties();
+            if (!(createUser.Email is null) && ModelState.IsValid)
+            {
+                createUser.UserType = 2;
+                createUser.CreationDate = DateTime.Now;
+                createUser.EnableAccess = EnableAccess.Enable;
+                createUser.UserPhoto = null;
+                if (Image != null)
+                {
+                    using (var stream = new MemoryStream())
+                    {
+                        Image.CopyToAsync(stream);
+                        byte[] temp = stream.ToArray();
+                        createUser.UserPhoto = temp;
+                    }
+                }
+                string data = JsonConvert.SerializeObject(createUser);
+                var contentdata = new StringContent(data);
+                HttpResponseMessage response = client.PostAsJsonAsync(client.BaseAddress + "/AddCustomer/", createUser).Result;
+
+                return RedirectToAction(nameof(Index));
+            }
+            //return RedirectToAction(nameof(Index));
+            return View(createUser);
+        }
+
 
         public IActionResult CreateEngineer()
         {

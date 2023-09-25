@@ -6,6 +6,7 @@ namespace GarageAPI.Models
     [NotMapped]
     public class ServiceHistoryDTO
     {
+        public long ID { get; set; }
         public long UserModelsID { get; set; }
 
         public string? Description { get; set; }

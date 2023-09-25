@@ -7,7 +7,7 @@
 
 @if (@ViewBag.UserType == GaragePortal.Enum.UserType.Admin.ToString())
 {
-    <div id="AddCustomerPartial"></div>
+    @*<div id="AddCustomerPartial"></div>*@
     <div id="SendEmailToUser"></div>
     <button class="btn btn-sm btn-primary m-2" id="btnAddCustomer" data-bs-toggle="ajax-modal" data-bs-target="#AddCustomer" data-url="@Url.Action("CreateCustomerPartial")">@Resource.GetKey("Add_New_Customer")</button>
     <div>
@@ -36,7 +36,7 @@
                         @Html.TextBox("searchValue",null, new {Class = "form-control",placeholder=@Resource.GetKey("Enter_Details_for_Search")})
                     </td>
                     <td>
-                        <input type="submit" id ="Search" value="Search" class="btn btn-success" />
+                        <input type="submit" id="Search" value="@Resource.GetKey("Search")" class="btn btn-success" />
                     </td>
                 </tr>
             </table>
@@ -70,6 +70,9 @@
                 <th>
                     @Resource.GetKey("User_Photo")
                 </th>
+                <th></th>
+                <th></th>
+                <th></th>
                 <th></th>
             </tr>
         </thead>
@@ -125,30 +128,30 @@
     <script type="text/javascript">
 
         //Show Add Make Modal
-        $(function () {
-            var AddCustomerCarElement = $('#AddCustomerPartial');
+        //$(function () {
+        //    var AddCustomerCarElement = $('#AddCustomerPartial');
 
-            $('button[data-bs-toggle="ajax-modal"]').click(function (event) {
-                var url = $(this).data('url');
-                $.get(url).done(function (data) {
-                    AddCustomerCarElement.html(data);
-                    AddCustomerCarElement.find('.modal').modal('show');
-                })
-            })
+        //    $('button[data-bs-toggle="ajax-modal"]').click(function (event) {
+        //        var url = $(this).data('url');
+        //        $.get(url).done(function (data) {
+        //            AddCustomerCarElement.html(data);
+        //            AddCustomerCarElement.find('.modal').modal('show');
+        //        })
+        //    })
 
-            //Save Add Makeform data
-            AddCustomerCarElement.on('click', '[data-bs-save="modal"]', function (event) {
+        //    //Save Add Makeform data
+        //    AddCustomerCarElement.on('click', '[data-bs-save="modal"]', function (event) {
 
-                var form = $(this).parents('.modal').find('form');
-                var actionUrl = form.attr("action");
-                var sendData = form.serialize();
-                $.post(actionUrl, sendData).done(function (data) {
-                    AddCustomerCarElement.find('.modal').modal('hide');
-                    location.reload(true);
-                })
-            })
+        //        var form = $(this).parents('.modal').find('form');
+        //        var actionUrl = form.attr("action");
+        //        var sendData = form.serialize();
+        //        $.post(actionUrl, sendData).done(function (data) {
+        //            AddCustomerCarElement.find('.modal').modal('hide');
+        //            location.reload(true);
+        //        })
+        //    })
 
-        })
+        //})
 
         $(function () {
             var SendEmailToUserElement = $('#SendEmailToUser');

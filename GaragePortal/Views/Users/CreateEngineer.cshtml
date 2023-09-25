@@ -40,12 +40,9 @@
             <div class="form-group">
                 <label asp-for="EngineerSpeciality" class="control-label">@Resource.GetKey("Engineer_Speciality")</label>
                 <br />
-                @*                <input asp-for="ModelManufacturerYear" class="form-control" />
-                <span asp-validation-for="ModelManufacturerYear" class="text-danger"></span>*@
                 <select id="EngineerSpeciality" asp-for="EngineerSpeciality" class="form-control">
                     <option value='0'>--@Resource.GetKey("Select_Speciality")--</option>
                 </select>
-                @*<input asp-for"EngineerSpeciality" type="hidden" />*@
             </div>
             <div class="form-group">
                 <label asp-for="UserPhoto" class="control-label">@Resource.GetKey("User_Photo")</label>
@@ -65,13 +62,5 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");
-        <script src="~/js/JavaScript.js" defer></script>
-
-        <script type="text/javascript">
-            window.onload = function test() {
-                document.getElementById('EngineerSpeciality').innerHTML = getEngineerSpeciality();
-            };
-        </script>
-    }
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

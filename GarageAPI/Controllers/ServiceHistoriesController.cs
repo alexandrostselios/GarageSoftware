@@ -64,5 +64,36 @@ namespace GarageAPI.Controllers
 
             return Ok(serviceHistory);
         }
+
+        [HttpDelete]
+        [Route("api/DeleteServiceHistoryByServiceHistoryID/{id:long}")]
+        public async Task<IActionResult> DeleteServiceHistoryByServiceHistoryID([FromRoute] long id)
+        {
+            var serviceHistory = await dbContext.ServiceHistory.FindAsync(id);
+            if (serviceHistory != null)
+            {
+                dbContext.Remove(serviceHistory);
+                await dbContext.SaveChangesAsync();
+                return Ok(serviceHistory);
+            }
+            return NotFound();
+        }
+
+        [HttpDelete]
+        [Route("api/DeleteServiceHistoryByUserModelID/{id:long}")]
+        public async Task<IActionResult> DeleteServiceHistoryByUserModelID([FromRoute] long id)
+        {
+            List<ServiceHistory> serviceHistory = await dbContext.ServiceHistory.Where(x=>x.UserModelsID==id).ToListAsync();
+            if (serviceHistory != null)
+            {
+                for(int i = 0; i < serviceHistory.Count; i++)
+                {
+                    dbContext.Remove(serviceHistory[i]);
+                    await dbContext.SaveChangesAsync();
+                }
+                return Ok(serviceHistory);
+            }
+            return NotFound();
+        }
     }
 }

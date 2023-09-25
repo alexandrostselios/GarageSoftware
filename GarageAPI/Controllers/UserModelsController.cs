@@ -11,6 +11,7 @@ using GarageAPI.Enum;
 using GarageAPI.Models.UserModels;
 using GarageAPI.Models;
 using GarageAPI.Models.CarEngineTypes;
+using GarageAPI.Models.User;
 
 namespace GarageAPI.Controllers
 {
@@ -85,7 +86,6 @@ namespace GarageAPI.Controllers
             return Ok(userModel);
         }
 
-
         [HttpPut]
         [Route("api/UpdateUserModel/{id:long}")]
         public async Task<IActionResult> UpdateUserModelByCarID([FromRoute] long id, UpdateUserModelRequest updateUserModelRequest)
@@ -105,14 +105,15 @@ namespace GarageAPI.Controllers
         [Route("api/DeleteUserModel/{id:long}")]
         public async Task<IActionResult> DeleteUserModel([FromRoute] long id)
         {
+            var serviceHistoryHelper = await new ServiceHistoriesController(this.dbContext).DeleteServiceHistoryByUserModelID(id);
             var userModel = await dbContext.UserModels.FindAsync(id);
             if (userModel != null)
             {
                 dbContext.Remove(userModel);
                 await dbContext.SaveChangesAsync();
-                return Ok();
+                return Ok(userModel);
             }
-            return NotFound();
+            return Ok();
         }
     }
 }

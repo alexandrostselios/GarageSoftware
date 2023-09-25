@@ -121,6 +121,10 @@
     <value>Customer Details</value>
     <comment>Add_Customer_Details_Form</comment>
   </data>
+  <data name="Add_Engineer_Details_Form" xml:space="preserve">
+    <value>Engineer Details</value>
+    <comment>Add_Engineer_Details_Form</comment>
+  </data>
   <data name="Add_New_Car" xml:space="preserve">
     <value>Add New Car</value>
     <comment>Add New Car</comment>
@@ -276,6 +280,10 @@
   <data name="Save" xml:space="preserve">
     <value>Save</value>
     <comment>Save</comment>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+    <comment>Search</comment>
   </data>
   <data name="SearchBy" xml:space="preserve">
     <value>Search By</value>

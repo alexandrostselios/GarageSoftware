@@ -111,12 +111,14 @@ namespace GarageAPI.Controllers
         [Route("api/GetEngineerByID/{id:long}")]
         public async Task<IActionResult> GetEngineerByID([FromRoute] long id)
         {
-            var engineer = await dbContext.Users.FindAsync(id);
+            string StoredProc = "exec GetEngineerByID @EngineerID = " + id;
+            //var engineer = await dbContext.Users.FindAsync(id);
+            List<UsersDTO> engineer = await dbContext.UsersDTO.FromSqlRaw(StoredProc).ToListAsync();
             if (engineer == null)
             {
                 return NotFound();
             }
-            return Ok(engineer);
+            return Ok(engineer.First());
         }
 
         [HttpGet]
@@ -124,43 +126,67 @@ namespace GarageAPI.Controllers
         public async Task<IActionResult> GetUsersByValue([FromRoute] int searchBy,int usertype, string value)
         {
             var user = new List<Users>();
-            if (searchBy == 0 && usertype == 0)
+            if (usertype == 2)
             {
-                user = await dbContext.Users.Where(c => c.Name.Contains(value) || c.Surname.Contains(value) || c.Email.Contains(value)).ToListAsync();
-            }
-            else if (searchBy == 0 && usertype == 3)
-            {
-                user = await dbContext.Users.Where(c => (c.Name.Contains(value) || c.Surname.Contains(value) || c.Email.Contains(value)) && c.UserType == UserType.Engineer).ToListAsync();
-            }
-            else if (searchBy == 1 && usertype == 0)
-            {
-                user = await dbContext.Users.Where(c => c.Name.Contains(value)).ToListAsync();
-            }
-            else if (searchBy == 1 && usertype == 3)
-            {
-                user = await dbContext.Users.Where(c => c.Name.Contains(value) && c.UserType == UserType.Engineer).ToListAsync();
-            }
-            else if (searchBy == 2 && usertype == 0)
-            {
-                user = await dbContext.Users.Where(c => c.Surname.Contains(value)).ToListAsync();
-            }
-            else if (searchBy == 2 && (usertype == 3))
-            {
-                user = await dbContext.Users.Where(c => c.Surname.Contains(value) && c.UserType == UserType.Engineer).ToListAsync();
-            }
-            else if(searchBy == 3 && usertype == 0)
-            {
-                user = await dbContext.Users.Where(c => c.Email.Contains(value)).ToListAsync();
+                if (searchBy == 0 && usertype == 2)
+                {
+                    user = await dbContext.Users.Where(c => (c.Name.Contains(value) || c.Surname.Contains(value) || c.Email.Contains(value) && (c.UserType == UserType.Admin || c.UserType == UserType.Customer))).ToListAsync();
+                }
+                else if (searchBy == 1 && usertype == 2)
+                {
+                    user = await dbContext.Users.Where(c => c.Name.Contains(value) && (c.UserType == UserType.Admin || c.UserType == UserType.Customer)).ToListAsync();
+                }
+                else if (searchBy == 2 && usertype == 2)
+                {
+                    user = await dbContext.Users.Where(c => c.Surname.Contains(value) && (c.UserType == UserType.Admin || c.UserType == UserType.Customer)).ToListAsync();
+                }
+                else if (searchBy == 3 && usertype == 2)
+                {
+                    user = await dbContext.Users.Where(c => c.Email.Contains(value) && (c.UserType == UserType.Admin || c.UserType == UserType.Customer)).ToListAsync();
+                }
+                return Ok(user);
             }
             else
             {
-                user = await dbContext.Users.Where(c => c.Email.Contains(value) && c.UserType == UserType.Engineer).ToListAsync();
+                if (searchBy == 0)
+                {
+                    user = await dbContext.Users.Where(c => (c.Name.Contains(value) || c.Surname.Contains(value) || c.Email.Contains(value)) && c.UserType == UserType.Engineer).ToListAsync();
+                }
+
+                else if (searchBy == 1)
+                {
+                    user = await dbContext.Users.Where(c => c.Name.Contains(value) && c.UserType == UserType.Engineer).ToListAsync();
+                }
+
+                else if (searchBy == 2)
+                {
+                    user = await dbContext.Users.Where(c => c.Surname.Contains(value) && c.UserType == UserType.Engineer).ToListAsync();
+                }
+                else
+                {
+                    user = await dbContext.Users.Where(c => c.Email.Contains(value) && c.UserType == UserType.Engineer).ToListAsync();
+                }
+                if (user == null)
+                {
+                    return NotFound();
+                }
+                var engineersDTO = new List<UsersDTO>();
+                for (int i = 0; i < user.Count(); i++) {
+                    engineersDTO.Add(new UsersDTO
+                    {
+                        ID = user[i].ID,
+                        Name = user[i].Name,
+                        Surname = user[i].Surname,
+                        Email = user[i].Email,
+                        CreationDate = user[i].CreationDate,
+                        LastLoginDate = user[i].LastLoginDate,
+                        ModifiedDate = user[i].ModifiedDate,
+                        UserPhoto = user[i].UserPhoto,
+                        EngineerSpeciality = (await dbContext.EngineerSpeciality.FirstOrDefaultAsync(x => x.ID == user[i].Speciality)).Speciality
+                    });  
+                }
+                return Ok(engineersDTO);
             }
-            if (user == null)
-            {
-                return NotFound();
-            }
-            return Ok(user);
         }
 
         [HttpPost]
@@ -223,8 +249,8 @@ namespace GarageAPI.Controllers
                    InsDate = DateTime.Now
                 };
                 await _emailSender.SendEmailAsync(tempEmail);
-                await dbContext.Email.AddAsync(tempEmail);
-                await dbContext.SaveChangesAsync();
+                //await dbContext.Email.AddAsync(tempEmail);
+                //await dbContext.SaveChangesAsync();
                 return Ok(email);
             }
             return Ok();

@@ -19,7 +19,7 @@
                     <td>
                         <span><b>@Resource.GetKey("SearchBy"): </b></span>
                         @Html.RadioButton("searchBy","All",true)
-                        <text>All</text>
+                        <text>@Resource.GetKey("All")</text>
                         @Html.RadioButton("searchBy","Name")
                         <text>@Resource.GetKey("Name")</text>
                         @Html.RadioButton("searchBy","Surname")
@@ -33,7 +33,7 @@
                         @Html.TextBox("searchValue",null, new {Class = "form-control", placeholder=@Resource.GetKey("Enter_Details_for_Search")})
                     </td>
                     <td>
-                        <input type="submit" value="Search" class="btn btn-success" />
+                        <input type="submit" value="@Resource.GetKey("Search")" class="btn btn-success" />
                     </td>
                 </tr>
             </table>

@@ -6,7 +6,7 @@ namespace GarageAPI.Controllers
 {
     public class EmailController : IEmailSender
     {
-        public Task SendEmailAsync(Email email)
+        public async Task SendEmailAsync(Email email)
         {
             var emailProviderAccount = "alexandrostsel@hotmail.com";
             var emailProviderAccountPassword = "AlexTselios123456!@#$%^?";
@@ -18,7 +18,7 @@ namespace GarageAPI.Controllers
                 Credentials = new NetworkCredential(emailProviderAccount, emailProviderAccountPassword)
             };
 
-            return client.SendMailAsync(new MailMessage(from: emailProviderAccount, to: email.Receiver, email.Subject, email.Message + emailSignature));
+            await client.SendMailAsync(new MailMessage(from: emailProviderAccount, to: email.Receiver, email.Subject, email.Message + emailSignature));
         }
     }
 }

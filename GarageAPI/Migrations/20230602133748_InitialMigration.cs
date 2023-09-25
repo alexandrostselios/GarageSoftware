@@ -1332,7 +1332,8 @@ namespace GarageAPI.Migrations
                     { 3L, new DateTime(2022, 12, 15, 22, 19, 46, 456, DateTimeKind.Unspecified), "kkitsikou@hotmail.com", 1, 0L, null, null, "Kostas", "gafa#$#", null, "Kitsikou", null, 2 },
                     { 4L, new DateTime(2022, 12, 24, 13, 42, 34, 566, DateTimeKind.Unspecified), "mpapadopoulos@yahoo.gr", 2, 0L, null, null, "Marios", "MP1234@?", null, "Papadopoulos", null, 2 },
                     { 5L, new DateTime(2023, 2, 3, 20, 8, 23, 860, DateTimeKind.Unspecified), "konpapa@yahoo.gr", 1, 0L, null, null, "Κωνσταντίνος", "DfG34#$%^", 3L, "Παπαδόπουλος", null, 3 },
-                    { 6L, new DateTime(2023, 6, 2, 16, 37, 48, 180, DateTimeKind.Local).AddTicks(7589), "mmichail@gmail.com", 1, 0L, null, null, "Μιχάλης", "KavMixalis$%", 2L, "Μιχαήλ", null, 3 }
+                    { 6L, new DateTime(2023, 3, 1, 16, 37, 48, 180, DateTimeKind.Local).AddTicks(7589), "mmichail@gmail.com", 1, 0L, null, null, "Μιχάλης", "KavMixalis$%", 2L, "Μιχαήλ", null, 3 },
+                    { 7L, new DateTime(2023, 5, 7, 10, 06, 10, 000, DateTimeKind.Local).AddTicks(7589), "gntinou@gmail.com", 1, 0L, null, null, "Γιάννης", "gNtin123!@#", 1L, "Ντίνου", null, 3 }
                 });
 
             migrationBuilder.InsertData(
@@ -1500,17 +1501,17 @@ namespace GarageAPI.Migrations
                 });
 
             migrationBuilder.InsertData(
-    table: "UserModels",
-    columns: new[] { "ID", "UserID", "ModelManufacturerYearID", "LicencePlate", "VIN", "Color", "Kilometer" },
-    values: new object[,]
-    {
-                                {1L, 1L, 56L, "KBT5670", "ZAR94000007368150", 101, 156125},
-                                {2L, 1L, 81L, "EYB7174", "VNKKG3D330A048555", 142, 27450},
-                                {3L, 1L, 3L,"NIZ2654", "NLHBA51BABZ014926", 4, 88956},
-                                {4L, 2L, 5L,"XEZ6532", "KHX94000007259841", 5, 220653},
-                                {5L, 2L, 6L, "KBH1452", "JNKCV61E09M303716", 6, 65402},
-                                {6L, 3L, 6L, "AHZ1495", "JH4DA9460MS032070", 6, 9563}
-    });
+                table: "UserModels",
+                columns: new[] { "ID", "UserID", "ModelManufacturerYearID", "LicencePlate", "VIN", "Color", "Kilometer" },
+                values: new object[,]
+                {
+                    {1L, 1L, 56L, "KBT5670", "ZAR94000007368150", 101, 156125},
+                    {2L, 1L, 81L, "EYB7174", "VNKKG3D330A048555", 142, 27450},
+                    {3L, 1L, 3L,"NIZ2654", "NLHBA51BABZ014926", 4, 88956},
+                    {4L, 2L, 5L,"XEZ6532", "KHX94000007259841", 5, 220653},
+                    {5L, 2L, 6L, "KBH1452", "JNKCV61E09M303716", 6, 65402},
+                    {6L, 3L, 6L, "AHZ1495", "JH4DA9460MS032070", 6, 9563}
+                });
 
             migrationBuilder.InsertData(
                 table: "ServiceHistory",
