@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using GarageAPI.Data;
 using GarageAPI.Models.UserModels;
 using GarageAPI.Models;
+using GarageAPI.Models.Service;
 
 namespace GarageAPI.Controllers
 {

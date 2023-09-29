@@ -17,8 +17,8 @@ namespace GarageAPI.Controllers
                 EnableSsl = true,
                 Credentials = new NetworkCredential(emailProviderAccount, emailProviderAccountPassword)
             };
-
-            await client.SendMailAsync(new MailMessage(from: emailProviderAccount, to: email.Receiver, email.Subject, email.Message + emailSignature));
+            Task.Run(() => client.SendMailAsync(new MailMessage(from: emailProviderAccount, to: email.Receiver, email.Subject, email.Message + emailSignature)));
+            //await client.SendMailAsync(new MailMessage(from: emailProviderAccount, to: email.Receiver, email.Subject, email.Message + emailSignature));
         }
     }
 }

@@ -11,7 +11,7 @@ namespace GarageAPI.Controllers
     {
         private readonly GarageAPIDbContext dbContext;
 
-       public CarModelsController(GarageAPIDbContext dbContext)
+        public CarModelsController(GarageAPIDbContext dbContext)
         {
             this.dbContext = dbContext;
         }

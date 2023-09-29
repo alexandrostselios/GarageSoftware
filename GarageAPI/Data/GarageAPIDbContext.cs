@@ -8,6 +8,7 @@ using GarageAPI.Models.UserModels;
 using GarageAPI.Models.CarEngineTypes;
 using System.ComponentModel.DataAnnotations.Schema;
 using GarageAPI.Models.User;
+using GarageAPI.Models.Service;
 
 namespace GarageAPI.Data
 {
@@ -40,6 +41,7 @@ namespace GarageAPI.Data
         public DbSet<UsersDTO> UsersDTO { get; set; }
         public DbSet<Settings> Settings { get; set; }
         public DbSet<Email> Email { get; set; }
+        public DbSet<ServiceItems> ServiceItems { get; set; }
 
         private void SetCarEngineTypeData(ModelBuilder builder)
         {

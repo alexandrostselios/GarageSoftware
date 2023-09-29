@@ -165,7 +165,7 @@ namespace GarageAPI.Migrations
                     b.ToTable("EngineerSpeciality");
                 });
 
-            modelBuilder.Entity("GarageAPI.Models.ServiceHistory", b =>
+            modelBuilder.Entity("GarageAPI.Models.Service.ServiceHistory", b =>
                 {
                     b.Property<long>("ID")
                         .ValueGeneratedOnAdd()
@@ -216,7 +216,7 @@ namespace GarageAPI.Migrations
                     b.ToTable("ServiceHistory");
                 });
 
-            modelBuilder.Entity("GarageAPI.Models.ServiceHistoryDTO", b =>
+            modelBuilder.Entity("GarageAPI.Models.Service.ServiceHistoryDTO", b =>
                 {
                     b.Property<byte[]>("CarImage")
                         .HasColumnType("varbinary(max)");
@@ -272,6 +272,29 @@ namespace GarageAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.ToTable("ServiceHistoryDTO");
+                });
+
+            modelBuilder.Entity("GarageAPI.Models.Service.ServiceItems", b =>
+                {
+                    b.Property<long>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("GarageID")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal?>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("ServiceItems");
                 });
 
             modelBuilder.Entity("GarageAPI.Models.Settings", b =>
@@ -535,7 +558,7 @@ namespace GarageAPI.Migrations
                     b.Navigation("CarModelYear");
                 });
 
-            modelBuilder.Entity("GarageAPI.Models.ServiceHistory", b =>
+            modelBuilder.Entity("GarageAPI.Models.Service.ServiceHistory", b =>
                 {
                     b.HasOne("GarageAPI.Models.User.Users", "Engineer")
                         .WithMany()

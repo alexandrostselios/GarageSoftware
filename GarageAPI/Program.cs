@@ -1,3 +1,5 @@
+using DinkToPdf.Contracts;
+using DinkToPdf;
 using GarageAPI;
 using GarageAPI.Controllers;
 using GarageAPI.Data;
@@ -11,9 +13,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddMvc().AddControllersAsServices();
+
 /* Send Emails */
 builder.Services.AddTransient<IEmailSender, EmailController>();
 /* Send Emails */
+
+/* Create PDF */
+builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
+/* Create PDF */
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
