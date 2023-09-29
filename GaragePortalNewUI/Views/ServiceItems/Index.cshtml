@@ -1,0 +1,125 @@
+﻿@model IEnumerable<GaragePortalNewUI.Models.ServiceItems>
+@inject LanguageService Resource
+
+@{
+    //ViewData["Title"] = @Resource.GetKey("List_of_Customers");
+    ViewData["Title"] = "Service Items";
+}
+
+@if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Admin.ToString())
+{
+@*    <div id="addCustomerDIV"></div>
+    <div id="editCustomerDIV"></div>
+    <div id="sendEmailToCustomer"></div>
+    <button class="btn btn-sm btn-primary m-2" id="btnAddCustomer" data-bs-toggle="ajax-modal" data-bs-target="#AddCustomer" data-url="@Url.Action("CreateCustomerPartial")">@Resource.GetKey("Add_New_Customer")</button>
+    <div>
+        <br><br>
+        @using (Html.BeginForm("Customers", "Users", FormMethod.Get))
+        {
+            <table>
+                <tr>
+                    <td>
+                        @Html.Partial("_SearchPartialView")
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.TextBox("searchValue",null, new {Class = "form-control",placeholder=@Resource.GetKey("Enter_Details_for_Search")})
+                    </td>
+                    <td>
+                        <input type="submit" id="Search" value="@Resource.GetKey("Search")" class="btn btn-success" />
+                    </td>
+                    <td>
+                        <a class="af" asp-controller="PdfCreator" asp-action="CreatePDF" asp-route-entityType="2">@Resource.GetKey("Download_Users")</a>
+                    </td>
+                </tr>
+
+            </table>
+        }
+    </div>*@
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ID)
+                </th>
+                <th>
+                    Description
+                </th>
+                <th colspan="2">Total Service Items: @Model.Count()</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-primary m-2" id="btnEditCustomer" data-bs-toggle="ajax-modal" data-bs-target="#EditCustomer" data-url="@Url.Action("EditCustomerPartial",new{id = @item.ID})">@Resource.GetKey("Edit")</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-danger m-2" id="btnEditCustomer" data-bs-toggle="ajax-modal" data-bs-target="#EditCustomer" data-url="@Url.Action("EditCustomerPartial",new{id = @item.ID})">@Resource.GetKey("Delete")</button>
+                    </td>
+                    <td colspan ="3"></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p><center>You are not authorized to access this page</center></p>
+}
+
+
+@*@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            var addCustomerDIVElement = $('#addCustomerDIV');
+
+            $('button[data-bs-toggle="ajax-modal"]').click(function (event) {
+                var url = $(this).data('url');
+                $.get(url).done(function (data) {
+                    addCustomerDIVElement.html(data);
+                    addCustomerDIVElement.find('.modal').modal('show');
+                })
+            })
+
+            //Save Add Makeform data
+            addCustomerDIVElement.on('click', '[data-bs-save="modal"]', function (event) {
+
+                var form = $(this).parents('.modal').find('form');
+                var actionUrl = form.attr("action");
+                var sendData = form.serialize();
+                $.post(actionUrl, sendData).done(function (data) {
+                    addCustomerDIVElement.find('.modal').modal('hide');
+                    location.reload(true);
+                })
+            })
+        })
+
+        var message = "@ViewBag.SuccessMessage";
+        @{
+            ViewBag.SuccessMessage = "null";
+        }
+        if (message == "Successfully") {
+            console.log('Successfully');
+            $(document).ready(function () {
+                $('#successModal').modal('show');
+            });
+            //alert(message);
+        } else if (message == "Failed") {
+            console.log('Failed');
+            $(document).ready(function () {
+                $('#failedModal').modal('show');
+            });
+            //alert(message);
+        }
+    </script>
+}*@

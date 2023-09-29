@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+@*    <link rel="stylesheet" href="https://flag-sprites.com">*@
+</head>
+@inject LanguageService Resource
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 ">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Alex Garage</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index"><i class="fa fa-fw fa-home"></i> @Resource.GetKey("Home")</a>
+                        </li>
+@*                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy"><i class="fa fa-shield" aria-hidden="true"></i> @Resource.GetKey("Privacy")</a>
+                        </li>*@
+                        @if (@ViewBag.UserType == null || @ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Guest.ToString())
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="Login"><i class="fa fa-fw fa-sign-in"></i> @Resource.GetKey("Login")</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="Create"><i class="fa fa-user-plus"></i> @Resource.GetKey("Register")</a>
+                            </li>
+                        }
+                        @if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Admin.ToString() || @ViewBag.UserType == GaragePortalNewUI.Enum.UserType.User.ToString())
+                        {
+                            @switch (@ViewBag.UserType)
+                            {
+                                case "Admin":
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="Customers"><i class="fa fa-users" aria-hidden="true"></i> @Resource.GetKey("Customers")</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="Engineers"><i class="fa fa-wrench" aria-hidden="true"></i> @Resource.GetKey("Engineers")</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="Engineers"><i class="fa fa-car" aria-hidden="true"></i> Service</a>
+                                    </li>
+                                break;
+                                case "User":
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="UserModels" asp-controller="UserModels" asp-action="ViewCustomerCars" asp-route-id="@ViewBag.ID"><i class="fa fa-car" aria-hidden="true"></i> @Resource.GetKey("List_Of_MyCars")</a>
+                                    </li>
+                                break;
+                            }
+
+                            <li class="nav-item dropdown">
+                                <div class="dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-user-circle" aria-hidden="true"></i> @Resource.GetKey("My_Account")
+                                    </a>
+                                </div>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="MyProfile"><i class="fa fa-user" aria-hidden="false"></i> @Resource.GetKey("My_Profile")</a>
+                                    <a class="nav-link" asp-area="Home" asp-controller="Home" asp-action="Settings"><i class="fa fa-cog" aria-hidden="true"></i> @Resource.GetKey("Settings")</a>
+                                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy"><i class="fa fa-shield" aria-hidden="true"></i> @Resource.GetKey("Privacy")</a>
+                                </div>
+                            </li>
+                            @switch (@ViewBag.UserType)
+                            {
+                                case "Admin":
+                                    <li class="nav-item dropdown">
+                                        <div class="dropdown">
+                                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fa fa-cogs" aria-hidden="true"></i> @Resource.GetKey("Settings")
+                                            </a>
+                                        </div>
+                                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                            <a class="nav-link" asp-area="ServiceItems" asp-controller="ServiceItems" asp-action="Index"><i class="fa fa-briefcase" aria-hidden="true"></i> Service Items</a>
+                                        </div>
+                                    </li>
+                                break;
+                            }
+                            <li>
+                                <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="Logout"><i class="fa fa-sign-out" aria-hidden="true"></i> @Resource.GetKey("Logout")</a>
+                            </li>
+                        }
+                        
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <div class="dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-globe" aria-hidden="true"></i> @ViewBag.Language
+                                </a>
+                            </div>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="nav-link" asp-controller="UILanguage" asp-action="ChangeLanguage" asp-route-culture="en-GB">English</a>
+                                <a class="nav-link" asp-controller="UILanguage" asp-action="ChangeLanguage" asp-route-culture="el-GR">Ελληνικά</a>
+                            </div>
+                        </li>
+                    </ul>
+@*                    <div class="dropdown show">
+                        <a class="btn btn-info dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Language
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="background-color: yellow;">
+                            <a class="nav-link" asp-controller="UILanguage" asp-action="ChangeLanguage" asp-route-culture="en-GB">English</a>
+                            <a class="nav-link" asp-controller="UILanguage" asp-action="ChangeLanguage" asp-route-culture="el-GR">Greek</a>
+                        </div>
+                    </div>*@
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            <center>&copy; 2022 - Garage Management Software - <a class="af" asp-area="" asp-controller="Home" asp-action="Privacy">@Resource.GetKey("Privacy")</a></center>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/JavaScript.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajax-unobtrusive/3.2.6/jquery.unobtrusive-ajax.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

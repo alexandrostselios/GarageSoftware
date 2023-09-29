@@ -1,0 +1,181 @@
+﻿@model IEnumerable<GaragePortalNewUI.Models.Users>
+@inject LanguageService Resource
+
+@{
+    ViewData["Title"] = @Resource.GetKey("List_Of_Engineers");
+}
+
+@if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Admin.ToString())
+{
+
+    <div class="modal fade" id="successModalEngineer" tabindex="-1" role="dialog" aria-labelledby="successModalEngineerLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <center><p>@Resource.GetKey("Your_email_has_been_sent_successfully.")</p></center>
+                    <center><button type="button" class="btn btn-primary" data-dismiss="modal">OK</button></center>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="failedModalEngineer" tabindex="-1" role="dialog" aria-labelledby="failedModalEngineerLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <center>
+                        <p>@Resource.GetKey("Your_email_did_not_send.")</p>
+                        <p>@Resource.GetKey("Please_try_again_later.")</p>
+                    </center>
+                    <center><button type="button" class="btn btn-primary" data-dismiss="modal">OK</button></center>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="addEngineerDIV"></div>
+    <div id="editEngineerDIV"></div>
+    <button class="btn btn-sm btn-primary m-2" id="btnAddEngineer" data-bs-toggle="ajax-modal" data-bs-target="#AddEngineer" data-url="@Url.Action("CreateEngineerPartial")">@Resource.GetKey("Add_New_Engineer")</button>
+
+    <div>
+        <br><br>
+        @using (Html.BeginForm("Engineers", "Users", FormMethod.Get))
+        {
+            <table>
+                <tr>
+                    <td>
+                        @Html.Partial("_SearchPartialView")
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.TextBox("searchValue",null, new {Class = "form-control",placeholder=@Resource.GetKey("Enter_Details_for_Search")})
+                    </td>
+                    <td>
+                        <input type="submit" id="Search" value="@Resource.GetKey("Search")" class="btn btn-success" />
+                    </td>
+                    <td>
+                        <a class="af" asp-controller="PdfCreator" asp-action="CreatePDF" asp-route-entityType="3">@Resource.GetKey("Download_Engineers")</a>
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th data-sort="string">
+                    @Resource.GetKey("Name")
+                </th>
+                <th data-sort="string">
+                    @Resource.GetKey("Surname")
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th data-sort="date">
+                    @Resource.GetKey("Creation_Date")
+                </th>
+                <th>
+                    @Resource.GetKey("Modified_Date")
+                </th>
+                <th>
+                    @Resource.GetKey("Last_Login_Date")
+                </th>
+                <th>
+                    @Resource.GetKey("User_Photo")
+                </th>
+                <th data-sort="string">
+                    @Resource.GetKey("Engineer_Speciality")
+                </th>
+                <th colspan="3">@Resource.GetKey("Total_Engineers"): @Model.Count()</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Surname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreationDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ModifiedDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastLoginDate)
+                    </td>
+                    <td>
+                        @if (!(item.UserPhoto is null)){
+                            <img src="data:image/jpg;base64, @Convert.ToBase64String(item.UserPhoto)" width="50" height="50" />
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EngineerSpeciality)
+                    </td>
+                    <td>
+                        <a class="af" asp-controller="Email" asp-action="SendEmailToUser" asp-route-id="@item.ID" asp-route-userType="3">@Resource.GetKey("Send_Email")</a>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-primary m-2" id="btnEditEngineer" data-bs-toggle="ajax-modal" data-bs-target="#EditEngineer" data-url="@Url.Action("EditEngineerPartial",new{id = @item.ID})">@Resource.GetKey("Edit")</button>
+                    </td>
+                    <td>
+                        <input type="button" class="btn btn-sm btn-danger m-2" value="@Resource.GetKey("Delete")" onclick="" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}else{
+    <p><center>You are not authorized to access this page</center></p>
+}
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            var addEngineerDIVElement = $('#addEngineerDIV');
+            $('button[data-bs-toggle="ajax-modal"]').click(function (event) {
+                var url = $(this).data('url');
+                $.get(url).done(function (data) {
+                    addEngineerDIVElement.html(data);
+                    addEngineerDIVElement.find('.modal').modal('show');
+                })
+            })
+
+            //Save Add Makeform data
+            addEngineerDIVElement.on('click', '[data-bs-save="modal"]', function (event) {
+                var form = $(this).parents('.modal').find('form');
+                var actionUrl = form.attr("action");
+                var sendData = form.serialize();
+                $.post(actionUrl, sendData).done(function (data) {
+                    addEngineerDIVElement.find('.modal').modal('hide');
+                    location.reload(true);
+                })
+            })
+        })
+
+        var message = "@ViewBag.SuccessMessage";
+        if (message == "Successfully") {
+            console.log('Successfully');
+            $(document).ready(function () {
+                $('#successModalEngineer').modal('show');
+            });
+            //alert(message);
+        } else if (message == "Failed") {
+            console.log('Failed');
+            $(document).ready(function () {
+                $('#failedModalEngineer').modal('show');
+            });
+            //alert(message);
+        }
+    </script>
+}

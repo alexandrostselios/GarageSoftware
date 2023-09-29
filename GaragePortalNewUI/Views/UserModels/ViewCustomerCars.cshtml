@@ -1,0 +1,209 @@
+﻿@model IEnumerable<GaragePortalNewUI.Models.UserModels>
+@inject LanguageService Resource
+@{
+    ViewData["Title"] = @Resource.GetKey("List_Of_User_Cars");
+}
+
+
+@if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Admin.ToString())
+{
+    ViewData["Title"] = @Resource.GetKey("List_Of_User_Cars");
+    <p>
+        <div id="AddCustomerCarPartial"></div>
+        <div id="editCarDetailsDIV"></div>
+        <br>
+        <button class="btn btn-sm btn-primary m-2" id="btnAddCustomerCar" asp-route-CustomerUserID="@ViewBag.CustomerUserID" data-bs-toggle="ajax-modal" data-bs-target="#AddCustomerCar" data-url="@Url.Action("CreateCustomerCarPartial")">@Resource.GetKey("Add_New_Car")</button>
+    </p>
+    <div>
+        <a class="af" asp-controller="PdfCreator" asp-action="CreatePDF" asp-route-entityType="4">@Resource.GetKey("Download_User_Cars")</a>
+    </div>
+
+    <table class="table" >
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ID)
+                </th>
+                <th>
+                    @Resource.GetKey("Model_Manufacturer")
+                </th>
+                <th>
+                    @Resource.GetKey("Model")
+                </th>
+                <th>
+                    @Resource.GetKey("Model_Year")
+                </th>
+                <th>
+                    @Resource.GetKey("Color")
+                </th>
+                <th>
+                    @Resource.GetKey("Licence_Plate")
+                </th>
+                <th>
+                    @Resource.GetKey("Kilometer")
+                </th>
+                <th>
+                    @Resource.GetKey("Car_Image")
+                </th>
+                <th>
+                    @Resource.GetKey("Engine_Type")
+                </th>
+                <th></th>
+                <th colspan="3">@Resource.GetKey("Total_Cars"): @Model.Count()</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ManufacturerName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ModelName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ModelYear)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Color)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LicencePlate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Kilometer)
+                    </td>
+                     <td>
+                        @if (!(item.CarImage is null))
+                        {
+                            <img src="data:image/jpg;base64, @Convert.ToBase64String(item.CarImage)" width="50" height="50" />
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EngineType)
+                    </td>
+@*                    <td>
+                        <a class="af" asp-controller="UserModels" asp-action="EditCarDetails" asp-route-id="@item.ID" asp-route-flag="1">@Resource.GetKey("Edit_Car_Details")</a>
+                    </td>*@
+                    <td>
+                        <a class="af" asp-controller="UserModels" asp-action="ViewCarDetails" asp-route-id="@item.ID">@Resource.GetKey("View_Car_History")</a>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-primary m-2" id="btnEditCarDetails" data-bs-toggle="ajax-modal" data-bs-target="#EditCarDetails" data-url="@Url.Action("EditCarDetailsPartial",new {id = @item.ID})">@Resource.GetKey("Edit_Car_Details")</button>
+                    </td>
+                    <td>
+                        <input type="button" class="btn btn-sm btn-danger m-2" value="@Resource.GetKey("Delete")" onclick="location.href='@Url.Action("DeleteUserModel", "UserModels",new {id = @item.ID})'" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <p></p>
+}
+else if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.User.ToString()){
+    ViewData["Title"] = @Resource.GetKey("List_Of_MyCars");
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ID)
+                </th>
+                <th>
+                    @Resource.GetKey("Model_Manufacturer")
+                </th>
+                <th>
+                    @Resource.GetKey("Model")
+                </th>
+                <th>
+                    @Resource.GetKey("Model_Year")
+                </th>
+                <th>
+                    @Resource.GetKey("Color")
+                </th>
+                <th>
+                    @Resource.GetKey("Licence_Plate")
+                </th>
+                <th>
+                    @Resource.GetKey("Kilometer")
+                </th>
+                <th>
+                    @Resource.GetKey("Car_Image")
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ManufacturerName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ModelName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ModelYear)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Color)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LicencePlate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Kilometer)
+                    </td>
+                    <td>
+                        @if (!(item.CarImage is null))
+                        {
+                            <img src="data:image/jpg;base64, @Convert.ToBase64String(item.CarImage)" width="50" height="50" />
+                        }
+                    </td>
+                    <td>
+                        <a class="af" asp-controller="UserModels" asp-action="ViewCarDetails" asp-route-id="@item.ID">@Resource.GetKey("View_Car_History")</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@section scripts{
+
+    <script type="text/javascript">
+
+        //Show Add Make Modal
+        $(function () {
+            var AddCustomerCarElement = $('#AddCustomerCarPartial');
+
+            $('button[data-bs-toggle="ajax-modal"]').click(function (event) {
+                var url = $(this).data('url');
+                $.get(url).done(function (data) {
+                    AddCustomerCarElement.html(data);
+                    AddCustomerCarElement.find('.modal').modal('show');
+                })
+            })
+
+            //Save Add Makeform data
+            AddCustomerCarElement.on('click', '[data-bs-save="modal"]', function (event) {
+
+                var form = $(this).parents('.modal').find('form');
+                var actionUrl = form.attr("action");
+                var sendData = form.serialize();
+                $.post(actionUrl, sendData).done(function (data) {
+                    AddCustomerCarElement.find('.modal').modal('hide');
+                    location.reload(true);
+                })
+            })
+
+        })
+    </script>
+}

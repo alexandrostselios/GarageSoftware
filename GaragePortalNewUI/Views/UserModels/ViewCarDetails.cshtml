@@ -1,0 +1,144 @@
+﻿@model IEnumerable<GaragePortalNewUI.Models.ServiceHistory>
+@inject LanguageService Resource
+@{
+    ViewData["Title"] = @Resource.GetKey("View_Car_Details");
+}
+
+@if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Admin.ToString())
+{
+    <p>
+        <form asp-action="CreateUserModelServiceHistory" asp-route-UserModelsID="@ViewBag.CarDetailsID">
+            <input type="submit" value="@Resource.GetKey("Add_Service_History")" class="btn btn-primary" />
+        </form>
+    </p>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    ID
+                </th>
+                <th>
+                    Service Date
+                </th>
+                <th>
+                   Engineer
+                </th>
+                <th>
+                    Kilometer at Service
+                </th>
+                <th>
+                    Starting Price of Service
+                </th>
+                <th>
+                    Final Price of Service
+                </th>
+                <th>
+                    Service History
+                </th>
+                <th>
+                    Car Image
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ServiceDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Surname) @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ServiceKilometer)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StartPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FinalPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @if (item.CarImage != null)
+                        {
+                            <img src="data:image/jpg;base64, @Convert.ToBase64String(item.CarImage)" width="50" height="50" />
+                        }
+                    </td>
+                    <td>
+                        <a class="af" asp-controller="UserModels" asp-action="DeleteUserModelServiceHistory" asp-route-id="@item.ID">@Resource.GetKey("Delete")</a>
+                    </td>  
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.User.ToString()){
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Service Date
+                    </th>
+                    <th>
+                        Engineer
+                    </th>
+                    <th>
+                        Kilometer at Service
+                    </th>
+                    <th>
+                        Starting Price of Service
+                    </th>
+                    <th>
+                        Final Price of Service
+                    </th>
+                    <th>
+                        Service History
+                    </th>
+                    <th>
+                        Car Image
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ServiceDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Surname) @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ServiceKilometer)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StartPrice)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FinalPrice)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @if (item.CarImage != null)
+                            {
+                                <img src="data:image/jpg;base64, @Convert.ToBase64String(item.CarImage)" width="50" height="50" />
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+}

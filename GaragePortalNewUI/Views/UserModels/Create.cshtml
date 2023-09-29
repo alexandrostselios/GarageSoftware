@@ -1,0 +1,86 @@
+﻿@model GaragePortalNewUI.Models.UserModelsDTO
+
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>UserModels</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+@*            <div class="form-group">
+                <label asp-for="UserID" class="control-label"></label>
+                <input asp-for="UserID" class="form-control" />
+                <span asp-validation-for="UserID" class="text-danger"></span>
+            </div>*@
+            <input type="hidden" asp-for="UserID" value="@ViewBag.CustomerUserID" />
+            <div class="form-group">
+                <label asp-for="ModelManufacturer" class="control-label"></label>
+                <br />
+                <select id="ShowManufacturers" onchange="getManufacturersForModel(getSelectedManufacturer(),@ViewBag.Culture)" asp-for="ModelManufacturer" class="form-control">
+                    <option value='0'>--Select Manufacturer--</option>
+                </select>
+                <input asp-for"ModelManufacturer" type="hidden" />
+            </div>
+             <div class="form-group">
+                <label asp-for="Model" class="control-label"></label>
+                <br />
+                <select id="ShowModels" onchange="getYearsForModel(getSelectedModel(),@ViewBag.Culture)" asp-for="Model" class="form-control">
+                    <option value='0'>--Select Model--</option>
+                </select>
+            </div>
+            <div>
+                <label asp-for="ModelYear" class="control-label"></label>
+                <br />
+                <select id="ShowYears" asp-for="ModelYear" class="form-control">
+                    <option value='0'>--Select Year--</option>
+                </select>
+                <input asp-for"ModelYear" type="hidden" />
+            </div>
+            <div class="form-group">
+                <label asp-for="LicencePlate" class="control-label"></label>
+                <input asp-for="LicencePlate" class="form-control" />
+                <span asp-validation-for="LicencePlate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VIN" class="control-label"></label>
+                <input asp-for="VIN" class="form-control" />
+                <span asp-validation-for="VIN" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Kilometer" class="control-label"></label>
+                <input asp-for="Kilometer" class="form-control" />
+                <span asp-validation-for="Kilometer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Color" class="control-label"></label>
+                <input asp-for="Color" class="form-control" />
+                <span asp-validation-for="Color" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        <script src="~/js/JavaScript.js" defer></script>
+
+        <script type="text/javascript">
+            window.onload = function what() {
+                document.getElementById('ShowManufacturers').innerHTML = getManufacturers();
+            };
+        </script>
+    }
+}
