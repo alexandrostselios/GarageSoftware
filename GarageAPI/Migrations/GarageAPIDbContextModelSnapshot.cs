@@ -34,6 +34,9 @@ namespace GarageAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long>("GarageID")
+                        .HasColumnType("bigint");
+
                     b.HasKey("ID");
 
                     b.ToTable("CarEngineType");
@@ -46,6 +49,9 @@ namespace GarageAPI.Migrations
                         .HasColumnType("bigint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
+
+                    b.Property<long>("GarageID")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("ManufacturerName")
                         .IsRequired()
@@ -73,6 +79,9 @@ namespace GarageAPI.Migrations
                     b.Property<long>("CarModelYearID")
                         .HasColumnType("bigint");
 
+                    b.Property<long>("GarageID")
+                        .HasColumnType("bigint");
+
                     b.HasKey("ID");
 
                     b.HasIndex("CarManufacturerID");
@@ -96,6 +105,9 @@ namespace GarageAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long>("GarageID")
+                        .HasColumnType("bigint");
+
                     b.HasKey("ID");
 
                     b.ToTable("CarModelYear");
@@ -108,6 +120,9 @@ namespace GarageAPI.Migrations
                         .HasColumnType("bigint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
+
+                    b.Property<long>("GarageID")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("ModelName")
                         .IsRequired()
@@ -126,6 +141,9 @@ namespace GarageAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
 
+                    b.Property<long>("GarageID")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime>("InsDate")
                         .HasColumnType("datetime2");
 
@@ -133,10 +151,10 @@ namespace GarageAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Receiver")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<long>("ReceiverID")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("SenderID")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Subject")
@@ -156,6 +174,9 @@ namespace GarageAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
 
+                    b.Property<long>("GarageID")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Speciality")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -163,6 +184,26 @@ namespace GarageAPI.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("EngineerSpeciality");
+                });
+
+            modelBuilder.Entity("GarageAPI.Models.GarageDetails", b =>
+                {
+                    b.Property<long>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("isActive")
+                        .HasColumnType("bit");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("GarageDetails");
                 });
 
             modelBuilder.Entity("GarageAPI.Models.Service.ServiceHistory", b =>
@@ -191,6 +232,9 @@ namespace GarageAPI.Migrations
 
                     b.Property<DateTime?>("FinishingDate")
                         .HasColumnType("datetime");
+
+                    b.Property<long>("GarageID")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("ServiceDate")
                         .HasColumnType("datetime");
@@ -454,6 +498,9 @@ namespace GarageAPI.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<long>("EngineTypeID")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("GarageID")
                         .HasColumnType("bigint");
 
                     b.Property<long?>("Kilometer")

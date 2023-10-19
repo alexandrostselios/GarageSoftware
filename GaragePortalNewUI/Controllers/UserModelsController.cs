@@ -15,7 +15,6 @@ namespace GaragePortalNewUI.Controllers
     public class UserModelsController : Controller
     {
         readonly Uri baseAddress = new Uri(@Resources.SettingsResources.Uri);
-        //readonly Uri baseAddress = new Uri(@Resources.SettingsResources.UriProduction);
         readonly HttpClient client;
 
         public UserModelsController()

@@ -15,9 +15,7 @@ namespace GaragePortalNewUI.Models
 {
     public class ServiceItemsController : Controller
     {
-        //Uri baseAddress = new Uri("https://garageapi20230516165317.azurewebsites.net/api");
         readonly Uri baseAddress = new Uri(@Resources.SettingsResources.Uri);
-        //readonly Uri baseAddress = new Uri(@Resources.SettingsResources.UriProduction);
         readonly HttpClient client;
 
         public ServiceItemsController()
@@ -29,9 +27,16 @@ namespace GaragePortalNewUI.Models
         public ActionResult Index()
         {
             GetSessionProperties();
+            IEnumerable<ServiceItems> serviceItems = GetServiceItems();
+            return View(serviceItems); 
+        }
+
+        public IEnumerable<ServiceItems> GetServiceItems()
+        {
             IEnumerable<ServiceItems> serviceItems = null;
             var responseTask = client.GetAsync(client.BaseAddress);
-            using (client){
+            using (client)
+            {
                 responseTask = client.GetAsync(client.BaseAddress + "/GetServiceItems");
                 responseTask.Wait();
                 var result = responseTask.Result;
@@ -47,9 +52,14 @@ namespace GaragePortalNewUI.Models
                     ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
                 }
             }
-            return View(serviceItems);
+            return serviceItems;
         }
 
+        public IActionResult EditServiceItemPartial(long id)
+        {
+            GetSessionProperties();
+            return PartialView("_EditServiceItemPartial");
+        }
 
         private void SetSessionProperties(Users dbUser)
         {

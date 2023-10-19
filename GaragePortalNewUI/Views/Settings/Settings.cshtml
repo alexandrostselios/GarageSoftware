@@ -1,0 +1,66 @@
+﻿@model IEnumerable<GaragePortalNewUI.Models.ServiceItems>
+@inject LanguageService Resource
+
+@{
+    ViewData["Title"] = @Resource.GetKey("Settings");
+}
+
+@if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Admin.ToString())
+{
+    <select id="myDropDown">
+        <option value="0" selected disabled>--@Resource.GetKey("Please_Select")--</option>
+        <option value="1">@Resource.GetKey("Service_Items")</option>
+        <option value="2">@Resource.GetKey("System_Settings")</option>
+        <option value="3">@Resource.GetKey("Utilities")</option>
+    </select>
+
+    <div id="partialPlaceHolder"></div>
+    <div id="EditServiceItem"></div>
+}
+else
+{
+    <p><center>You are not authorized to access this page</center></p>
+}
+
+
+@section scripts{
+    <script type="text/javascript">
+        $('#myDropDown').change(function () {
+            /* Get the selected value of dropdownlist */
+            var selectedID = $(this).val();
+
+            console.log("Inside " + selectedID)
+            $.get("/Settings/SettingsPartialView/" + selectedID, function (data) {
+                $('#partialPlaceHolder').html(data);
+                $('#partialPlaceHolder').fadeIn('slow');
+            });
+        });
+
+        console.log(2);
+        $(function () {
+            var addServiceItemDIVElement = $('#EditServiceItem');
+            console.log(3);
+            $('button[data-bs-toggle="ajax-modal"]').click(function (event) {
+                console.log(4);
+                var url = $(this).data('url');
+                $.get(url).done(function (data) {
+                    console.log(5);
+                    addServiceItemDIVElement.html(data);
+                    addServiceItemDIVElement.find('.modal').modal('show');
+                })
+            })
+
+            //Save Add Makeform data
+            addServiceItemDIVElement.on('click', '[data-bs-save="modal"]', function (event) {
+
+                var form = $(this).parents('.modal').find('form');
+                var actionUrl = form.attr("action");
+                var sendData = form.serialize();
+                $.post(actionUrl, sendData).done(function (data) {
+                    addServiceItemDIVElement.find('.modal').modal('hide');
+                    location.reload(true);
+                })
+            })
+        })
+    </script>
+}

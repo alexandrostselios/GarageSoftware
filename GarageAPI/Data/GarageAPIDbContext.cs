@@ -42,6 +42,7 @@ namespace GarageAPI.Data
         public DbSet<Settings> Settings { get; set; }
         public DbSet<Email> Email { get; set; }
         public DbSet<ServiceItems> ServiceItems { get; set; }
+        public DbSet<GarageDetails> GarageDetails { get; set; }
 
         private void SetCarEngineTypeData(ModelBuilder builder)
         {

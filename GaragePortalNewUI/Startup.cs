@@ -69,6 +69,7 @@ namespace GaragePortalNewUI
                 return true;
             };
             services.AddControllersWithViews();
+            services.AddMvc().AddControllersAsServices();
 
 
 
@@ -108,6 +109,7 @@ namespace GaragePortalNewUI
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(1440);
+                options.Cookie.IsEssential = true;
             });
         }
 

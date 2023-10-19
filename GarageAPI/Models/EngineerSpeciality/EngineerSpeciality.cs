@@ -11,6 +11,9 @@ namespace GarageAPI.Models.EngineerSpeciality
         public long ID { get; set; }
         public string Speciality { get; set; }
 
+        [ForeignKey("GarageDetails")]
+        public long GarageID { get; set; }
+
         public static implicit operator string?(EngineerSpeciality? v)
         {
             throw new NotImplementedException();

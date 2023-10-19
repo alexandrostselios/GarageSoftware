@@ -38,6 +38,7 @@ namespace GaragePortalNewUI.Controllers
             {
                 HttpContext.Session.SetString("Language", "Ελληνικά");
                 HttpContext.Session.SetString("Culture", "el-GR");
+                HttpContext.Session.SetString("GarageID", "1");
             }
 
             /* REMOVE IN PRODUCTION */
@@ -132,6 +133,8 @@ namespace GaragePortalNewUI.Controllers
             var lang = settings.FirstOrDefault(x => x.Description == "Language").Value;
             HttpContext.Session.SetString("Culture", lang );
             HttpContext.Session.SetString("Language", (HttpContext.Session.GetString("Culture") == "el-GR") ? "Ελληνικά":"English");
+
+            HttpContext.Session.SetString("GarageID", "1");
         }
 
         /* REMOVE IN PRODUCTION */

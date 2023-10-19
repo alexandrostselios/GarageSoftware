@@ -17,6 +17,7 @@ namespace GarageAPI.Models
 
         public string Value { get; set; }
 
+        [ForeignKey("GarageDetails")]
         public long GarageID { get; set; }
 
         [ForeignKey("Users")]

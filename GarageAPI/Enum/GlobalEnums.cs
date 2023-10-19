@@ -36,7 +36,8 @@
         Success = 200,
         NoUserFound = 801,
         WrongPassword = 802,
-        BlockedUser = 803
+        BlockedUser = 803,
+        FailedEmail = 804
     }
 
     public enum FileExtension

@@ -11,8 +11,9 @@ namespace GarageAPI.Models.Service
 
         public string Description { get; set; }
 
-        public decimal? Price { get; set; }  
+        public decimal? Price { get; set; }
 
+        [ForeignKey("GarageDetails")]
         public long GarageID { get; set; }
     }
 }

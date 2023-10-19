@@ -11,5 +11,8 @@ namespace GarageAPI.Models.CarManufacturers
         public long ID { get; set; }
 
         public string ManufacturerName { get; set; }
+
+        [ForeignKey("GarageDetails")]
+        public long GarageID { get; set; }
     }
 }

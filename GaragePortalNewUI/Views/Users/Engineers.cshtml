@@ -126,7 +126,7 @@
                         <a class="af" asp-controller="Email" asp-action="SendEmailToUser" asp-route-id="@item.ID" asp-route-userType="3">@Resource.GetKey("Send_Email")</a>
                     </td>
                     <td>
-                        <button class="btn btn-sm btn-primary m-2" id="btnEditEngineer" data-bs-toggle="ajax-modal" data-bs-target="#EditEngineer" data-url="@Url.Action("EditEngineerPartial",new{id = @item.ID})">@Resource.GetKey("Edit")</button>
+                        <button class="btn btn-sm btn-primary m-2" id="btnEditEngineer" data-bs-toggle="ajax-modal" data-bs-target="#EditEngineer" data-url="@Url.Action("EditEngineerPartial",new{id = @item.ID, garageID = @item.GarageID})">@Resource.GetKey("Edit")</button>
                     </td>
                     <td>
                         <input type="button" class="btn btn-sm btn-danger m-2" value="@Resource.GetKey("Delete")" onclick="" />

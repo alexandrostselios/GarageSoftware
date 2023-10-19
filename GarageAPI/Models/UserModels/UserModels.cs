@@ -28,5 +28,7 @@ namespace GarageAPI.Models.UserModels
         public long? Kilometer { get; set; }
 
         public byte[]? CarImage { get; set; }
+
+        public long GarageID { get; set; }
     }
 }

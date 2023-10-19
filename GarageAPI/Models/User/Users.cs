@@ -16,6 +16,7 @@ namespace GarageAPI.Models.User
 
         public string Password { get; set; }
 
+        [ForeignKey("GarageDetails")]
         public long GarageID { get; set; }
 
         public UserType UserType { get; set; }

@@ -10,14 +10,14 @@ using Newtonsoft.Json;
 using System.Net.Http.Json;
 using System.IO;
 using Microsoft.Extensions.Localization;
+using static System.Collections.Specialized.BitVector32;
+using System.Net;
 
 namespace GaragePortalNewUI.Models
 {
     public class UsersController : Controller
     {
-        //Uri baseAddress = new Uri("https://garageapi20230516165317.azurewebsites.net/api");
         readonly Uri baseAddress = new Uri(@Resources.SettingsResources.Uri);
-        //readonly Uri baseAddress = new Uri(@Resources.SettingsResources.UriProduction);
         readonly HttpClient client;
 
         public UsersController()
@@ -26,7 +26,7 @@ namespace GaragePortalNewUI.Models
             client.BaseAddress = baseAddress;
         }
 
-        public ActionResult Customers(string searchBy, string searchValue)
+        public ActionResult Customers(string searchBy, string searchValue,string garageID)
         {
             GetSessionProperties();
             IEnumerable<Users> customers = null;
@@ -34,7 +34,7 @@ namespace GaragePortalNewUI.Models
             if (string.IsNullOrEmpty(searchValue))
             {
                 using (client){
-                    responseTask = client.GetAsync(client.BaseAddress + "/GetCustomers");
+                    responseTask = client.GetAsync(client.BaseAddress + "/GetCustomers" + "/" + ViewBag.GarageID);
                     responseTask.Wait();
                     var result = responseTask.Result;
                     if (result.IsSuccessStatusCode)
@@ -86,7 +86,7 @@ namespace GaragePortalNewUI.Models
             return View(customers);
         }
 
-        public ActionResult Engineers(string searchBy, string searchValue)
+        public ActionResult Engineers(string searchBy, string searchValue, string garageID)
         {
             GetSessionProperties();
             if (HttpContext.Session.GetString("SuccessMessage")!="null")
@@ -99,7 +99,7 @@ namespace GaragePortalNewUI.Models
             {
                 using (client)
                 {
-                    responseTask = client.GetAsync(client.BaseAddress + "/GetEngineers");
+                    responseTask = client.GetAsync(client.BaseAddress + "/GetEngineers" + "/" + (long)Convert.ToDouble(garageID));
                     responseTask.Wait();
                     var result = responseTask.Result;
                     if (result.IsSuccessStatusCode)
@@ -353,7 +353,6 @@ namespace GaragePortalNewUI.Models
             return View(createUser);
         }
 
-
         public IActionResult CreateEngineer()
         {
             GetSessionProperties();
@@ -467,11 +466,11 @@ namespace GaragePortalNewUI.Models
             }
         }
 
-        public IActionResult EditCustomerPartial(long id)
+        public IActionResult EditCustomerPartial(long id, long garageID)
         {
             GetSessionProperties();
             Users editCustomer;
-            var responseTask = client.GetAsync(client.BaseAddress + "/GetCustomerByID/" + id);
+            var responseTask = client.GetAsync(client.BaseAddress + "/GetCustomerByID/" + id + "/" + garageID);
             responseTask.Wait();
             var result = responseTask.Result;
             var readTask = result.Content.ReadAsAsync<Users>();
@@ -480,11 +479,11 @@ namespace GaragePortalNewUI.Models
             return PartialView("_EditCustomerPartialView", editCustomer);
         }
 
-        public IActionResult EditEngineerPartial(long id)
+        public IActionResult EditEngineerPartial(long id, long garageID)
         {
             GetSessionProperties();
             Users editEngineer;
-            var responseTask = client.GetAsync(client.BaseAddress + "/GetEngineerByID/" + id);
+            var responseTask = client.GetAsync(client.BaseAddress + "/GetEngineerByID/" + id + "/" + garageID);
             responseTask.Wait();
             var result = responseTask.Result;
             var readTask = result.Content.ReadAsAsync<Users>();
@@ -563,6 +562,7 @@ namespace GaragePortalNewUI.Models
             HttpContext.Session.SetString("Name", dbUser.Name);
             HttpContext.Session.SetString("Surname", dbUser.Surname);
             HttpContext.Session.SetString("SuccessMessage", "null");
+            HttpContext.Session.SetString("GarageID", dbUser.GarageID.ToString());
         }
 
         private void GetSessionProperties()
@@ -581,6 +581,7 @@ namespace GaragePortalNewUI.Models
                 ViewBag.Language = HttpContext.Session.GetString("Language");
             }
             ViewBag.SuccessMessage = HttpContext.Session.GetString("SuccessMessage");
+            ViewBag.GarageID = HttpContext.Session.GetString("GarageID");
         }
     }
 }

@@ -1,0 +1,71 @@
+﻿@model IEnumerable<GaragePortalNewUI.Models.ServiceItems>
+@inject LanguageService Resource
+
+<div id="EditServiceItem"></div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ID)
+            </th>
+            <th>
+                Description
+            </th>
+            <th colspan="2">Total Service Items: @Model.Count()</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    <button class="btn btn-sm btn-primary m-2" id="btnEditServiceItem" data-bs-toggle="ajax-modal" data-bs-target="#EditServiceItem" data-url="@Url.Action("EditServiceItemPartial","ServiceItems",new{id = @item.ID})">@Resource.GetKey("Edit")</button>
+                </td>
+                <td>
+                    <a class="af" asp-controller="ServiceItems" asp-action="EditServiceItemPartial" asp-route-id="@item.ID" >@Resource.GetKey("Edit") 11</a>
+                </td>
+@*                <td>
+                    <button class="btn btn-sm btn-danger m-2" id="btnEditCustomer" data-bs-toggle="ajax-modal" data-bs-target="#EditCustomer" data-url="@Url.Action("EditCustomerPartial",new{id = @item.ID})">@Resource.GetKey("Delete")</button>
+                </td>*@
+                <td colspan ="3"></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@*@section scripts{
+    <script type="text/javascript">
+        console.log(11);
+        $(function () {
+            var addServiceItemDIVElement = $('#EditServiceItem');
+            console.log(33);
+            $('button[data-bs-toggle="ajax-modal"]').click(function (event) {
+                console.log(44);
+                var url = $(this).data('url');
+                $.get(url).done(function (data) {
+                    console.log(55);
+                    addServiceItemDIVElement.html(data);
+                    addServiceItemDIVElement.find('.modal').modal('show');
+                })
+            })
+
+            //Save Add Makeform data
+            addServiceItemDIVElement.on('click', '[data-bs-save="modal"]', function (event) {
+
+                var form = $(this).parents('.modal').find('form');
+                var actionUrl = form.attr("action");
+                var sendData = form.serialize();
+                $.post(actionUrl, sendData).done(function (data) {
+                    addServiceItemDIVElement.find('.modal').modal('hide');
+                    location.reload(true);
+                })
+            })
+        })
+    </script>
+}*@

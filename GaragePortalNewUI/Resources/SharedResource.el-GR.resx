@@ -297,6 +297,14 @@
     <value>Όνομα</value>
     <comment>Name</comment>
   </data>
+  <data name="Password" xml:space="preserve">
+    <value>Κωδικός Πρόσβασης</value>
+    <comment>Password</comment>
+  </data>
+  <data name="Please_Select" xml:space="preserve">
+    <value>Παρακαλώ Επιλέξτε</value>
+    <comment>Please_Select</comment>
+  </data>
   <data name="Please_try_again_later." xml:space="preserve">
     <value>Παρακαλώ προσπαθήστε αργότερα</value>
     <comment>Please_try_again_later.</comment>
@@ -349,6 +357,10 @@
     <value>Αποστολή Email</value>
     <comment>Send_Email</comment>
   </data>
+  <data name="Service_Items" xml:space="preserve">
+    <value>Εργασίες Service</value>
+    <comment>Service_Items</comment>
+  </data>
   <data name="Settings" xml:space="preserve">
     <value>Ρυθμίσεις</value>
     <comment>Settings</comment>
@@ -360,6 +372,10 @@
   <data name="Surname" xml:space="preserve">
     <value>Επώνυμο</value>
     <comment>Surname</comment>
+  </data>
+  <data name="System_Settings" xml:space="preserve">
+    <value>Ρυθμίσεις Συστήματος</value>
+    <comment>System_Settings</comment>
   </data>
   <data name="Total_Cars" xml:space="preserve">
     <value>Σύνολο Οχημάτων</value>
@@ -380,6 +396,10 @@
   <data name="User_Photo" xml:space="preserve">
     <value>Φωτογραφία</value>
     <comment>User_Photo</comment>
+  </data>
+  <data name="Utilities" xml:space="preserve">
+    <value>Εργαλεία</value>
+    <comment>Utilities</comment>
   </data>
   <data name="View_Cars" xml:space="preserve">
     <value>Προβολή Οχημάτων</value>

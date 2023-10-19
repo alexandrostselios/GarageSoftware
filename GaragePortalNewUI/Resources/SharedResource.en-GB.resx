@@ -297,6 +297,14 @@
     <value>Name</value>
     <comment>Name</comment>
   </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+    <comment>Password</comment>
+  </data>
+  <data name="Please_Select" xml:space="preserve">
+    <value>Please Select</value>
+    <comment>Please_Select</comment>
+  </data>
   <data name="Please_try_again_later." xml:space="preserve">
     <value>Please try again later.</value>
     <comment>Please_try_again_later.</comment>
@@ -349,6 +357,10 @@
     <value>Send Email</value>
     <comment>Send_Email</comment>
   </data>
+  <data name="Service_Items" xml:space="preserve">
+    <value>Service Items</value>
+    <comment>Service_Items</comment>
+  </data>
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
     <comment>Settings</comment>
@@ -360,6 +372,10 @@
   <data name="Surname" xml:space="preserve">
     <value>Surname</value>
     <comment>Surname</comment>
+  </data>
+  <data name="System_Settings" xml:space="preserve">
+    <value>System Settings</value>
+    <comment>System_Settings</comment>
   </data>
   <data name="Total_Cars" xml:space="preserve">
     <value>Total Cars</value>
@@ -380,6 +396,10 @@
   <data name="User_Photo" xml:space="preserve">
     <value>Photo</value>
     <comment>User_Photo</comment>
+  </data>
+  <data name="Utilities" xml:space="preserve">
+    <value>Utilities</value>
+    <comment>Utilities</comment>
   </data>
   <data name="View_Cars" xml:space="preserve">
     <value>View Cars</value>

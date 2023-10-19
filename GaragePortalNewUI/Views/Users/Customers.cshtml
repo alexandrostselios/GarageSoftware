@@ -128,10 +128,10 @@
                         <a class="af" asp-controller="UserModels" asp-action="ViewCustomerCars" asp-route-id="@item.ID">@Resource.GetKey("View_Cars")</a>
                     </td>
                     <td>
-                        <a class="af" asp-controller="Email" asp-action="SendEmailToUser" asp-route-id="@item.ID" asp-route-userType="2">@Resource.GetKey("Send_Email")</a>
+                        <a class="af" asp-controller="Email" asp-action="SendEmailToUser" asp-route-id="@item.ID" asp-route-email="@item.Email" asp-route-userType="2">@Resource.GetKey("Send_Email")</a>
                     </td>
                     <td>
-                        <button class="btn btn-sm btn-primary m-2" id="btnEditCustomer" data-bs-toggle="ajax-modal" data-bs-target="#EditCustomer" data-url="@Url.Action("EditCustomerPartial",new{id = @item.ID})">@Resource.GetKey("Edit")</button>
+                        <button class="btn btn-sm btn-primary m-2" id="btnEditCustomer" data-bs-toggle="ajax-modal" data-bs-target="#EditCustomer" data-url="@Url.Action("EditCustomerPartial",new{id = @item.ID, garageID = @item.GarageID})">@Resource.GetKey("Edit")</button>
                     </td>
                     <td></td>
                 </tr>

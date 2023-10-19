@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
+    <link href="/favicon.png" rel="icon" type="image/x-icon" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -14,9 +15,9 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 ">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Alex Garage</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <link href="/favicon.png" rel="icon" type="image/x-icon" />
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="/favicon.png" alt="Girl in a jacket" width="25" height="25">Alex Garage</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
@@ -43,14 +44,14 @@
                             {
                                 case "Admin":
                                     <li class="nav-item">
-                                        <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="Customers"><i class="fa fa-users" aria-hidden="true"></i> @Resource.GetKey("Customers")</a>
+                                        <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="Customers" asp-route-garageID="@ViewBag.GarageID"><i class="fa fa-users" aria-hidden="true"></i> @Resource.GetKey("Customers")</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="Engineers"><i class="fa fa-wrench" aria-hidden="true"></i> @Resource.GetKey("Engineers")</a>
+                                        <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="Engineers" asp-route-garageID="@ViewBag.GarageID"><i class="fa fa-wrench" aria-hidden="true"></i> @Resource.GetKey("Engineers")</a>
                                     </li>
-                                    <li class="nav-item">
+@*                                    <li class="nav-item">
                                         <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="Engineers"><i class="fa fa-car" aria-hidden="true"></i> Service</a>
-                                    </li>
+                                    </li>*@
                                 break;
                                 case "User":
                                     <li class="nav-item">
@@ -74,7 +75,8 @@
                             @switch (@ViewBag.UserType)
                             {
                                 case "Admin":
-                                    <li class="nav-item dropdown">
+                                    <a class="nav-link" asp-area="Settings" asp-controller="Settings" asp-action="Settings"><i class="fa fa-cogs" aria-hidden="true"></i> @Resource.GetKey("Settings")</a>
+@*                                    <li class="nav-item dropdown">
                                         <div class="dropdown">
                                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <i class="fa fa-cogs" aria-hidden="true"></i> @Resource.GetKey("Settings")
@@ -83,7 +85,7 @@
                                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                             <a class="nav-link" asp-area="ServiceItems" asp-controller="ServiceItems" asp-action="Index"><i class="fa fa-briefcase" aria-hidden="true"></i> Service Items</a>
                                         </div>
-                                    </li>
+                                    </li>*@
                                 break;
                             }
                             <li>

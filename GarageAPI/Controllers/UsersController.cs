@@ -11,6 +11,7 @@ using GarageAPI.Enum;
 using GarageAPI.Models.User;
 using NuGet.Protocol.Plugins;
 using GarageAPI.Models;
+using System.Xml;
 
 namespace GarageAPI.Controllers
 {
@@ -27,24 +28,24 @@ namespace GarageAPI.Controllers
         }
 
         [HttpGet]
-        [Route("api/GetUsersExist/{id:long}")]
+        [Route("api/GetUsersExist/{id:long}/{garageID:long}")]
         public async Task<IActionResult> GetUsersExist([FromRoute] long id)
         {
             return Ok(dbContext.Users.Any(e => e.ID == id));
         }
 
         [HttpGet]
-        [Route("api/GetCustomers")]
-        public async Task<IActionResult> GetCustomers()
+        [Route("api/GetCustomers/{garageID:long}")]
+        public async Task<IActionResult> GetCustomers(long garageID)
         {
-            return Ok(await dbContext.Users.Where(c => c.UserType == Enum.UserType.Customer || c.UserType == Enum.UserType.Admin).ToListAsync());
+            return Ok(await dbContext.Users.Where(c => (c.UserType == Enum.UserType.Customer || c.UserType == Enum.UserType.Admin) && c.GarageID == garageID).ToListAsync());
         }
 
         [HttpGet]
-        [Route("api/GetCustomerByID/{id:long}")]
-        public async Task<IActionResult> GetCustomerByID([FromRoute] long id)
+        [Route("api/GetCustomerByID/{id:long}/{garageID:long}")]
+        public async Task<IActionResult> GetCustomerByID([FromRoute] long id, long garageID)
         {
-            var user = await dbContext.Users.FindAsync(id);
+            var user = await dbContext.Users.FirstOrDefaultAsync(x => x.ID == id && x.GarageID == garageID);
             if (user == null)
             {
                 return NotFound();
@@ -94,10 +95,10 @@ namespace GarageAPI.Controllers
         }
 
         [HttpGet]
-        [Route("api/GetEngineers")]
-        public async Task<IActionResult> GetEngineers()
+        [Route("api/GetEngineers/{garageID:long}")]
+        public async Task<IActionResult> GetEngineers(long garageID)
         {
-            string StoredProc = "exec GetEngineers";
+            string StoredProc = "exec GetEngineers @GarageID = " + garageID;
             List<UsersDTO> carEngineers = await dbContext.UsersDTO.FromSqlRaw(StoredProc).ToListAsync();
 
             if (carEngineers == null)
@@ -108,10 +109,10 @@ namespace GarageAPI.Controllers
         }
 
         [HttpGet]
-        [Route("api/GetEngineerByID/{id:long}")]
-        public async Task<IActionResult> GetEngineerByID([FromRoute] long id)
+        [Route("api/GetEngineerByID/{id:long}/{garageID:long}")]
+        public async Task<IActionResult> GetEngineerByID([FromRoute] long id, long garageID)
         {
-            string StoredProc = "exec GetEngineerByID @EngineerID = " + id;
+            string StoredProc = "exec GetEngineerByID @EngineerID = " + id + ", @GarageID = " + garageID;
             //var engineer = await dbContext.Users.FindAsync(id);
             List<UsersDTO> engineer = await dbContext.UsersDTO.FromSqlRaw(StoredProc).ToListAsync();
             if (engineer == null)
@@ -235,36 +236,16 @@ namespace GarageAPI.Controllers
         }
 
         [HttpPost]
-        [Route("api/SendEmailToUserByID")]
-        public async Task<IActionResult> SendEmailToUserByID(Email email)//, string subject, string message)
-        {
-            var user = await dbContext.Users.FindAsync(email.ReceiverID);
-            if(user!=null)
-            {
-                Email tempEmail = new Email {
-                   ReceiverID = email.ReceiverID,
-                   Receiver = user.Email,
-                   Subject = email.Subject,
-                   Message = email.Message,
-                   InsDate = DateTime.Now
-                };
-                await _emailSender.SendEmailAsync(tempEmail);
-                //await dbContext.Email.AddAsync(tempEmail);
-                //await dbContext.SaveChangesAsync();
-                return Ok(email);
-            }
-            return Ok();
-        }
-
-        [HttpPost]
-        [Route("api/SendEmailToUsers")]
-        public async Task<IActionResult> SendEmailToUsers(Email email)//, string subject, string message)
+        [Route("api/SendEmailToUserByID/")]
+        public async Task<IActionResult> SendEmailToUserByID(Email email)//, string subject, string message)9
         {
             var user = await dbContext.Users.FindAsync(email.ReceiverID);
             if (user != null)
             {
                 Email tempEmail = new Email
                 {
+                    GarageID = user.GarageID,
+                    SenderID = email.SenderID,
                     ReceiverID = email.ReceiverID,
                     Receiver = user.Email,
                     Subject = email.Subject,
@@ -272,10 +253,40 @@ namespace GarageAPI.Controllers
                     InsDate = DateTime.Now
                 };
                 await _emailSender.SendEmailAsync(tempEmail);
-                await dbContext.Email.AddAsync(tempEmail);
-                await dbContext.SaveChangesAsync();
-                return Ok(email);
+
+                return new ContentResult() { Content = "Successfully", StatusCode = (int)ResponseCode.Success };
+                //return Ok(email);
             }
+            return new ContentResult() { Content = "Failed", StatusCode = (int)ResponseCode.FailedEmail };
+            //return Ok();
+        }
+
+        [HttpPost]
+        [Route("api/SendEmailToUsers")]
+        public async Task<IActionResult> SendEmailToUsers(Email email)//, string subject, string message)
+        {
+            List<string> recepients = new List<string>{ "alexandrostselios@gmail.com","atselios@classter.com" };
+            List<Email> emailList = new List<Email>();
+            var user = await dbContext.Users.FindAsync(email.ReceiverID);
+            for (int i = 0; i < recepients.Count; i++)
+            {
+
+                //if (user != null)
+                //{
+
+                Email tempEmail = new Email
+                {
+                    ReceiverID = email.ReceiverID,
+                    Receiver = recepients[i],
+                    Subject = email.Subject,
+                    Message = email.Message,
+                    InsDate = DateTime.Now
+                };
+                emailList.Add(tempEmail);
+                //return Ok(email);
+                //}
+            }
+            await _emailSender.SendEmailToListAsync(emailList);
             return Ok();
         }
 

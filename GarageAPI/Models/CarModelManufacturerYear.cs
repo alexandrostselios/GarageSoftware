@@ -27,5 +27,8 @@ namespace GarageAPI.Models
 
         [NotNull]
         public CarModelYear CarModelYear { get; set; }
+
+        [ForeignKey("GarageDetails")]
+        public long GarageID { get; set; }
     }
  }

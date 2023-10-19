@@ -41,5 +41,8 @@ namespace GarageAPI.Models.Service
 
         [Column(TypeName = "datetime")]
         public DateTime? FinishingDate { get; set; }
+
+        [ForeignKey("GarageDetails")]
+        public long GarageID { get; set; }
     }
 }

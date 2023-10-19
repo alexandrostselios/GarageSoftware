@@ -121,7 +121,7 @@
     <value>https://localhost:7096/api</value>
     <comment>Uri</comment>
   </data>
-  <data name="Uri1" xml:space="preserve">
+  <data name="Uri2" xml:space="preserve">
     <value>http://alefhome.ddns.net:8082/api</value>
     <comment>UriProduction</comment>
   </data>

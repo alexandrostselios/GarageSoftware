@@ -1,22 +1,16 @@
-﻿using GaragePortalNewUI.Enum;
-using GaragePortalNewUI.Models;
+﻿using GaragePortalNewUI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Net.Http;
+using System.Net.Http.Json;
 
 namespace GaragePortalNewUI.Controllers
 {
     public class EmailController : Controller
     {
-
-        //Uri baseAddress = new Uri("https://garageapi20230516165317.azurewebsites.net/api");
         readonly Uri baseAddress = new Uri(@Resources.SettingsResources.Uri);
-        //readonly Uri baseAddress = new Uri(@Resources.SettingsResources.UriProduction);
         readonly HttpClient client;
 
         public EmailController()
@@ -36,7 +30,6 @@ namespace GaragePortalNewUI.Controllers
             HttpContext.Session.SetString("ReceiverUserType", userType.ToString());
             GetSessionProperties();
             return View();
-            //return PartialView("SendEmailToUser");
         }
 
         [HttpPost]
@@ -46,10 +39,16 @@ namespace GaragePortalNewUI.Controllers
             GetSessionProperties();
             if (!(email.Message is null) && ModelState.IsValid)
             {
-                string data = JsonConvert.SerializeObject(email);
-                var contentdata = new StringContent(data);
+                email.SenderID = long.Parse(HttpContext.Session.GetString("ID"));
                 HttpResponseMessage response = client.PostAsJsonAsync(client.BaseAddress + "/SendEmailToUserByID/", email).Result;
-                HttpContext.Session.SetString("SuccessMessage", "Successfully");
+                if ((int)response.StatusCode == 200)
+                {
+                    HttpContext.Session.SetString("SuccessMessage", "Successfully"); 
+                }
+                else // if ((int)response.StatusCode == 804)
+                {
+                    HttpContext.Session.SetString("SuccessMessage", "Failed");
+                }
                 if(HttpContext.Session.GetString("ReceiverUserType") == "2")
                 {
                     return RedirectToAction("Customers", "Users");
@@ -58,7 +57,6 @@ namespace GaragePortalNewUI.Controllers
                 {
                     return RedirectToAction("Engineers", "Users");
                 }
-                
             }
             return View(email);
         }

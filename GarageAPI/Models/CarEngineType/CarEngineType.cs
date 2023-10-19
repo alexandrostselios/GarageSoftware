@@ -12,5 +12,8 @@ namespace GarageAPI.Models.CarEngineTypes
         public long ID { get; set; }
 
         public String EngineType { get; set; }
+
+        [ForeignKey("GarageDetails")]
+        public long GarageID { get; set; }
     }
 }
