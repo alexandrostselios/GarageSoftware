@@ -117,6 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Portal" xml:space="preserve">
+    <value>https://localhost:5000/</value>
+    <comment>PortalUri</comment>
+  </data>
+  <data name="Portal1" xml:space="preserve">
+    <value>http://alefhome.ddns.net:8086</value>
+    <comment>PortalUriProduction</comment>
+  </data>
   <data name="Uri" xml:space="preserve">
     <value>https://localhost:7096/api</value>
     <comment>Uri</comment>

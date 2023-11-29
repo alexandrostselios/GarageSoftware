@@ -12,11 +12,12 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <center><p>@Resource.GetKey("Your_email_has_been_sent_successfully.")</p></center>
-                    <center><button type="button" class="btn btn-primary" data-dismiss="modal">OK</button></center>
+                    <center><button type="button" class="btn btn-primary" data-dismiss="modal" onclick="SetViewBag()">OK</button></center>
                 </div>  
             </div>
         </div>
     </div>
+
 
     <div class="modal fade" id="failedModal" tabindex="-1" role="dialog" aria-labelledby="failedModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -26,7 +27,7 @@
                         <p>@Resource.GetKey("Your_email_did_not_send.")</p>
                         <p>@Resource.GetKey("Please_try_again_later.")</p>
                     </center>
-                    <center><button type="button" class="btn btn-primary" data-dismiss="modal">OK</button></center>
+                    <center><button type="button" class="btn btn-primary" data-dismiss="modal" onclick="SetViewBag()">OK</button></center>
                 </div>
             </div>
         </div>
@@ -178,7 +179,6 @@ else
         if (message == "Successfully") {
             console.log('Successfully');
             $(document).ready(function () {
-                
                 $('#successModal').modal('show');
             });
             //alert(message);
@@ -188,6 +188,19 @@ else
                 $('#failedModal').modal('show');
             });
             //alert(message);
+        }
+
+        function SetViewBag() {
+            $.ajax({
+                type: "POST",
+                url: '/Users/SetViewBag',
+                data: '{ value: null}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "text",
+                success: function (r) {
+
+                }
+            });
         }
     </script>
 }

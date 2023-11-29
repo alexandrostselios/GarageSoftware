@@ -23,6 +23,8 @@ namespace GarageAPI.Data
         {
             //initDatabase(builder);
             builder.Entity<ServiceHistoryDTO>().HasNoKey();
+            builder.Entity<ServiceHistoryItemsDTO>().HasNoKey();
+            builder.Entity<ServiceHistoryWithItemsDTO > ().HasNoKey();
             builder.Entity<UsersDTO>().HasNoKey();
             base.OnModelCreating(builder);
         }
@@ -43,6 +45,10 @@ namespace GarageAPI.Data
         public DbSet<Email> Email { get; set; }
         public DbSet<ServiceItems> ServiceItems { get; set; }
         public DbSet<GarageDetails> GarageDetails { get; set; }
+        public DbSet<ServiceHistoryItems> ServiceHistoryItems { get; set; }
+        public DbSet<ServiceHistoryItemsDTO> ServiceHistoryItemsDTO { get; set; }
+        public DbSet<ServiceHistoryWithItemsDTO> ServiceHistoryWithItemsDTO { get; set; }
+        public DbSet<Report> Report { get; set; }
 
         private void SetCarEngineTypeData(ModelBuilder builder)
         {
@@ -1215,6 +1221,7 @@ namespace GarageAPI.Data
             SetCarModelManufacturerYear(builder);
             SetUsersData(builder);
             builder.Entity<ServiceHistoryDTO>().HasNoKey();
+            builder.Entity<ServiceHistoryItemsDTO>().HasNoKey();
 
             int k = 1;
             for (int i = 1950; i <= DateTime.Now.Year; i++)

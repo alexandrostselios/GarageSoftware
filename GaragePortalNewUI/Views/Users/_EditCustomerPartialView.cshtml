@@ -3,13 +3,13 @@
 
 
 <div id="EditEngineer" name="EditEngineer" class="modal" tabindex="-1" role="form">
-    <div class="modal-dialog" role="document" >
+    <div class="modal-dialog draggable" role="document" >
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header dragable_touch d-block">
                 <h5 class="modal-title">@Resource.GetKey("Edit_Customer_Profile")</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+@*                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
-                </button>
+                </button>*@
             </div>
             <form asp-action="EditEngineer" enctype="multipart/form-data">
                 <div class="modal-body">
@@ -56,5 +56,9 @@
 </div>
 
 <script type="text/javascript">
-    //To be Filled
+    $(document).ready(function () {
+        $('.draggable').draggable({
+            handle: '.modal-header'
+        });
+    });
 </script>

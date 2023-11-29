@@ -42,6 +42,35 @@ namespace GarageAPI.Controllers
             return Ok(carServiceHistory);
         }
 
+        [HttpGet]
+        [Route("api/GetCarServiceHistoryByServiceHistoryID/{id:long}")]
+        public async Task<IActionResult> GetCarServiceHistoryByServiceHistoryID([FromRoute] long id)
+        {
+            string StoredProc = "exec GetCarServiceHistoryByServiceHistoryID @ServiceHistoryID = " + id;
+            List<ServiceHistoryWithItemsDTO> carServiceHistory = await dbContext.ServiceHistoryWithItemsDTO.FromSqlRaw(StoredProc).ToListAsync();
+            if (carServiceHistory == null)
+            {
+                return NotFound();
+            }
+            ServiceHistoryWithItemsDTO temp = new ServiceHistoryWithItemsDTO()
+            {
+                ID = carServiceHistory[0].ID,
+                ServiceDate = carServiceHistory[0].ServiceDate,
+                ServiceItemID = carServiceHistory[0].ServiceItemID,
+                ServiceItemDescription = carServiceHistory[0].ServiceItemDescription,
+                ServiceItemPrice = carServiceHistory[0].ServiceItemPrice,
+                ServiceKilometer = carServiceHistory[0].ServiceKilometer,
+                Description = carServiceHistory[0].Description,
+                EngineerID = carServiceHistory[0].EngineerID,
+                Color = carServiceHistory[0].Color,
+                LicencePlate = carServiceHistory[0].LicencePlate,
+                VIN = carServiceHistory[0].VIN,
+                UserModelsID = carServiceHistory[0].UserModelsID,
+                GarageID = carServiceHistory[0].GarageID
+            };
+            return Ok(carServiceHistory);
+        }
+
         [HttpPost]
         [Route("api/AddUserModelServiceHistory")]
         public async Task<IActionResult> AddUserModelServiceHistory(AddUserModelServiceHistoryRequest addUserModelServiceHistoryRequest)
@@ -58,10 +87,35 @@ namespace GarageAPI.Controllers
                DiscountPercentage = addUserModelServiceHistoryRequest.DiscountPercentage,
                FinalPrice = addUserModelServiceHistoryRequest.FinalPrice,
                StartingDate = addUserModelServiceHistoryRequest.StartingDate,
-               FinishingDate = addUserModelServiceHistoryRequest.FinishingDate
+               FinishingDate = addUserModelServiceHistoryRequest.FinishingDate,
+               GarageID = addUserModelServiceHistoryRequest.GarageID
             };
             await dbContext.ServiceHistory.AddAsync(serviceHistory);
             await dbContext.SaveChangesAsync();
+
+            #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+            ServiceHistory serviceHistoryGet = await dbContext.ServiceHistory.FirstOrDefaultAsync(x => x.UserModelsID == serviceHistory.UserModelsID &&
+                x.GarageID == serviceHistory.GarageID &&
+                x.ServiceDate == serviceHistory.ServiceDate &&
+                x.Engineer == serviceHistory.Engineer &&
+                x.ServiceKilometer == serviceHistory.ServiceKilometer);
+            #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+
+            List<int> serviceHistoryItemsList = addUserModelServiceHistoryRequest.ServiceItemsList.Where(x => int.TryParse(x, out _))
+                                                        .Select(int.Parse)
+                                                        .ToList();
+
+            for (int i = 0; i < serviceHistoryItemsList.Count; i++)
+            {
+                ServiceHistoryItems temp = new ServiceHistoryItems()
+                {
+                    SHID = serviceHistoryGet.ID,
+                    SIID = serviceHistoryItemsList[i],
+                    GarageID = serviceHistoryGet.GarageID
+                };
+                await dbContext.ServiceHistoryItems.AddAsync(temp);
+                await dbContext.SaveChangesAsync();
+            }
 
             return Ok(serviceHistory);
         }

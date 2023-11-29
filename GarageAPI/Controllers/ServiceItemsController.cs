@@ -17,7 +17,6 @@ namespace GarageAPI.Controllers
             this.dbContext = dbContext;
         }
 
-
         [HttpGet]
         [Route("api/GetServiceItems")]
         public async Task<IActionResult> GetServiceItems()
@@ -70,6 +69,20 @@ namespace GarageAPI.Controllers
             {
                 serviceItem.Description = updateServiceItemRequest.Description;
                 serviceItem.Price = updateServiceItemRequest.Price;
+                await dbContext.SaveChangesAsync();
+                return Ok(serviceItem);
+            }
+            return NotFound();
+        }
+
+        [HttpDelete]
+        [Route("api/DeleteServiceItemByID/{id:long}")]
+        public async Task<IActionResult> DeleteServiceItem([FromRoute] long id)
+        {
+            var serviceItem = await dbContext.ServiceItems.FindAsync(id);
+            if (serviceItem != null)
+            {
+                dbContext.Remove(serviceItem);
                 await dbContext.SaveChangesAsync();
                 return Ok(serviceItem);
             }

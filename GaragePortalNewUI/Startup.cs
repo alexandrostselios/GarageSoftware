@@ -31,7 +31,6 @@ namespace GaragePortalNewUI
         //readonly Uri baseAddress = new Uri(@Resources.SettingsResources.UriProduction);
         readonly HttpClient client = new HttpClient();
 
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -61,7 +60,8 @@ namespace GaragePortalNewUI
             }
 
             var lang = settings.FirstOrDefault(x => x.Description == "Language").Value;
-            //SetLanguage(lang);
+
+            //var lang = "el-GR";
 
             ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, errors) =>
             {
@@ -70,8 +70,6 @@ namespace GaragePortalNewUI
             };
             services.AddControllersWithViews();
             services.AddMvc().AddControllersAsServices();
-
-
 
             /* Language Locale */
 
@@ -147,8 +145,6 @@ namespace GaragePortalNewUI
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
-            //UILanguageController temp = new UILanguageController();
-            //temp.SetSessionProperties(locOptions.Value.DefaultRequestCulture.Culture.Name);
         }
     }
 }

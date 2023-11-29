@@ -26,7 +26,7 @@ namespace GaragePortalNewUI.Models
             client.BaseAddress = baseAddress;
         }
 
-        public ActionResult Customers(string searchBy, string searchValue,string garageID)
+        public ActionResult Customers(string searchBy, string searchValue)
         {
             GetSessionProperties();
             IEnumerable<Users> customers = null;
@@ -56,17 +56,17 @@ namespace GaragePortalNewUI.Models
                 {
                     if (searchBy.ToLower() == "all")
                     {
-                        responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/0/2/" + searchValue);
+                        responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/0/2/" + searchValue + '/' + ViewBag.GarageID);
                     }
                     else if (searchBy.ToLower() == "name")
                     {
-                        responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/1/2/" + searchValue); 
+                        responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/1/2/" + searchValue + '/' + ViewBag.GarageID); 
                     }else if (searchBy.ToLower() == "surname")
                     {
-                        responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/2/2/" + searchValue);
+                        responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/2/2/" + searchValue + '/' + ViewBag.GarageID);
                     }else if (searchBy.ToLower() == "email")
                     {
-                        responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/3/2/" + searchValue);
+                        responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/3/2/" + searchValue + '/' + ViewBag.GarageID);
                     }
                     responseTask.Wait();
                     var result = responseTask.Result;
@@ -86,7 +86,7 @@ namespace GaragePortalNewUI.Models
             return View(customers);
         }
 
-        public ActionResult Engineers(string searchBy, string searchValue, string garageID)
+        public ActionResult Engineers(string searchBy, string searchValue)
         {
             GetSessionProperties();
             if (HttpContext.Session.GetString("SuccessMessage")!="null")
@@ -99,7 +99,7 @@ namespace GaragePortalNewUI.Models
             {
                 using (client)
                 {
-                    responseTask = client.GetAsync(client.BaseAddress + "/GetEngineers" + "/" + (long)Convert.ToDouble(garageID));
+                    responseTask = client.GetAsync(client.BaseAddress + "/GetEngineers" + "/" + ViewBag.GarageID);
                     responseTask.Wait();
                     var result = responseTask.Result;
                     if (result.IsSuccessStatusCode)
@@ -121,19 +121,19 @@ namespace GaragePortalNewUI.Models
                 {
                     if (searchBy.ToLower() == "all")
                     {
-                        responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/0/3/" + searchValue);
+                        responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/0/3/" + searchValue + '/' + ViewBag.GarageID);
                     }
                     else if (searchBy.ToLower() == "name")
                     {
-                        responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/1/3/" + searchValue);
+                        responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/1/3/" + searchValue + '/' + ViewBag.GarageID);
                     }
                     else if (searchBy.ToLower() == "surname")
                     {
-                        responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/2/3/" + searchValue);
+                        responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/2/3/" + searchValue + '/' + ViewBag.GarageID);
                     }
                     else if (searchBy.ToLower() == "email")
                     {
-                        responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/3/3/" + searchValue);
+                        responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/3/3/" + searchValue + '/' + ViewBag.GarageID);
                     }
                     responseTask.Wait();
                     var result = responseTask.Result;
@@ -563,6 +563,7 @@ namespace GaragePortalNewUI.Models
             HttpContext.Session.SetString("Surname", dbUser.Surname);
             HttpContext.Session.SetString("SuccessMessage", "null");
             HttpContext.Session.SetString("GarageID", dbUser.GarageID.ToString());
+            HttpContext.Session.SetString("DeleteServiceItem", "UsersController");
         }
 
         private void GetSessionProperties()
@@ -572,7 +573,8 @@ namespace GaragePortalNewUI.Models
             ViewBag.Name = HttpContext.Session.GetString("Name");
             ViewBag.Surname = HttpContext.Session.GetString("Surname");
             ViewBag.Culture = HttpContext.Session.GetString("Culture");
-            if(HttpContext.Session.GetString("Language") is null)
+            ViewBag.GarageID = HttpContext.Session.GetString("GarageID");
+            if (HttpContext.Session.GetString("Language") is null)
             {
                 HttpContext.Session.SetString("Language", "English");
             }
@@ -582,6 +584,13 @@ namespace GaragePortalNewUI.Models
             }
             ViewBag.SuccessMessage = HttpContext.Session.GetString("SuccessMessage");
             ViewBag.GarageID = HttpContext.Session.GetString("GarageID");
+        }
+
+        [HttpPost]
+        public ActionResult SetViewBag(string value)
+        {
+            HttpContext.Session.SetString("SuccessMessage", "null");
+            return new EmptyResult();
         }
     }
 }

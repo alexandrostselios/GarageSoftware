@@ -157,6 +157,10 @@
     <value>Car Image</value>
     <comment>Car Image</comment>
   </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+    <comment>Close</comment>
+  </data>
   <data name="Color" xml:space="preserve">
     <value>Color</value>
     <comment>Color</comment>
@@ -165,13 +169,25 @@
     <value>Creation Date</value>
     <comment>Creation_Date</comment>
   </data>
+  <data name="Customer" xml:space="preserve">
+    <value>Customer</value>
+    <comment>Customer</comment>
+  </data>
   <data name="Customers" xml:space="preserve">
     <value>Customers</value>
     <comment>Customers</comment>
   </data>
+  <data name="Customer_Car" xml:space="preserve">
+    <value>Customer Car</value>
+    <comment>Customer_Car</comment>
+  </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
     <comment>Delete</comment>
+  </data>
+  <data name="Discount_Price" xml:space="preserve">
+    <value>Discount</value>
+    <comment>Discount_Price</comment>
   </data>
   <data name="Download_Engineers" xml:space="preserve">
     <value>Download Engineers List</value>
@@ -205,6 +221,10 @@
     <value>Edit Profile</value>
     <comment>Edit Profile</comment>
   </data>
+  <data name="Engineer" xml:space="preserve">
+    <value>Engineer</value>
+    <comment>Engineer</comment>
+  </data>
   <data name="Engineers" xml:space="preserve">
     <value>Engineers</value>
     <comment>Engineers</comment>
@@ -220,6 +240,14 @@
   <data name="Enter_Details_for_Search" xml:space="preserve">
     <value>Enter Details for Search</value>
     <comment>Enter_Details_for_Search</comment>
+  </data>
+  <data name="Final_Price" xml:space="preserve">
+    <value>Final Price</value>
+    <comment>Final_Price</comment>
+  </data>
+  <data name="General_Comment" xml:space="preserve">
+    <value>General Comment</value>
+    <comment>General_Comment</comment>
   </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
@@ -309,9 +337,17 @@
     <value>Please try again later.</value>
     <comment>Please_try_again_later.</comment>
   </data>
+  <data name="Price_Percentage" xml:space="preserve">
+    <value>Price Percentage</value>
+    <comment>Price_Percentage</comment>
+  </data>
   <data name="Privacy" xml:space="preserve">
     <value>Privacy</value>
     <comment>Privacy</comment>
+  </data>
+  <data name="Quick_Add_Service_History" xml:space="preserve">
+    <value>Quick Add Service History</value>
+    <comment>Quick_Add_Service_History</comment>
   </data>
   <data name="Register" xml:space="preserve">
     <value>Register</value>
@@ -333,6 +369,14 @@
     <value>Search By</value>
     <comment>SearchBy</comment>
   </data>
+  <data name="Select_Car" xml:space="preserve">
+    <value>Select Car</value>
+    <comment>Select_Car</comment>
+  </data>
+  <data name="Select_Customer" xml:space="preserve">
+    <value>Select Customer</value>
+    <comment>Select_Customer</comment>
+  </data>
   <data name="Select_Engineer" xml:space="preserve">
     <value>Select Engineer</value>
     <comment>Select_Engineer</comment>
@@ -344,6 +388,14 @@
   <data name="Select_Model" xml:space="preserve">
     <value>Select Model</value>
     <comment>Select_Model</comment>
+  </data>
+  <data name="Select_Multiple_Service_Items" xml:space="preserve">
+    <value>Please keep CTRL pressed to select multiple</value>
+    <comment>Select_Multiple_Service_Items</comment>
+  </data>
+  <data name="Select_Service_Items" xml:space="preserve">
+    <value>Select Service Items</value>
+    <comment>Select_Service_Items</comment>
   </data>
   <data name="Select_Speciality" xml:space="preserve">
     <value>Select Speciality</value>
@@ -357,13 +409,45 @@
     <value>Send Email</value>
     <comment>Send_Email</comment>
   </data>
+  <data name="Service_Date" xml:space="preserve">
+    <value>Service Date</value>
+    <comment>Service_Date</comment>
+  </data>
+  <data name="Service_Engineer" xml:space="preserve">
+    <value>Service Engineer</value>
+    <comment>Service_Engineer</comment>
+  </data>
+  <data name="Service_FinalPrice" xml:space="preserve">
+    <value>Service FinalPrice</value>
+    <comment>Service_FinalPrice</comment>
+  </data>
+  <data name="Service_Information" xml:space="preserve">
+    <value>Service Information</value>
+    <comment>Service_Information</comment>
+  </data>
   <data name="Service_Items" xml:space="preserve">
     <value>Service Items</value>
     <comment>Service_Items</comment>
   </data>
+  <data name="Service_Kilometer" xml:space="preserve">
+    <value>Service Kilometer</value>
+    <comment>Service_Kilometer</comment>
+  </data>
+  <data name="Service_Print" xml:space="preserve">
+    <value>Print</value>
+    <comment>Service_Print</comment>
+  </data>
+  <data name="Service_StartPrice" xml:space="preserve">
+    <value>Service StartPrice</value>
+    <comment>Service_StartPrice</comment>
+  </data>
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
     <comment>Settings</comment>
+  </data>
+  <data name="Start_Price" xml:space="preserve">
+    <value>Start Price</value>
+    <comment>Start_Price</comment>
   </data>
   <data name="Subject" xml:space="preserve">
     <value>Subject</value>
@@ -424,5 +508,9 @@
   <data name="Your_email_has_been_sent_successfully." xml:space="preserve">
     <value>Your email has been sent successfully.</value>
     <comment>Your_email_has_been_sent_successfully.</comment>
+  </data>
+  <data name="ΟΚ" xml:space="preserve">
+    <value>ΟΚ</value>
+    <comment>ΟΚ</comment>
   </data>
 </root>

@@ -1,0 +1,39 @@
+﻿@model GaragePortalNewUI.Models.ServiceItems
+@inject LanguageService Resource
+@{
+    ViewData["Title"] = "Add Service Item";
+}
+
+<div id="addServiceItem" name="addServiceItem" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Service Item<h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form asp-action="AddServiceItem" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="ID" />
+                <input type="hidden" asp-for="GarageID" value="@ViewBag.GarageID"/>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label">Description</label>
+                        <input asp-for="Description" class="form-control" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Price" class="control-label">Price</label>
+                        <input asp-for="Price" class="form-control" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" value="Create" class="btn btn-success">@Resource.GetKey("Edit_Car_Details")</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">@Resource.GetKey("Cancel")</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

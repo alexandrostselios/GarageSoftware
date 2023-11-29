@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using System.IO;
 using System.Net.Http.Json;
 using System.Net.Http;
+using GaragePortalNewUI.Models;
 
 namespace GaragePortalNewUI.Controllers
 {
@@ -162,6 +163,8 @@ namespace GaragePortalNewUI.Controllers
             ViewBag.Surname = HttpContext.Session.GetString("Surname");
             ViewBag.CarDetailsID = HttpContext.Session.GetString("CarDetailsID");
             ViewBag.CustomerUserID = HttpContext.Session.GetString("CustomerUserID");
+            ViewBag.GarageID = HttpContext.Session.GetString("GarageID");
+            ViewBag.SHID = HttpContext.Session.GetString("SHID");
         }
 
         // GET: UserModels/Details/5
@@ -204,9 +207,16 @@ namespace GaragePortalNewUI.Controllers
             return View(userModels);
         }
 
+        public IActionResult CreateUserModelServiceHistoryPartial()
+        {
+            GetSessionProperties();
+            return PartialView("_CreateUserModelServiceHistoryPartial");
+        }
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateUserModelServiceHistory(long UserModelsID, [Bind("UserModelsID", "Description", "ServiceDate", "ServiceKilometer", "EngineerID", "StartPrice", "DiscountPrice", "DiscountPercentage", "FinalPrice", "StartingDate", "StartingTime", "FinishingDate", "FinishingTime")] ServiceHistoryDTO serviceHistoryDTO)
+        public async Task<IActionResult> CreateUserModelServiceHistory(long UserModelsID, [Bind("UserModelsID", "Description", "ServiceDate", "ServiceKilometer", "EngineerID", "StartPrice", "DiscountPrice", "DiscountPercentage", "FinalPrice", "StartingDate", "StartingTime", "FinishingDate", "FinishingTime","GarageID", "ServiceItemsList")] ServiceHistoryDTO serviceHistoryDTO)
         {
             GetSessionProperties();
             if (ModelState.IsValid && serviceHistoryDTO.UserModelsID > 0 && !(serviceHistoryDTO.ServiceDate is null))
@@ -214,10 +224,64 @@ namespace GaragePortalNewUI.Controllers
                 JsonContent content = JsonContent.Create(serviceHistoryDTO);
                 HttpResponseMessage response = client.PostAsJsonAsync(client.BaseAddress + "/AddUserModelServiceHistory/", serviceHistoryDTO).Result;
 
-                return View();
+                return RedirectToAction("ViewCarDetails", new { id = serviceHistoryDTO.UserModelsID });
             }
 
             return View("CreateUserModelServiceHistory");
+        }
+
+
+        public IActionResult QuickCreateUserModelServiceHistoryPartial()
+        {
+            GetSessionProperties();
+            return PartialView("_QuickCreateUserModelServiceHistoryPartial");
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> QuickCreateUserModelServiceHistory(long UserModelsID, [Bind("UserModelsID", "Description", "ServiceDate", "ServiceKilometer", "EngineerID", "StartPrice", "DiscountPrice", "DiscountPercentage", "FinalPrice", "StartingDate", "StartingTime", "FinishingDate", "FinishingTime", "GarageID", "ServiceItemsList")] ServiceHistoryDTO serviceHistoryDTO)
+        {
+            GetSessionProperties();
+            if (ModelState.IsValid && serviceHistoryDTO.UserModelsID > 0 && !(serviceHistoryDTO.ServiceDate is null))
+            {
+                JsonContent content = JsonContent.Create(serviceHistoryDTO);
+                HttpResponseMessage response = client.PostAsJsonAsync(client.BaseAddress + "/AddUserModelServiceHistory/", serviceHistoryDTO).Result;
+
+                return RedirectToAction("ViewCarDetails", new { id = serviceHistoryDTO.UserModelsID });
+            }
+
+            return View("CreateUserModelServiceHistory");
+        }
+
+        public IActionResult UserModelServiceHistoryInformationPartial(long id)
+        {
+            //GetSessionProperties();
+            //IEnumerable<ServiceHistoryWithItemsDTO> serviceHistoryList = null;
+            //var responseTask = client.GetAsync(client.BaseAddress + "/GetCarServiceHistoryByServiceHistoryID/" + id);
+            //responseTask.Wait();
+            //var result = responseTask.Result;
+            //var readTask = result.Content.ReadAsAsync<IList<ServiceHistoryWithItemsDTO>>();
+            //readTask.Wait();
+            //serviceHistoryList = readTask.Result;
+            //ServiceHistoryWithItemsDTO serviceHistory = new ServiceHistoryWithItemsDTO()
+            //{
+            //    ID = serviceHistoryList.ElementAt(0).ID,
+            //    GarageID = serviceHistoryList.ElementAt(0).GarageID,
+            //    ServiceDate = serviceHistoryList.ElementAt(0).ServiceDate,
+            //    ServiceKilometer = serviceHistoryList.ElementAt(0).ServiceKilometer,
+            //    EngineerID = serviceHistoryList.ElementAt(0).EngineerID,
+            //    Description = serviceHistoryList.ElementAt(0).Description,
+            //    StartPrice = serviceHistoryList.ElementAt(0).StartPrice,
+            //    FinalPrice = serviceHistoryList.ElementAt(0).FinalPrice,
+            //    ServiceItem = serviceHistoryList.ElementAt(0).ServiceItem,
+            //    ServiceItemID = serviceHistoryList.ElementAt(0).ServiceItemID,
+            //    ServiceItemDescription = serviceHistoryList.ElementAt(0).ServiceItemDescription
+            //};
+
+            HttpContext.Session.SetString("SHID", id.ToString());
+            GetSessionProperties();
+            return PartialView("_UserModelServiceHistoryInformationPartial");
         }
 
         // GET: UserModels/Edit/5

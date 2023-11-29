@@ -13,7 +13,7 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <center><p>@Resource.GetKey("Your_email_has_been_sent_successfully.")</p></center>
-                    <center><button type="button" class="btn btn-primary" data-dismiss="modal">OK</button></center>
+                    <center><button type="button" class="btn btn-primary" data-dismiss="modal" onclick="SetViewBag()">OK</button></center>
                 </div>
             </div>
         </div>
@@ -27,7 +27,7 @@
                         <p>@Resource.GetKey("Your_email_did_not_send.")</p>
                         <p>@Resource.GetKey("Please_try_again_later.")</p>
                     </center>
-                    <center><button type="button" class="btn btn-primary" data-dismiss="modal">OK</button></center>
+                    <center><button type="button" class="btn btn-primary" data-dismiss="modal" onclick="SetViewBag()">OK</button></center>
                 </div>
             </div>
         </div>
@@ -176,6 +176,19 @@
                 $('#failedModalEngineer').modal('show');
             });
             //alert(message);
+        }
+
+        function SetViewBag() {
+            $.ajax({
+                type: "POST",
+                url: '/Users/SetViewBag',
+                data: '{ value: null}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "text",
+                success: function (r) {
+
+                }
+            });
         }
     </script>
 }

@@ -17,6 +17,8 @@ namespace GaragePortalNewUI.Models
     {
         readonly Uri baseAddress = new Uri(@Resources.SettingsResources.Uri);
         readonly HttpClient client;
+        private ServiceItemsController si;
+        private List<ServiceItems> temp;
 
         public ServiceItemsController()
         {
@@ -55,10 +57,108 @@ namespace GaragePortalNewUI.Models
             return serviceItems;
         }
 
+        public IActionResult AddServiceItemPartial()
+        {
+            GetSessionProperties();
+            return PartialView("_AddServiceItemPartial");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddServiceItem([Bind("ID,Description,GarageID,Price")] ServiceItems serviceItem)
+        {
+            GetSessionProperties();
+            if (serviceItem.Description != null)
+            {
+                HttpResponseMessage response = client.PostAsJsonAsync(client.BaseAddress + "/AddServiceItem/", serviceItem).Result;
+                si = new ServiceItemsController();
+                temp = si.GetServiceItems().ToList();
+                //serviceItem.Description = null;
+                //serviceItem.Price = null;
+                //serviceItem.GarageID = 0;
+                //actionName, controllerName, routeValues
+                return RedirectToAction("Settings", "Settings");
+            }
+            return NotFound();
+        }
+
         public IActionResult EditServiceItemPartial(long id)
         {
             GetSessionProperties();
-            return PartialView("_EditServiceItemPartial");
+            var responseTask = client.GetAsync(client.BaseAddress);
+            ServiceItems serviceItems = null;
+            using (client)
+            {
+                responseTask = client.GetAsync(client.BaseAddress + "/GetServiceItemsByID/" + id);
+                responseTask.Wait();
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<ServiceItems>();
+                    readTask.Wait();
+                    serviceItems = readTask.Result;
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+                }
+            }
+            return PartialView("_EditServiceItemPartial", serviceItems);
+        }
+
+        //public IActionResult EditServiceItems(long id)
+        //{
+        //    GetSessionProperties();
+        //    var responseTask = client.GetAsync(client.BaseAddress);
+        //    IEnumerable<ServiceItems> serviceItems = null;
+        //    using (client)
+        //    {
+        //        responseTask = client.GetAsync(client.BaseAddress + "/GetServiceItemsByID/" + id);
+        //        responseTask.Wait();
+        //        var result = responseTask.Result;
+        //        if (result.IsSuccessStatusCode)
+        //        {
+        //            var readTask = result.Content.ReadAsAsync<IList<ServiceItems>>();
+        //            readTask.Wait();
+        //            serviceItems = readTask.Result;
+        //        }
+        //        else
+        //        {
+        //            serviceItems = Enumerable.Empty<ServiceItems>();
+        //            ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+        //        }
+        //    }
+        //    return View("_EditServiceItemPartial", serviceItems);
+        //}
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditServiceItem(long id, [Bind("ID,Description,Price")] ServiceItems serviceItem)
+        {
+            if (id != serviceItem.ID)
+            {
+                return NotFound();
+            }
+            HttpResponseMessage response = client.PutAsJsonAsync(client.BaseAddress + "/UpdateServiceItemByID/" + serviceItem.ID, serviceItem).Result;
+
+            return RedirectToAction("Settings", "Settings");
+            //return View();
+        }
+
+        public async Task<IActionResult> DeleteServiceItem(int? id)
+        {
+            GetSessionProperties();
+            if (id == null)
+            {
+                return NotFound();
+            }
+            HttpResponseMessage response = client.DeleteAsync(client.BaseAddress + "/DeleteServiceItemByID/" + id).Result;
+            
+            si = new ServiceItemsController();
+            temp = si.GetServiceItems().ToList();
+            return RedirectToAction("Settings", "Settings");
+            //return View("~/Views/Settings/Settings.cshtml", temp);
+            //return View("~/Views/Settings/_ServiceItemsPartial.cshtml", temp);
         }
 
         private void SetSessionProperties(Users dbUser)
@@ -69,6 +169,7 @@ namespace GaragePortalNewUI.Models
             HttpContext.Session.SetString("Name", dbUser.Name);
             HttpContext.Session.SetString("Surname", dbUser.Surname);
             HttpContext.Session.SetString("SuccessMessage", "null");
+            HttpContext.Session.SetString("DeleteServiceItem", "SetServiceItemsController");
         }
 
         private void GetSessionProperties()
@@ -78,7 +179,8 @@ namespace GaragePortalNewUI.Models
             ViewBag.Name = HttpContext.Session.GetString("Name");
             ViewBag.Surname = HttpContext.Session.GetString("Surname");
             ViewBag.Culture = HttpContext.Session.GetString("Culture");
-            if(HttpContext.Session.GetString("Language") is null)
+            ViewBag.GarageID = HttpContext.Session.GetString("GarageID");
+            if (HttpContext.Session.GetString("Language") is null)
             {
                 HttpContext.Session.SetString("Language", "English");
             }
@@ -87,6 +189,7 @@ namespace GaragePortalNewUI.Models
                 ViewBag.Language = HttpContext.Session.GetString("Language");
             }
             ViewBag.SuccessMessage = HttpContext.Session.GetString("SuccessMessage");
+            ViewBag.DeleteServiceItem = HttpContext.Session.GetString("DeleteServiceItem");
         }
     }
 }

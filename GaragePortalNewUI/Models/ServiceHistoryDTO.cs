@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Web.Mvc;
 
 namespace GaragePortalNewUI.Models
 {
@@ -35,5 +38,9 @@ namespace GaragePortalNewUI.Models
 
         [Column(TypeName = "datetime")]
         public DateTime? FinishingDate { get; set; }
+
+        public long GarageID { get; set; }
+
+        public List<string> ServiceItemsList { get; set; }
     }
 }

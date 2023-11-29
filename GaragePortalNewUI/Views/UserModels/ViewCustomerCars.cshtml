@@ -10,9 +10,9 @@
     ViewData["Title"] = @Resource.GetKey("List_Of_User_Cars");
     <p>
         <div id="AddCustomerCarPartial"></div>
-        <div id="editCarDetailsDIV"></div>
-        <br>
+        <div id="editCarDetailsDIV"></div>  
         <button class="btn btn-sm btn-primary m-2" id="btnAddCustomerCar" asp-route-CustomerUserID="@ViewBag.CustomerUserID" data-bs-toggle="ajax-modal" data-bs-target="#AddCustomerCar" data-url="@Url.Action("CreateCustomerCarPartial")">@Resource.GetKey("Add_New_Car")</button>
+        <br>
     </p>
     <div>
         <a class="af" asp-controller="PdfCreator" asp-action="CreatePDF" asp-route-entityType="4">@Resource.GetKey("Download_User_Cars")</a>

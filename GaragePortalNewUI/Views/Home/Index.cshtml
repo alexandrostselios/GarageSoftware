@@ -5,10 +5,51 @@
 @inject LanguageService Resource
 
 
-@if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Guest.ToString() || @ViewBag.UserType == null)
+@if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Admin.ToString())
 {
+    <p>
+        <button class="btn btn-sm btn-primary m-2" id="btnQuickAddCarServiceHistory" data-bs-toggle="ajax-modal" data-bs-target="#QuickAddCarServiceHistory" data-url="@Url.Action("QuickCreateUserModelServiceHistoryPartial","UserModels")">@Resource.GetKey("Quick_Add_Service_History")</button>
+    </p>
+    <div class="container-fluid">
+        <div class="row d-flex justify-content-center pt-5  h-100">
+            @*<button class="btn btn-primary" id="btnQuickAddCarServiceHistory">Quick Service Add</button>*@
+            <div id="quickAddCarServiceHistoryDIV"></div>
+        </div>
+    </div>
+}else{
     <div class="text-center">
         <h1 class="display-4">Welcome</h1>
         <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
     </div>
+}
+
+
+@section scripts{
+    <script type="text/javascript">
+        //Show Add Make Modal
+        $(function () {
+            var QuickAddCarServiceHistoryElement = $('#quickAddCarServiceHistoryDIV');
+
+            $('button[data-bs-toggle="ajax-modal"]').click(function (event) {
+                var url = $(this).data('url');
+                $.get(url).done(function (data) {
+                    QuickAddCarServiceHistoryElement.html(data);
+                    QuickAddCarServiceHistoryElement.find('.modal').modal('show');
+                })
+            })
+
+            //Save Add Makeform data
+            QuickAddCarServiceHistoryElement.on('click', '[data-bs-save="modal"]', function (event) {
+
+                var form = $(this).parents('.modal').find('form');
+                var actionUrl = form.attr("action");
+                var sendData = form.serialize();
+                $.post(actionUrl, sendData).done(function (data) {
+                    QuickAddCarServiceHistoryElement.find('.modal').modal('hide');
+                    location.reload(true);
+                })
+            })
+
+        })
+    </script>
 }

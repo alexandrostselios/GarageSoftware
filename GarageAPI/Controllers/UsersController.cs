@@ -123,27 +123,27 @@ namespace GarageAPI.Controllers
         }
 
         [HttpGet]
-        [Route("api/GetUsersByValue/{searchBy}/{usertype}/{value}")]
-        public async Task<IActionResult> GetUsersByValue([FromRoute] int searchBy,int usertype, string value)
+        [Route("api/GetUsersByValue/{searchBy}/{usertype}/{value}/{garageID}")]
+        public async Task<IActionResult> GetUsersByValue([FromRoute] int searchBy,int usertype, string value, long garageID)
         {
             var user = new List<Users>();
             if (usertype == 2)
             {
                 if (searchBy == 0 && usertype == 2)
                 {
-                    user = await dbContext.Users.Where(c => (c.Name.Contains(value) || c.Surname.Contains(value) || c.Email.Contains(value) && (c.UserType == UserType.Admin || c.UserType == UserType.Customer))).ToListAsync();
+                    user = await dbContext.Users.Where(c => (c.Name.Contains(value) || c.Surname.Contains(value) || c.Email.Contains(value) && (c.UserType == UserType.Admin || c.UserType == UserType.Customer) && (c.GarageID == garageID))).ToListAsync();
                 }
                 else if (searchBy == 1 && usertype == 2)
                 {
-                    user = await dbContext.Users.Where(c => c.Name.Contains(value) && (c.UserType == UserType.Admin || c.UserType == UserType.Customer)).ToListAsync();
+                    user = await dbContext.Users.Where(c => c.Name.Contains(value) && (c.UserType == UserType.Admin || c.UserType == UserType.Customer) && (c.GarageID == garageID)).ToListAsync();
                 }
                 else if (searchBy == 2 && usertype == 2)
                 {
-                    user = await dbContext.Users.Where(c => c.Surname.Contains(value) && (c.UserType == UserType.Admin || c.UserType == UserType.Customer)).ToListAsync();
+                    user = await dbContext.Users.Where(c => c.Surname.Contains(value) && (c.UserType == UserType.Admin || c.UserType == UserType.Customer) && (c.GarageID == garageID)).ToListAsync();
                 }
                 else if (searchBy == 3 && usertype == 2)
                 {
-                    user = await dbContext.Users.Where(c => c.Email.Contains(value) && (c.UserType == UserType.Admin || c.UserType == UserType.Customer)).ToListAsync();
+                    user = await dbContext.Users.Where(c => c.Email.Contains(value) && (c.UserType == UserType.Admin || c.UserType == UserType.Customer) && (c.GarageID == garageID)).ToListAsync();
                 }
                 return Ok(user);
             }
@@ -151,21 +151,21 @@ namespace GarageAPI.Controllers
             {
                 if (searchBy == 0)
                 {
-                    user = await dbContext.Users.Where(c => (c.Name.Contains(value) || c.Surname.Contains(value) || c.Email.Contains(value)) && c.UserType == UserType.Engineer).ToListAsync();
+                    user = await dbContext.Users.Where(c => (c.Name.Contains(value) || c.Surname.Contains(value) || c.Email.Contains(value)) && c.UserType == UserType.Engineer && c.GarageID == garageID).ToListAsync();
                 }
 
                 else if (searchBy == 1)
                 {
-                    user = await dbContext.Users.Where(c => c.Name.Contains(value) && c.UserType == UserType.Engineer).ToListAsync();
+                    user = await dbContext.Users.Where(c => c.Name.Contains(value) && c.UserType == UserType.Engineer && c.GarageID == garageID).ToListAsync();
                 }
 
                 else if (searchBy == 2)
                 {
-                    user = await dbContext.Users.Where(c => c.Surname.Contains(value) && c.UserType == UserType.Engineer).ToListAsync();
+                    user = await dbContext.Users.Where(c => c.Surname.Contains(value) && c.UserType == UserType.Engineer && c.GarageID == garageID).ToListAsync();
                 }
                 else
                 {
-                    user = await dbContext.Users.Where(c => c.Email.Contains(value) && c.UserType == UserType.Engineer).ToListAsync();
+                    user = await dbContext.Users.Where(c => c.Email.Contains(value) && c.UserType == UserType.Engineer && c.GarageID == garageID).ToListAsync();
                 }
                 if (user == null)
                 {
@@ -183,7 +183,7 @@ namespace GarageAPI.Controllers
                         LastLoginDate = user[i].LastLoginDate,
                         ModifiedDate = user[i].ModifiedDate,
                         UserPhoto = user[i].UserPhoto,
-                        EngineerSpeciality = (await dbContext.EngineerSpeciality.FirstOrDefaultAsync(x => x.ID == user[i].Speciality)).Speciality
+                        EngineerSpeciality = (await dbContext.EngineerSpeciality.FirstOrDefaultAsync(x => x.ID == user[i].Speciality && x.GarageID == garageID)).Speciality
                     });  
                 }
                 return Ok(engineersDTO);

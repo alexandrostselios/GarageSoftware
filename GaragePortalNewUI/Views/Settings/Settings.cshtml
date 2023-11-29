@@ -7,7 +7,7 @@
 
 @if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Admin.ToString())
 {
-    <select id="myDropDown">
+    <select id="serviceItemsDropdown">
         <option value="0" selected disabled>--@Resource.GetKey("Please_Select")--</option>
         <option value="1">@Resource.GetKey("Service_Items")</option>
         <option value="2">@Resource.GetKey("System_Settings")</option>
@@ -25,7 +25,18 @@ else
 
 @section scripts{
     <script type="text/javascript">
-        $('#myDropDown').change(function () {
+        var message = "@ViewBag.DeleteServiceItem";
+        if (message == "ServiceItemIsDeleted") {
+            var selectedID = 1;
+            const select = document.getElementById('serviceItemsDropdown');
+            select.value = selectedID;
+            $.get("/Settings/SettingsPartialView/" + selectedID, function (data) {
+                $('#partialPlaceHolder').html(data);
+                $('#partialPlaceHolder').fadeIn('slow');
+            });
+        }
+
+        $('#serviceItemsDropdown').change(function () {
             /* Get the selected value of dropdownlist */
             var selectedID = $(this).val();
 

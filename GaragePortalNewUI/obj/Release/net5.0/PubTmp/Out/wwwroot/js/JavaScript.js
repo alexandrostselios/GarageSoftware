@@ -1,6 +1,109 @@
 ﻿//var url = 'https://localhost:7096/api/'
 var url = 'http://alefhome.ddns.net:8082/api/'
 
+function checkDiscountType(x) {
+    if(x === 0){
+        if (document.getElementById('percentage').checked) {
+            $("#discountPrice").hide();
+            $("#discountPriceSymbol").hide();
+            $("#discountPricePercentage").show();
+            $("#discountPricePercentageSymbol").show();
+            document.getElementById("discountPricePercentage").placeholder = "0,00";
+            setFinalPrice();
+            //console.log("checked");
+        } else {
+            $("#discountPrice").show();
+            $("#discountPriceSymbol").show();
+            document.getElementById("discountPrice").placeholder = "0,00";
+            $("#discountPricePercentage").hide();
+            $("#discountPricePercentageSymbol").hide();
+            setFinalPrice();
+            //console.log("Not checked.");
+        }
+    }else {
+        $("#discountPrice").show();
+        $("#discountPriceSymbol").show();
+        document.getElementById("discountPrice").placeholder = "0,00";
+        $("#discountPricePercentage").hide();
+        $("#discountPricePercentageSymbol").hide();
+    }
+    
+}
+
+function setFinalPrice() {
+    var finalPrice;
+    if (document.getElementById('percentage').checked) {
+        console.log("1st");
+        finalPrice = (document.getElementById("StartPrice").value.replace(',', '.') - ((document.getElementById("StartPrice").value.replace(',', '.')) * (document.getElementById("discountPricePercentage").value.replace(',', '.') / 100))).toFixed(2);
+    } else {
+        console.log("2nd");
+        finalPrice = (document.getElementById("StartPrice").value.replace(',', '.') - document.getElementById("discountPrice").value.replace(',', '.')).toFixed(2);
+    }
+    //document.getElementById("FinalPrice").value = finalPrice;
+    //console.log("Log: " + document.getElementById("FinalPrice").value);
+    document.getElementById("FinalPrice").value = finalPrice.replace('.', ',');
+    document.getElementById("StartPrice").value = document.getElementById("StartPrice").value.replace('.', ',');
+    console.log("Log: " + document.getElementById("FinalPrice").value);
+    console.log("Log: " + document.getElementById("StartPrice").value);
+};
+
+function getServiceItems() {
+    //console.log("getServiceItems()");
+    $(document).ready(function () {
+        $.getJSON(url + 'GetServiceItemsToList')
+            //$.getJSON('http://alefhome.ddns.net:8082/api/GetCarManufacturersToList')
+            .done(function (data) {
+                // On success, 'data' contains a list of products.
+                $.each(data, function (key, item) {
+                    // Add a list item for the product.
+                    if (item.price > 0) {
+                        $("#ServiceItems").append($("<option></option>").val(item.id).html(' '+item.id + ') ' + item.description + ' (' + item.price + ' €)'));
+                    } else {
+                        $("#ServiceItems").append($("<option></option>").val(item.id).html(' ' +item.id + ') ' + item.description + ' (--)'));
+                    }
+                });
+            });
+    });
+}
+
+function CalculatePrice() {
+    const options = document.getElementById("ServiceItems").options;
+    let sum = 0.00;
+    for (let i = 0; i < options.length; i++) {
+        if (options[i].selected) {
+            const str = options[i].text;
+            const before_ = str.substring(str.length, str.lastIndexOf('('));
+            console.log(before_);
+            let res = before_.replace('(', "");
+            res = res.replace(')', "");
+            res = res.replace('€', "");
+            if (res === "--") {
+                sum += 0;
+            } else {
+                sum += parseFloat(res, 10);
+            }
+        }
+    }
+    //console.log("Sum is: " + sum);
+    document.getElementById("StartPrice").value = sum;
+    setFinalPrice();
+};
+
+function getServiceEngineers() {
+    console.log("getServiceItems()");
+    $(document).ready(function () {
+        $.getJSON(url + 'GetEngineers/1')
+            //$.getJSON('http://alefhome.ddns.net:8082/api/GetCarManufacturersToList')
+            .done(function (data) {
+                // On success, 'data' contains a list of products.
+                $.each(data, function (key, item) {
+                    // Add a list item for the product.
+                    $("#ShowEngineers").append($("<option></option>").val(item.id).html(item.surname + ' ' + item.name));
+                });
+            });
+    });
+}
+
 /* Manufacturer */
 function getManufacturers() {
     $(document).ready(function () {
@@ -471,13 +574,6 @@ function getModelManufacturerByDescription(manufacturerDescription, modelDescrip
 function formatModelManufacturer(item) {
     return 'ManufacturerID: ' + item.ID + ' - ManufacturerName: ' + item.ManufacturerName;
 }
-
-
-/* General Functions */
-//function clearData() {
-//    const container = document.getElementById('ShowData');
-//    container.replaceChildren();
-//}
 
 
 function getLogin() {

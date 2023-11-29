@@ -157,6 +157,10 @@
     <value>Φωτογραφία</value>
     <comment>Car Image</comment>
   </data>
+  <data name="Close" xml:space="preserve">
+    <value>Κλείσιμο</value>
+    <comment>Close</comment>
+  </data>
   <data name="Color" xml:space="preserve">
     <value>Χρώμα</value>
     <comment>Color</comment>
@@ -165,13 +169,25 @@
     <value>Ημερομηνία Εγγραφής</value>
     <comment>Creation_Date</comment>
   </data>
+  <data name="Customer" xml:space="preserve">
+    <value>Πελάτης</value>
+    <comment>Customer</comment>
+  </data>
   <data name="Customers" xml:space="preserve">
     <value>Πελάτες</value>
     <comment>Customers</comment>
   </data>
+  <data name="Customer_Car" xml:space="preserve">
+    <value>Όχημα</value>
+    <comment>Customer_Car</comment>
+  </data>
   <data name="Delete" xml:space="preserve">
     <value>Διαγραφή</value>
     <comment>Delete</comment>
+  </data>
+  <data name="Discount_Price" xml:space="preserve">
+    <value>Έκπτωση</value>
+    <comment>Discount_Price</comment>
   </data>
   <data name="Download_Engineers" xml:space="preserve">
     <value>Λήψη Λίστας Μηχανικών</value>
@@ -205,6 +221,10 @@
     <value>Επεξεργασία Προφίλ</value>
     <comment>Edit Profile</comment>
   </data>
+  <data name="Engineer" xml:space="preserve">
+    <value>Μηχανικός</value>
+    <comment>Engineer</comment>
+  </data>
   <data name="Engineers" xml:space="preserve">
     <value>Μηχανικοί</value>
     <comment>Engineers</comment>
@@ -220,6 +240,14 @@
   <data name="Enter_Details_for_Search" xml:space="preserve">
     <value>Παρακαλώ Πληκτρολογήστε</value>
     <comment>Enter_Details_for_Search</comment>
+  </data>
+  <data name="Final_Price" xml:space="preserve">
+    <value>Τελική Τιμή</value>
+    <comment>Final_Price</comment>
+  </data>
+  <data name="General_Comment" xml:space="preserve">
+    <value>Γενικά Σχόλια</value>
+    <comment>General_Comment</comment>
   </data>
   <data name="Home" xml:space="preserve">
     <value>Αρχική</value>
@@ -309,9 +337,17 @@
     <value>Παρακαλώ προσπαθήστε αργότερα</value>
     <comment>Please_try_again_later.</comment>
   </data>
+  <data name="Price_Percentage" xml:space="preserve">
+    <value>Ποσοστό</value>
+    <comment>Price_Percentage</comment>
+  </data>
   <data name="Privacy" xml:space="preserve">
     <value>Πολιτική Απορρήτου</value>
     <comment>Privacy</comment>
+  </data>
+  <data name="Quick_Add_Service_History" xml:space="preserve">
+    <value>Γρήγορη Καταχώριση Ιστορικού</value>
+    <comment>Quick_Add_Service_History</comment>
   </data>
   <data name="Register" xml:space="preserve">
     <value>Εγγραφή</value>
@@ -333,17 +369,33 @@
     <value>Αναζήτηση με</value>
     <comment>SearchBy</comment>
   </data>
+  <data name="Select_Car" xml:space="preserve">
+    <value>Επιλέξτε Όχημα</value>
+    <comment>Select_Car</comment>
+  </data>
+  <data name="Select_Customer" xml:space="preserve">
+    <value>Επιλέξτε Πελάτη</value>
+    <comment>Select_Customer</comment>
+  </data>
   <data name="Select_Engineer" xml:space="preserve">
-    <value>Επιλογή Μηχανικού</value>
+    <value>Επιλέξτε  Μηχανικό</value>
     <comment>Select_Engineer</comment>
   </data>
   <data name="Select_Manufacturer" xml:space="preserve">
-    <value>Επιλογή Κατασκευαστή</value>
+    <value>Επιλέξτε  Κατασκευαστή</value>
     <comment>Select_Manufacturer</comment>
   </data>
   <data name="Select_Model" xml:space="preserve">
-    <value>Επιλογή Μοντέλου</value>
+    <value>Επιλέξτε  Μοντέλο</value>
     <comment>Select_Model</comment>
+  </data>
+  <data name="Select_Multiple_Service_Items" xml:space="preserve">
+    <value>Παρακαλώ κρατήστε πατημένο το CTRL για μαζική επιλογή</value>
+    <comment>Select_Multiple_Service_Items</comment>
+  </data>
+  <data name="Select_Service_Items" xml:space="preserve">
+    <value>Επιλέξτε Εργασίες Service</value>
+    <comment>Select_Service_Items</comment>
   </data>
   <data name="Select_Speciality" xml:space="preserve">
     <value>Επιλέξτε Ειδικότητα</value>
@@ -357,13 +409,45 @@
     <value>Αποστολή Email</value>
     <comment>Send_Email</comment>
   </data>
+  <data name="Service_Date" xml:space="preserve">
+    <value>Ημερομηνία Service</value>
+    <comment>Service_Date</comment>
+  </data>
+  <data name="Service_Engineer" xml:space="preserve">
+    <value>Τεχνικός Ελέγχου</value>
+    <comment>Service_Engineer</comment>
+  </data>
+  <data name="Service_FinalPrice" xml:space="preserve">
+    <value>Τελική Τιμή</value>
+    <comment>Service_FinalPrice</comment>
+  </data>
+  <data name="Service_Information" xml:space="preserve">
+    <value>Πληροφορίες</value>
+    <comment>Service_Information</comment>
+  </data>
   <data name="Service_Items" xml:space="preserve">
     <value>Εργασίες Service</value>
     <comment>Service_Items</comment>
   </data>
+  <data name="Service_Kilometer" xml:space="preserve">
+    <value>Χιλιόμετρα Service</value>
+    <comment>Service_Kilometer</comment>
+  </data>
+  <data name="Service_Print" xml:space="preserve">
+    <value>Εκτύπωση</value>
+    <comment>Service_Print</comment>
+  </data>
+  <data name="Service_StartPrice" xml:space="preserve">
+    <value>Αρχική Τιμή</value>
+    <comment>Service_StartPrice</comment>
+  </data>
   <data name="Settings" xml:space="preserve">
     <value>Ρυθμίσεις</value>
     <comment>Settings</comment>
+  </data>
+  <data name="Start_Price" xml:space="preserve">
+    <value>Αρχική Τιμή</value>
+    <comment>Start_Price</comment>
   </data>
   <data name="Subject" xml:space="preserve">
     <value>Θέμα Μηνύματος</value>
@@ -424,5 +508,9 @@
   <data name="Your_email_has_been_sent_successfully." xml:space="preserve">
     <value>Το email σας έχει αποσταλεί επιτυχώς.</value>
     <comment>Your_email_has_been_sent_successfully.</comment>
+  </data>
+  <data name="ΟΚ" xml:space="preserve">
+    <value>ΟΚ</value>
+    <comment>ΟΚ</comment>
   </data>
 </root>

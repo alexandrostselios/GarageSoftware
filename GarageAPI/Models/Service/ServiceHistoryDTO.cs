@@ -37,5 +37,9 @@ namespace GarageAPI.Models.Service
         public string ModelYear { get; set; }
 
         public byte[]? CarImage { get; set; }
+
+        public long EngineerID { get; set; }
+
+        //public string ServiceItem { get; set; }
     }
 }

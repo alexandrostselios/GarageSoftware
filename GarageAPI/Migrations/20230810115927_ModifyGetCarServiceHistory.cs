@@ -18,9 +18,9 @@ namespace GarageAPI.Migrations
                         SET NOCOUNT ON;
                         SELECT SH.ID, 
                                 SH.Description, 
-                                SH.ServiceDate, 
-                                SH.StartingDate, 
-                                SH.FinishingDate, 
+                                CAST(SH.ServiceDate AS DATE) AS ServiceDate, 
+                                CAST(SH.StartingDate AS DATE) AS StartingDate, 
+                                CAST(SH.FinishingDate AS DATE) AS FinishingDate, 
                                 SH.ServiceKilometer, 
                                 SH.StartPrice, 
                                 SH.FinalPrice, 
@@ -34,7 +34,8 @@ namespace GarageAPI.Migrations
                                 UM.VIN, 
                                 UM.Color, 
                                 UM.Kilometer, 
-                                UM.CarImage
+                                UM.CarImage,
+                                SH.EngineerID
                         FROM UserModels UM
                                 INNER JOIN CarModelManufacturerYear CMMY ON CMMY.ID = um.ModelManufacturerYearID
                                 INNER JOIN CarModels CM ON CM.ID = CMMY.CarModelID
@@ -48,6 +49,51 @@ namespace GarageAPI.Migrations
                 GO";
 
             migrationBuilder.Sql(GetCarServiceHistory);
+
+            var GetCustomerCars = @"CREATE PROCEDURE GetCarServiceHistoryByServiceHistoryID
+                -- Add the parameters for the stored procedure here
+                @ServiceHistoryID BIGINT
+                AS
+                BEGIN
+	                SET NOCOUNT ON;
+	                SELECT SH.ID, 
+                       SH.Description, 
+                        SH.GarageID,
+                       CAST(SH.ServiceDate AS DATE) AS ServiceDate, 
+                       CAST(SH.StartingDate AS DATE) AS StartingDate, 
+                       CAST(SH.FinishingDate AS DATE) AS FinishingDate, 
+                       SH.ServiceKilometer, 
+                       SH.StartPrice, 
+                       SH.FinalPrice, 
+                       UE.Surname, 
+                       UE.Name, 
+                       CMAN.ManufacturerName, 
+                       CM.ModelName, 
+                       CMY.Description AS ModelYear, 
+                       UM.ID AS UserModelsID, 
+                       UM.LicencePlate, 
+                       UM.VIN, 
+                       UM.Color, 
+                       UM.Kilometer, 
+                       UM.CarImage, 
+                       SH.EngineerID,
+                       SI.ID AS ServiceItemID, 
+                       SI.Description AS ServiceItemDescription,
+                       SI.Price AS ServiceItemPrice
+                FROM UserModels UM
+                     INNER JOIN CarModelManufacturerYear CMMY ON CMMY.ID = um.ModelManufacturerYearID
+                     INNER JOIN CarModels CM ON CM.ID = CMMY.CarModelID
+                     INNER JOIN CarManufacturer CMAN ON CMAN.ID = CMMY.CarManufacturerID
+                     INNER JOIN CarModelYear CMY ON CMY.ID = CMMY.CarModelYearID
+                     LEFT OUTER JOIN ServiceHistory SH ON UM.ID = SH.UserModelsID
+                     LEFT OUTER JOIN ServiceHistoryItems SHI ON SHI.SHID = SH.ID
+                     LEFT OUTER JOIN ServiceItems SI ON SI.ID = SHI.SIID
+                     LEFT OUTER JOIN Users UE ON UE.ID = EngineerID
+                WHERE SH.ID = @ServiceHistoryID
+                ORDER BY SH.ServiceDate DESC;
+                END";
+
+            migrationBuilder.Sql(GetCustomerCars);
         }
 
         /// <inheritdoc />

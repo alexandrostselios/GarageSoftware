@@ -206,6 +206,26 @@ namespace GarageAPI.Migrations
                     b.ToTable("GarageDetails");
                 });
 
+            modelBuilder.Entity("GarageAPI.Models.Report", b =>
+                {
+                    b.Property<long>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
+
+                    b.Property<string>("Definition")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("InsertDate")
+                        .HasColumnType("datetime");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Report");
+                });
+
             modelBuilder.Entity("GarageAPI.Models.Service.ServiceHistory", b =>
                 {
                     b.Property<long>("ID")
@@ -316,6 +336,28 @@ namespace GarageAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.ToTable("ServiceHistoryDTO");
+                });
+
+            modelBuilder.Entity("GarageAPI.Models.Service.ServiceHistoryItems", b =>
+                {
+                    b.Property<long>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
+
+                    b.Property<long>("GarageID")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("SHID")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("SIID")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("ServiceHistoryItems");
                 });
 
             modelBuilder.Entity("GarageAPI.Models.Service.ServiceItems", b =>

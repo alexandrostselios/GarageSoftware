@@ -7,13 +7,13 @@
 
 
 <div id="AddEngineer" name="AddEngineer" class="modal" tabindex="-1" role="form">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog draggable" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header dragable_touch d-block">
                 <h5 class="modal-title">@Resource.GetKey("Add_Engineer_Details_Form")</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+@*                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
-                </button>
+                </button>*@
             </div>
             <form method="post" asp-action="CreateEngineerPartial" asp-controller="Users" enctype="multipart/form-data">
                 <div class="modal-body">
@@ -62,6 +62,12 @@
 </div>
 
 <script type="text/javascript">
+    $(document).ready(function () {
+        $('.draggable').draggable({
+            handle: '.modal-header'
+        });
+    });
+
     $(function () {
         var url = $(this).data('url');
         $.get(url).done(function (data) {

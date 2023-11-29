@@ -29,8 +29,10 @@ namespace GaragePortalNewUI.Models
 
         public ActionResult SettingsPartialView(long id)
         {
+            GetSessionProperties();
             if (id == 1)
             {
+                HttpContext.Session.SetString("DeleteServiceItem", "ServiceItemIsDeleted");
                 ServiceItemsController si = new ServiceItemsController();
                 List<ServiceItems> temp = si.GetServiceItems().ToList();
                 return PartialView("_ServiceItemsPartial", temp);
@@ -53,6 +55,7 @@ namespace GaragePortalNewUI.Models
             HttpContext.Session.SetString("Name", dbUser.Name);
             HttpContext.Session.SetString("Surname", dbUser.Surname);
             HttpContext.Session.SetString("SuccessMessage", "null");
+            HttpContext.Session.SetString("DeleteServiceItem", "SetSettingsController");
         }
 
         private void GetSessionProperties()
@@ -62,7 +65,8 @@ namespace GaragePortalNewUI.Models
             ViewBag.Name = HttpContext.Session.GetString("Name");
             ViewBag.Surname = HttpContext.Session.GetString("Surname");
             ViewBag.Culture = HttpContext.Session.GetString("Culture");
-            if(HttpContext.Session.GetString("Language") is null)
+            ViewBag.GarageID = HttpContext.Session.GetString("GarageID");
+            if (HttpContext.Session.GetString("Language") is null)
             {
                 HttpContext.Session.SetString("Language", "English");
             }
@@ -71,6 +75,7 @@ namespace GaragePortalNewUI.Models
                 ViewBag.Language = HttpContext.Session.GetString("Language");
             }
             ViewBag.SuccessMessage = HttpContext.Session.GetString("SuccessMessage");
+            ViewBag.DeleteServiceItem = HttpContext.Session.GetString("DeleteServiceItem");
         }
     }
 }

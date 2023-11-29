@@ -1,10 +1,12 @@
 ﻿using DinkToPdf;
 using DinkToPdf.Contracts;
 using GaragePortalNewUI.Enum;
+using GaragePortalNewUI.Models;
 using GaragePortalNewUI.Utilities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.IO;
 
 namespace GaragePortalNewUI.Controllers
 {
@@ -17,7 +19,7 @@ namespace GaragePortalNewUI.Controllers
             _converter = converter;
         }
 
-        public FileResult CreatePDF(long entityType)
+        public FileResult CreatePDF(long entityType,long? serviceHistoryID)
         {
             GetSessionProperties();
             var globalSettings = new GlobalSettings
@@ -32,7 +34,7 @@ namespace GaragePortalNewUI.Controllers
             var objectSettings = new ObjectSettings
             {
                 PagesCount = true,
-                HtmlContent = TemplateGenerator.GetHTMLString(entityType,  HttpContext.Session.GetString("CustomerUserID"), HttpContext.Session.GetString("Culture").ToString()),
+                HtmlContent = TemplateGenerator.GetHTMLString(entityType,  HttpContext.Session.GetString("CustomerUserID"), HttpContext.Session.GetString("Culture").ToString(), serviceHistoryID),
                 WebSettings = { DefaultEncoding = "utf-8" },
                 HeaderSettings = { FontName = "Arial", FontSize = 9, Right = " Page [page] of [toPage]"},
                 FooterSettings = { FontName = "Arial", FontSize = 9, Center = "Garage Management Software ©TseliosAlexandros\n"+ DateTime.Now.DayOfWeek + " " + DateTime.Now.Day + "-" + DateTime.Now.Month + "-" + DateTime.Now.Year + "  " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Millisecond }
@@ -54,9 +56,17 @@ namespace GaragePortalNewUI.Controllers
             {
                 return File(file, "application/pdf", "Engineers " + DateTime.Now.Day + "-" + DateTime.Now.Month + "-" + DateTime.Now.Year + "-" + DateTime.Now.Hour + "-" + DateTime.Now.Minute + "-" + DateTime.Now.Millisecond + ".pdf");
             }
-            else
+            else if (entityType == 4)
             {
                 return File(file, "application/pdf", "User Cars " + DateTime.Now.Day + "-" + DateTime.Now.Month + "-" + DateTime.Now.Year + "-" + DateTime.Now.Hour + "-" + DateTime.Now.Minute + "-" + DateTime.Now.Millisecond + ".pdf");
+            }
+            else
+            {
+
+                //Convert File to Base64 string and send to Client.
+                //string base64 = Convert.ToBase64String(file, 0, file.Length);
+                //return Content(base64);
+                return File(file, "application/pdf", "General " + DateTime.Now.Day + "-" + DateTime.Now.Month + "-" + DateTime.Now.Year + "-" + DateTime.Now.Hour + "-" + DateTime.Now.Minute + "-" + DateTime.Now.Millisecond + ".pdf");
             }
             
         }
@@ -70,6 +80,7 @@ namespace GaragePortalNewUI.Controllers
             ViewBag.CarDetailsID = HttpContext.Session.GetString("CarDetailsID");
             ViewBag.CustomerUserID = HttpContext.Session.GetString("CustomerUserID");
             ViewBag.Culture = HttpContext.Session.GetString("Culture");
+            ViewBag.GarageID = HttpContext.Session.GetString("GarageID");
         }
     }
 }

@@ -92,7 +92,17 @@
         });
     });
 
+    function clearGetManufacturersForModel() {
+        var container = document.getElementById('ShowModels');
+        //console.log('---Clear Models----');
+        while (container.childNodes.length>2){
+            container.removeChild(container.lastChild);
+        }
+        //container.replaceChildren();
+    }
+
     function getManufacturersForModel(manufacturerID, culture) {
+        clearGetManufacturersForModel();
         $(document).ready(function () {
             // Send an AJAX request
             $.getJSON('@Resources.SettingsResources.Uri' + '/GetCarModelManufacturerYearByManufacturerID/' + manufacturerID)
@@ -107,7 +117,17 @@
         });
     }
 
+    function clearGetYearsForModel() {
+        var container = document.getElementById('ShowYears');
+        //console.log('---Clear Years----');
+        while (container.childNodes.length > 2) {
+            container.removeChild(container.lastChild);
+        }
+        //container.replaceChildren();
+    }
+
     function getYearsForModel(modelID, culture) {
+        clearGetYearsForModel();
         $(document).ready(function () {
             // Send an AJAX request
             $.getJSON('@Resources.SettingsResources.Uri' + '/GetCarModelManufacturerYearByModelID/' + modelID)

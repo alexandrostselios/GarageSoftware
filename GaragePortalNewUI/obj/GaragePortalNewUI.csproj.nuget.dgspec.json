@@ -47,6 +47,10 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "AspNetCore.Reporting": {
+              "target": "Package",
+              "version": "[2.1.0, )"
+            },
             "DinkToPdf": {
               "target": "Package",
               "version": "[1.0.8, )"
@@ -58,6 +62,14 @@
             "Microsoft.AspNetCore.Authentication.Google": {
               "target": "Package",
               "version": "[5.0.17, )"
+            },
+            "Microsoft.AspNetCore.Mvc.ViewFeatures": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.ReportingServices.ReportViewerControl.WebForms": {
+              "target": "Package",
+              "version": "[150.1586.0, )"
             },
             "Newtonsoft.Json": {
               "target": "Package",

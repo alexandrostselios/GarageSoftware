@@ -41,5 +41,10 @@ namespace GarageAPI.Models
 
         [Column(TypeName = "datetime")]
         public DateTime? FinishingDate { get; set; }
+
+        public long GarageID { get; set; }
+
+        [NotMapped]
+        public List<string> ServiceItemsList { get; set; }
     }
 }
