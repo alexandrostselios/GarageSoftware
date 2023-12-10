@@ -296,3 +296,5 @@ C:\Users\alexa\Desktop\Visual Studio Projects\GarageSoftware\GaragePortalNewUI\b
 C:\Users\alexa\Desktop\Visual Studio Projects\GarageSoftware\GaragePortalNewUI\obj\Release\net5.0\Razor\Views\ServiceItems\_AddServiceItemPartial.cshtml.g.cs
 C:\Users\alexa\Desktop\Visual Studio Projects\GarageSoftware\GaragePortalNewUI\obj\Release\net5.0\Razor\Views\UserModels\_QuickCreateUserModelServiceHistoryPartial.cshtml.g.cs
 C:\Users\alexa\Desktop\Visual Studio Projects\GarageSoftware\GaragePortalNewUI\obj\Release\net5.0\Razor\Views\UserModels\_UserModelServiceHistoryInformationPartial.cshtml.g.cs
+C:\Users\alexa\Desktop\Visual Studio Projects\GarageSoftware\GaragePortalNewUI\bin\Release\net5.0\ExcelDataReader.dll
+C:\Users\alexa\Desktop\Visual Studio Projects\GarageSoftware\GaragePortalNewUI\obj\Release\net5.0\Razor\Views\UserModels\_SearchUserModelsPartialView.cshtml.g.cs

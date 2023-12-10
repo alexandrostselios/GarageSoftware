@@ -1,0 +1,9 @@
+﻿@inject LanguageService Resource
+
+<span><b>@Resource.GetKey("SearchBy"): </b></span>
+@Html.RadioButton("searchBy","All",true)
+<text>@Resource.GetKey("All")</text>&nbsp;
+@Html.RadioButton("searchBy","Vin")
+<text>@Resource.GetKey("VIN_Number")</text>&nbsp;
+@Html.RadioButton("searchBy","Licence_Plate")
+<text>@Resource.GetKey("Licence_Plate")</text>

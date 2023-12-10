@@ -32,6 +32,8 @@ namespace GarageAPI.Models.Service
 
         public long GarageID { get; set; }
 
+        public string EngineType { get; set; }
+
         public string ModelName { get; set; }
 
         public string ManufacturerName { get; set; }
@@ -42,10 +44,19 @@ namespace GarageAPI.Models.Service
 
         public long EngineerID { get; set; }
 
+        [NotMapped]
+        public string? Engineer { get; set; }
+
         public long? ServiceItemID { get; set; }
 
         public string? ServiceItemDescription { get; set; }
 
         public decimal? ServiceItemPrice { get; set; }
+
+        public float? DiscountPrice { get; set; }
+
+        public float? DiscountPercentage { get; set; }
+
+        public bool isDiscountPercentage { get; set; }
     }
 }

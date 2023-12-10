@@ -165,6 +165,10 @@
     <value>Χρώμα</value>
     <comment>Color</comment>
   </data>
+  <data name="Comments" xml:space="preserve">
+    <value>Σχόλια</value>
+    <comment>Comments</comment>
+  </data>
   <data name="Creation_Date" xml:space="preserve">
     <value>Ημερομηνία Εγγραφής</value>
     <comment>Creation_Date</comment>
@@ -236,6 +240,14 @@
   <data name="Engine_Type" xml:space="preserve">
     <value>Καύσιμο</value>
     <comment>Engine_Type</comment>
+  </data>
+  <data name="Enter_Details_for_Quick_Search" xml:space="preserve">
+    <value>Γρήγορη Αναζήτηση Πελατών</value>
+    <comment>Enter_Details_for_Quick_Search</comment>
+  </data>
+  <data name="Enter_Details_for_Quick_Service_History_Search" xml:space="preserve">
+    <value>Γρήγορη Αναζήτηση Service</value>
+    <comment>Enter_Details_for_Quick_Service_History_Search</comment>
   </data>
   <data name="Enter_Details_for_Search" xml:space="preserve">
     <value>Παρακαλώ Πληκτρολογήστε</value>
@@ -336,6 +348,10 @@
   <data name="Please_try_again_later." xml:space="preserve">
     <value>Παρακαλώ προσπαθήστε αργότερα</value>
     <comment>Please_try_again_later.</comment>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Τιμή</value>
+    <comment>Price</comment>
   </data>
   <data name="Price_Percentage" xml:space="preserve">
     <value>Ποσοστό</value>
@@ -461,6 +477,10 @@
     <value>Ρυθμίσεις Συστήματος</value>
     <comment>System_Settings</comment>
   </data>
+  <data name="Total" xml:space="preserve">
+    <value>Σύνολο</value>
+    <comment>Total</comment>
+  </data>
   <data name="Total_Cars" xml:space="preserve">
     <value>Σύνολο Οχημάτων</value>
     <comment>Total_Cars</comment>
@@ -498,7 +518,7 @@
     <comment>View_Car_History</comment>
   </data>
   <data name="VIN_Number" xml:space="preserve">
-    <value>Αριθμός Πλαισίου</value>
+    <value>Αρ. Πλαισίου</value>
     <comment>VIN_Number</comment>
   </data>
   <data name="Your_email_did_not_send." xml:space="preserve">

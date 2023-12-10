@@ -20,7 +20,7 @@
       "NETCOREAPP3_1_OR_GREATER"
     ],
     "languageVersion": "9.0",
-    "platform": "",
+    "platform": "x64",
     "allowUnsafe": false,
     "warningsAsErrors": false,
     "optimize": true,
@@ -35,6 +35,7 @@
         "dependencies": {
           "AspNetCore.Reporting": "2.1.0",
           "DinkToPdf": "1.0.8",
+          "ExcelDataReader": "3.6.0",
           "Limcap.ApiTools.AspNetLegacy": "0.25.0",
           "Microsoft.AspNetCore.Authentication.Google": "5.0.17",
           "Microsoft.AspNetCore.Mvc.ViewFeatures": "2.2.0",
@@ -391,6 +392,17 @@
         },
         "compile": {
           "lib/netstandard1.6/DinkToPdf.dll": {}
+        }
+      },
+      "ExcelDataReader/3.6.0": {
+        "runtime": {
+          "lib/netstandard2.0/ExcelDataReader.dll": {
+            "assemblyVersion": "3.6.0.0",
+            "fileVersion": "3.6.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/ExcelDataReader.dll": {}
         }
       },
       "Limcap.ApiTools/0.25.0": {
@@ -3703,6 +3715,13 @@
       "sha512": "sha512-wJDlcNXjQ+OnBFwh3LBeAXgrXqlKl0RsgN60XpxEFbyqzdaG9ASb5HTXQjXQPaBguSCOrGZZESPnpcng34TEkw==",
       "path": "dinktopdf/1.0.8",
       "hashPath": "dinktopdf.1.0.8.nupkg.sha512"
+    },
+    "ExcelDataReader/3.6.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-eXyxTwG7EEWpgQX3juZ2KcndqTqm/ydx9GXS2lUiMJU54U4h5eXdygRtVgINv0t60ezPWEb+lL7uM7Q+wm5BBA==",
+      "path": "exceldatareader/3.6.0",
+      "hashPath": "exceldatareader.3.6.0.nupkg.sha512"
     },
     "Limcap.ApiTools/0.25.0": {
       "type": "package",

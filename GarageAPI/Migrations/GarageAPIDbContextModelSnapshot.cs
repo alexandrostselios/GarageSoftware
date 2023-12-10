@@ -271,6 +271,9 @@ namespace GarageAPI.Migrations
                     b.Property<long>("UserModelsID")
                         .HasColumnType("bigint");
 
+                    b.Property<bool>("isDiscountPercentage")
+                        .HasColumnType("bit");
+
                     b.HasKey("ID");
 
                     b.HasIndex("EngineerID");
@@ -290,6 +293,9 @@ namespace GarageAPI.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("EngineerID")
+                        .HasColumnType("bigint");
 
                     b.Property<float?>("FinalPrice")
                         .HasColumnType("real");
@@ -335,6 +341,9 @@ namespace GarageAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("isDiscountPercentage")
+                        .HasColumnType("bit");
+
                     b.ToTable("ServiceHistoryDTO");
                 });
 
@@ -357,7 +366,110 @@ namespace GarageAPI.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("GarageID");
+
+                    b.HasIndex("SHID");
+
+                    b.HasIndex("SIID");
+
                     b.ToTable("ServiceHistoryItems");
+                });
+
+            modelBuilder.Entity("GarageAPI.Models.Service.ServiceHistoryItemsDTO", b =>
+                {
+                    b.Property<long>("GarageID")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ID")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("SHID")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("SIID")
+                        .HasColumnType("bigint");
+
+                    b.ToTable("ServiceHistoryItemsDTO");
+                });
+
+            modelBuilder.Entity("GarageAPI.Models.Service.ServiceHistoryWithItemsDTO", b =>
+                {
+                    b.Property<byte[]>("CarImage")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<long>("Color")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EngineType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("EngineerID")
+                        .HasColumnType("bigint");
+
+                    b.Property<float?>("FinalPrice")
+                        .HasColumnType("real");
+
+                    b.Property<long>("GarageID")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ID")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("LicencePlate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ManufacturerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ModelName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ModelYear")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ServiceDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("ServiceItemDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("ServiceItemID")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal?>("ServiceItemPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long?>("ServiceKilometer")
+                        .HasColumnType("bigint");
+
+                    b.Property<float?>("StartPrice")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Surname")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("UserModelsID")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("VIN")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("isDiscountPercentage")
+                        .HasColumnType("bit");
+
+                    b.ToTable("ServiceHistoryWithItemsDTO");
                 });
 
             modelBuilder.Entity("GarageAPI.Models.Service.ServiceItems", b =>
@@ -664,6 +776,33 @@ namespace GarageAPI.Migrations
                     b.Navigation("Engineer");
 
                     b.Navigation("UserModels");
+                });
+
+            modelBuilder.Entity("GarageAPI.Models.Service.ServiceHistoryItems", b =>
+                {
+                    b.HasOne("GarageAPI.Models.GarageDetails", "GarageDetails")
+                        .WithMany()
+                        .HasForeignKey("GarageID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GarageAPI.Models.Service.ServiceHistory", "ServiceHistory")
+                        .WithMany()
+                        .HasForeignKey("SHID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GarageAPI.Models.Service.ServiceItems", "ServiceItems")
+                        .WithMany()
+                        .HasForeignKey("SIID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("GarageDetails");
+
+                    b.Navigation("ServiceHistory");
+
+                    b.Navigation("ServiceItems");
                 });
 
             modelBuilder.Entity("GarageAPI.Models.Settings", b =>

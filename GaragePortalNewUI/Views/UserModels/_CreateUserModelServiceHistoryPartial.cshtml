@@ -41,7 +41,7 @@
                     <div class="form-group ServiceHistoryServiceItems">
                         <label asp-for="ServiceItemsList" class="control-label">@Resource.GetKey("Service_Items") (@Resource.GetKey("Select_Multiple_Service_Items"))</label>
                         <br />
-                        <select id="ServiceItems" asp-for="ServiceItemsList" class="form-control" onchange="CalculatePrice()" multiple>
+                        <select id="ServiceItems" asp-for="ServiceItemsList" class="form-control" onchange="CalculatePrice(0)" multiple>
                             @*<option value='0'>--@Resource.GetKey("Select_Service_Items")--</option>*@
                         </select>
                         <span asp-validation-for="ServiceItemsList" class="text-danger"></span>
@@ -66,10 +66,10 @@
                         <div class="form-group col-sm-4 ">
                             <div class="input-icon input-icon-right">
                                 <label asp-for="DiscountPrice" class="control-label">@Resource.GetKey("Discount_Price")</label>&nbsp;&nbsp;
-                                <input type="checkbox" id="percentage" name="percentage" onclick="checkDiscountType()" />
+                                <input type="checkbox" id="percentage" name="percentage" onclick="checkDiscountType(0)" />
                                 <label for="horns">@Resource.GetKey("Price_Percentage")</label>
                                 <input asp-for="DiscountPrice" class="form-control" placeholder="0,00" onchange="setFinalPrice()" id="discountPrice">
-                                <input asp-for="DiscountPrice" class="form-control" placeholder="0,00" onchange="setFinalPrice()" id="discountPricePercentage" value="0,00">
+                                <input asp-for="DiscountPercentage" class="form-control" placeholder="0,00" onchange="setFinalPrice()" id="discountPricePercentage" value="0,00">
                                 <i id="discountPriceSymbol">€</i>
                                 <i id="discountPricePercentageSymbol">%</i>
                                 <span asp-validation-for="DiscountPrice" class="text-danger"></span>

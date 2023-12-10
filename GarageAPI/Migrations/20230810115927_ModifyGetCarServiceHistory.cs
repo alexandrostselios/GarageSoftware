@@ -70,6 +70,7 @@ namespace GarageAPI.Migrations
                        CMAN.ManufacturerName, 
                        CM.ModelName, 
                        CMY.Description AS ModelYear, 
+                       CET.EngineType,
                        UM.ID AS UserModelsID, 
                        UM.LicencePlate, 
                        UM.VIN, 
@@ -89,6 +90,7 @@ namespace GarageAPI.Migrations
                      LEFT OUTER JOIN ServiceHistoryItems SHI ON SHI.SHID = SH.ID
                      LEFT OUTER JOIN ServiceItems SI ON SI.ID = SHI.SIID
                      LEFT OUTER JOIN Users UE ON UE.ID = EngineerID
+                     LEFT OUTER JOIN CarEngineType CET ON CET.ID = UM.EngineTypeID
                 WHERE SH.ID = @ServiceHistoryID
                 ORDER BY SH.ServiceDate DESC;
                 END";

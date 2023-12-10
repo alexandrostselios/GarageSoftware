@@ -373,3 +373,8 @@ textarea.form-control {
     max-height: 110px !important;
     overflow: scroll !important;
 }
+
+#quickServiceHistorySearch{
+    /*background-color: yellow;*/
+    width: 353.5px
+}

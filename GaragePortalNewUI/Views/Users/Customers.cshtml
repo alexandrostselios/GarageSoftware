@@ -55,7 +55,7 @@
                         <input type="submit" id="Search" value="@Resource.GetKey("Search")" class="btn btn-success" />
                     </td>
                     <td>
-                        <a class="af" asp-controller="PdfCreator" asp-action="CreatePDF" asp-route-entityType="2">@Resource.GetKey("Download_Users")</a>
+                        <a class="af" asp-controller="PdfCreator" asp-action="CreatePDF" asp-route-entityType="2" >@Resource.GetKey("Download_Users")</a>
                     </td>
                 </tr>
 
@@ -131,10 +131,12 @@
                     <td>
                         <a class="af" asp-controller="Email" asp-action="SendEmailToUser" asp-route-id="@item.ID" asp-route-email="@item.Email" asp-route-userType="2">@Resource.GetKey("Send_Email")</a>
                     </td>
+                    <td style="width:250px">
+                        <a class="af" asp-controller="PdfCreator" asp-action="CreatePDF" asp-route-entityType="4" asp-route-userID="@item.ID">@Resource.GetKey("Download_User_Cars")</a>
+                    </td>
                     <td>
                         <button class="btn btn-sm btn-primary m-2" id="btnEditCustomer" data-bs-toggle="ajax-modal" data-bs-target="#EditCustomer" data-url="@Url.Action("EditCustomerPartial",new{id = @item.ID, garageID = @item.GarageID})">@Resource.GetKey("Edit")</button>
                     </td>
-                    <td></td>
                 </tr>
             }
         </tbody>

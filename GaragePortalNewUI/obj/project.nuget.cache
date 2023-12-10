@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "7a4BXT07Z2whIhr/29VCXnBJzVXcjzYBUfkrnh98JlMKRhi1RtZf/kKVjqXrzQ26dQX3LVd7+tGjRSVSTuQL8g==",
+  "dgSpecHash": "JBJvw1y5f427gSGsCsx1U+OucmB11guFmY1MPIVj00oALLGcMpuVHXzWScDF7CRXGw+q9gNs4zdZ4Y2yEceHcA==",
   "success": true,
   "projectFilePath": "C:\\Users\\alexa\\Desktop\\Visual Studio Projects\\GarageSoftware\\GaragePortalNewUI\\GaragePortalNewUI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\alexa\\.nuget\\packages\\aspnetcore.reporting\\2.1.0\\aspnetcore.reporting.2.1.0.nupkg.sha512",
     "C:\\Users\\alexa\\.nuget\\packages\\aspnetcore.reportingservices\\2.1.0\\aspnetcore.reportingservices.2.1.0.nupkg.sha512",
     "C:\\Users\\alexa\\.nuget\\packages\\dinktopdf\\1.0.8\\dinktopdf.1.0.8.nupkg.sha512",
+    "C:\\Users\\alexa\\.nuget\\packages\\exceldatareader\\3.6.0\\exceldatareader.3.6.0.nupkg.sha512",
     "C:\\Users\\alexa\\.nuget\\packages\\limcap.apitools\\0.25.0\\limcap.apitools.0.25.0.nupkg.sha512",
     "C:\\Users\\alexa\\.nuget\\packages\\limcap.apitools.aspnetlegacy\\0.25.0\\limcap.apitools.aspnetlegacy.0.25.0.nupkg.sha512",
     "C:\\Users\\alexa\\.nuget\\packages\\microsoft.aspnet.mvc\\5.0.0\\microsoft.aspnet.mvc.5.0.0.nupkg.sha512",

@@ -165,6 +165,10 @@
     <value>Color</value>
     <comment>Color</comment>
   </data>
+  <data name="Comments" xml:space="preserve">
+    <value>Comments</value>
+    <comment>Comments</comment>
+  </data>
   <data name="Creation_Date" xml:space="preserve">
     <value>Creation Date</value>
     <comment>Creation_Date</comment>
@@ -236,6 +240,14 @@
   <data name="Engine_Type" xml:space="preserve">
     <value>Fuel</value>
     <comment>Engine_Type</comment>
+  </data>
+  <data name="Enter_Details_for_Quick_Search" xml:space="preserve">
+    <value>Quick Search for Clients</value>
+    <comment>Enter_Details_for_Quick_Search</comment>
+  </data>
+  <data name="Enter_Details_for_Quick_Service_History_Search" xml:space="preserve">
+    <value>Quick Search for Service History</value>
+    <comment>Enter_Details_for_Quick_Service_History_Search</comment>
   </data>
   <data name="Enter_Details_for_Search" xml:space="preserve">
     <value>Enter Details for Search</value>
@@ -336,6 +348,10 @@
   <data name="Please_try_again_later." xml:space="preserve">
     <value>Please try again later.</value>
     <comment>Please_try_again_later.</comment>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Price</value>
+    <comment>Price</comment>
   </data>
   <data name="Price_Percentage" xml:space="preserve">
     <value>Price Percentage</value>
@@ -460,6 +476,10 @@
   <data name="System_Settings" xml:space="preserve">
     <value>System Settings</value>
     <comment>System_Settings</comment>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Total</value>
+    <comment>Total</comment>
   </data>
   <data name="Total_Cars" xml:space="preserve">
     <value>Total Cars</value>

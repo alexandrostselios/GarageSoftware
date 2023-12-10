@@ -46,5 +46,7 @@ namespace GarageAPI.Models
 
         [NotMapped]
         public List<string> ServiceItemsList { get; set; }
+
+        public bool isDiscountPercentage { get; set; }
     }
 }

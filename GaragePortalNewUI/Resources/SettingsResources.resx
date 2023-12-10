@@ -133,4 +133,8 @@
     <value>http://alefhome.ddns.net:8082/api</value>
     <comment>UriProduction</comment>
   </data>
+  <data name="Uri3" xml:space="preserve">
+    <value>https://garagewebapi.eu/api</value>
+    <comment>UriWeb</comment>
+  </data>
 </root>

@@ -55,26 +55,56 @@ namespace GaragePortalNewUI.Controllers
             return View(userCars);
         }
 
-        public IActionResult ViewCarDetails(long id)
+        public IActionResult ViewCarDetails(long id, string? searchBy, string? searchValue)
         {
             GetSessionProperties();
-            if (id == null)
+            if (string.IsNullOrEmpty(searchValue))
             {
-                return NotFound();
+                if (id == null)
+                {
+                    return NotFound();
+                }
+                HttpContext.Session.SetString("CarDetailsID", id.ToString());
+                IEnumerable<ServiceHistory> carServiceHsitory = null;
+                var responseTask = client.GetAsync(client.BaseAddress + "/GetCarServiceHistoryByUserModelsID/" + id);
+                responseTask.Wait();
+                var result = responseTask.Result;
+                var readTask = result.Content.ReadAsAsync<IList<ServiceHistory>>();
+                readTask.Wait();
+                carServiceHsitory = readTask.Result;
+                if (carServiceHsitory == null)
+                {
+                    return NotFound();
+                }
+                return View(carServiceHsitory);
             }
-            HttpContext.Session.SetString("CarDetailsID",id.ToString());
-            IEnumerable<ServiceHistory> carServiceHsitory = null;
-            var responseTask = client.GetAsync(client.BaseAddress + "/GetCarServiceHistoryByUserModelsID/" + id);
-            responseTask.Wait();
-            var result = responseTask.Result;
-            var readTask = result.Content.ReadAsAsync<IList<ServiceHistory>>();
-            readTask.Wait();
-            carServiceHsitory = readTask.Result;
-            if (carServiceHsitory == null)
+            else
             {
-                return NotFound();
+                using (client)
+                {
+                    var responseTask = client.GetAsync(client.BaseAddress);
+                    IEnumerable<ServiceHistory> carServiceHsitory = null;
+                    if (searchBy.ToLower() == "all")
+                    {
+                        responseTask = client.GetAsync(client.BaseAddress + "/GetUserModelsServiceHistoryByValue/0/" + searchValue + '/' + ViewBag.GarageID);
+                    }
+                    else if (searchBy.ToLower() == "vin")
+                    {
+                        responseTask = client.GetAsync(client.BaseAddress + "/GetUserModelsServiceHistoryByValue/1/" + searchValue + '/' + ViewBag.GarageID);
+                    }
+                    else if (searchBy.ToLower() == "licence_plate")
+                    {
+                        responseTask = client.GetAsync(client.BaseAddress + "/GetUserModelsServiceHistoryByValue/2/" + searchValue + '/' + ViewBag.GarageID);
+                    }
+                    responseTask.Wait();
+                    var result = responseTask.Result;
+                    var readTask = result.Content.ReadAsAsync<IList<ServiceHistory>>();
+                    readTask.Wait();
+                    carServiceHsitory = readTask.Result;
+
+                    return View(carServiceHsitory);
+                }
             }
-            return View(carServiceHsitory);
         }
 
         public IActionResult EditCarDetails(long id, Colors color, int flag, IFormFile Image)

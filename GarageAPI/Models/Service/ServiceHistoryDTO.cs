@@ -40,6 +40,6 @@ namespace GarageAPI.Models.Service
 
         public long EngineerID { get; set; }
 
-        //public string ServiceItem { get; set; }
+        public bool isDiscountPercentage { get; set; }
     }
 }

@@ -296,3 +296,5 @@ C:\Users\alexa\Desktop\Visual Studio Projects\GarageSoftware\GaragePortalNewUI\o
 C:\Users\alexa\Desktop\Visual Studio Projects\GarageSoftware\GaragePortalNewUI\obj\Debug\net5.0\GaragePortalNewUI.genruntimeconfig.cache
 C:\Users\alexa\Desktop\Visual Studio Projects\GarageSoftware\GaragePortalNewUI\obj\Debug\net5.0\ref\GaragePortalNewUI.dll
 C:\Users\alexa\Desktop\Visual Studio Projects\GarageSoftware\GaragePortalNewUI\obj\Debug\net5.0\Razor\Views\UserModels\_UserModelServiceHistoryInformationPartial.cshtml.g.cs
+C:\Users\alexa\Desktop\Visual Studio Projects\GarageSoftware\GaragePortalNewUI\bin\Debug\net5.0\ExcelDataReader.dll
+C:\Users\alexa\Desktop\Visual Studio Projects\GarageSoftware\GaragePortalNewUI\obj\Debug\net5.0\Razor\Views\UserModels\_SearchUserModelsPartialView.cshtml.g.cs

@@ -20,8 +20,6 @@ namespace GaragePortalNewUI.Models
 
         public float? FinalPrice { get; set; }
 
-        public float? DiscountPrice { get; set; }
-
         public string? Name { get; set; }
 
         public string? Surname { get; set; }
@@ -34,6 +32,8 @@ namespace GaragePortalNewUI.Models
 
         public long GarageID { get; set; }
 
+        public string EngineType { get; set; }
+
         public string ModelName { get; set; }
 
         public string ManufacturerName { get; set; }
@@ -44,10 +44,20 @@ namespace GaragePortalNewUI.Models
 
         public long EngineerID { get; set; }
 
+        public string Engineer { get; set; }
+
         public string ServiceItem { get; set; }
 
         public long? ServiceItemID { get; set; }
 
         public string? ServiceItemDescription { get; set; }
+
+        public decimal? ServiceItemPrice { get; set; }
+
+        public float? DiscountPrice { get; set; }
+
+        public float? DiscountPercentage { get; set; }
+
+        public bool isDiscountPercentage { get; set; }
     }
 }

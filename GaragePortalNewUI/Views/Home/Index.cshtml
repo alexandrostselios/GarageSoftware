@@ -16,6 +16,52 @@
             <div id="quickAddCarServiceHistoryDIV"></div>
         </div>
     </div>
+    <div class="form-row">
+    <div class="form-group col-sm-6">
+        <br><br>
+        @using (Html.BeginForm("ViewCarDetails", "UserModels", FormMethod.Get))
+        {
+            <table>
+                <tr>
+                    <td>
+                        @Html.Partial("../UserModels/_SearchUserModelsPartialView")
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.TextBox("searchValue",null, new {Class = "form-control",id="quickServiceHistorySearch",placeholder=@Resource.GetKey("Enter_Details_for_Quick_Service_History_Search")})
+                    </td>
+                    <td>
+                        <input type="submit" id="Search" value="@Resource.GetKey("Search")" class="btn btn-success" />
+                    </td>
+                </tr>
+
+            </table>
+        }
+    </div>
+
+    <div class="form-group col-sm-6">
+        <br><br>
+        @using (Html.BeginForm("Customers", "Users", FormMethod.Get))
+        {
+            <table>
+                <tr>
+                    <td>
+                        @Html.Partial("../Users/_SearchPartialView")
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.TextBox("searchValue",null, new {Class = "form-control",placeholder=@Resource.GetKey("Enter_Details_for_Quick_Search")})
+                    </td>
+                    <td>
+                        <input type="submit" id="Search" value="@Resource.GetKey("Search")" class="btn btn-success" />
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+    </div>
 }else{
     <div class="text-center">
         <h1 class="display-4">Welcome</h1>

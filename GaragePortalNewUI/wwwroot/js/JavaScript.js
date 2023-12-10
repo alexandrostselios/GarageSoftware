@@ -1,5 +1,7 @@
 ﻿var url = 'https://localhost:7096/api/'
 //var url = 'http://alefhome.ddns.net:8082/api/'
+//var url = 'https://garagewebapi.eu/api/'
+
 
 function checkDiscountType(x) {
     if(x === 0){
@@ -8,9 +10,9 @@ function checkDiscountType(x) {
             $("#discountPriceSymbol").hide();
             $("#discountPricePercentage").show();
             $("#discountPricePercentageSymbol").show();
-            document.getElementById("discountPricePercentage").placeholder = "0,00";
+            //document.getElementById("discountPricePercentage").placeholder = "0,00";
             setFinalPrice();
-            //console.log("checked");
+            console.log("checked");
         } else {
             $("#discountPrice").show();
             $("#discountPriceSymbol").show();
@@ -18,7 +20,7 @@ function checkDiscountType(x) {
             $("#discountPricePercentage").hide();
             $("#discountPricePercentageSymbol").hide();
             setFinalPrice();
-            //console.log("Not checked.");
+            console.log("Not checked.");
         }
     }else {
         $("#discountPrice").show();
@@ -26,6 +28,7 @@ function checkDiscountType(x) {
         document.getElementById("discountPrice").placeholder = "0,00";
         $("#discountPricePercentage").hide();
         $("#discountPricePercentageSymbol").hide();
+        console.log("Nothing");
     }
     
 }

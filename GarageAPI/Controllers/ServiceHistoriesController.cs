@@ -9,6 +9,8 @@ using GarageAPI.Data;
 using GarageAPI.Models.UserModels;
 using GarageAPI.Models;
 using GarageAPI.Models.Service;
+using GarageAPI.Enum;
+using GarageAPI.Models.User;
 
 namespace GarageAPI.Controllers
 {
@@ -31,7 +33,7 @@ namespace GarageAPI.Controllers
 
         [HttpGet]
         [Route("api/GetCarServiceHistoryByUserModelsID/{id:long}")]
-        public async Task<IActionResult> GetUserModelByUserID([FromRoute] long id)
+        public async Task<ActionResult<IEnumerable<ServiceHistoryDTO>>> GetCarServiceHistoryByUserModelsID([FromRoute] long id)
         {
             string StoredProc = "exec GetCarServiceHistory @UserModelsID = " + id;
             List<ServiceHistoryDTO> carServiceHistory = await dbContext.ServiceHistoryDTO.FromSqlRaw(StoredProc).ToListAsync();
@@ -40,6 +42,28 @@ namespace GarageAPI.Controllers
                 return NotFound();
             }
             return Ok(carServiceHistory);
+        }
+
+        [HttpGet]
+        [Route("api/GetUserModelsServiceHistoryByValue/{searchBy}/{value}/{garageID}")]
+        public async Task<ActionResult<IEnumerable<ServiceHistoryDTO>>> GetUserModelsServiceHistoryByValue([FromRoute] int searchBy,string value, long garageID)
+        {
+            UserModel userModelList = new UserModel();
+            if (searchBy == 0)
+            {
+                userModelList = await dbContext.UserModels.FirstOrDefaultAsync(c => (c.VIN.Contains(value) || c.LicencePlate.Contains(value)));
+            }
+            else if (searchBy == 1)
+            {
+                userModelList = await dbContext.UserModels.FirstOrDefaultAsync(c => (c.VIN.Contains(value) ));
+            }
+            else
+            {
+                userModelList = await dbContext.UserModels.FirstOrDefaultAsync(c => (c.LicencePlate.Contains(value)));
+                
+            }
+            var userModel = await GetCarServiceHistoryByUserModelsID(userModelList.ID);
+            return userModel;
         }
 
         [HttpGet]
@@ -52,22 +76,6 @@ namespace GarageAPI.Controllers
             {
                 return NotFound();
             }
-            ServiceHistoryWithItemsDTO temp = new ServiceHistoryWithItemsDTO()
-            {
-                ID = carServiceHistory[0].ID,
-                ServiceDate = carServiceHistory[0].ServiceDate,
-                ServiceItemID = carServiceHistory[0].ServiceItemID,
-                ServiceItemDescription = carServiceHistory[0].ServiceItemDescription,
-                ServiceItemPrice = carServiceHistory[0].ServiceItemPrice,
-                ServiceKilometer = carServiceHistory[0].ServiceKilometer,
-                Description = carServiceHistory[0].Description,
-                EngineerID = carServiceHistory[0].EngineerID,
-                Color = carServiceHistory[0].Color,
-                LicencePlate = carServiceHistory[0].LicencePlate,
-                VIN = carServiceHistory[0].VIN,
-                UserModelsID = carServiceHistory[0].UserModelsID,
-                GarageID = carServiceHistory[0].GarageID
-            };
             return Ok(carServiceHistory);
         }
 
@@ -85,6 +93,7 @@ namespace GarageAPI.Controllers
                StartPrice = addUserModelServiceHistoryRequest.StartPrice,
                DiscountPrice = addUserModelServiceHistoryRequest.DiscountPrice,
                DiscountPercentage = addUserModelServiceHistoryRequest.DiscountPercentage,
+               isDiscountPercentage = addUserModelServiceHistoryRequest.DiscountPercentage is null ? false : true,
                FinalPrice = addUserModelServiceHistoryRequest.FinalPrice,
                StartingDate = addUserModelServiceHistoryRequest.StartingDate,
                FinishingDate = addUserModelServiceHistoryRequest.FinishingDate,

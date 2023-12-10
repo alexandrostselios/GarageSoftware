@@ -19,7 +19,7 @@ namespace GaragePortalNewUI.Controllers
             _converter = converter;
         }
 
-        public FileResult CreatePDF(long entityType,long? serviceHistoryID)
+        public FileResult CreatePDF(long entityType,long? userID,long? serviceHistoryID)
         {
             GetSessionProperties();
             var globalSettings = new GlobalSettings
@@ -34,10 +34,10 @@ namespace GaragePortalNewUI.Controllers
             var objectSettings = new ObjectSettings
             {
                 PagesCount = true,
-                HtmlContent = TemplateGenerator.GetHTMLString(entityType,  HttpContext.Session.GetString("CustomerUserID"), HttpContext.Session.GetString("Culture").ToString(), serviceHistoryID),
+                HtmlContent = TemplateGenerator.GetHTMLString(entityType,  userID is null ? HttpContext.Session.GetString("CustomerUserID") : userID.ToString(), HttpContext.Session.GetString("Culture").ToString(), serviceHistoryID),
                 WebSettings = { DefaultEncoding = "utf-8" },
                 HeaderSettings = { FontName = "Arial", FontSize = 9, Right = " Page [page] of [toPage]"},
-                FooterSettings = { FontName = "Arial", FontSize = 9, Center = "Garage Management Software ©TseliosAlexandros\n"+ DateTime.Now.DayOfWeek + " " + DateTime.Now.Day + "-" + DateTime.Now.Month + "-" + DateTime.Now.Year + "  " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Millisecond }
+                FooterSettings = { FontName = "Arial", FontSize = 9, Center = "Garage Management Software ©TseliosAlexandros\n"+ DateTime.Now.DayOfWeek + " " + DateTime.Now.Day.ToString("00") + "-" + DateTime.Now.Month.ToString("00") + "-" + DateTime.Now.Year + "  " + DateTime.Now.Hour.ToString("00") + ":" + DateTime.Now.Minute.ToString("00")}
             };
 
             var pdf = new HtmlToPdfDocument

@@ -10,6 +10,8 @@ using System.Resources;
 using System.Xml.Linq;
 using Microsoft.AspNetCore.Http;
 using System.Web.Mvc;
+using Microsoft.Extensions.Primitives;
+using Microsoft.VisualBasic;
 
 namespace GaragePortalNewUI.Utilities
 {
@@ -190,8 +192,7 @@ namespace GaragePortalNewUI.Utilities
                         serviceHistoryDTO = readTask.Result;
                     }
 
-                    sb.Append(@"
-                        <html>
+                    sb.Append(@"<html>
 	                        <head>
 		                        <style>
 			                        table {
@@ -211,17 +212,17 @@ namespace GaragePortalNewUI.Utilities
 		                        </style>
 	                        </head>
 	                        <body>
-		                        <div class='header'><h1><center>" + reportTitle + @"</center></h1>
-		                        <table align='center' style='width:100%'>
-			                        <tr>
-				                        <th>" + rm.GetString("Service_Date", new System.Globalization.CultureInfo(culture)) + @"</th>
-				                        <th>" + rm.GetString("Service_Engineer", new System.Globalization.CultureInfo(culture)) + @"</th>
-				                        <th>" + rm.GetString("Service_StartPrice", new System.Globalization.CultureInfo(culture)) + @"</th>
-				                        <th>" + rm.GetString("Service_FinalPrice", new System.Globalization.CultureInfo(culture)) + @"</th>
-				                        <th>" + rm.GetString("Service_Kilometer", new System.Globalization.CultureInfo(culture)) + @"</th>
-                                    </tr>
-                    ");
+		                        <div class='header'><h1><center>" + reportTitle + @"</center></h1>");
 
+                    sb.Append(@"<table align='center' style='width:100%'>
+			                            <tr>
+                                            <th>" + rm.GetString("Model_Manufacturer", new System.Globalization.CultureInfo(culture)) + @"</th>
+                                            <th>" + rm.GetString("Model", new System.Globalization.CultureInfo(culture)) + @"</th>
+                                            <th>" + rm.GetString("Model_Year", new System.Globalization.CultureInfo(culture)) + @"</th>
+                                            <th>" + rm.GetString("Engine_Type", new System.Globalization.CultureInfo(culture)) + @"</th>
+                                            <th>" + rm.GetString("Licence_Plate", new System.Globalization.CultureInfo(culture)) + @"</th>
+                                            <th>VIN</th>
+                                        </tr>");
                     sb.AppendFormat(@"
                             <tr align='center'>" +
                                @"
@@ -230,31 +231,65 @@ namespace GaragePortalNewUI.Utilities
                                 <td>{2}</td>
                                 <td>{3}</td>
                                 <td>{4}</td>
-                            </tr>", serviceHistoryDTO.ElementAt(0).ServiceDate, serviceHistoryDTO.ElementAt(0).EngineerID, serviceHistoryDTO.ElementAt(0).StartPrice,
-                            serviceHistoryDTO.ElementAt(0).FinalPrice, serviceHistoryDTO.ElementAt(0).ServiceKilometer
+                                <td>{5}</td>
+                            </tr>", serviceHistoryDTO.ElementAt(0).ManufacturerName, serviceHistoryDTO.ElementAt(0).ModelName, serviceHistoryDTO.ElementAt(0).ModelYear, serviceHistoryDTO.ElementAt(0).EngineType, serviceHistoryDTO.ElementAt(0).LicencePlate, serviceHistoryDTO.ElementAt(0).VIN);
+                    sb.Append(@"</table><br><br>");
+
+                    sb.AppendFormat(@"
+                                <table align='center' style='width:100%'>
+			                        <tr>
+				                        <th>" + rm.GetString("Service_Date", new System.Globalization.CultureInfo(culture)) + @"</th>
+				                        <th>" + rm.GetString("Service_Engineer", new System.Globalization.CultureInfo(culture)) + @"</th>
+				                        <th>" + rm.GetString("Service_StartPrice", new System.Globalization.CultureInfo(culture)) + @"</th>
+                                        <th>" + rm.GetString("Discount_Price", new System.Globalization.CultureInfo(culture)) + @"</th>
+				                        <th>" + rm.GetString("Service_FinalPrice", new System.Globalization.CultureInfo(culture)) + @"</th>
+				                        <th>" + rm.GetString("Service_Kilometer", new System.Globalization.CultureInfo(culture)) + @"</th>
+                                    </tr>
+                    ");
+                    DateTime dt;
+                    DateTime.TryParse(serviceHistoryDTO.ElementAt(0).ServiceDate.ToString(), out dt);
+                    sb.AppendFormat(@"
+                            <tr align='center'>" +
+                               @"
+                                <td>{0}</td>
+                                <td>{1}</td>
+                                <td>{2} €</td>
+                                <td>{3}</td>
+                                <td>{4} €</td>
+                                <td>{5}</td>
+                            </tr>", dt.ToString("dd/MM/yyyy"), serviceHistoryDTO.ElementAt(0).Surname + ' ' + serviceHistoryDTO.ElementAt(0).Name, serviceHistoryDTO.ElementAt(0).StartPrice,
+                             "--", serviceHistoryDTO.ElementAt(0).FinalPrice, serviceHistoryDTO.ElementAt(0).ServiceKilometer
                             );
-                
+
                     sb.Append(@"</table><br><br>");
                     sb.Append(@"<table align='center' style='width:100%'>
-			                            <tr>
-                                            <th>A/A</th>
-                                            <th>Description</th>
-                                        </tr>");
+			                        <tr>
+                                        <th>A/A</th>
+                                        <th>" + rm.GetString("Service_Items", new System.Globalization.CultureInfo(culture)) + @"</th>
+                                        <th>" + rm.GetString("Price", new System.Globalization.CultureInfo(culture)) + @"</th>
+                                    </tr>");
                     int i = 1;
+                    double totalServiceItemPrice = 0;
                     foreach (var serviceItem in serviceHistoryDTO)
                     {
                         sb.AppendFormat(@"
                                 <tr align='center'>" +
                                 @"<td>" + i + @")</td>
                                     <td>{0}</td>
-                                </tr>", serviceItem.ServiceItemDescription);
+                                    <td>{1}</td>
+                                </tr>", serviceItem.ServiceItemDescription, serviceItem.ServiceItemPrice > 0 ? serviceItem.ServiceItemPrice + " €" : "--");
                         i++;
+                        totalServiceItemPrice += Convert.ToDouble(serviceItem.ServiceItemPrice);
                     }
-                    sb.Append(@"</table><br><br>");
 
-                    sb.AppendFormat(@"Comments: {0}", serviceHistoryDTO.ElementAt(0).Description);
+                    sb.AppendFormat(@"<br>
+                    <tr style='font-weight: bold; background-color: white'><td colspan='2'; style='text-align: right'>" + rm.GetString("Total", new System.Globalization.CultureInfo(culture)) + @": </td><td> {0} € </td></tr>
+                    </table><br><br>", totalServiceItemPrice);
+
+
+                    sb.AppendFormat(@"<b>" + rm.GetString("Comments", new System.Globalization.CultureInfo(culture)) + @":</b> {0}", serviceHistoryDTO.ElementAt(0).Description);
                     sb.Append(@"</body>
-                                </html> ");
+                                </html>");
                 }
             }
             return sb.ToString();

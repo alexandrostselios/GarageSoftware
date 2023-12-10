@@ -65,10 +65,10 @@
                         <div class="form-group col-sm-4 ">
                             <div class="input-icon input-icon-right">
                                 <label asp-for="DiscountPrice" class="control-label">@Resource.GetKey("Discount_Price")</label>&nbsp;&nbsp;
-                                <input type="checkbox" id="percentage" name="percentage" onclick="checkDiscountType()" disabled />
+                                <input type="checkbox" id="percentage" name="percentage" onclick="checkDiscountType(0)" disabled />
                                 <label for="horns">@Resource.GetKey("Price_Percentage")</label>
-                                <input asp-for="DiscountPrice" class="form-control" placeholder="0,00" onchange="setFinalPrice()" id="discountPrice" disabled>
-                                <input asp-for="DiscountPrice" class="form-control" placeholder="0,00" onchange="setFinalPrice()" id="discountPricePercentage" disabled>
+                                <input class="form-control" placeholder="0,00" onchange="setFinalPrice()" id="discountPrice" disabled>
+                                <input class="form-control" placeholder="0,00" onchange="setFinalPrice()" id="discountPricePercentage" disabled>
                                 <i id="discountPriceSymbol">€</i>
                                 <i id="discountPricePercentageSymbol">%</i>
                                 <span asp-validation-for="DiscountPrice" class="text-danger"></span>
@@ -100,52 +100,7 @@
     function PrintServiceHistory() {
         console.log("PrintServiceHistory()");
         window.location = window.location.origin + '/PdfCreator/CreatePDF?entityType=5&serviceHistoryID=' + document.getElementById("ID").value ;
-
-        //var serviceURL = window.location.origin + '/PdfCreator/CreatePDF?entityType=5&serviceHistoryID=' + document.getElementById('ID').value;
-        //console.log("ServiceURL: " + serviceURL);
-        //var fileName = "test.pdf";
-        //var model = {
-        //    StartPrice: "150",
-        //    ServiceKilometer: "1234567890"
-        //};
-        //$.ajax({
-        //    type: "POST",
-        //    url: serviceURL,
-        //    dataType: "text",
-        //    data: JSON.stringify(model),
-        //    success: function (r) {
-        //        //Convert Base64 string to Byte Array.
-        //        var bytes = Base64ToBytes(r);
-
-        //        //Convert Byte Array to BLOB.
-        //        var blob = new Blob([bytes], { type: "application/octetstream" });
-
-        //        //Check the Browser type and download the File.
-        //        var isIE = false || !!document.documentMode;
-        //        if (isIE) {
-        //            window.navigator.msSaveBlob(blob, fileName);
-        //        } else {
-        //            var url = window.URL || window.webkitURL;
-        //            link = url.createObjectURL(blob);
-        //            var a = $("<a />");
-        //            a.attr("download", fileName);
-        //            a.attr("href", link);
-        //            $("body").append(a);
-        //            a[0].click();
-        //            $("body").remove(a);
-        //        }
-        //    }
-        //});
     }
-
-    function Base64ToBytes(base64) {
-        var s = window.atob(base64);
-        var bytes = new Uint8Array(s.length);
-        for (var i = 0; i < s.length; i++) {
-            bytes[i] = s.charCodeAt(i);
-        }
-        return bytes;
-    };
 
 
     $(document).ready(function () {
@@ -185,6 +140,20 @@
             document.getElementById('ServiceDateInfo').value = data[0].serviceDate;
             document.getElementById('GeneralCommentInfo').value = data[0].description;
             document.getElementById('StartPriceInfo').value = data[0].startPrice;
+            
+            console.log(data[0].isDiscountPercentage);
+            if (data[0].isDiscountPercentage){
+                $("#discountPrice").hide();
+                $("#discountPriceSymbol").hide();
+                $("#discountPricePercentage").show();
+                $("#discountPricePercentageSymbol").show();
+                $("#percentage").prop("checked", true);
+                document.getElementById('discountPricePercentage').value = data[0].discountPercentage;
+                console.log(data[0].discountPricePercentage);
+            }else{
+                document.getElementById('discountPrice').value = data[0].discountPrice;
+            }
+            
             document.getElementById('FinalPriceInfo').value = data[0].finalPrice;
             $("#ShowEngineers").append($("<option value=" + data[0].engineerID + " selected='selected'>" + data[0].surname + " " + data[0].name + "</option>"));
         }

@@ -50,6 +50,7 @@ C:\Users\alexa\Desktop\Visual Studio Projects\GarageSoftware\GaragePortalNewUI\o
 C:\Users\alexa\Desktop\Visual Studio Projects\GarageSoftware\GaragePortalNewUI\obj\Release\net5.0\PubTmp\Out\AspNetCore.Reporting.dll
 C:\Users\alexa\Desktop\Visual Studio Projects\GarageSoftware\GaragePortalNewUI\obj\Release\net5.0\PubTmp\Out\AspNetCore.ReportingServices.dll
 C:\Users\alexa\Desktop\Visual Studio Projects\GarageSoftware\GaragePortalNewUI\obj\Release\net5.0\PubTmp\Out\DinkToPdf.dll
+C:\Users\alexa\Desktop\Visual Studio Projects\GarageSoftware\GaragePortalNewUI\obj\Release\net5.0\PubTmp\Out\ExcelDataReader.dll
 C:\Users\alexa\Desktop\Visual Studio Projects\GarageSoftware\GaragePortalNewUI\obj\Release\net5.0\PubTmp\Out\Limcap.ApiTools.dll
 C:\Users\alexa\Desktop\Visual Studio Projects\GarageSoftware\GaragePortalNewUI\obj\Release\net5.0\PubTmp\Out\Limcap.ApiTools.AspNetLegacy.dll
 C:\Users\alexa\Desktop\Visual Studio Projects\GarageSoftware\GaragePortalNewUI\obj\Release\net5.0\PubTmp\Out\System.Web.Mvc.dll

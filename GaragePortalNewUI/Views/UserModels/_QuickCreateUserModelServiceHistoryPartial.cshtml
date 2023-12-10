@@ -86,10 +86,10 @@
                         <div class="form-group col-sm-4 ">
                             <div class="input-icon input-icon-right">
                                 <label asp-for="DiscountPrice" class="control-label">@Resource.GetKey("Discount_Price")</label>&nbsp;&nbsp;
-                                <input type="checkbox" id="percentage" name="percentage" onclick="checkDiscountType()" />
+                                <input type="checkbox" id="percentage" name="percentage" onclick="checkDiscountType(0)" />
                                 <label for="horns">@Resource.GetKey("Price_Percentage")</label>
                                 <input asp-for="DiscountPrice" class="form-control" placeholder="0,00" onchange="setFinalPrice()" id="discountPrice">
-                                <input asp-for="DiscountPrice" class="form-control" placeholder="0,00" onchange="setFinalPrice()" id="discountPricePercentage">
+                                <input asp-for="DiscountPercentage" class="form-control" placeholder="0,00" onchange="setFinalPrice()" id="discountPricePercentage">
                                 <i id="discountPriceSymbol">€</i>
                                 <i id="discountPricePercentageSymbol">%</i>
                                 <span asp-validation-for="DiscountPrice" class="text-danger"></span>
@@ -122,7 +122,7 @@
         $('.draggable').draggable({
             handle: '.modal-header'
         });
-        checkDiscountType();
+        checkDiscountType(0);
     });
 
     $(document).ready(function () {
@@ -143,7 +143,6 @@
                 event.preventDefault();
             }
         });
-
 
     //$(function () {
     //    //console.log("getServiceItems()");

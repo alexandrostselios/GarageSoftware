@@ -44,5 +44,7 @@ namespace GarageAPI.Models.Service
 
         [ForeignKey("GarageDetails")]
         public long GarageID { get; set; }
+
+        public bool isDiscountPercentage { get; set; }
     }
 }

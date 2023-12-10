@@ -55,6 +55,10 @@
               "target": "Package",
               "version": "[1.0.8, )"
             },
+            "ExcelDataReader": {
+              "target": "Package",
+              "version": "[3.6.0, )"
+            },
             "Limcap.ApiTools.AspNetLegacy": {
               "target": "Package",
               "version": "[0.25.0, )"
