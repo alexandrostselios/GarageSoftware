@@ -157,6 +157,10 @@
     <value>Car Image</value>
     <comment>Car Image</comment>
   </data>
+  <data name="Choose_Sheet_To_Import" xml:space="preserve">
+    <value>Choose Sheet to Import</value>
+    <comment>Choose_Sheet_To_Import</comment>
+  </data>
   <data name="Close" xml:space="preserve">
     <value>Close</value>
     <comment>Close</comment>
@@ -265,6 +269,42 @@
     <value>Home</value>
     <comment>Home</comment>
   </data>
+  <data name="Import" xml:space="preserve">
+    <value>Import</value>
+    <comment>Import</comment>
+  </data>
+  <data name="Import_Car_Manufacturers" xml:space="preserve">
+    <value>Import Car Manufacturers</value>
+    <comment>Import_Car_Manufacturers</comment>
+  </data>
+  <data name="Import_Car_Manufacturers_Info" xml:space="preserve">
+    <value>From this menu you are able to import Car Manufactures</value>
+    <comment>Import_Car_Manufacturers_Info</comment>
+  </data>
+  <data name="Import_Car_Models" xml:space="preserve">
+    <value>Import Car Models</value>
+    <comment>Import_Car_Models</comment>
+  </data>
+  <data name="Import_Car_Models_Info" xml:space="preserve">
+    <value>From this menu you are able to import Car Models</value>
+    <comment>Import_Car_Models_Info</comment>
+  </data>
+  <data name="Import_Customers" xml:space="preserve">
+    <value>Import Customers</value>
+    <comment>Import_Customers</comment>
+  </data>
+  <data name="Import_Manufacturers_From_Excel" xml:space="preserve">
+    <value>Import Manufacturers from Excel</value>
+    <comment>Import_Manufacturers_From_Excel</comment>
+  </data>
+  <data name="Import_Users" xml:space="preserve">
+    <value>Import Users</value>
+    <comment>Import_Users</comment>
+  </data>
+  <data name="Import_Users_Info" xml:space="preserve">
+    <value>From this menu you are able to import Users</value>
+    <comment>Import_Users_Info</comment>
+  </data>
   <data name="Kilometer" xml:space="preserve">
     <value>Kilometer</value>
     <comment>Kilometer</comment>
@@ -288,6 +328,14 @@
   <data name="List_Of_Engineers" xml:space="preserve">
     <value>List Of Engineers</value>
     <comment>List_Of_Engineers</comment>
+  </data>
+  <data name="List_Of_Manufacturers" xml:space="preserve">
+    <value>List Of Manufacturers</value>
+    <comment>List_Of_Manufacturers</comment>
+  </data>
+  <data name="List_Of_Models" xml:space="preserve">
+    <value>List Of Models</value>
+    <comment>List_Of_Models</comment>
   </data>
   <data name="List_Of_MyCars" xml:space="preserve">
     <value>List Of My Cars</value>
@@ -441,9 +489,9 @@
     <value>Service Information</value>
     <comment>Service_Information</comment>
   </data>
-  <data name="Service_Items" xml:space="preserve">
+  <data name="List_Of_Service_Items" xml:space="preserve">
     <value>Service Items</value>
-    <comment>Service_Items</comment>
+    <comment>List_Of_Service_Items</comment>
   </data>
   <data name="Service_Kilometer" xml:space="preserve">
     <value>Service Kilometer</value>
@@ -532,5 +580,69 @@
   <data name="ΟΚ" xml:space="preserve">
     <value>ΟΚ</value>
     <comment>ΟΚ</comment>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+    <comment>Description</comment>
+  </data>
+  <data name="Entries_DataTable" xml:space="preserve">
+    <value>entries</value>
+    <comment>Entries_DataTable</comment>
+  </data>
+  <data name="Entries_Per_Page" xml:space="preserve">
+    <value>entrie per page</value>
+    <comment>Entries_Per_Page</comment>
+  </data>
+  <data name="Filtered_From_DataTable" xml:space="preserve">
+    <value>filtered from</value>
+    <comment>Filtered_From_DataTable</comment>
+  </data>
+  <data name="ID" xml:space="preserve">
+    <value>ID</value>
+    <comment>ID</comment>
+  </data>
+  <data name="Next_DataTable" xml:space="preserve">
+    <value>Next</value>
+    <comment>Next_DataTable</comment>
+  </data>
+  <data name="No_Matching_Records_Found_DataTable" xml:space="preserve">
+    <value>No matching records found</value>
+    <comment>No_Matching_Records_Found_DataTable</comment>
+  </data>
+  <data name="Of_DataTable" xml:space="preserve">
+    <value>of</value>
+    <comment>Of_DataTable</comment>
+  </data>
+  <data name="Previous_DataTable" xml:space="preserve">
+    <value>Previous</value>
+    <comment>Previous_DataTable</comment>
+  </data>
+  <data name="Showing_Empty_DataTable" xml:space="preserve">
+    <value>Showing 0 to 0 of 0 entries</value>
+    <comment>Showing_Empty_DataTable</comment>
+  </data>
+  <data name="Show_DataTables" xml:space="preserve">
+    <value>Showing</value>
+    <comment>Show_DataTables</comment>
+  </data>
+  <data name="Total_DataTable" xml:space="preserve">
+    <value>total</value>
+    <comment>Total_DataTable</comment>
+  </data>
+  <data name="To_DataTable" xml:space="preserve">
+    <value>to</value>
+    <comment>To_DataTable</comment>
+  </data>
+  <data name="Add_Service_Item" xml:space="preserve">
+    <value>Add Service Item</value>
+    <comment>Add_Service_Item</comment>
+  </data>
+  <data name="Edit_Service_Item" xml:space="preserve">
+    <value>Edit Service Item</value>
+    <comment>Edit_Service_Item</comment>
+  </data>
+  <data name="Edit_Manufacturer" xml:space="preserve">
+    <value>Edit Manufacturer</value>
+    <comment>Edit_Manufacturer</comment>
   </data>
 </root>

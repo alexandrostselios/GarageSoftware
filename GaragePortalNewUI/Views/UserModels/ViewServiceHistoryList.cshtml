@@ -1,22 +1,19 @@
 ﻿@model IEnumerable<GaragePortalNewUI.Models.ServiceHistory>
 @inject LanguageService Resource
 @{
-    //ViewData["Title"] = Model.First().ManufacturerName + ' ' + Model.First().ModelName + " (" + Model.First().ModelYear + ")";
-    ViewData["Title"] = @Resource.GetKey("View_Car_Details");
+    ViewData["Title"] = "List of Services";
 }
-<div class="container-fluid">
-    <div class="row d-flex justify-content-center pt-5  h-100">
-        @*<button class="btn btn-primary" id="btnQuickAddCarServiceHistory">Quick Service Add</button>*@
-        <div id="addCarServiceHistoryDIV"></div>
-        <div id="CarServiceHistoryInformationDIV"></div>
-    </div>
-</div>
+
 @if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Admin.ToString())
 {
-    <p>
-        <button class="btn btn-sm btn-primary m-2" id="btnAddCarServiceHistory" asp-route-CustomerUserID="@ViewBag.CustomerUserID" data-bs-toggle="ajax-modal" data-bs-target="#AddCarServiceHistory" data-url="@Url.Action("CreateUserModelServiceHistoryPartial")">@Resource.GetKey("Add_Service_History")</button>
-    </p>
-    
+    <div class="container-fluid">
+        <div class="row d-flex justify-content-center pt-5  h-100">
+            @*<button class="btn btn-primary" id="btnQuickAddCarServiceHistory">Quick Service Add</button>*@
+            <div id="addCarServiceHistoryDIV"></div>
+            <div id="CarServiceHistoryInformationDIV"></div>
+        </div>
+    </div>
+
     <table class="table">
         <thead>
             <tr>
@@ -25,6 +22,15 @@
                 </th>
                 <th>
                     @Resource.GetKey("Service_Date")
+                </th>
+                <th>
+                    @Resource.GetKey("Model_Manufacturer")
+                </th>
+                <th>
+                    @Resource.GetKey("Model")
+                </th>
+                <th>
+                    @Resource.GetKey("Model_Year")
                 </th>
                 <th>
                     @Resource.GetKey("Service_Engineer")
@@ -59,6 +65,15 @@
                         @Html.DisplayFor(modelItem => item.ServiceDate)
                     </td>
                     <td>
+                        @Html.DisplayFor(modelItem => item.ManufacturerName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ModelName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ModelYear)
+                    </td>
+                    <td>
                         @Html.DisplayFor(modelItem => item.Surname) @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td>
@@ -91,66 +106,65 @@
     </table>
 }
 else if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.User.ToString()){
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Resource.GetKey("Service_Date")
-                </th>
-                <th>
-                    @Resource.GetKey("Service_Engineer")
-                </th>
-                <th>
-                    @Resource.GetKey("Service_Kilometer")
-                </th>
-                <th>
-                    @Resource.GetKey("Service_StartPrice")
-                </th>
-                <th>
-                    @Resource.GetKey("Service_FinalPrice")
-                </th>
-                <th>
-                    @Resource.GetKey("Service_Information")
-                </th>
-                <th></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ServiceDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Surname) @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ServiceKilometer)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.StartPrice)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FinalPrice)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Description)
-                    </td>
-                    <td>
-                        @if (item.CarImage != null)
-                        {
-                            <img src="data:image/jpg;base64, @Convert.ToBase64String(item.CarImage)" width="50" height="50" />
-                        }
-                    </td>
-                    <td>
-                        <button class="btn btn-sm btn-primary m-2" id="btnUserModelServiceHistoryInformation" data-bs-toggle="ajax-modal" data-bs-target="#CarServiceHistoryInformation" data-url="@Url.Action("UserModelServiceHistoryInformationPartial",new {id = @item.ID})">@Resource.GetKey("Service_Information")</button>
-                    </td>
+                    <th>
+                        @Resource.GetKey("Service_Date")
+                    </th>
+                    <th>
+                        @Resource.GetKey("Service_Engineer")
+                    </th>
+                    <th>
+                        @Resource.GetKey("Service_StartPrice")
+                    </th>
+                    <th>
+                        @Resource.GetKey("Service_Kilometer")
+                    </th>
+                    <th>
+                        @Resource.GetKey("Service_FinalPrice")
+                    </th>
+                    <th>
+                        @Resource.GetKey("Service_Information")
+                    </th>
+                    <th>
+                        @Resource.GetKey("Car_Image")
+                    </th>
+                    <th></th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ServiceDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Surname) @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ServiceKilometer)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StartPrice)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FinalPrice)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @if (item.CarImage != null)
+                            {
+                                <img src="data:image/jpg;base64, @Convert.ToBase64String(item.CarImage)" width="50" height="50" />
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
 }
 
 @section scripts{

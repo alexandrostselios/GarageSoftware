@@ -32,6 +32,19 @@ namespace GarageAPI.Controllers
         }
 
         [HttpGet]
+        [Route("api/GetCarsServiceHistoryToList/{garageID:long}")]
+        public async Task<ActionResult<IEnumerable<ServiceHistoryDTO>>> GetCarsServiceHistoryToList([FromRoute] long garageID)
+        {
+            string StoredProc = "exec GetCarSServiceHistoryToList @GarageID = " + garageID;
+            List<ServiceHistoryDTO> carsServiceHistoryList = await dbContext.ServiceHistoryDTO.FromSqlRaw(StoredProc).ToListAsync();
+            if (carsServiceHistoryList == null)
+            {
+                return NotFound();
+            }
+            return Ok(carsServiceHistoryList);
+        }
+
+        [HttpGet]
         [Route("api/GetCarServiceHistoryByUserModelsID/{id:long}")]
         public async Task<ActionResult<IEnumerable<ServiceHistoryDTO>>> GetCarServiceHistoryByUserModelsID([FromRoute] long id)
         {

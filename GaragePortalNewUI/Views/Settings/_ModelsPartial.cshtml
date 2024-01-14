@@ -50,26 +50,28 @@
 </div>
 
 <script type="text/javascript">
-    $('document').ready(function () {
-        var editServiceItemDIVElement = $('#editServiceItem');
+    console.log(11);
+    $(function () {
+        var addServiceItemDIVElement = $('#editServiceItem');
+        console.log(33);
         $('button[data-bs-toggle="ajax-modal"]').click(function (event) {
-            console.log("OLD Edit Service Item before OLD");
+            console.log(44);
             var url = $(this).data('url');
             $.get(url).done(function (data) {
-                console.log("OLD Edit Service Item After OLD");
-                editServiceItemDIVElement.html(data);
-                editServiceItemDIVElement.find('.modal').modal('show');
+                console.log(55);
+                addServiceItemDIVElement.html(data);
+                addServiceItemDIVElement.find('.modal').modal('show');
             })
         })
 
         //Save Add Makeform data
-        editServiceItemDIVElement.on('click', '[data-bs-save="modal"]', function (event) {
+        addServiceItemDIVElement.on('click', '[data-bs-save="modal"]', function (event) {
 
             var form = $(this).parents('.modal').find('form');
             var actionUrl = form.attr("action");
             var sendData = form.serialize();
             $.post(actionUrl, sendData).done(function (data) {
-                editServiceItemDIVElement.find('.modal').modal('hide');
+                addServiceItemDIVElement.find('.modal').modal('hide');
                 location.reload(true);
             })
         })

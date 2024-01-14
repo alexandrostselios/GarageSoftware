@@ -265,7 +265,7 @@ namespace GaragePortalNewUI.Utilities
                     sb.Append(@"<table align='center' style='width:100%'>
 			                        <tr>
                                         <th>A/A</th>
-                                        <th>" + rm.GetString("Service_Items", new System.Globalization.CultureInfo(culture)) + @"</th>
+                                        <th>" + rm.GetString("List_Of_Service_Items", new System.Globalization.CultureInfo(culture)) + @"</th>
                                         <th>" + rm.GetString("Price", new System.Globalization.CultureInfo(culture)) + @"</th>
                                     </tr>");
                     int i = 1;

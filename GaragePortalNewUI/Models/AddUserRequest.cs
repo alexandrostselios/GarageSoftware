@@ -1,8 +1,9 @@
-﻿using GarageAPI.Enum;
+﻿using GaragePortalNewUI.Enum;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace GarageAPI.Models.User { 
+namespace GaragePortalNewUI.Models
+{
     public class AddUserRequest
     {
         public string Name { get; set; }

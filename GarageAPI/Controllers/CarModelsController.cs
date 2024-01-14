@@ -1,4 +1,5 @@
 ﻿using GarageAPI.Data;
+using GarageAPI.Models.CarManufacturers;
 using GarageAPI.Models.CarModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -42,12 +43,31 @@ namespace GarageAPI.Controllers
         {
             var carModel = new CarModel()
             {
-                ModelName = addCarModelRequest.ModelName
+                ModelName = addCarModelRequest.ModelName,
+                GarageID = addCarModelRequest.GarageID
             };
             await dbContext.CarModels.AddAsync(carModel);
             await dbContext.SaveChangesAsync();
 
             return Ok(carModel);
+        }
+
+        [HttpPost]
+        [Route("api/AddCarModelList")]
+        public async Task<IActionResult> AddCarModelList(List<AddCarModelRequest> addCarModelRequest)
+        {
+            for (int i = 0; i <= addCarModelRequest.Count(); i++)
+            {
+                var carModel = new CarModel()
+                {
+                    ModelName = addCarModelRequest[i].ModelName,
+                    GarageID = addCarModelRequest[i].GarageID
+                };
+                await dbContext.CarModels.AddAsync(carModel);
+                await dbContext.SaveChangesAsync();
+            }
+
+            return Ok();
         }
 
         [HttpPut]

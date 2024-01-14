@@ -10,10 +10,9 @@ using Newtonsoft.Json;
 using System.Net.Http.Json;
 using System.IO;
 using Microsoft.Extensions.Localization;
-using static System.Collections.Specialized.BitVector32;
-using System.Net;
+using GaragePortalNewUI.Models;
 
-namespace GaragePortalNewUI.Models
+namespace GaragePortalNewUI.Controllers
 {
     public class UsersController : Controller
     {
@@ -164,7 +163,12 @@ namespace GaragePortalNewUI.Models
         {
             IEnumerable<Users> users = null;
             Users logInUser = null;
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/GetLogin/"+loginUser.Email+"/"+loginUser.Password).Result;
+
+            //string host = HttpContext.Request.Host.Host.ToString();
+            string host = "garagewebportal";
+            // Add later + "/" + loginUser.GarageID
+
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/GetLogin/"+loginUser.Email+"/"+loginUser.Password ).Result;
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
@@ -419,7 +423,7 @@ namespace GaragePortalNewUI.Models
             editCustomer.ModifiedDate = DateTime.Now;
             HttpResponseMessage response = client.PutAsJsonAsync(client.BaseAddress + "/UpdateUser/" + editCustomer.ID, editCustomer).Result;
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Customers));
         }
 
         public IActionResult EditMyProfile(long id)

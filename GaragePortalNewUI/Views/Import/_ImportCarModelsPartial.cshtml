@@ -1,0 +1,94 @@
+﻿@model GaragePortalNewUI.Models.AddCarManufacturerRequest
+@inject LanguageService Resource
+
+<div id="importCarModels" name="importCarModels" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog draggable" role="document" >
+        <div class="modal-content" id="modalContentCustomCSS">
+            <div class="modal-header dragable_touch d-block">
+                <h5 class="modal-title">@Resource.GetKey("Import_Car_Models")<h5>
+@*                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>*@
+            </div>
+            <form method="post" asp-action="ImportCarModels" asp-controller="Import" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    @*<input type="hidden" asp-for="UserModelsID" value="@ViewBag.CarDetailsID" />*@
+                    <input type="hidden" asp-for="GarageID" value="@ViewBag.GarageID" />
+                    @*<div class="form-row importCarManufacturers">*@
+                    <div class="input-group custom-file-button importCarManufacturers">
+                        <label class="input-group-text labelImport" for="inputGroupFile">File</label>
+                        <input type="file" class="form-control" name="file" id="inputExcelFile">
+                        @*<button class="buttonImport" type="submit">@Resource.GetKey("Import_Manufacturers_From_Excel")</button>*@
+                    </div>
+                   @* </div>*@
+                    <div class="form-row importCarManufacturers">
+                        <div class="form-group col-sm-4">
+                            <label for="sheetOrder">@Resource.GetKey("Choose_Sheet_To_Import")</label>
+                            @*<input type="text" id="nameOrder" name="sheetOrder" class="form-control" />*@
+                            <select id="excelSheetOrder" name="sheetOrder" class="form-control"></select>
+                        </div>
+                        <br />
+                        <div class="form-group col-sm-4">
+                            <label for="nameOrder">Choose Model Name column</label>
+                            <input type="text" id="nameOrder" name="nameOrder" class="form-control" />
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label for="garageIDOrder">Choose Garage ID column</label>
+                            <input type="text" id="garageIDOrder" name="garageIDOrder" class="form-control" />
+                        </div>
+                    </div>
+                   
+                    <div class="modal-footer">
+                        <button type="submit" value="Create" class="btn btn-success">@Resource.GetKey("Import")</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">@Resource.GetKey("Cancel")</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.draggable').draggable({
+            handle: '.modal-header'
+        });
+        document.getElementById("excelSheetOrder").disabled = true;
+        document.getElementById("nameOrder").disabled = true;
+        document.getElementById("garageIDOrder").disabled = true;
+    });
+
+    $('#importCarModels').keypress(
+        function (event) {
+            if (event.which == '13') {
+                console.log("Enter Pressed");
+                event.preventDefault();
+            }
+        });
+
+    $(function () {
+        let fileInput = document.getElementById("inputExcelFile");
+        fileInput.addEventListener("change", function () {
+            console.log("66");
+            // check if the file is selected or not
+            if (fileInput.files.length == 0) {
+                console.log("77");
+                document.getElementById("excelSheetOrder").disabled = true;
+                document.getElementById("nameOrder").disabled = true;
+                document.getElementById("garageIDOrder").disabled = true;
+            } else {
+                console.log("88");
+                document.getElementById("excelSheetOrder").disabled = false;
+                document.getElementById("nameOrder").disabled = false;
+                document.getElementById("garageIDOrder").disabled = false;
+            }
+        });
+    });
+
+    importExcelPartial();
+  
+</script>

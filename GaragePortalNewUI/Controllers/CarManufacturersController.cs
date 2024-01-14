@@ -1,26 +1,24 @@
-﻿using System;
+﻿using GaragePortalNewUI.Models;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+using System;
 using GaragePortalNewUI.Enum;
-using Newtonsoft.Json;
-using System.Net.Http.Json;
-using System.IO;
-using Microsoft.Extensions.Localization;
+using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
+using System.Data;
 
-namespace GaragePortalNewUI.Models
+namespace GaragePortalNewUI.Controllers
 {
-    public class ServiceItemsController : Controller
+    public class CarManufacturersController : Controller
     {
         readonly Uri baseAddress = new Uri(@Resources.SettingsResources.Uri);
         readonly HttpClient client;
-        private ServiceItemsController si;
-        private List<ServiceItems> temp;
+        private List<CarManufacturers> temp;
 
-        public ServiceItemsController()
+        public CarManufacturersController()
         {
             client = new HttpClient();
             client.BaseAddress = baseAddress;
@@ -29,111 +27,96 @@ namespace GaragePortalNewUI.Models
         public ActionResult Index()
         {
             GetSessionProperties();
-            IEnumerable<ServiceItems> serviceItems = GetServiceItems();
-            return View(serviceItems); 
+            IEnumerable<CarManufacturers> carManufacturers = GetCarManufacturers();
+            return View(carManufacturers);
         }
 
-        public IEnumerable<ServiceItems> GetServiceItems()
+        public IEnumerable<CarManufacturers> GetCarManufacturers()
         {
-            IEnumerable<ServiceItems> serviceItems = null;
+            IEnumerable<CarManufacturers> carManufacturers = null;
             var responseTask = client.GetAsync(client.BaseAddress);
             using (client)
             {
-                responseTask = client.GetAsync(client.BaseAddress + "/GetServiceItems");
+                responseTask = client.GetAsync(client.BaseAddress + "/GetCarManufacturers");
                 responseTask.Wait();
                 var result = responseTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    var readTask = result.Content.ReadAsAsync<IList<ServiceItems>>();
+                    var readTask = result.Content.ReadAsAsync<IList<CarManufacturers>>();
                     readTask.Wait();
-                    serviceItems = readTask.Result;
+                    carManufacturers = readTask.Result;
                 }
                 else
                 {
-                    serviceItems = Enumerable.Empty<ServiceItems>();
+                    carManufacturers = Enumerable.Empty<CarManufacturers>();
                     ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
                 }
             }
-            return serviceItems;
+
+            return carManufacturers;
         }
 
-        public IActionResult AddServiceItemPartial()
+        public ActionResult GetCarManufacturersJSON()
         {
-            GetSessionProperties();
-            return PartialView("_AddServiceItemPartial");
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddServiceItem([Bind("ID,Description,GarageID,Price")] ServiceItems serviceItem)
-        {
-            GetSessionProperties();
-            if (serviceItem.Description != null)
-            {
-                HttpResponseMessage response = client.PostAsJsonAsync(client.BaseAddress + "/AddServiceItem/", serviceItem).Result;
-                si = new ServiceItemsController();
-                temp = si.GetServiceItems().ToList();
-                //serviceItem.Description = null;
-                //serviceItem.Price = null;
-                //serviceItem.GarageID = 0;
-                //actionName, controllerName, routeValues
-                return RedirectToAction("Settings", "Settings");
-            }
-            return NotFound();
-        }
-
-        public IActionResult EditServiceItemPartial(long id)
-        {
-            GetSessionProperties();
+            IEnumerable<CarManufacturers> carManufacturers = null;
             var responseTask = client.GetAsync(client.BaseAddress);
-            ServiceItems serviceItems = null;
             using (client)
             {
-                responseTask = client.GetAsync(client.BaseAddress + "/GetServiceItemsByID/" + id);
+                responseTask = client.GetAsync(client.BaseAddress + "/GetCarManufacturers");
                 responseTask.Wait();
                 var result = responseTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    var readTask = result.Content.ReadAsAsync<ServiceItems>();
+                    var readTask = result.Content.ReadAsAsync<IList<CarManufacturers>>();
                     readTask.Wait();
-                    serviceItems = readTask.Result;
+                    carManufacturers = readTask.Result;
+                }
+                else
+                {
+                    carManufacturers = Enumerable.Empty<CarManufacturers>();
+                    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+                }
+            }
+
+            return Json(carManufacturers);
+        }
+
+        public IActionResult EditCarManufacturerPartial(long id)
+        {
+            GetSessionProperties();
+            var responseTask = client.GetAsync(client.BaseAddress);
+            CarManufacturers carManufacturer = null;
+            using (client)
+            {
+                responseTask = client.GetAsync(client.BaseAddress + "/GetCarManufacturerByID/" + id);
+                responseTask.Wait();
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<CarManufacturers>();
+                    readTask.Wait();
+                    carManufacturer = readTask.Result;
                 }
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
                 }
             }
-            return PartialView("_EditServiceItemPartial", serviceItems);
+            return PartialView("_EditCarManufacturerPartial", carManufacturer);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditServiceItem(long id, [Bind("ID,Description,Price")] ServiceItems serviceItem)
+        public async Task<IActionResult> EditCarManufacturerItem(long id, [Bind("ID,ManufacturerName")] CarManufacturers carManufacturer)
         {
-            if (id != serviceItem.ID)
+            if (id != carManufacturer.ID)
             {
                 return NotFound();
             }
-            HttpResponseMessage response = client.PutAsJsonAsync(client.BaseAddress + "/UpdateServiceItemByID/" + serviceItem.ID, serviceItem).Result;
+            HttpResponseMessage response = client.PutAsJsonAsync(client.BaseAddress + "/UpdateCarManufacturerByID/" + carManufacturer.ID, carManufacturer).Result;
 
             return RedirectToAction("Settings", "Settings");
             //return View();
-        }
-
-        public async Task<IActionResult> DeleteServiceItem(int? id)
-        {
-            GetSessionProperties();
-            if (id == null)
-            {
-                return NotFound();
-            }
-            HttpResponseMessage response = client.DeleteAsync(client.BaseAddress + "/DeleteServiceItemByID/" + id).Result;
-            
-            si = new ServiceItemsController();
-            temp = si.GetServiceItems().ToList();
-            return RedirectToAction("Settings", "Settings");
-            //return View("~/Views/Settings/Settings.cshtml", temp);
-            //return View("~/Views/Settings/_ServiceItemsPartial.cshtml", temp);
         }
 
         private void SetSessionProperties(Users dbUser)

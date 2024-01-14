@@ -1,0 +1,81 @@
+﻿@model IEnumerable<GaragePortalNewUI.Models.CarManufacturers>
+@inject LanguageService Resource
+
+<div id="addCarManufacturer"></div>
+<div id="editCarManufacturer"></div>
+
+<button class="btn btn-sm btn-primary m-2" id="btnAddCarManufacturer" data-bs-toggle="ajax-modal" data-bs-target="#addCarManufacturer" data-url="@Url.Action("AddServiceItemPartial","ServiceItems")">Add</button>
+
+<div id="totalInvoiceDiv" class="scrollit">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ManufacturerName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.GarageID)
+                </th>
+                <th colspan="2">Total Service Items: @Model.Count()</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ManufacturerName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GarageID)
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-primary m-2" id="btnEditCarManufacturer" data-bs-toggle="ajax-modal" data-bs-target="#editCarManufacturer" data-url="@Url.Action("EditCarManufacturerPartial","CarManufacturers",new{id = @item.ID})">@Resource.GetKey("Edit")</button>
+                    </td>
+                    <td>
+                        <a class="af" asp-controller="CarManufacturer" asp-action="DeleteCarManufacturer" asp-route-id="@item.ID">@Resource.GetKey("Delete")</a>
+                    </td>
+                    <td colspan ="3"></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script type="text/javascript">
+    console.log(11);
+    //$(function () {
+    //    var editCarManufacturerDIVElement = $('#editCarManufacturerItem');
+    //    console.log(335555);
+    //    $('button[data-bs-toggle="ajax-modal"]').click(function (event) {
+    //        console.log(44);
+    //        var url = $(this).data('url');
+    //        console.log("AFTERERRERERER");
+    //        console.log("URL: "+url);
+    //        $.get(url).done(function (data) {
+    //            console.log(55);
+    //            editCarManufacturerDIVElement.html(data);
+    //            editCarManufacturerDIVElement.find('.modal').modal('show');
+    //        })
+    //    })
+
+    //    //Save Add Makeform data
+    //    editCarManufacturerDIVElement.on('click', '[data-bs-save="modal"]', function (event) {
+
+    //        var form = $(this).parents('.modal').find('form');
+    //        var actionUrl = form.attr("action");
+    //        var sendData = form.serialize();
+    //        $.post(actionUrl, sendData).done(function (data) {
+    //            editCarManufacturerDIVElement.find('.modal').modal('hide');
+    //            location.reload(true);
+    //        })
+    //    })
+    //})
+</script>

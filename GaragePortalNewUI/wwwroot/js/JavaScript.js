@@ -2,6 +2,56 @@
 //var url = 'http://alefhome.ddns.net:8082/api/'
 //var url = 'https://garagewebapi.eu/api/'
 
+function importExcelPartial() {
+    'use strict'; // v2.3.2
+    var result, zip = new JSZip(),
+        processStartTime, s, i, index, id;
+
+    var getTab = function (base64file) {
+
+        zip = zip.load(base64file, {
+            base64: true
+        });
+        result = [];
+        processStartTime = Date.now();
+
+        if (s = zip.file('xl/workbook.xml')) {
+            s = s.asText();
+
+            s = s.split('<sheet ');
+            i = s.length;
+            while (--i) {
+                console.log("si: " + s[i]);
+                id = s[i].substr(s[i].indexOf('name="') + 6);
+                result.push(id.substring(0, id.indexOf('"')));
+                $("#excelSheetOrder").append($("<option value=" + (s[i].substr(s[i].indexOf('sheetId="') + 9)).split('"')[0] + ">" + id.substring(0, id.indexOf('"')) + "</option>"));
+            }
+        }
+    }
+
+    var handleFileSelect = function (evt) {
+        var files = evt.target.files;
+        var file = files[0];
+
+        if (files && file) {
+            var reader = new FileReader();
+
+            reader.onload = function (readerEvt) {
+                var binaryString = readerEvt.target.result;
+                getTab(btoa(binaryString));
+            };
+
+            reader.readAsBinaryString(file);
+        }
+    };
+
+    if (window.File && window.FileReader && window.FileList && window.Blob) {
+        document.getElementById('inputExcelFile').addEventListener('change', handleFileSelect, false);
+
+    } else {
+        alert('The File APIs are not fully supported in this browser.');
+    }
+};
 
 function checkDiscountType(x) {
     if(x === 0){
@@ -12,7 +62,7 @@ function checkDiscountType(x) {
             $("#discountPricePercentageSymbol").show();
             //document.getElementById("discountPricePercentage").placeholder = "0,00";
             setFinalPrice();
-            console.log("checked");
+            //console.log("checked");
         } else {
             $("#discountPrice").show();
             $("#discountPriceSymbol").show();
@@ -20,7 +70,7 @@ function checkDiscountType(x) {
             $("#discountPricePercentage").hide();
             $("#discountPricePercentageSymbol").hide();
             setFinalPrice();
-            console.log("Not checked.");
+            //console.log("Not checked.");
         }
     }else {
         $("#discountPrice").show();
@@ -28,7 +78,7 @@ function checkDiscountType(x) {
         document.getElementById("discountPrice").placeholder = "0,00";
         $("#discountPricePercentage").hide();
         $("#discountPricePercentageSymbol").hide();
-        console.log("Nothing");
+        //console.log("Nothing");
     }
     
 }
@@ -36,10 +86,10 @@ function checkDiscountType(x) {
 function setFinalPrice() {
     var finalPrice;
     if (document.getElementById('percentage').checked) {
-        console.log("1st");
+        //console.log("1st");
         finalPrice = (document.getElementById("StartPrice").value.replace(',', '.') - ((document.getElementById("StartPrice").value.replace(',', '.')) * (document.getElementById("discountPricePercentage").value.replace(',', '.') / 100))).toFixed(2);
     } else {
-        console.log("2nd");
+        //console.log("2nd");
         finalPrice = (document.getElementById("StartPrice").value.replace(',', '.') - document.getElementById("discountPrice").value.replace(',', '.')).toFixed(2);
     }
     //document.getElementById("FinalPrice").value = finalPrice;
@@ -56,9 +106,11 @@ function getServiceItems() {
         $.getJSON(url + 'GetServiceItemsToList')
             //$.getJSON('http://alefhome.ddns.net:8082/api/GetCarManufacturersToList')
             .done(function (data) {
+                console.log(data);
                 // On success, 'data' contains a list of products.
                 $.each(data, function (key, item) {
                     // Add a list item for the product.
+                    console.log("ID: " + item.id + " Description: " + item.description+" Price: "+item.price);
                     if (item.price > 0) {
                         $("#ServiceItems").append($("<option></option>").val(item.id).html(' '+item.id + ') ' + item.description + ' (' + item.price + ' €)'));
                     } else {

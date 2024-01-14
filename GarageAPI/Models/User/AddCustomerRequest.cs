@@ -1,9 +1,10 @@
 ﻿using GarageAPI.Enum;
-using System;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace GarageAPI.Models.User { 
-    public class AddUserRequest
+namespace GarageAPI.Models.User
+{
+    public class AddCustomerRequest
     {
         public string Name { get; set; }
 

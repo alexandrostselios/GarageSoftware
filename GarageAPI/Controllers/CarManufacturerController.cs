@@ -61,6 +61,24 @@ namespace GarageAPI.Controllers
             return Ok(carModel);
         }
 
+        [HttpPost]
+        [Route("api/AddCarManufacturerList")]
+        public async Task<IActionResult> AddCarManufacturerList(List<AddCarManufacturerRequest> addCarManufacturerRequest)
+        {
+            for(int i = 0; i <= addCarManufacturerRequest.Count(); i++)
+            {
+                var carModel = new CarManufacturer()
+                {
+                    ManufacturerName = addCarManufacturerRequest[i].ManufacturerName,
+                    GarageID = addCarManufacturerRequest[i].GarageID
+                };
+                await dbContext.CarManufacturer.AddAsync(carModel);
+                await dbContext.SaveChangesAsync();
+            }
+
+            return Ok();
+        }
+
         [HttpPut]
         [Route("api/UpdateCarManufacturerByID/{id:long}")]
         public async Task<IActionResult> UpdateCarManufacturer([FromRoute] long id, UpdateCarManufacturerRequest updateCarManufacturerRequest)

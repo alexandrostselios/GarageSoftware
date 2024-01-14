@@ -12,6 +12,7 @@ using GarageAPI.Models.User;
 using NuGet.Protocol.Plugins;
 using GarageAPI.Models;
 using System.Xml;
+using GarageAPI.Models.CarModels;
 
 namespace GarageAPI.Controllers
 {
@@ -66,7 +67,7 @@ namespace GarageAPI.Controllers
         }
 
         [HttpGet]
-        [Route("api/GetLogin/{email}/{password}")]
+        [Route("api/GetLogin/{email}/{password}")] //Add later /{garageID}
         public async Task<IActionResult> GetLogin([FromRoute] string email, string password)
         {
             Users loginuser = await dbContext.Users.FirstOrDefaultAsync(c => c.Email == email && c.Password == password);
@@ -192,7 +193,7 @@ namespace GarageAPI.Controllers
 
         [HttpPost]
         [Route("api/AddCustomer")]
-        public async Task<IActionResult> AddCustomer(AddUserRequest addUserRequest)
+        public async Task<IActionResult> AddCustomer(AddCustomerRequest addUserRequest)
         {
             var user = new Users()
             {
@@ -233,6 +234,32 @@ namespace GarageAPI.Controllers
             await dbContext.SaveChangesAsync();
 
             return Ok(engineer);
+        }
+
+        [HttpPost]
+        [Route("api/AddUserList")]
+        public async Task<IActionResult> AddUserList(List<AddUserRequest> addUserRequest)
+        {
+            for (int i = 0; i <= addUserRequest.Count(); i++)
+            {
+                var engineer = new Users()
+                {
+                    Name = addUserRequest[i].Name,
+                    Surname = addUserRequest[i].Surname,
+                    Email = addUserRequest[i].Email,
+                    Password = addUserRequest[i].Password,
+                    GarageID = addUserRequest[i].GarageID,
+                    CreationDate = addUserRequest[i].CreationDate,
+                    UserType = addUserRequest[i].UserType,
+                    EnableAccess = addUserRequest[i].EnableAccess,
+                    UserPhoto = addUserRequest[i].UserPhoto,
+                    Speciality = addUserRequest[i].Speciality
+                };
+                await dbContext.Users.AddAsync(engineer);
+                await dbContext.SaveChangesAsync();
+            }
+
+            return Ok();
         }
 
         [HttpPost]

@@ -1,4 +1,4 @@
-﻿namespace GarageAPI.Models.CarManufacturers
+﻿namespace GaragePortalNewUI.Models
 {
     public class AddCarManufacturerRequest
     {

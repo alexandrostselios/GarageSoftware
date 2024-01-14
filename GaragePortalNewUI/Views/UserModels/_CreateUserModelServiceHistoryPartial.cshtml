@@ -39,7 +39,7 @@
                     </div>
 
                     <div class="form-group ServiceHistoryServiceItems">
-                        <label asp-for="ServiceItemsList" class="control-label">@Resource.GetKey("Service_Items") (@Resource.GetKey("Select_Multiple_Service_Items"))</label>
+                        <label asp-for="ServiceItemsList" class="control-label">@Resource.GetKey("List_Of_Service_Items") (@Resource.GetKey("Select_Multiple_Service_Items"))</label>
                         <br />
                         <select id="ServiceItems" asp-for="ServiceItemsList" class="form-control" onchange="CalculatePrice(0)" multiple>
                             @*<option value='0'>--@Resource.GetKey("Select_Service_Items")--</option>*@

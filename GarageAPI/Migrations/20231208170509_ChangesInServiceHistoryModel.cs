@@ -129,6 +129,57 @@ namespace GarageAPI.Migrations
             WHERE ID = 2;";
 
             migrationBuilder.Sql(UpdateServiceHistoryEntity2);
+
+            var GetCarsServiceHistoryToList = @"
+            CREATE PROCEDURE [dbo].[GetCarsServiceHistoryToList]
+            -- Add the parameters for the stored procedure here
+            @GarageID BIGINT
+            AS
+                BEGIN
+                    SET NOCOUNT ON;
+                    SELECT SH.ID, 
+                           SH.Description, 
+                           CAST(SH.ServiceDate AS DATE) AS ServiceDate, 
+                           CAST(SH.StartingDate AS DATE) AS StartingDate, 
+                           CAST(SH.FinishingDate AS DATE) AS FinishingDate, 
+                           SH.ServiceKilometer, 
+                           SH.StartPrice, 
+                           SH.FinalPrice, 
+                           UE.Surname, 
+                           UE.Name, 
+                           CMAN.ManufacturerName, 
+                           CM.ModelName, 
+                           CMY.Description AS ModelYear, 
+                           UM.ID AS UserModelsID, 
+                           UM.LicencePlate, 
+                           UM.VIN, 
+                           UM.Color, 
+                           UM.Kilometer, 
+                           UM.CarImage, 
+                           SH.EngineerID, 
+                           SH.DiscountPrice, 
+                           SH.DiscountPercentage, 
+                           SH.isDiscountPercentage
+                    FROM UserModels UM
+                         INNER JOIN CarModelManufacturerYear CMMY ON CMMY.ID = UM.ModelManufacturerYearID
+                                                                     AND CMMY.GarageID = UM.GarageID
+                         INNER JOIN CarModels CM ON CM.ID = CMMY.CarModelID
+                                                    AND CM.GarageID = CMMY.GarageID
+                         INNER JOIN CarManufacturer CMAN ON CMAN.ID = CMMY.CarManufacturerID
+                                                            AND CMAN.GarageID = CMMY.GarageID
+                         INNER JOIN CarModelYear CMY ON CMY.ID = CMMY.CarModelYearID
+                                                        AND CMY.GarageID = CMMY.GarageID
+                         LEFT OUTER JOIN ServiceHistory SH ON UM.ID = SH.UserModelsID
+                                                              AND UM.GarageID = SH.GarageID
+                         LEFT OUTER JOIN Users UE ON UE.ID = EngineerID
+                                                     AND UE.GarageID = SH.GarageID
+                    WHERE UM.GarageID = @GarageID
+                          AND SH.ID IS NOT NULL
+                    ORDER BY SH.ServiceDate DESC;
+                END;
+            GO";
+
+            migrationBuilder.Sql(GetCarsServiceHistoryToList);
         }
 
         /// <inheritdoc />

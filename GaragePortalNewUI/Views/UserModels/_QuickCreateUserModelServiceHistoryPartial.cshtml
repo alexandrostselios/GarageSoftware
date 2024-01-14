@@ -61,9 +61,9 @@
                         </div>
                     </div>
                     <div class="form-group quickServiceHistoryServiceItems">
-                        <label asp-for="ServiceItemsList" class="control-label">@Resource.GetKey("Service_Items") (@Resource.GetKey("Select_Multiple_Service_Items"))</label>
+                        <label asp-for="ServiceItemsList" class="control-label">@Resource.GetKey("List_Of_Service_Items") (@Resource.GetKey("Select_Multiple_Service_Items"))</label>
                         <br />
-                        <select id="ServiceItems" asp-for="ServiceItemsList" class="form-control" onchange="CalculatePrice()" multiple>
+                        <select id="ServiceItems" asp-for="ServiceItemsList" class="form-control select2" onchange="CalculatePrice()" multiple>
                             @*<option value='0'>--@Resource.GetKey("Select_Service_Items")--</option>*@
                         </select>
                         <span asp-validation-for="ServiceItemsList" class="text-danger"></span>
@@ -114,26 +114,24 @@
     </div>
 </div>
 
-
-
-
 <script type="text/javascript">
     $(document).ready(function () {
         $('.draggable').draggable({
             handle: '.modal-header'
         });
-        checkDiscountType(0);
-    });
 
-    $(document).ready(function () {
         $('#ServiceItems').select2({
             allowClear: true,
             placeholder: "",
             multiple: true
         });
+        checkDiscountType(0);
+        getServiceItems();
+
     });
 
-    getServiceItems();
+
+    
     getServiceEngineers();
 
     $('#AddCarServiceHistory').keypress(
@@ -143,25 +141,6 @@
                 event.preventDefault();
             }
         });
-
-    //$(function () {
-    //    //console.log("getServiceItems()");
-    //    $(document).ready(function () {
-    //        $.getJSON('@Resources.SettingsResources.Uri' + '/GetServiceItemsToList')
-    //            //$.getJSON('http://alefhome.ddns.net:8082/api/GetCarManufacturersToList')
-    //            .done(function (data) {
-    //                // On success, 'data' contains a list of products.
-    //                $.each(data, function (key, item) {
-    //                    // Add a list item for the product.
-    //                    if (item.id === ) {
-    //                        console.log("YES");
-    //                    } else {
-    //                        console.log("nothing here");
-    //                    }
-    //                });
-    //            });
-    //    });
-    //}
 
     $(function () {
         var url = $(this).data('url');

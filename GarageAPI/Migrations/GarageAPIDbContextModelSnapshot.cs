@@ -39,7 +39,7 @@ namespace GarageAPI.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("CarEngineType");
+                    b.ToTable("CarEngineType", (string)null);
                 });
 
             modelBuilder.Entity("GarageAPI.Models.CarManufacturers.CarManufacturer", b =>
@@ -59,7 +59,7 @@ namespace GarageAPI.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("CarManufacturer");
+                    b.ToTable("CarManufacturer", (string)null);
                 });
 
             modelBuilder.Entity("GarageAPI.Models.CarModelManufacturerYear", b =>
@@ -90,7 +90,7 @@ namespace GarageAPI.Migrations
 
                     b.HasIndex("CarModelYearID");
 
-                    b.ToTable("CarModelManufacturerYear");
+                    b.ToTable("CarModelManufacturerYear", (string)null);
                 });
 
             modelBuilder.Entity("GarageAPI.Models.CarModelYears.CarModelYear", b =>
@@ -110,7 +110,7 @@ namespace GarageAPI.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("CarModelYear");
+                    b.ToTable("CarModelYear", (string)null);
                 });
 
             modelBuilder.Entity("GarageAPI.Models.CarModels.CarModel", b =>
@@ -130,7 +130,7 @@ namespace GarageAPI.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("CarModels");
+                    b.ToTable("CarModels", (string)null);
                 });
 
             modelBuilder.Entity("GarageAPI.Models.Email", b =>
@@ -163,7 +163,7 @@ namespace GarageAPI.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Email");
+                    b.ToTable("Email", (string)null);
                 });
 
             modelBuilder.Entity("GarageAPI.Models.EngineerSpeciality.EngineerSpeciality", b =>
@@ -183,7 +183,7 @@ namespace GarageAPI.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("EngineerSpeciality");
+                    b.ToTable("EngineerSpeciality", (string)null);
                 });
 
             modelBuilder.Entity("GarageAPI.Models.GarageDetails", b =>
@@ -203,7 +203,7 @@ namespace GarageAPI.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("GarageDetails");
+                    b.ToTable("GarageDetails", (string)null);
                 });
 
             modelBuilder.Entity("GarageAPI.Models.Report", b =>
@@ -223,7 +223,7 @@ namespace GarageAPI.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Report");
+                    b.ToTable("Report", (string)null);
                 });
 
             modelBuilder.Entity("GarageAPI.Models.Service.ServiceHistory", b =>
@@ -280,7 +280,7 @@ namespace GarageAPI.Migrations
 
                     b.HasIndex("UserModelsID");
 
-                    b.ToTable("ServiceHistory");
+                    b.ToTable("ServiceHistory", (string)null);
                 });
 
             modelBuilder.Entity("GarageAPI.Models.Service.ServiceHistoryDTO", b =>
@@ -344,7 +344,7 @@ namespace GarageAPI.Migrations
                     b.Property<bool>("isDiscountPercentage")
                         .HasColumnType("bit");
 
-                    b.ToTable("ServiceHistoryDTO");
+                    b.ToTable("ServiceHistoryDTO", (string)null);
                 });
 
             modelBuilder.Entity("GarageAPI.Models.Service.ServiceHistoryItems", b =>
@@ -372,7 +372,7 @@ namespace GarageAPI.Migrations
 
                     b.HasIndex("SIID");
 
-                    b.ToTable("ServiceHistoryItems");
+                    b.ToTable("ServiceHistoryItems", (string)null);
                 });
 
             modelBuilder.Entity("GarageAPI.Models.Service.ServiceHistoryItemsDTO", b =>
@@ -389,7 +389,7 @@ namespace GarageAPI.Migrations
                     b.Property<long>("SIID")
                         .HasColumnType("bigint");
 
-                    b.ToTable("ServiceHistoryItemsDTO");
+                    b.ToTable("ServiceHistoryItemsDTO", (string)null);
                 });
 
             modelBuilder.Entity("GarageAPI.Models.Service.ServiceHistoryWithItemsDTO", b =>
@@ -469,7 +469,7 @@ namespace GarageAPI.Migrations
                     b.Property<bool>("isDiscountPercentage")
                         .HasColumnType("bit");
 
-                    b.ToTable("ServiceHistoryWithItemsDTO");
+                    b.ToTable("ServiceHistoryWithItemsDTO", (string)null);
                 });
 
             modelBuilder.Entity("GarageAPI.Models.Service.ServiceItems", b =>
@@ -492,7 +492,7 @@ namespace GarageAPI.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("ServiceItems");
+                    b.ToTable("ServiceItems", (string)null);
                 });
 
             modelBuilder.Entity("GarageAPI.Models.Settings", b =>
@@ -527,7 +527,7 @@ namespace GarageAPI.Migrations
 
                     b.HasIndex("InsertUserID");
 
-                    b.ToTable("Settings");
+                    b.ToTable("Settings", (string)null);
                 });
 
             modelBuilder.Entity("GarageAPI.Models.User.Users", b =>
@@ -580,7 +580,7 @@ namespace GarageAPI.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("GarageAPI.Models.User.UsersDTO", b =>
@@ -634,7 +634,7 @@ namespace GarageAPI.Migrations
                     b.Property<int>("UserType")
                         .HasColumnType("int");
 
-                    b.ToTable("UsersDTO");
+                    b.ToTable("UsersDTO", (string)null);
                 });
 
             modelBuilder.Entity("GarageAPI.Models.UserModels.UserModel", b =>
@@ -680,7 +680,7 @@ namespace GarageAPI.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("UserModels");
+                    b.ToTable("UserModels", (string)null);
                 });
 
             modelBuilder.Entity("GarageAPI.Models.UserModels.UserModelsDTO", b =>
@@ -729,7 +729,7 @@ namespace GarageAPI.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Output");
+                    b.ToTable("Output", (string)null);
                 });
 
             modelBuilder.Entity("GarageAPI.Models.CarModelManufacturerYear", b =>

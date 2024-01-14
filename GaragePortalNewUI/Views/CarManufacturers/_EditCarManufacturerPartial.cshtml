@@ -1,0 +1,39 @@
+﻿@model GaragePortalNewUI.Models.CarManufacturers
+@inject LanguageService Resource
+@{
+    ViewData["Title"] = "partial Car Editted";
+}
+
+<div id="editCarManufacturerItem" name="editCarManufacturerItem" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@Resource.GetKey("Edit_Manufacturer")<h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form asp-action="EditCarManufacturerItem" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="ID" />
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label asp-for="ManufacturerName" class="control-label">@Resource.GetKey("Model_Manufacturer")</label>
+                        <input asp-for="ManufacturerName" class="form-control" />
+                        <span asp-validation-for="ManufacturerName" class="text-danger"></span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" value="Create" class="btn btn-success">@Resource.GetKey("Edit_Car_Details")</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">@Resource.GetKey("Cancel")</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@*<script type="text/javascript">
+    $(document).ready(function () {
+       console.log("partial");
+    });
+</script>*@

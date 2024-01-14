@@ -2,4 +2,97 @@
 @inject LanguageService Resource
 
 <br/><br/>
-<p>@Resource.GetKey("Utilities")</p>
+
+
+<div class="row">
+    <div class="col-sm-5">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@Resource.GetKey("Import_Car_Manufacturers")</h5>
+                <p class="card-text">@Resource.GetKey("Import_Car_Manufacturers_Info")</p>
+                <button class="btn btn-sm btn-primary m-2" id="btnImportCarManufacturers" data-bs-toggle="ajax-modal" data-bs-target="#importCarManufacturers" data-url="@Url.Action("ImportCarManufacturersPartial","Import")">@Resource.GetKey("Import_Car_Manufacturers")</button>
+                @*<a href="#" class="btn btn-primary">Go somewhere</a>*@
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-5">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@Resource.GetKey("Import_Car_Models")</h5>
+                <p class="card-text">@Resource.GetKey("Import_Car_Models_Info")</p>
+                <button class="btn btn-sm btn-primary m-2" id="btnImportCarModels" data-bs-toggle="ajax-modal" data-bs-target="#importCarModels" data-url="@Url.Action("ImportCarModelsPartial","Import")">@Resource.GetKey("Import_Car_Models")</button>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-sm-5">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@Resource.GetKey("Import_Users")</h5>
+                <p class="card-text">@Resource.GetKey("Import_Users_Info")</p>
+                <button class="btn btn-sm btn-primary m-2" id="btnImportUsers" data-bs-toggle="ajax-modal" data-bs-target="#importUsers" data-url="@Url.Action("ImportUsersPartial","Import")">@Resource.GetKey("Import_Users")</button>
+                @*<a href="#" class="btn btn-primary">Go somewhere</a>*@
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="container-fluid">
+    <div class="row d-flex justify-content-center pt-5  h-100">
+        <div id="importCarManufacturers"></div>  
+        <div id="importCarModels"></div>
+    </div>
+</div>
+
+@*<p>
+    <form method="post" asp-controller="Import" asp-action="ImportCarModels" enctype="multipart/form-data">
+        <div class="input-group custom-file-button">
+            <label class="input-group-text labelImport" for="inputModelsFile">@Resource.GetKey("Model")</label>
+            <input type="file" class="form-control" name="file" id="inputModelsFile" accept=".xlsx, .xls, .csv">
+            <button class="buttonImport"  type="submit">Import Models from Excel</button>
+        </div>
+    </form>
+</p>
+
+<p>
+    <form method="post" asp-controller="Import" asp-action="ImportCustomers" enctype="multipart/form-data">
+        <div class="input-group custom-file-button">
+            <label class="input-group-text labelImport" for="inputCustomersFile">@Resource.GetKey("Customers")</label>
+            <input type="file" class="form-control" name="file"  id="inputCustomersFile" accept=".xlsx, .xls, .csv">
+            <button class="buttonImport" type="submit">Import Customers from Excel</button>
+        </div>
+    </form>
+</p>*@
+
+<script type="text/javascript">
+    console.log(11);
+    $(function () {
+        var importCarManufacturersDIVElement = $('#importCarManufacturers');
+        console.log(33);
+        $('button[data-bs-toggle="ajax-modal"]').click(function (event) {
+            console.log(44);
+            var url = $(this).data('url');
+            $.get(url).done(function (data) {
+                console.log(55);
+                importCarManufacturersDIVElement.html(data);
+                importCarManufacturersDIVElement.find('.modal').modal('show');
+            })
+        })
+
+        //Save Add Makeform data
+        importCarManufacturersDIVElement.on('click', '[data-bs-save="modal"]', function (event) {
+
+            var form = $(this).parents('.modal').find('form');
+            var actionUrl = form.attr("action");
+            var sendData = form.serialize();
+            $.post(actionUrl, sendData).done(function (data) {
+                importCarManufacturersDIVElement.find('.modal').modal('hide');
+                location.reload(true);
+            })
+        })
+    })
+
+</script>

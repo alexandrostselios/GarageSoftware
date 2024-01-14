@@ -10,6 +10,9 @@ using System.Linq;
 using System.Net.Http;
 using Microsoft.AspNetCore.Localization;
 using GaragePortalNewUI.Enum;
+using System.Threading.Tasks;
+using System.IO;
+using OfficeOpenXml;
 
 namespace GaragePortalNewUI.Controllers
 {
@@ -19,7 +22,6 @@ namespace GaragePortalNewUI.Controllers
         private bool isProduction = false;
 
         readonly Uri baseAddress = new Uri(@Resources.SettingsResources.Uri);
-        //readonly Uri baseAddress = new Uri(@Resources.SettingsResources.UriProduction);
         readonly HttpClient client = new HttpClient();
 
         public HomeController(ILogger<HomeController> logger)
@@ -147,6 +149,7 @@ namespace GaragePortalNewUI.Controllers
             ViewBag.Surname = HttpContext.Session.GetString("Surname");
             ViewBag.Culture = HttpContext.Session.GetString("Culture");
             ViewBag.Language = HttpContext.Session.GetString("Language");
+            ViewBag.GarageID = HttpContext.Session.GetString("GarageID");
         }
     }
 }

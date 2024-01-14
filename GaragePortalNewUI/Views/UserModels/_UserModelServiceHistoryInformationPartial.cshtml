@@ -41,7 +41,7 @@
                         </div>
                     </div>
                     <div class="form-group quickServiceHistoryServiceItems">
-                        <label asp-for="ServiceItemID" class="control-label">@Resource.GetKey("Service_Items")</label>
+                        <label asp-for="ServiceItemID" class="control-label">@Resource.GetKey("List_Of_Service_Items")</label>
                         <br />       
                         <input type="hidden" id="ServiceItemIDTest" value="@Html.DisplayFor(modelItem => modelItem.ServiceItemID)">
                         <select id="ServiceItemID" asp-for="ServiceItemID" class="form-control" multiple disabled>

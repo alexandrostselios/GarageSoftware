@@ -8,8 +8,13 @@ using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.AspNetCore.Server.Kestrel.Https;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography.X509Certificates;
+using sib_api_v3_sdk.Client;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
 
 // Add services to the container.
 
@@ -17,6 +22,10 @@ builder.Services.AddMvc().AddControllersAsServices();
 
 /* Send Emails */
 builder.Services.AddTransient<IEmailSender, EmailController>();
+
+/* Brevo Email*/
+Configuration.Default.ApiKey.Add("api-key", builder.Configuration["BrevoApi:ApiKey"]);
+
 /* Send Emails */
 
 /* Create PDF */
@@ -44,7 +53,6 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
 
 app.UseCors("corspolicy");
 

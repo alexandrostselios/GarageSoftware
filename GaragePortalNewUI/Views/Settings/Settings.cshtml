@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<GaragePortalNewUI.Models.ServiceItems>
 @inject LanguageService Resource
+@using Newtonsoft.Json;
+@using GaragePortalNewUI.Models;
 
 @{
     ViewData["Title"] = @Resource.GetKey("Settings");
@@ -7,15 +9,79 @@
 
 @if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Admin.ToString())
 {
-    <select id="serviceItemsDropdown">
-        <option value="0" selected disabled>--@Resource.GetKey("Please_Select")--</option>
-        <option value="1">@Resource.GetKey("Service_Items")</option>
-        <option value="2">@Resource.GetKey("System_Settings")</option>
-        <option value="3">@Resource.GetKey("Utilities")</option>
-    </select>
+    <div class="row">
+        <div class="col-sm-5">
+            <select class="form-control" style="width:300px" id="settingsItemsDropdown" onchange="testFunction()">
+                <option value="0" selected disabled>--@Resource.GetKey("Please_Select")--</option>
+                <option value="1">General Lists</option>
+                <option value="2">@Resource.GetKey("System_Settings")</option>
+                <option value="3">@Resource.GetKey("Utilities")</option>
+            </select>
+        </div>
+        <div class="col-sm-5">
+            <select class="form-control" style="width:300px" id="serviceItemsDropdown">
+            </select>
+        </div>
+    </div>
 
+    <br />
     <div id="partialPlaceHolder"></div>
-    <div id="EditServiceItem"></div>
+    <div id="addServiceItem"></div>
+    <div id="editServiceItem"></div>
+    <div id="addCarManufacturer"></div>
+    <div id="editCarManufacturerItem"></div>
+
+    <button class="btn btn-sm btn-primary m-2" id="btnAddServiceItem" data-bs-toggle="ajax-modal" data-bs-target="#addServiceItem" data-url="@Url.Action("AddServiceItemPartial","ServiceItems")" style="display: none">Add</button>
+    <table id="serviceItemsTable" class="table table-striped" style="display: none">
+        <thead>
+            <tr>
+                <th class="all">
+                    @Resource.GetKey("ID")
+                </th >
+                <th class="all">
+                    @Resource.GetKey("Description")
+                </th>
+                <th class="all">
+                    @Resource.GetKey("Price")
+                </th>
+                <th class="none">
+                    GarageID
+                </th>
+                <th class="all">
+                    
+                </th>
+@*                <th class="all">
+
+                </th>*@
+            </tr>
+        </thead>
+
+        <tbody>
+        </tbody>
+    </table>
+
+    <table id="carManufacturersTable" class="table table-striped" style="display: none">
+        <thead>
+            <tr>
+                <th>
+                    @Resource.GetKey("ID")
+                </th>
+                <th>
+                    @Resource.GetKey("Model_Manufacturer")
+                </th>
+                <th>
+                    GarageID
+                </th>
+                <th>
+
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            
+        </tbody>
+    </table>
 }
 else
 {
@@ -24,7 +90,36 @@ else
 
 
 @section scripts{
+    @*    <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>*@
     <script type="text/javascript">
+        $("#serviceItemsDropdown").append($("<option></option>").val(0).html('--@Resource.GetKey("Please_Select")--'));
+        document.getElementById("serviceItemsDropdown").disabled = true;
+
+
+        function testFunction() {
+            var e = document.getElementById("settingsItemsDropdown");
+            var value = e.options[e.selectedIndex].value;
+            var text = e.options[e.selectedIndex].text;
+            document.getElementById("serviceItemsDropdown").disabled = false;
+            const container = document.getElementById('serviceItemsDropdown');
+            if (value == '1') {
+                container.replaceChildren();
+                $("#serviceItemsDropdown").append($("<option></option>").val(0).html('--@Resource.GetKey("Please_Select")--'));
+                $("#serviceItemsDropdown").append($("<option></option>").val(1).html('@Resource.GetKey("List_Of_Service_Items")'));
+                $("#serviceItemsDropdown").append($("<option></option>").val(2).html('@Resource.GetKey("List_Of_Manufacturers")'));
+                $("#serviceItemsDropdown").append($("<option></option>").val(5).html('Old Lista'));
+                $("#serviceItemsDropdown").append($("<option></option>").val(3).html('@Resource.GetKey("List_Of_Models")'));
+            } else if (value == '2') {
+                container.replaceChildren();
+                $("#serviceItemsDropdown").append($("<option></option>").val(0).html('--@Resource.GetKey("Please_Select")--'));
+            } else if (value == '3') {
+                container.replaceChildren();
+                $("#serviceItemsDropdown").append($("<option></option>").val(0).html('--@Resource.GetKey("Please_Select")--'));
+                $("#serviceItemsDropdown").append($("<option></option>").val(4).html("Import"));
+            }
+        }
+
         var message = "@ViewBag.DeleteServiceItem";
         if (message == "ServiceItemIsDeleted") {
             var selectedID = 1;
@@ -40,22 +135,195 @@ else
             /* Get the selected value of dropdownlist */
             var selectedID = $(this).val();
 
-            console.log("Inside " + selectedID)
-            $.get("/Settings/SettingsPartialView/" + selectedID, function (data) {
-                $('#partialPlaceHolder').html(data);
-                $('#partialPlaceHolder').fadeIn('slow');
+            if (selectedID == 1) {
+                $('#serviceItemsTable tbody').empty();
+                $.get('@Url.Action("GetServiceItems", "ServiceItems")', function (data) {
+                    // Clear existing rows
+                    $('#serviceItemsTable tbody').empty();
+                    // Iterate through the data and append rows to the table
+                    $.each(data, function (index, item) {
+                        var row = '<tr>' +
+                            '<td>' + item.id + '</td>' +
+                            '<td>' + item.description + '</td>' +
+                            '<td>' + item.price + '</td>' +
+                            '<td>' + item.garageID + '</td>' +
+                        // Add more cells if needed
+                        '</tr>';
+                        $('#serviceItemsTable tbody').append(row);
+                    });
+                    $('#partialPlaceHolder').html(data);
+                    console.log(data);
+                    var table = $('#serviceItemsTable').DataTable({
+                        data: data,
+                        columns: [
+                            { data: 'id',
+                                "visible": false
+                            },
+                            { data: 'description'},
+                            { data: 'price', render: $.fn.dataTable.render.number(',', '.', 2, '', ' €') },
+                            { data: 'garageID' },
+                            {
+                                data: null,
+                                render: function (data, type, row) {
+                                    return '<button class= "btn-edit" id="btnEditServiceItem" data-id="' + row.id + '" ><i class="fa fa-edit"></i></button>    <button class="btn-delete" id="btnDeleteServiceItem" data-id="' + row.id + '"><i class="fa fa-trash"></i></button>';
+                                }  
+                            }
+                        ]
+                    });
+                    $('#serviceItemsTable').show();
+                    $('#btnAddServiceItem').show();
+                    var otable = $('#carManufacturersTable').dataTable();
+                    $('#carManufacturersTable').dataTable().fnDestroy();
+                    otable.hide();
+                    otable.parents('div.dataTables_wrapper').first().hide();
+                    // Initialize DataTable after data is loaded
+                    $('#serviceItemsTable').DataTable({
+                        "pageLength": 10,
+                        "searching": true,
+                        "paging": true,
+                        "destroy": true,
+                        "language": {
+                            "lengthMenu": "@Resource.GetKey("Show_DataTable") _MENU_ @Resource.GetKey("Entries_Per_Page")",
+                            "zeroRecords": "@Resource.GetKey("No_Matching_Records_Found_DataTable")",
+                            "info": "@Resource.GetKey("Show_DataTable") _START_ @Resource.GetKey("To_DataTable") _END_ @Resource.GetKey("Of_DataTable") _TOTAL_ @Resource.GetKey("Entries_DataTable")",
+                            "infoEmpty": "@Resource.GetKey("Showing_Empty_DataTable")",
+                            "infoFiltered": "(@Resource.GetKey("Filtered_From_DataTable") _MAX_ @Resource.GetKey("Total_DataTable") @Resource.GetKey("Entries_DataTable"))",
+                            "search": "@Resource.GetKey("Search"):",
+                            "paginate": {
+                                "first": "First",
+                                "last": "Last",
+                                "next": "@Resource.GetKey("Next_DataTable")",
+                                "previous": "@Resource.GetKey("Previous_DataTable")"
+                            }
+                        }
+                    });
+                });
+            } else if (selectedID == 2) {
+                $('#carManufacturersTable tbody').empty();
+                $.get('@Url.Action("GetCarManufacturersJson", "CarManufacturers")', function (data) {
+                    // Clear existing rows
+                    $('#carManufacturersTable tbody').empty();
+                    // Iterate through the data and append rows to the table
+                    $.each(data, function (index, item) {
+                        var row = '<tr>' +
+                            '<td>' + item.id + '</td>' +
+                            '<td>' + item.manufacturerName + '</td>' +
+                            '<td>' + item.garageID + '</td>'                         
+                            // Add more cells if needed
+                        '</tr>';
+                        $('#carManufacturersTable tbody').append(row);
+                    });
+                    $('#partialPlaceHolder').html(data);
+                    var table = $('#carManufacturersTable').DataTable({
+                        data: data,
+                        columns: [
+                            { data: 'id' },
+                            { data: 'manufacturerName'},
+                            { data: 'garageID' },
+                            {
+                                data: null,
+                                render: function (data, type, row) {
+                                    return '<button class="btn-edit" data-id="' + row.id + '"><i class="fa fa-edit"></button>'; /*@Resource.GetKey("Edit")*/
+                                }
+                            }
+                        ]
+                    });
+                    $('#carManufacturersTable').show();
+                    var otable = $('#serviceItemsTable').dataTable();
+                    $('#serviceItemsTable').dataTable().fnDestroy();
+                    otable.hide();
+                    otable.parents('div.dataTables_wrapper').first().hide();
+                    $('#btnAddServiceItem').hide();
+                    // Initialize DataTable after data is loaded
+                    $('#carManufacturersTable').DataTable({
+                        "pageLength": 10,
+                        "searching": true,
+                        "paging": true,
+                        "destroy": true,
+                        "language": {
+                            "lengthMenu": "@Resource.GetKey("Show_DataTable") _MENU_ @Resource.GetKey("Entries_Per_Page")",
+                            "zeroRecords": "@Resource.GetKey("No_Matching_Records_Found_DataTable")",
+                            "info": "@Resource.GetKey("Show_DataTable") _START_ @Resource.GetKey("To_DataTable") _END_ @Resource.GetKey("Of_DataTable") _TOTAL_ @Resource.GetKey("Entries_DataTable")",
+                            "infoEmpty": "@Resource.GetKey("Showing_Empty_DataTable")",
+                            "infoFiltered": "(@Resource.GetKey("Filtered_From_DataTable") _MAX_ @Resource.GetKey("Total_DataTable") @Resource.GetKey("Entries_DataTable"))",
+                            "search": "@Resource.GetKey("Search"):",
+                            "paginate": {
+                                "first": "First",
+                                "last": "Last",
+                                "next": "@Resource.GetKey("Next_DataTable")",
+                                "previous": "@Resource.GetKey("Previous_DataTable")"
+                            }
+                        }
+                    });
+                });
+            } else{
+                var otable = $('#serviceItemsTable').dataTable();
+                $('#serviceItemsTable').dataTable().fnDestroy();
+                otable.hide();
+                otable.parents('div.dataTables_wrapper').first().hide();
+                var otable = $('#carManufacturersTable').dataTable();
+                $('#carManufacturersTable').dataTable().fnDestroy();
+                otable.hide();
+                otable.parents('div.dataTables_wrapper').first().hide();
+                $.get("/Settings/SettingsPartialView/" + selectedID, function (data) {
+                    $('#partialPlaceHolder').html(data);
+                    $('#partialPlaceHolder').fadeIn('slow');
+                });
+            }
+        });
+
+        // Handle Add button click
+        $('#btnAddServiceItem').click(function (event) {
+            var url = "@Url.Action("AddServiceItemPartial", "ServiceItems")";
+            // Load partial view into the container
+            $.get(url, function (response) {
+                $('#addServiceItem').html(response);
+                $('#addServiceItem').find('.modal').modal('show');
             });
         });
 
-        console.log(2);
+        // Handle edit button click
+        $('#serviceItemsTable tbody').on('click', 'button.btn-edit', function () {
+            var id = $(this).data('id');
+            var url = "@Url.Action("EditServiceItemPartial", "ServiceItems")" + '/?id=' + id;
+            // Load partial view into the container
+            $.get(url, function (response) {
+                $('#editServiceItem').html(response);
+                $('#editServiceItem').find('.modal').modal('show');
+            });
+        });
+
+        $('#carManufacturersTable tbody').on('click', 'button.btn-edit', function () {
+            var id = $(this).data('id');
+            var url = "@Url.Action("EditCarManufacturerPartial", "CarManufacturers")" + '/?id=' + id;
+            // Load partial view into the container
+            $.get(url, function (response) {
+                $('#editCarManufacturerItem').html(response);
+                $('#editCarManufacturerItem').find('.modal').modal('show');
+            });
+        });
+
+        // Handle Delete button click
+        $('#serviceItemsTable tbody').on('click', 'button.btn-delete', function (){
+            console.log("Delete Service Item");
+            var id = $(this).data('id');
+            console.log("Delete id: "+id);
+            var url = "@Url.Action("DeleteServiceItem", "ServiceItems")" + '/?id=' + id;
+            // Load partial view into the container
+            $.get(url, function (response) {
+                console.log("Deleted");
+                    //$('#addServiceItem').html(response);
+                //$('#addServiceItem').find('.modal').modal('show');
+            });
+        });
+
         $(function () {
             var addServiceItemDIVElement = $('#EditServiceItem');
-            console.log(3);
-            $('button[data-bs-toggle="ajax-modal"]').click(function (event) {
-                console.log(4);
+            $('#buttonedit').click(function (event) {
+                console.log("Edit Service Item Before");
                 var url = $(this).data('url');
                 $.get(url).done(function (data) {
-                    console.log(5);
+                    console.log("Edit Service Item After");
                     addServiceItemDIVElement.html(data);
                     addServiceItemDIVElement.find('.modal').modal('show');
                 })
@@ -69,6 +337,30 @@ else
                 var sendData = form.serialize();
                 $.post(actionUrl, sendData).done(function (data) {
                     addServiceItemDIVElement.find('.modal').modal('hide');
+                    location.reload(true);
+                })
+            })
+        })
+
+        $(function () {
+            var editCarManufacturerDIVElement = $('#editCarManufacturer');
+            $('button[data-bs-toggle="ajax-modal"]').click(function (event) {
+                var url = $(this).data('url');
+                $.get(url).done(function (data) {
+                    console.log(55);
+                    editCarManufacturerDIVElement.html(data);
+                    editCarManufacturerDIVElement.find('.modal').modal('show');
+                })
+            })
+
+            //Save Add Makeform data
+            editCarManufacturerDIVElement.on('click', '[data-bs-save="modal"]', function (event) {
+
+                var form = $(this).parents('.modal').find('form');
+                var actionUrl = form.attr("action");
+                var sendData = form.serialize();
+                $.post(actionUrl, sendData).done(function (data) {
+                    editCarManufacturerDIVElement.find('.modal').modal('hide');
                     location.reload(true);
                 })
             })

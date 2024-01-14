@@ -55,6 +55,29 @@ namespace GaragePortalNewUI.Controllers
             return View(userCars);
         }
 
+        public IActionResult ViewServiceHistoryList(long garageID)
+        {
+            GetSessionProperties();
+            //if (userID == null)
+            //{
+            //    return NotFound();
+            //}
+            IEnumerable<ServiceHistory> userCars = null;
+            var responseTask = client.GetAsync(client.BaseAddress + "/GetCarsServiceHistoryToList/" + garageID);
+            responseTask.Wait();
+            var result = responseTask.Result;
+            var readTask = result.Content.ReadAsAsync<IList<ServiceHistory>>();
+            readTask.Wait();
+            userCars = readTask.Result;
+
+            if (userCars == null)
+            {
+                return NotFound();
+            }
+
+            return View(userCars);
+        }
+
         public IActionResult ViewCarDetails(long id, string? searchBy, string? searchValue)
         {
             GetSessionProperties();

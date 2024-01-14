@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using GaragePortalNewUI.Enum;
 using Microsoft.Extensions.Localization;
+using GaragePortalNewUI.Controllers;
 
 namespace GaragePortalNewUI.Models
 {
@@ -37,13 +38,24 @@ namespace GaragePortalNewUI.Models
                 List<ServiceItems> temp = si.GetServiceItems().ToList();
                 return PartialView("_ServiceItemsPartial", temp);
             }
-            else if ( id==2)
+            else if ( id==2 || id==5)
             {
-                return PartialView("_SystemSettingsPartial");
+                //HttpContext.Session.SetString("DeleteServiceItem", "ServiceItemIsDeleted");
+                CarManufacturersController si = new CarManufacturersController();
+                List<CarManufacturers> temp = si.GetCarManufacturers().ToList();
+                return PartialView("_ManufacturersPartial", temp);
+            }
+            else if (id == 3)
+            {
+                return PartialView("_ModelsPartial");
+            }
+            else if (id == 4)
+            {
+                return PartialView("_UtilitiesPartial");
             }
             else
             {
-                return PartialView("_UtilitiesPartial");
+                return Ok();
             }
         }
 

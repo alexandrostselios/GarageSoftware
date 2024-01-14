@@ -1,31 +1,31 @@
 ﻿@model GaragePortalNewUI.Models.ServiceItems
 @inject LanguageService Resource
 @{
-    ViewData["Title"] = "partial Car Editted";
+    ViewData["Title"] = "Add Service Item";
 }
 
-<div id="editServiceItem" name="editServiceItem" class="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog draggable" role="document">
+<div id="addServiceItem" name="addServiceItem" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header dragable_touch d-block">
-                <h5 class="modal-title">@Resource.GetKey("Edit_Service_Item")<h5>
+            <div class="modal-header">
+                <h5 class="modal-title">Add Service Item<h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form asp-action="EditServiceItem" enctype="multipart/form-data">
+            <form asp-action="AddServiceItem" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="ID" />
+                <input type="hidden" asp-for="GarageID" value="@ViewBag.GarageID"/>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label asp-for="Description" class="control-label">@Resource.GetKey("Description")</label>
+                        <label asp-for="Description" class="control-label">Description</label>
                         <input asp-for="Description" class="form-control" />
                         <span asp-validation-for="Description" class="text-danger"></span>
                     </div>
-                    <div class="form-group "> @*input-icon input-icon-right*@
-                        <label asp-for="Price" class="control-label">@Resource.GetKey("Price")</label>
+                    <div class="form-group">
+                        <label asp-for="Price" class="control-label">Price</label>
                         <input asp-for="Price" class="form-control" />
-                        @*<i id="discountPriceSymbol">€</i>*@
                         <span asp-validation-for="Price" class="text-danger"></span>
                     </div>
                     <div class="modal-footer">
@@ -37,12 +37,3 @@
         </div>
     </div>
 </div>
-
-@*<script type="text/javascript">
-    $(document).ready(function () {
-        $('.draggable').draggable({
-            handle: '.modal-header'
-        });
-        checkDiscountType(0);
-    });
-</script>*@
