@@ -4,43 +4,39 @@
 
 function importExcelPartial() {
     'use strict'; // v2.3.2
-    var result, zip = new JSZip(),
-        processStartTime, s, i, index, id;
-
     var getTab = function (base64file) {
+        var result = []; // Initialize the result array
 
-        zip = zip.load(base64file, {
-            base64: true
-        });
-        result = [];
-        processStartTime = Date.now();
+        JSZip.loadAsync(base64file, { base64: true })
+            .then(function (zip) {
+                // Accessing workbook.xml content
+                var workbookContent = zip.file('xl/workbook.xml').async('string');
 
-        if (s = zip.file('xl/workbook.xml')) {
-            s = s.asText();
-
-            s = s.split('<sheet ');
-            i = s.length;
-            while (--i) {
-                console.log("si: " + s[i]);
-                id = s[i].substr(s[i].indexOf('name="') + 6);
-                result.push(id.substring(0, id.indexOf('"')));
-                $("#excelSheetOrder").append($("<option value=" + (s[i].substr(s[i].indexOf('sheetId="') + 9)).split('"')[0] + ">" + id.substring(0, id.indexOf('"')) + "</option>"));
-            }
-        }
-    }
+                // Processing workbook content to get sheet names and IDs
+                return workbookContent.then(function (content) {
+                    var sheets = content.split('<sheet ');
+                    for (var i = 1; i < sheets.length; i++) { // Start from 1 to skip the first element
+                        var id = sheets[i].substr(sheets[i].indexOf('name="') + 6);
+                        var sheetId = (sheets[i].substr(sheets[i].indexOf('sheetId="') + 9)).split('"')[0];
+                        result.push(id.substring(0, id.indexOf('"')));
+                        $("#excelSheetOrder").append($("<option value=" + sheetId + ">" + id.substring(0, id.indexOf('"')) + "</option>"));
+                    }
+                });
+            })
+            .catch(function (error) {
+                console.error("Error reading Excel file:", error);
+            });
+    };
 
     var handleFileSelect = function (evt) {
         var files = evt.target.files;
         var file = files[0];
-
         if (files && file) {
             var reader = new FileReader();
-
             reader.onload = function (readerEvt) {
                 var binaryString = readerEvt.target.result;
                 getTab(btoa(binaryString));
             };
-
             reader.readAsBinaryString(file);
         }
     };

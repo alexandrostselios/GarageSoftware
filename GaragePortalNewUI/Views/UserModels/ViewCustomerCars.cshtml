@@ -18,7 +18,7 @@
         <a class="af" asp-controller="PdfCreator" asp-action="CreatePDF" asp-route-entityType="4">@Resource.GetKey("Download_User_Cars")</a>
     </div>
 
-    <table class="table" >
+@*    <table class="table" >
         <thead>
             <tr>
                 <th>
@@ -86,9 +86,6 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.EngineType)
                     </td>
-@*                    <td>
-                        <a class="af" asp-controller="UserModels" asp-action="EditCarDetails" asp-route-id="@item.ID" asp-route-flag="1">@Resource.GetKey("Edit_Car_Details")</a>
-                    </td>*@
                     <td>
                         <a class="af" asp-controller="UserModels" asp-action="ViewCarDetails" asp-route-id="@item.ID">@Resource.GetKey("View_Car_History")</a>
                     </td>
@@ -100,6 +97,50 @@
                     </td>
                 </tr>
             }
+        </tbody>
+    </table>*@
+    <div id="editCustomerCarDetailsDIV"></div>
+    <div id="customerCarsPlaceHolder"></div>
+    <table id="customerCarsTable" class="table table-striped" style="display: none">
+        <thead>
+            <tr>
+                <th class="all">
+                    @Resource.GetKey("ID")
+                </th>
+                <th class="all">
+                    @Resource.GetKey("Model_Manufacturer")
+                </th>
+                <th class="all">
+                    @Resource.GetKey("Model")
+                </th>
+                <th class="all">
+                    @Resource.GetKey("Model_Year")
+                </th>
+                <th class="all">
+                    @Resource.GetKey("Color")
+                </th>
+                <th class="all">
+                    @Resource.GetKey("Licence_Plate")
+                </th>
+                <th class="all">
+                    @Resource.GetKey("Kilometer")
+                </th>
+                <th class="all">
+                    @Resource.GetKey("Car_Image")
+                </th>
+                <th class="all">
+                    @Resource.GetKey("Engine_Type")
+                </th>
+                <th class="all">
+                    @Resource.GetKey("VIN")
+                </th>
+                <th class="all">
+
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
         </tbody>
     </table>
     <p></p>
@@ -179,6 +220,105 @@ else if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.User.ToString()){
 @section scripts{
 
     <script type="text/javascript">
+        $(function () {
+            $('#customerCarsTable tbody').empty();
+            $.get('@Url.Action("GetCustomerCarsList", "UserModels", new {id = ViewBag.CustomerID})', function (data) {
+                // Clear existing rows
+                $('#customersTable tbody').empty();
+                // Iterate through the data and append rows to the table
+                $.each(data, function (index, item) {
+                    var row = '<tr>' +
+                        '<td>' + item.model_manufacturer + '</td>' +
+                        '<td>' + item.model + '</td>' +
+                        '</tr>';
+                    $('#customerCarsTable tbody').append(row);
+                });
+                console.log(data);
+                var table = $('#customerCarsTable').DataTable({
+                    data: data,
+                    columns: [
+                        { data: 'id'},
+                        { data: 'manufacturerName' },
+                        { data: 'modelName' },
+                        { data: 'modelYear' },
+                        { data: 'color' },
+                        { data: 'licencePlate' },
+                        { data: 'kilometer' },
+                        {
+                            data: 'carImage',
+                            render: function (data, type, row) {
+                                var carImage = row.carImage;
+                                if (carImage) {
+                                    return '<img src="data:image/jpg;base64,' + carImage + '"width="40px height="50px">';
+                                } else {
+                                    return ''; // or some placeholder image if userPhoto is null or empty
+                                }
+                            },
+                            "className": "text-center"
+                        },
+                        { data: 'engineType' },
+                        { data: 'vin'},
+                        {
+                            data: null,
+                            render: function (data, type, row) {
+                                var id = row.id;
+                                var url = "@Url.Action("ViewCustomerCars", "UserModels")" + '/?id=' + id;
+                                return '<div class="btn-group" role="group">' +
+                                    '<a href="#" class="btn btn-edit" title="@Resource.GetKey("Edit_Car_Details")" id="btnEditCarDetails" data-id="' + row.id + '" ><i class="fa fa-edit" style="color:orange"></i></a>' +
+                                    '</div>';
+                            },
+                            "width": "80px",
+                            "className": "text-center"
+                        }
+                    ]
+                });
+                $('#customerCarsTable').show();
+                $('#customerCarsTable').DataTable({
+                    "pageLength": 10,
+                    "searching": true,
+                    "paging": true,
+                    "destroy": true,
+                    "scrollCollapse": true,
+                    "scrollY": '600px',
+                    "columnDefs": [
+                        {
+                            "targets": [0],
+                            "visible": false
+                        },
+                        {
+                            "targets": [4,7,9,10],
+                            "orderable": false
+                        }
+                    ],
+                    "language": {
+                        "lengthMenu": "@Resource.GetKey("Show_DataTable") _MENU_ @Resource.GetKey("Entries_Per_Page")",
+                        "zeroRecords": "@Resource.GetKey("No_Matching_Records_Found_DataTable")",
+                        "info": "@Resource.GetKey("Show_DataTable") _START_ @Resource.GetKey("To_DataTable") _END_ @Resource.GetKey("Of_DataTable") _TOTAL_ @Resource.GetKey("Entries_DataTable")",
+                        "infoEmpty": "@Resource.GetKey("Showing_Empty_DataTable")",
+                        "infoFiltered": "(@Resource.GetKey("Filtered_From_DataTable") _MAX_ @Resource.GetKey("Total_DataTable") @Resource.GetKey("Entries_DataTable"))",
+                        "search": "@Resource.GetKey("Search"):",
+                        "paginate": {
+                            "first": "First",
+                            "last": "Last",
+                            "next": "@Resource.GetKey("Next_DataTable")",
+                            "previous": "@Resource.GetKey("Previous_DataTable")"
+                        }
+                    }
+                });
+            });
+        });
+
+        // Handle edit button click
+        $('#customerCarsTable tbody').on('click', 'a.btn-edit', function (e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+            var url = "@Url.Action("EditCarDetailsPartial")" + '/?id=' + id;
+            // Load partial view into the container
+            $.get(url, function (response) {
+                $('#editCustomerCarDetailsDIV').html(response);
+                $('#editCustomerCarDetailsDIV').find('.modal').modal('show');
+            });
+        });
 
         //Show Add Make Modal
         $(function () {

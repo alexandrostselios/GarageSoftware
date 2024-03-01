@@ -29,7 +29,7 @@ namespace GaragePortalNewUI.Controllers
             HttpContext.Session.SetString("ReceiverID", id.ToString());
             HttpContext.Session.SetString("ReceiverUserType", userType.ToString());
             GetSessionProperties();
-            return View();
+            return PartialView();
         }
 
         [HttpPost]

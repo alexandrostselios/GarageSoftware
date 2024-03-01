@@ -5,13 +5,13 @@
 }
 
 <div id="EditCarDetails" name="EditCarDetails" class="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog draggable" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header dragable_touch d-block">
                 <h5 class="modal-title">@Resource.GetKey("Edit_Car_Details")<h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
-                </button>
+                </button>*@
             </div>
             <form asp-action="EditCarDetails" asp-route-flag="0" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -58,3 +58,11 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.draggable').draggable({
+            handle: '.modal-header'
+        });
+    });
+</script>

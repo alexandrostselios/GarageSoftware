@@ -645,4 +645,12 @@
     <value>Επεξεργασία Δεδομένων Κατασκευαστή</value>
     <comment>Edit_Manufacturer</comment>
   </data>
+  <data name="Enable_Access" xml:space="preserve">
+    <value>Δυνατότητα Εισόδου</value>
+    <comment>Enable_Access</comment>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Αποστολή</value>
+    <comment>Send</comment>
+  </data>
 </root>

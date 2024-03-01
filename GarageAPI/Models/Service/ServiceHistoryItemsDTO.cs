@@ -12,6 +12,8 @@ namespace GarageAPI.Models.Service
 
         public long SIID { get; set; }
 
+        public decimal? Price { get; set; }
+
         public long GarageID { get; set; }
     }
 }

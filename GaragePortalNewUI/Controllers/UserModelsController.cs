@@ -399,5 +399,29 @@ namespace GaragePortalNewUI.Controllers
         {
             return true;
         }
+
+        public IEnumerable<UserModels> GetCustomerCarsList(long id)
+        {
+            IEnumerable<UserModels> customerCarsList = null;
+            var responseTask = client.GetAsync(client.BaseAddress);
+            using (client)
+            {
+                responseTask = client.GetAsync(client.BaseAddress + "/GetUserModelByUserID" + "/"+id); /*+ ViewBag.GarageID);*/
+                responseTask.Wait();
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<IList<UserModels>>();
+                    readTask.Wait();
+                    customerCarsList = readTask.Result;
+                }
+                else
+                {
+                    customerCarsList = Enumerable.Empty<UserModels>();
+                    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+                }
+            }
+            return customerCarsList;
+        }
     }
 }

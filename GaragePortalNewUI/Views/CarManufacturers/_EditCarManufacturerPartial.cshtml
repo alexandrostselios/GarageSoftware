@@ -5,13 +5,10 @@
 }
 
 <div id="editCarManufacturerItem" name="editCarManufacturerItem" class="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog draggable" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header dragable_touch d-block">
                 <h5 class="modal-title">@Resource.GetKey("Edit_Manufacturer")<h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
             </div>
             <form asp-action="EditCarManufacturerItem" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -32,8 +29,10 @@
     </div>
 </div>
 
-@*<script type="text/javascript">
+<script type="text/javascript">
     $(document).ready(function () {
-       console.log("partial");
+        $('.draggable').draggable({
+            handle: '.modal-header'
+        });
     });
-</script>*@
+</script>

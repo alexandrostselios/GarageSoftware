@@ -85,6 +85,30 @@ namespace GaragePortalNewUI.Controllers
             return View(customers);
         }
 
+        public IEnumerable<Users> GetCustomersList()
+        {
+            IEnumerable<Users> customersList = null;
+            var responseTask = client.GetAsync(client.BaseAddress);
+            using (client)
+            {
+                responseTask = client.GetAsync(client.BaseAddress + "/GetCustomers" + "/1"); /*+ ViewBag.GarageID);*/
+                responseTask.Wait();
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<IList<Users>>();
+                    readTask.Wait();
+                    customersList = readTask.Result;
+                }
+                else
+                {
+                    customersList = Enumerable.Empty<Users>();
+                    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+                }
+            }
+            return customersList;
+        }
+
         public ActionResult Engineers(string searchBy, string searchValue)
         {
             GetSessionProperties();
@@ -150,6 +174,30 @@ namespace GaragePortalNewUI.Controllers
                 }
             }
             return View(engineers);
+        }
+
+        public IEnumerable<Users> GetEngineersList()
+        {
+            IEnumerable<Users> engineersList = null;
+            var responseTask = client.GetAsync(client.BaseAddress);
+            using (client)
+            {
+                responseTask = client.GetAsync(client.BaseAddress + "/GetEngineers" + "/1"); /*+ ViewBag.GarageID);*/
+                responseTask.Wait();
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<IList<Users>>();
+                    readTask.Wait();
+                    engineersList = readTask.Result;
+                }
+                else
+                {
+                    engineersList = Enumerable.Empty<Users>();
+                    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+                }
+            }
+            return engineersList;
         }
 
         public IActionResult Login()

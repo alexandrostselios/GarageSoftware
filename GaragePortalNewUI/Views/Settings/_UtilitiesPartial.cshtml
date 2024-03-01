@@ -73,10 +73,10 @@
         var importCarManufacturersDIVElement = $('#importCarManufacturers');
         console.log(33);
         $('button[data-bs-toggle="ajax-modal"]').click(function (event) {
-            console.log(44);
+            //console.log(44);
             var url = $(this).data('url');
             $.get(url).done(function (data) {
-                console.log(55);
+                //console.log(55);
                 importCarManufacturersDIVElement.html(data);
                 importCarManufacturersDIVElement.find('.modal').modal('show');
             })

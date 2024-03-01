@@ -50,9 +50,6 @@
                 <th class="all">
                     
                 </th>
-@*                <th class="all">
-
-                </th>*@
             </tr>
         </thead>
 
@@ -157,16 +154,19 @@ else
                         data: data,
                         columns: [
                             { data: 'id',
-                                "visible": false
+                                "visible": false,
+                                "width": "10px"
                             },
-                            { data: 'description'},
-                            { data: 'price', render: $.fn.dataTable.render.number(',', '.', 2, '', ' €') },
-                            { data: 'garageID' },
+                            { data: 'description', "width": "80%"},
+                            { data: 'price', render: $.fn.dataTable.render.number(',', '.', 2, '', ' €'), "width": "20%" },
+                            { data: 'garageID',"width": "10px" },
                             {
                                 data: null,
                                 render: function (data, type, row) {
-                                    return '<button class= "btn-edit" id="btnEditServiceItem" data-id="' + row.id + '" ><i class="fa fa-edit"></i></button>    <button class="btn-delete" id="btnDeleteServiceItem" data-id="' + row.id + '"><i class="fa fa-trash"></i></button>';
-                                }  
+                                    return '<a href="#" class="btn-edit" title="@Resource.GetKey("Edit")" id="btnEditServiceItem" data-id="' + row.id + '" ><i class="fa fa-edit" style="color:orange"></i></a> &nbsp;&nbsp;&nbsp; <a href="#" class="btn-delete" title="@Resource.GetKey("Delete")" id="btnDeleteServiceItem" data-id="' + row.id + '" ><i class="fa fa-trash" style="color:red"></i></a>';
+                                },
+                                "width": "10%",
+                                "className": "text-center"
                             }
                         ]
                     });
@@ -182,6 +182,14 @@ else
                         "searching": true,
                         "paging": true,
                         "destroy": true,
+                        "scrollCollapse": true,
+                        "scrollY": '600px',
+                        "columnDefs": [
+                            {
+                                "targets": [0,3],
+                                "visible": false
+                            }
+                        ],
                         "language": {
                             "lengthMenu": "@Resource.GetKey("Show_DataTable") _MENU_ @Resource.GetKey("Entries_Per_Page")",
                             "zeroRecords": "@Resource.GetKey("No_Matching_Records_Found_DataTable")",
@@ -240,6 +248,14 @@ else
                         "searching": true,
                         "paging": true,
                         "destroy": true,
+                        "scrollCollapse": true,
+                        "scrollY": '600px',
+                        "columnDefs": [
+                            {
+                                "targets": [0, 2],
+                                "visible": false
+                            }
+                        ],
                         "language": {
                             "lengthMenu": "@Resource.GetKey("Show_DataTable") _MENU_ @Resource.GetKey("Entries_Per_Page")",
                             "zeroRecords": "@Resource.GetKey("No_Matching_Records_Found_DataTable")",
@@ -283,7 +299,8 @@ else
         });
 
         // Handle edit button click
-        $('#serviceItemsTable tbody').on('click', 'button.btn-edit', function () {
+        $('#serviceItemsTable tbody').on('click', 'a.btn-edit', function (e) {
+            e.preventDefault();
             var id = $(this).data('id');
             var url = "@Url.Action("EditServiceItemPartial", "ServiceItems")" + '/?id=' + id;
             // Load partial view into the container
@@ -304,7 +321,8 @@ else
         });
 
         // Handle Delete button click
-        $('#serviceItemsTable tbody').on('click', 'button.btn-delete', function (){
+        $('#serviceItemsTable tbody').on('click', 'a.btn-delete', function (e){
+            e.preventDefault();
             console.log("Delete Service Item");
             var id = $(this).data('id');
             console.log("Delete id: "+id);

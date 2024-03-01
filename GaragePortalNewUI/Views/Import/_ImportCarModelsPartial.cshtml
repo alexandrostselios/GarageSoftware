@@ -18,7 +18,7 @@
                     @*<div class="form-row importCarManufacturers">*@
                     <div class="input-group custom-file-button importCarManufacturers">
                         <label class="input-group-text labelImport" for="inputGroupFile">File</label>
-                        <input type="file" class="form-control" name="file" id="inputExcelFile">
+                        <input type="file" class="form-control" name="file" id="inputExcelFile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
                         @*<button class="buttonImport" type="submit">@Resource.GetKey("Import_Manufacturers_From_Excel")</button>*@
                     </div>
                    @* </div>*@
@@ -73,15 +73,15 @@
     $(function () {
         let fileInput = document.getElementById("inputExcelFile");
         fileInput.addEventListener("change", function () {
-            console.log("66");
+            //console.log("66");
             // check if the file is selected or not
             if (fileInput.files.length == 0) {
-                console.log("77");
+                //console.log("77");
                 document.getElementById("excelSheetOrder").disabled = true;
                 document.getElementById("nameOrder").disabled = true;
                 document.getElementById("garageIDOrder").disabled = true;
             } else {
-                console.log("88");
+                //console.log("88");
                 document.getElementById("excelSheetOrder").disabled = false;
                 document.getElementById("nameOrder").disabled = false;
                 document.getElementById("garageIDOrder").disabled = false;

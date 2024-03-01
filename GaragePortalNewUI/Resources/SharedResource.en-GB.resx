@@ -590,7 +590,7 @@
     <comment>Entries_DataTable</comment>
   </data>
   <data name="Entries_Per_Page" xml:space="preserve">
-    <value>entrie per page</value>
+    <value>entries per page</value>
     <comment>Entries_Per_Page</comment>
   </data>
   <data name="Filtered_From_DataTable" xml:space="preserve">
@@ -621,8 +621,8 @@
     <value>Showing 0 to 0 of 0 entries</value>
     <comment>Showing_Empty_DataTable</comment>
   </data>
-  <data name="Show_DataTables" xml:space="preserve">
-    <value>Showing</value>
+  <data name="Show_DataTable" xml:space="preserve">
+    <value>Show</value>
     <comment>Show_DataTables</comment>
   </data>
   <data name="Total_DataTable" xml:space="preserve">
@@ -644,5 +644,13 @@
   <data name="Edit_Manufacturer" xml:space="preserve">
     <value>Edit Manufacturer</value>
     <comment>Edit_Manufacturer</comment>
+  </data>
+  <data name="Enable_Access" xml:space="preserve">
+    <value>Login Access</value>
+    <comment>Enable_Access</comment>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Send</value>
+    <comment>Send</comment>
   </data>
 </root>

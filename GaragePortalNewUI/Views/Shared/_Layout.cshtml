@@ -130,6 +130,16 @@
     @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>*@
     <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
     @*DataTables*@
-        @await RenderSectionAsync("Scripts", required: false)
+
+    @*Excel Import*@
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/pptxgenjs@3.12.0/libs/jszip.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/pptxgenjs@3.12.0/dist/pptxgen.min.js"></script>
+    @*Excel Import*@
+
+    @*Custom Date Format*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    @*Custom Date Format*@
+
+    @await RenderSectionAsync("Scripts", required: false)
     </body>
 </html>
