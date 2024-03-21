@@ -674,3 +674,6 @@ FodyWeavers.xsd
 /GaragePortalNewUI/obj/Release/net5.0/GaragePortalNewUI.csproj.AssemblyReference.cache
 /GaragePortalNewUI/obj/Release/net5.0/GaragePortalNewUI.assets.cache
 /GaragePortalNewUI/bin/Debug/net5.0/runtimes/unix/lib/netcoreapp2.1/System.Data.SqlClient.dll
+/GarageAPI/.vs/ProjectEvaluation/garageapi.metadata.v6.1
+/GarageAPI/.vs/GarageAPI/v17/.futdcache.v2
+/GarageAPI/.vs/ProjectEvaluation/garageapi.projects.v6.1
