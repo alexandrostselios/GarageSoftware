@@ -590,7 +590,7 @@
     <comment>Entries_DataTable</comment>
   </data>
   <data name="Entries_Per_Page" xml:space="preserve">
-    <value>εγγραφών ανά σελίδα</value>
+    <value>εγγραφών ανά σελίδα      </value>
     <comment>Entries_Per_Page</comment>
   </data>
   <data name="Filtered_From_DataTable" xml:space="preserve">
@@ -652,5 +652,41 @@
   <data name="Send" xml:space="preserve">
     <value>Αποστολή</value>
     <comment>Send</comment>
+  </data>
+  <data name="Blocked_Access" xml:space="preserve">
+    <value>Αποκλεισμένη Πρόσβαση</value>
+    <comment>Blocked_Access</comment>
+  </data>
+  <data name="Enabled_Access" xml:space="preserve">
+    <value>Πλήρης Πρόσβαση</value>
+    <comment>Enabled_Access</comment>
+  </data>
+  <data name="Restricted_Access" xml:space="preserve">
+    <value>Περιορισμένη Πρόσβαση</value>
+    <comment>Restricted_Access</comment>
+  </data>
+  <data name="Rows_Selected" xml:space="preserve">
+    <value>γραμμές επιλέχθηκαν</value>
+    <comment>Rows_Selected</comment>
+  </data>
+  <data name="One_Row_Selected" xml:space="preserve">
+    <value>1 γραμμή επιλέχθηκε</value>
+    <comment>One_Row_Selected</comment>
+  </data>
+  <data name="Export_To_Excel" xml:space="preserve">
+    <value>Εξαγωγή σε Excel</value>
+    <comment>Export_To_Excel</comment>
+  </data>
+  <data name="Print" xml:space="preserve">
+    <value>Εκτύπωση</value>
+    <comment>Print</comment>
+  </data>
+  <data name="Select_All" xml:space="preserve">
+    <value>Επιλογή Όλων</value>
+    <comment>Select_All</comment>
+  </data>
+  <data name="Unselect_All" xml:space="preserve">
+    <value>Αποεπιλογή Όλων</value>
+    <comment>Unselect_All</comment>
   </data>
 </root>

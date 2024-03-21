@@ -1327,13 +1327,23 @@ namespace GarageAPI.Migrations
                 columns: new[] { "ID", "CreationDate", "Email", "EnableAccess", "GarageID", "LastLoginDate", "ModifiedDate", "Name", "Password", "Speciality", "Surname", "UserPhoto", "UserType" },
                 values: new object[,]
                 {
-                    { 1L, new DateTime(2022, 1, 6, 14, 5, 14, 258, DateTimeKind.Unspecified), "atselios@classter.com", 1, 0L, null, null, "Alexandros", "1", null, "Tselios", null, 1 },
-                    { 2L, new DateTime(2022, 2, 6, 9, 19, 46, 369, DateTimeKind.Unspecified), "efi.vanni@gmail.com", 1, 0L, null, null, "Efthumia", "f1234!", null, "Varvagianni", null, 2 },
-                    { 3L, new DateTime(2022, 12, 15, 22, 19, 46, 456, DateTimeKind.Unspecified), "kkitsikou@hotmail.com", 1, 0L, null, null, "Kostas", "gafa#$#", null, "Kitsikou", null, 2 },
-                    { 4L, new DateTime(2022, 12, 24, 13, 42, 34, 566, DateTimeKind.Unspecified), "mpapadopoulos@yahoo.gr", 2, 0L, null, null, "Marios", "MP1234@?", null, "Papadopoulos", null, 2 },
-                    { 5L, new DateTime(2023, 2, 3, 20, 8, 23, 860, DateTimeKind.Unspecified), "konpapa@yahoo.gr", 1, 0L, null, null, "Κωνσταντίνος", "DfG34#$%^", 3L, "Παπαδόπουλος", null, 3 },
-                    { 6L, new DateTime(2023, 3, 1, 16, 37, 48, 180, DateTimeKind.Local).AddTicks(7589), "mmichail@gmail.com", 1, 0L, null, null, "Μιχάλης", "KavMixalis$%", 2L, "Μιχαήλ", null, 3 },
-                    { 7L, new DateTime(2023, 5, 7, 10, 06, 10, 000, DateTimeKind.Local).AddTicks(7589), "gntinou@gmail.com", 1, 0L, null, null, "Γιάννης", "gNtin123!@#", 1L, "Ντίνου", null, 3 }
+                    { 1L, new DateTime(2022, 1, 6, 14, 5, 14, 258, DateTimeKind.Unspecified), "alexandrostselios@gmail.com", 1, 0L, null, null, "Alexandros", "1", null, "Tselios", null, 1 },
+                    { 2L, new DateTime(2022, 2, 6, 9, 19, 46, 369, DateTimeKind.Unspecified), "tempCustomer1@test.com", 1, 0L, null, null, "Customer1", "f1234!", null, "Test1", null, 2 },
+                    { 3L, new DateTime(2022, 12, 15, 22, 19, 46, 456, DateTimeKind.Unspecified), "tempCustomer2@test.com", 1, 0L, null, null, "Customer2", "gafa#$#", null, "Test2", null, 2 },
+                    { 4L, new DateTime(2022, 12, 24, 13, 42, 34, 566, DateTimeKind.Unspecified), "tempCustomer3@test.gr", 2, 0L, null, null, "Customer3", "MP1234@?", null, "Test3", null, 2 },
+                    { 5L, new DateTime(2023, 2, 3, 20, 8, 23, 860, DateTimeKind.Unspecified), "tempEngineer1@test.gr", 1, 0L, null, null, "Engineer1", "DfG34#$%^", 3L, "Test1", null, 3 },
+                    { 6L, new DateTime(2023, 3, 1, 16, 37, 48, 180, DateTimeKind.Local).AddTicks(7589), "tempEngineer2@test.com", 1, 0L, null, null, "Engineer2", "KavMixalis$%", 2L, "Test2", null, 3 },
+                    { 7L, new DateTime(2023, 5, 7, 10, 06, 10, 000, DateTimeKind.Local).AddTicks(7589), "tempEngineer3@test.com", 1, 0L, null, null, "Engineer3", "gNtin123!@#", 1L, "Test3", null, 3 },
+                    { 8L, new DateTime(2022, 12, 24, 13, 42, 34, 566, DateTimeKind.Unspecified), "tempCustomer4@test.gr", 2, 0L, null, null, "Customer4", "MP1234@?", null, "Test4", null, 2 },
+                    { 9L, new DateTime(2022, 12, 24, 13, 42, 34, 566, DateTimeKind.Unspecified), "tempCustomer5@test.gr", 2, 0L, null, null, "Customer5", "MP12345@?", null, "Test5", null, 2 },
+                    { 10L, new DateTime(2022, 12, 24, 13, 42, 34, 566, DateTimeKind.Unspecified), "tempCustomer6@test.gr", 2, 0L, null, null, "Customer6", "MP12346@?", null, "Test6", null, 1 },
+                    { 11L, new DateTime(2022, 12, 24, 13, 42, 34, 566, DateTimeKind.Unspecified), "tempCustomer7@test.gr", 2, 0L, null, null, "Customer7", "MP12347@?", null, "Test7", null, 2 },
+                    { 12L, new DateTime(2022, 12, 24, 13, 42, 34, 566, DateTimeKind.Unspecified), "tempCustomer8@test.gr", 2, 0L, null, null, "Customer8", "MP12348@?", null, "Test8", null, 1 },
+                    { 13L, new DateTime(2022, 12, 24, 13, 42, 34, 566, DateTimeKind.Unspecified), "tempCustomer9@test.gr", 2, 0L, null, null, "Customer9", "MP12348@?", null, "Test9", null, 1 },
+                    { 14L, new DateTime(2022, 12, 24, 13, 42, 34, 566, DateTimeKind.Unspecified), "tempCustomer10@test.gr", 2, 0L, null, null, "Customer10", "MP123410@?", null, "Test10", null, 1 },
+                    { 15L, new DateTime(2023, 12, 20, 14, 45, 34, 566, DateTimeKind.Unspecified), "tempCustomer11@test.gr", 2, 0L, null, null, "Customer11", "MP123411@?", null, "Test11", null, 2 },
+                    { 16L, new DateTime(2023, 12, 20, 12, 07, 34, 566, DateTimeKind.Unspecified), "tempCustomer12@test.gr", 2, 0L, null, null, "Customer12", "MP123412@?", null, "Test12", null, 2 },
+                    { 17L, new DateTime(2023, 12, 21, 13, 36, 34, 566, DateTimeKind.Unspecified), "tempCustomer13@test.gr", 2, 0L, null, null, "Customer13", "MP123413@?", null, "Test13", null, 3 }
                 });
 
             migrationBuilder.InsertData(
@@ -1505,9 +1515,9 @@ namespace GarageAPI.Migrations
                 columns: new[] { "ID", "UserID", "ModelManufacturerYearID", "LicencePlate", "VIN", "Color", "Kilometer" },
                 values: new object[,]
                 {
-                    {1L, 1L, 56L, "KBT5670", "ZAR94000007368150", 101, 156125},
-                    {2L, 1L, 81L, "EYB7174", "VNKKG3D330A048555", 142, 27450},
-                    {3L, 1L, 3L,"NIZ2654", "NLHBA51BABZ014926", 4, 88956},
+                    {1L, 1L, 56L, "KBB1234", "AFG94025607385960", 101, 156125},
+                    {2L, 1L, 81L, "EYX2536", "VNKKG3D253B048254", 142, 27450},
+                    {3L, 1L, 3L,"NIZ1234", "NLHBA51BABZ063524", 4, 88956},
                     {4L, 2L, 5L,"XEZ6532", "KHX94000007259841", 5, 220653},
                     {5L, 2L, 6L, "KBH1452", "JNKCV61E09M303716", 6, 65402},
                     {6L, 3L, 6L, "AHZ1495", "JH4DA9460MS032070", 6, 9563}

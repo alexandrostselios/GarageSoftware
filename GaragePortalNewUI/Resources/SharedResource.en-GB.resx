@@ -653,4 +653,40 @@
     <value>Send</value>
     <comment>Send</comment>
   </data>
+  <data name="Blocked_Access" xml:space="preserve">
+    <value>Blocked Access</value>
+    <comment>Blocked_Access</comment>
+  </data>
+  <data name="Enabled_Access" xml:space="preserve">
+    <value>Enabled Access</value>
+    <comment>Enabled_Access</comment>
+  </data>
+  <data name="Restricted_Access" xml:space="preserve">
+    <value>Restricted Access</value>
+    <comment>Restricted_Access</comment>
+  </data>
+  <data name="Rows_Selected" xml:space="preserve">
+    <value>rows selected</value>
+    <comment>Rows_Selected</comment>
+  </data>
+  <data name="One_Row_Selected" xml:space="preserve">
+    <value>1 row selected</value>
+    <comment>One_Row_Selected</comment>
+  </data>
+  <data name="Export_To_Excel" xml:space="preserve">
+    <value>Export to Excel</value>
+    <comment>Export_To_Excel</comment>
+  </data>
+  <data name="Print" xml:space="preserve">
+    <value>Print</value>
+    <comment>Print</comment>
+  </data>
+  <data name="Select_All" xml:space="preserve">
+    <value>Select All</value>
+    <comment>Select_All</comment>
+  </data>
+  <data name="Unselect_All" xml:space="preserve">
+    <value>Unselect All</value>
+    <comment>Unselect_All</comment>
+  </data>
 </root>

@@ -218,6 +218,7 @@ namespace GaragePortalNewUI.Controllers
             ViewBag.CustomerUserID = HttpContext.Session.GetString("CustomerUserID");
             ViewBag.GarageID = HttpContext.Session.GetString("GarageID");
             ViewBag.SHID = HttpContext.Session.GetString("SHID");
+            //ViewBag.CustomerID = HttpContext.Session.GetString("CustomerID");
         }
 
         // GET: UserModels/Details/5
@@ -400,28 +401,28 @@ namespace GaragePortalNewUI.Controllers
             return true;
         }
 
-        public IEnumerable<UserModels> GetCustomerCarsList(long id)
-        {
-            IEnumerable<UserModels> customerCarsList = null;
-            var responseTask = client.GetAsync(client.BaseAddress);
-            using (client)
-            {
-                responseTask = client.GetAsync(client.BaseAddress + "/GetUserModelByUserID" + "/"+id); /*+ ViewBag.GarageID);*/
-                responseTask.Wait();
-                var result = responseTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    var readTask = result.Content.ReadAsAsync<IList<UserModels>>();
-                    readTask.Wait();
-                    customerCarsList = readTask.Result;
-                }
-                else
-                {
-                    customerCarsList = Enumerable.Empty<UserModels>();
-                    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
-                }
-            }
-            return customerCarsList;
-        }
+        //public IEnumerable<UserModels> GetCustomerCarsList(long id)
+        //{
+        //    IEnumerable<UserModels> customerCarsList = null;
+        //    var responseTask = client.GetAsync(client.BaseAddress);
+        //    using (client)
+        //    {
+        //        responseTask = client.GetAsync(client.BaseAddress + "/GetUserModelByUserID" + "/"+id); /*+ ViewBag.GarageID);*/
+        //        responseTask.Wait();
+        //        var result = responseTask.Result;
+        //        if (result.IsSuccessStatusCode)
+        //        {
+        //            var readTask = result.Content.ReadAsAsync<IList<UserModels>>();
+        //            readTask.Wait();
+        //            customerCarsList = readTask.Result;
+        //        }
+        //        else
+        //        {
+        //            customerCarsList = Enumerable.Empty<UserModels>();
+        //            ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+        //        }
+        //    }
+        //    return customerCarsList;
+        //}
     }
 }

@@ -65,6 +65,20 @@
     <br>
     <br>
     <div id="engineerPlaceHolder"></div>
+    <div id="colorExplanation" class="color-explanation" style="display: none;">
+        <div>
+            <span style="display: inline-block; width: 15px; height: 15px; background-color: #FAFCFE; margin-right: 5px; border: 1px solid black;"></span>
+            <span style="vertical-align: super; font-size: 12px;">@Resource.GetKey("Enabled_Access")</span>
+        </div>
+        <div>
+            <span style="display: inline-block; width: 15px; height: 15px; background-color: #eb6534; margin-right: 5px; border: 1px solid black;"></span>
+            <span style="vertical-align: super; font-size: 12px;">@Resource.GetKey("Restricted_Access")</span>
+        </div>
+        <div>
+            <span style="display: inline-block; width: 15px; height: 15px; background-color: red; margin-right: 5px; border: 1px solid black;"></span>
+            <span style="vertical-align: super; font-size: 12px;">@Resource.GetKey("Blocked_Access")</span>
+        </div>
+    </div>
     <table id="engineersTable" class="table table-striped" style="display: none">
         <thead>
             <tr>
@@ -110,49 +124,13 @@
                 <th class="all">
 
                 </th>
+                <th class="all">
+
+                </th>
             </tr>
         </thead>
         <tbody>
-            @*@foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Surname)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Email)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CreationDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ModifiedDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LastLoginDate)
-                    </td>
-                    <td>
-                        @if (!(item.UserPhoto is null)){
-                            <img src="data:image/jpg;base64, @Convert.ToBase64String(item.UserPhoto)" width="50" height="50" />
-                        }
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EngineerSpeciality)
-                    </td>
-                    <td>
-                        <a class="af" asp-controller="Email" asp-action="SendEmailToUser" asp-route-id="@item.ID" asp-route-userType="3">@Resource.GetKey("Send_Email")</a>
-                    </td>
-                    <td>
-                        <button class="btn btn-sm btn-primary m-2" id="btnEditEngineer" data-bs-toggle="ajax-modal" data-bs-target="#EditEngineer" data-url="@Url.Action("EditEngineerPartial",new{id = @item.ID, garageID = @item.GarageID})">@Resource.GetKey("Edit")</button>
-                    </td>
-                    <td>
-                        <input type="button" class="btn btn-sm btn-danger m-2" value="@Resource.GetKey("Delete")" onclick="" />
-                    </td>
-                </tr>
-            }*@
+          
         </tbody>
     </table>
 }else{
@@ -161,6 +139,8 @@
 
 @section scripts{
     <script type="text/javascript">
+        var table;
+        var originalRowColors = [];
         $(function () {
             $('#engineersTable tbody').empty();
             $.get('@Url.Action("GetEngineersList", "Users")', function (data) {
@@ -177,7 +157,131 @@
                 });
                 //$('#customersPlaceHolder').html(data);
                 console.log(data);
-                var table = $('#engineersTable').DataTable({
+                table = $('#engineersTable').DataTable({
+                    dom: "<'row'<'col-sm-6'B><'col-sm-6'<'pull-right'lf>>>" +
+                        "<'row'<'col-sm-12'tr>>" +
+                        "<'row'<'col-sm-5'i><'col-sm-1'><'col-sm-6'p>>",
+                    initComplete: function () {
+                        // Add spacing between "Show x entries" and "Search" elements
+                        $('.dataTables_length').css('margin-right', '20px');
+                    },
+                    buttons: [
+                        {
+                            text: '<i class="fa fa-check-square-o"></i>',
+                            className: 'btn btn-success',
+                            action: function () {
+                                table.rows({ page: 'current' }).select(); // Select visible rows on current page
+                                //table.rows().select();
+                                var selectedRows = table.rows({ selected: true }).nodes(); // Get selected rows
+                                $(selectedRows).css('background-color', '#34baeb'); // Set background color to blue for selected rows
+                            },
+                            init: function (api, node, config) {
+                                $(node).tooltip({
+                                    title: decodeResourceText('@Resource.GetKey("Select_All")'), // Tooltip text
+                                    placement: 'bottom', // Tooltip placement
+                                    trigger: 'hover' // Show tooltip on hover
+                                });
+                            }
+                        },
+                        {
+                            text: '<i class="fa fa-minus-square-o"></i>',
+                            className: 'btn btn-danger',
+                            action: function () {
+                                table.rows({ page: 'current' }).deselect(); // Deselect visible rows on current page
+                                //table.rows().deselect();
+                                var deselectedRows = table.rows().nodes(); // Get all rows
+                                $(deselectedRows).css('background-color', function (index) {
+                                    return originalRowColors[index]; // Restore original background color for each row
+                                });
+                            },
+                            init: function (api, node, config) {
+                                $(node).tooltip({
+                                    title: decodeResourceText('@Resource.GetKey("Unselect_All")'), // Tooltip text
+                                    placement: 'bottom', // Tooltip placement
+                                    trigger: 'hover' // Show tooltip on hover
+                                });
+                            }
+                        },
+                        {
+                            extend: 'excelHtml5',
+                            text: '<i class="fa fa-file-excel-o"></i>',
+                            className: 'btn btn-primary',
+                            exportOptions: {
+                                orthogonal: 'sort',
+                                columns: ':visible:not(.no-export)'
+                            },
+                            customize: function (xlsx) {
+                                var selectedRowCount = table.rows({ selected: true }).count();
+                                console.log("Selected: " + selectedRowCount);
+
+                                if (selectedRowCount === 0) {
+                                    if (!xlsx.xl.worksheets['sheet1.xml'].sheetData) {
+                                        xlsx.xl.worksheets['sheet1.xml'].sheetData = [];
+                                    }
+                                    var messageRow = {
+                                        row: [
+                                            {
+                                                c: [
+                                                    { v: 'No rows selected!', s: { fontId: 2 } }
+                                                ]
+                                            }
+                                        ]
+                                    };
+                                    xlsx.xl.worksheets['sheet1.xml'].sheetProtection = { password: '1234', sheet: true };
+                                    xlsx.xl.worksheets['sheet1.xml'].sheetViews = [{ showGridLines: false }];
+                                    xlsx.xl.worksheets['sheet1.xml'].sheetFormatPr = { defaultRowHeight: 15 };
+                                    xlsx.xl.worksheets['sheet1.xml'].dimension = { ref: "A1:B2" };
+
+                                    // Prepend the message row to the sheetData array
+                                    xlsx.xl.worksheets['sheet1.xml'].sheetData.unshift(messageRow);
+                                }
+                            },
+                            init: function (api, node, config) {
+                                $(node).tooltip({
+                                    title: decodeResourceText('@Resource.GetKey("Export_To_Excel")'), // Tooltip text
+                                    placement: 'bottom', // Tooltip placement
+                                    trigger: 'hover' // Show tooltip on hover
+                                });
+                            }
+                        },
+                        {
+                            extend: 'print',
+                            text: '<i class= "fa fa-print" > </i>',
+                            className: 'btn btn-warning',
+                            exportOptions: {
+                                orthogonal: 'sort',
+                                rows: { selected: true }, // Only export selected rows
+                                columns: ':visible:not(.no-export)'
+                            },
+                            init: function (api, node, config) {
+                                $(node).tooltip({
+                                    title: decodeResourceText('@Resource.GetKey("Print")'), // Tooltip text
+                                    placement: 'bottom', // Tooltip placement
+                                    trigger: 'hover' // Show tooltip on hover
+                                });
+                            }
+                        },
+                        {
+                            text: '<i class="fa fa-info-circle"></i>',
+                            //titleAttr: 'Color Explanation',
+                            className: 'btn btn-info',
+                            action: function () {
+                                // Add action here if needed
+                            },
+                            init: function (api, node, config) {
+                                $(node).popover({
+                                    placement: 'top',
+                                    content: $('#colorExplanation').html(),
+                                    html: true,
+                                    trigger: 'hover', // Show popover on hover
+                                    delay: { show: 0, hide: 100 } // Add a small delay to avoid flickering
+                                }).on('shown.bs.popover', function () {
+                                    $('.popover-content').css('font-size', '12px'); // Set font size for popover content
+                                    $('.popover').css('max-width', '200px'); // Set max width for popover
+                                });
+                            }
+                        }
+                    ],
                     data: data,
                     columns: [
                         {
@@ -244,20 +348,18 @@
                                            '</div>';
                             },
                             "width": "150px"
+                        },
+                        {
+                            data: null,
+                            render: function (data, type, row) {
+                                return '<input type="checkbox">';
+                            }
                         }
-                    ]
-                });
-                $('#engineersTable').show();
-                $('#engineersTable').DataTable({
-                    "pageLength": 10,
-                    "searching": true,
-                    "paging": true,
-                    "destroy": true,
-                    "scrollCollapse": true,
-                    "scrollY": '600px',
+                    ],
+                    select: true,
                     "columnDefs": [
                         {
-                            "targets": [0,4,9,10,12],
+                            "targets": [0,4,9,10,12,14],
                             "visible": false
                         },
                         {
@@ -265,6 +367,21 @@
                             "orderable": false
                         }
                     ],
+                    "rowCallback": function (row, data) {
+                        var enableAccess = data.enableAccess;
+                        console.log("Enable Access: " + enableAccess);
+                        if (enableAccess === 2) {
+                            console.log("2");
+                            $(row).css('background-color', '#eb6534');
+                        } else if (enableAccess === 3) {
+                            console.log("3");
+                            $(row).css('background-color', 'red');
+                        } else {
+                            console.log("Other");
+                            $(row).css('background-color', '#FAFCFE');
+                        }
+                        originalRowColors.push($(row).css('background-color'));
+                    },
                     "language": {
                         "lengthMenu": "@Resource.GetKey("Show_DataTable") _MENU_ @Resource.GetKey("Entries_Per_Page")",
                         "zeroRecords": "@Resource.GetKey("No_Matching_Records_Found_DataTable")",
@@ -272,6 +389,13 @@
                         "infoEmpty": "@Resource.GetKey("Showing_Empty_DataTable")",
                         "infoFiltered": "(@Resource.GetKey("Filtered_From_DataTable") _MAX_ @Resource.GetKey("Total_DataTable") @Resource.GetKey("Entries_DataTable"))",
                         "search": "@Resource.GetKey("Search"):",
+                        "select": {
+                            rows: {
+                                _: '%d @Resource.GetKey("Rows_Selected")',
+                                0: '',
+                                1: '@Resource.GetKey("One_Row_Selected")'
+                            }
+                        },
                         "paginate": {
                             "first": "First",
                             "last": "Last",
@@ -283,7 +407,64 @@
             });
         });
 
-                // Handle email button click
+        $('#engineersTable').show();
+
+        $('#engineersTable tbody').on('click', 'tr', function () {
+            // Toggle selected class
+            $(this).toggleClass('selected');
+            var rowIndex = $(this).index(); // Get the index of the clicked row
+            if ($(this).hasClass('selected')) {
+                $(this).css('background-color', '#34baeb');
+            } else {
+                $(this).css('background-color', originalRowColors[rowIndex]);
+            }
+        });
+
+        // Handle Select All
+        function selectAll() {
+            // Check all checkboxes
+            $('#engineersTable tbody input[type="checkbox"]').prop('checked', true);
+
+            // Add selected class and change background color to blue
+            $('#engineersTable tbody tr').addClass('selected-row').css('background-color', '#326da8');
+        }
+
+        // Handle Diselect All
+        function deselectAll() {
+            $('#engineersTable tbody input[type="checkbox"]').prop('checked', false);
+            // Remove selected class and revert background color
+            $('#engineersTable tbody tr').removeClass('selected-row').each(function () {
+                var enableAccessIndex = 6; // 7th column index (zero-based)
+                var enableAccess = $(this).find('td:eq(' + enableAccessIndex + ')').text();
+                var conditionB = true; // Sample condition, replace it with your actual condition
+
+                var color = (enableAccess === "1" && conditionB) ? '#FAFCFE' : (enableAccess === "2" ? '#eb6534' : 'red');
+                $(this).css('background-color', color);
+            });
+            // Debugging Code
+            //$('#engineersTable tbody tr').removeClass('selected-row').each(function () {
+            //    var row = $(this);
+            //    var enableAccessIndex = -1;
+
+            //    // Debugging output: Log the text of each table cell
+            //    row.find('td').each(function (index) {
+            //        console.log('Cell ' + index + ': ' + $(this).text().trim());
+            //        if ($(this).text().trim() === 'enableAccess') { // Adjust the header text accordingly
+            //            enableAccessIndex = index;
+            //        }
+            //    });
+
+            //    console.log('enableAccessIndex: ' + enableAccessIndex); // Debugging output: Log the index
+
+            //    if (enableAccessIndex !== -1) {
+            //        var enableAccess = row.find('td:eq(' + enableAccessIndex + ')').text();
+            //        var color = enableAccess === "2" ? '#eb6534' : '#FAFCFE'; // Original colors based on enableAccess value
+            //        row.css('background-color', color);
+            //    }
+            //});
+        }
+
+        // Handle email button click
         $('#engineersTable tbody').on('click', 'a.btn-email', function () {
             var id = $(this).data('id');
             var email = $(this).data('email');

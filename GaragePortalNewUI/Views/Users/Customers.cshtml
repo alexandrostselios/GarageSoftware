@@ -41,6 +41,24 @@
     <br>
     <br>
     <div id="customersPlaceHolder"></div>
+@*    <button onclick="selectAll()">Select All</button>
+    <button onclick="deselectAll()">Deselect All</button>
+    <br>
+    <br>*@
+    <div id="colorExplanation" class="color-explanation" style="display: none;">
+        <div>
+            <span style="display: inline-block; width: 15px; height: 15px; background-color: #FAFCFE; margin-right: 5px; border: 1px solid black;"></span>
+            <span style="vertical-align: super; font-size: 12px;">@Resource.GetKey("Enabled_Access")</span>
+        </div>
+        <div>
+            <span style="display: inline-block; width: 15px; height: 15px; background-color: #eb6534; margin-right: 5px; border: 1px solid black;"></span>
+            <span style="vertical-align: super; font-size: 12px;">@Resource.GetKey("Restricted_Access")</span>
+        </div>
+        <div>
+            <span style="display: inline-block; width: 15px; height: 15px; background-color: red; margin-right: 5px; border: 1px solid black;"></span>
+            <span style="vertical-align: super; font-size: 12px;">@Resource.GetKey("Blocked_Access")</span>
+        </div>
+    </div>
     <table id="customersTable" class="table table-striped" style="display: none">
         <thead>
             <tr>
@@ -86,12 +104,17 @@
                 <th class="all">
 
                 </th>
+                <th class="all">
+
+                </th>
             </tr>
         </thead>
 
         <tbody>
         </tbody>
     </table>
+
+
 }
 else
 {
@@ -99,13 +122,18 @@ else
 }
 
 
+
 @section scripts{
     <script type="text/javascript">
+        let table; // Declare the table variable outside the scope of the callback function
+        var originalRowColors = [];
         $(function(){
             $('#customersTable tbody').empty();
             $.get('@Url.Action("GetCustomersList", "Users")', function (data) {
+                //console.log("Inside get");
                 // Clear existing rows
                 $('#customersTable tbody').empty();
+                //console.log("Afte rEmpty");
                 // Iterate through the data and append rows to the table
                 $.each(data, function (index, item) {
                     var row = '<tr>' +
@@ -114,8 +142,136 @@ else
                         '</tr>';
                     $('#customersTable tbody').append(row);
                 });
+                //console.log("Before Init");
                 console.log(data);
-                var table = $('#customersTable').DataTable({
+                table = $('#customersTable').DataTable({
+                    dom: "<'row'<'col-sm-6'B><'col-sm-6'<'pull-right'lf>>>" +
+                                "<'row'<'col-sm-12'tr>>" +
+                                "<'row'<'col-sm-5'i><'col-sm-1'><'col-sm-6'p>>",
+                    initComplete: function () {
+                        // Add spacing between "Show x entries" and "Search" elements
+                        $('.dataTables_length').css('margin-right', '20px');
+                    },
+                    buttons: [
+                        {
+                            text: '<i class="fa fa-check-square-o"></i>',
+                            className: 'btn btn-success', // Add a custom class to the button
+                            action: function () {
+                                table.rows({ page: 'current' }).select(); // Select visible rows on current page
+                                //table.rows().select();
+                                var selectedRows = table.rows({ selected: true }).nodes(); // Get selected rows
+                                $(selectedRows).css('background-color', '#34baeb'); // Set background color to blue for selected rows
+                            },
+                            init: function (api, node, config) {
+                                $(node).tooltip({
+                                    title: decodeResourceText('@Resource.GetKey("Select_All")'), // Tooltip text
+                                    placement: 'bottom', // Tooltip placement
+                                    trigger: 'hover' // Show tooltip on hover
+                                });
+                            }
+                        },
+                        {
+                            text: '<i class="fa fa-minus-square-o"></i>',
+                            className: 'btn btn-danger',
+                            action: function () {
+                                table.rows({ page: 'current' }).deselect(); // Deselect visible rows on current page
+                                //table.rows().deselect();
+                                var deselectedRows = table.rows().nodes(); // Get all rows
+                                $(deselectedRows).css('background-color', function (index) {
+                                    return originalRowColors[index]; // Restore original background color for each row
+                                });
+                            },
+                            init: function (api, node, config) {
+                                $(node).tooltip({
+                                    title: decodeResourceText('@Resource.GetKey("Unselect_All")'), // Tooltip text
+                                    placement: 'bottom', // Tooltip placement
+                                    trigger: 'hover' // Show tooltip on hover
+                                });
+                            }
+                        },
+                        {
+                            extend: 'excelHtml5',
+                            text: '<i class="fa fa-file-excel-o"></i>',
+                            className: 'btn btn-primary',
+                            exportOptions: {
+                                orthogonal: 'sort',
+                                columns: ':visible:not(.no-export)'
+                            },
+                            customize: function (xlsx) {
+                                var selectedRowCount = table.rows({ selected: true }).count();
+                                console.log("Selected: " + selectedRowCount);
+
+                                if (selectedRowCount === 0) {
+                                    if (!xlsx.xl.worksheets['sheet1.xml'].sheetData) {
+                                        xlsx.xl.worksheets['sheet1.xml'].sheetData = [];
+                                    }
+                                    var messageRow = {
+                                        row: [
+                                            {
+                                                c: [
+                                                    { v: 'No rows selected!', s: { fontId: 2 } }
+                                                ]
+                                            }
+                                        ]
+                                    };
+                                    xlsx.xl.worksheets['sheet1.xml'].sheetProtection = { password: '1234', sheet: true };
+                                    xlsx.xl.worksheets['sheet1.xml'].sheetViews = [{ showGridLines: false }];
+                                    xlsx.xl.worksheets['sheet1.xml'].sheetFormatPr = { defaultRowHeight: 15 };
+                                    xlsx.xl.worksheets['sheet1.xml'].dimension = { ref: "A1:B2" };
+
+                                    // Prepend the message row to the sheetData array
+                                    xlsx.xl.worksheets['sheet1.xml'].sheetData.unshift(messageRow);
+                                }
+                            },
+                            init: function (api, node, config) {
+                                $(node).tooltip({
+                                    title: decodeResourceText('@Resource.GetKey("Export_To_Excel")'), // Tooltip text
+                                    placement: 'bottom', // Tooltip placement
+                                    trigger: 'hover' // Show tooltip on hover
+                                });
+                            }
+                        },
+                        {
+                            extend: 'print',
+                            text: '<i class= "fa fa-print" ></i>',
+                            className: 'btn btn-warning',
+                            exportOptions: {
+                                orthogonal: 'sort',
+                                rows: { selected: true }, // Only export selected rows
+                                columns: ':visible:not(.no-export)'
+                            },
+                            init: function (api, node, config) {
+                                $(node).tooltip({
+                                    title: decodeResourceText('@Resource.GetKey("Print")'), // Tooltip text
+                                    placement: 'bottom', // Tooltip placement
+                                    trigger: 'hover' // Show tooltip on hover
+                                });
+                            }
+                        },
+                        {
+                            text: '<i class="fa fa-info-circle"></i>',
+                            //titleAttr: 'Color Explanation',
+                            className: 'btn btn-info',
+                            action: function () {
+                                // Add action here if needed
+                            },
+                            init: function (api, node, config) {
+                                $(node).popover({
+                                    placement: 'top',
+                                    content: $('#colorExplanation').html(),
+                                    html: true,
+                                    trigger: 'hover', // Show popover on hover
+                                    delay: { show: 0, hide: 100 } // Add a small delay to avoid flickering
+                                }).on('shown.bs.popover', function () {
+                                    $('.popover-content').css('font-size', '12px'); // Set font size for popover content
+                                    $('.popover').css('max-width', '200px'); // Set max width for popover
+                                });
+                            }
+                        }
+                    ],
+                    //scrollY: '600px', // Set the height of the scrollable area
+                    //scrollCollapse: true, // Allow the scrollable area to collapse
+                    //fixedHeader: true, // Enable the fixed header
                     data: data,
                     columns: [
                         {
@@ -189,27 +345,27 @@ else
                                     var id = row.id;
                                     var url = "@Url.Action("ViewCustomerCars", "UserModels")" + '/?id=' + id;
                                     return '<div class="btn-group" role="group">' +
-                                    '<a href="' + url + '" class="btn btn-view" title="@Resource.GetKey("List_Of_User_Cars")" data-id="' + row.id + '"><i class="fa fa-car" style="color:black"></i></a>' +
-                                               '<a href="#" class="btn btn-email" title="@Resource.GetKey("Send_Email")" data-id="' + row.id + '" data-email="' + row.email + '" ><i class="fa fa-envelope" style="color:#0366d6"></i></a>' +
-                                               '<a href="#" class="btn btn-edit" title="@Resource.GetKey("Edit")" id="btnEditCustomer" data-id="' + row.id + '" ><i class="fa fa-edit" style="color:orange"></i></a>' +
-                                           '</div>';
+                                    //'<a href="' + url + '" class="btn btn-view" title="@Resource.GetKey("List_Of_User_Cars")" data-id="' + row.id + '"><i class="fa fa-car" style="color:black"></i></a>' +
+                                    '<a href="#" class="btn btn-view" title="@Resource.GetKey("List_Of_User_Cars")" data-id="' + row.id + '"><i class="fa fa-car" style="color:black"></i></a>' +
+                                    '<a href="#" class="btn btn-email" title="@Resource.GetKey("Send_Email")" data-id="' + row.id + '" data-email="' + row.email + '" ><i class="fa fa-envelope" style="color:#0366d6"></i></a>' +
+                                                '<a href="#" class="btn btn-edit" title="@Resource.GetKey("Edit")" id="btnEditCustomer" data-id="' + row.id + '" ><i class="fa fa-edit" style="color:orange"></i></a>' +
+                                            '</div>';
                             },
                             "width": "80px",
                             "className": "text-center"
+                        },
+                        {
+                            data: null,
+                            render: function (data, type, row) {
+                                return '<input type="checkbox">';
+                            }
                         }
-                    ]
-                });
-                $('#customersTable').show();
-                $('#customersTable').DataTable({
-                    "pageLength": 10,
-                    "searching": true,
-                    "paging": true,
-                    "destroy": true,
-                    "scrollCollapse": true,
-                    "scrollY": '600px',
+                    ],
+                    
+                    select: true,
                     "columnDefs": [
                         {
-                            "targets": [0,4,9,10,12],
+                            "targets": [0,4,9,10,12,14],
                             "visible": false
                         },
                         {
@@ -217,6 +373,21 @@ else
                             "orderable": false
                         }
                     ],
+                    "rowCallback": function (row, data) {
+                        var enableAccess = data.enableAccess;
+                        console.log("Enable Access: " + enableAccess);
+                        if (enableAccess === 2) {
+                            //console.log("2");
+                            $(row).css('background-color', '#eb6534');
+                        } else if (enableAccess === 3) {
+                            // console.log("3");
+                            $(row).css('background-color', 'red');
+                        } else{
+                            //console.log("Other");
+                            $(row).css('background-color', '#FAFCFE');
+                        }
+                        originalRowColors.push($(row).css('background-color'));
+                    }, 
                     "language": {
                         "lengthMenu": "@Resource.GetKey("Show_DataTable") _MENU_ @Resource.GetKey("Entries_Per_Page")",
                         "zeroRecords": "@Resource.GetKey("No_Matching_Records_Found_DataTable")",
@@ -224,6 +395,13 @@ else
                         "infoEmpty": "@Resource.GetKey("Showing_Empty_DataTable")",
                         "infoFiltered": "(@Resource.GetKey("Filtered_From_DataTable") _MAX_ @Resource.GetKey("Total_DataTable") @Resource.GetKey("Entries_DataTable"))",
                         "search": "@Resource.GetKey("Search"):",
+                        "select": {
+                            rows: {
+                                _: '%d @Resource.GetKey("Rows_Selected")',
+                                0: '',
+                                1: '@Resource.GetKey("One_Row_Selected")'
+                            }
+                        },
                         "paginate": {
                             "first": "First",
                             "last": "Last",
@@ -232,18 +410,278 @@ else
                         }
                     }
                 });
+
+                //console.log("After Init");
+                $('#customersTable').show();
+                // Listen for row selection event
+                $('#customersTable tbody').on('click', 'tr', function () {
+                    // Toggle selected class
+                    $(this).toggleClass('selected');
+                    var rowIndex = $(this).index(); // Get the index of the clicked row
+                    if ($(this).hasClass('selected')) {
+                        $(this).css('background-color', '#34baeb');
+                    } else {
+                        $(this).css('background-color', originalRowColors[rowIndex]);
+                    }
+                });
+                //$('#customersTable').DataTable({
+                //    "language": {
+                //        "lengthMenu": "@Resource.GetKey("Show_DataTable") _MENU_ @Resource.GetKey("Entries_Per_Page")",
+                //        "zeroRecords": "@Resource.GetKey("No_Matching_Records_Found_DataTable")",
+                //        "info": "@Resource.GetKey("Show_DataTable") _START_ @Resource.GetKey("To_DataTable") _END_ @Resource.GetKey("Of_DataTable") _TOTAL_ @Resource.GetKey("Entries_DataTable")",
+                //        "infoEmpty": "@Resource.GetKey("Showing_Empty_DataTable")",
+                //        "infoFiltered": "(@Resource.GetKey("Filtered_From_DataTable") _MAX_ @Resource.GetKey("Total_DataTable") @Resource.GetKey("Entries_DataTable"))",
+                //        "search": "@Resource.GetKey("Search"):",
+                //        "paginate": {
+                //            "first": "First",
+                //            "last": "Last",
+                //            "next": "@Resource.GetKey("Next_DataTable")",
+                //            "previous": "@Resource.GetKey("Previous_DataTable")"
+                //        }
+                //    }
+                //});
+                //var table = $('#customersTable').DataTable({
+                //    data: data,
+                //    columns: [
+                //        {
+                //            data: 'id',
+                //            "visible": false
+                //        },
+                //        { data: 'surname' },
+                //        { data: 'name' },
+                //        { data: 'email' },
+                //        { data: 'password' },
+                //        { data: 'modifiedDate',
+                //            render: function (data, type, row) {
+                //                var modifiedDate = row.modifiedDate;
+
+                //                if (type === 'display' && modifiedDate) {
+                //                    var formattedDate = moment(modifiedDate).format('DD-MM-YYYY HH:mm:ss');
+                //                    return formattedDate;
+                //                }
+
+                //                // Return the original data for sorting and filtering
+                //                return data;
+                //            },
+                //            "className": "text-center"
+                //        },
+                //        { data: 'lastLoginDate',
+                //            render: function (data, type, row) {
+                //                var lastLoginDate = row.lastLoginDate;
+
+                //                if (type === 'display' && lastLoginDate) {
+                //                    var formattedDate = moment(lastLoginDate).format('DD-MM-YYYY HH:mm:ss');
+                //                    return formattedDate;
+                //                }
+
+                //                // Return the original data for sorting and filtering
+                //                return data;
+                //            },
+                //            "className": "text-center"
+                //        },
+                //        { data: 'enableAccess' },
+                //        { data: 'userPhoto',
+                //            render: function (data, type, row) {
+                //                var userPhoto = row.userPhoto;
+                //                if (userPhoto) {
+                //                    return '<img src="data:image/jpg;base64,' + userPhoto + '"width="40px height="50px">';
+                //                } else {
+                //                    return ''; // or some placeholder image if userPhoto is null or empty
+                //                }
+                //            },
+                //            "className": "text-center"
+                //        },
+                //        { data: 'engineerSpeciality' },
+                //        { data: 'garageID' },
+                //        { data: 'creationDate',
+                //            render: function (data, type, row) {
+                //                var creationDate = row.creationDate;
+
+                //                if (type === 'display' && creationDate) {
+                //                    var formattedDate = moment(creationDate).format('DD-MM-YYYY HH:mm:ss');
+                //                    return formattedDate;
+                //                }
+
+                //                // Return the original data for sorting and filtering
+                //                return data;
+                //            },
+                //            "className": "text-center"
+                //        },
+                //        { data: 'userType'},
+                //        {
+                //            data: null,
+                //            render: function (data, type, row) {
+                //                    var id = row.id;
+                //                    var url = "@Url.Action("ViewCustomerCars", "UserModels")" + '/?id=' + id;
+                //                    return '<div class="btn-group" role="group">' +
+                //                    //'<a href="' + url + '" class="btn btn-view" title="@Resource.GetKey("List_Of_User_Cars")" data-id="' + row.id + '"><i class="fa fa-car" style="color:black"></i></a>' +
+                //                    '<a href="#" class="btn btn-view" title="@Resource.GetKey("List_Of_User_Cars")" data-id="' + row.id + '"><i class="fa fa-car" style="color:black"></i></a>' +
+                //                    '<a href="#" class="btn btn-email" title="@Resource.GetKey("Send_Email")" data-id="' + row.id + '" data-email="' + row.email + '" ><i class="fa fa-envelope" style="color:#0366d6"></i></a>' +
+                //                               '<a href="#" class="btn btn-edit" title="@Resource.GetKey("Edit")" id="btnEditCustomer" data-id="' + row.id + '" ><i class="fa fa-edit" style="color:orange"></i></a>' +
+                //                           '</div>';
+                //            },
+                //            "width": "80px",
+                //            "className": "text-center"
+                //        },
+                //        {
+                //            data: null,
+                //            render: function (data, type, row) {
+                //                return '<input type="checkbox">';
+                //            }
+                //        }
+                //    ]
+                //});
+                
+                //$('#customersTable').show();
+                //$('#customersTable').DataTable({
+                //    //"dom": 'Blfrtip', // Remove 'f' to show the default search box
+                //    //layout: {
+                //        //topStart: {
+                //            dom: "<'row'<'col-sm-6'B><'col-sm-6'<'pull-right'lf>>>" +
+                //                "<'row'<'col-sm-12'tr>>" +
+                //                "<'row'<'col-sm-5'i><'col-sm-1'><'col-sm-6'p>>",
+                    
+                //            "buttons": [
+                //                {
+                //                    text: 'Select all',
+                //                    action: function () {
+                //                        table.rows().select();
+                //                    }
+                //                },
+                //                {
+                //                    text: 'Select none',
+                //                    action: function () {
+                //                        table.rows().deselect();
+                //                    }
+                //                }
+                //            ],
+                //            //buttons: [
+                //            //    {
+                //            //        text: '<i class="fa fa-check-square-o"></i>',
+                //            //        action: function () {
+                //            //            table.rows().select();
+                //            //        }
+                //            //    },
+                //            //    //{
+                //            //    //    text: '<i class="fa fa-check-square-o"></i>',
+                //            //    //    action: function () {
+                //            //    //        selectAll();
+                //            //    //    }
+                //            //    //}, 
+                //            //    {
+                //            //        text: '<i class="fa fa-minus-square-o"></i>',
+                //            //        action: function () {
+                //            //            deselectAll();
+                //            //        }
+                //            //    },
+                //            //    {
+                //            //        extend: 'excelHtml5',
+                //            //        text: '<i class= "fa fa-file-excel-o" > </i>',
+                //            //        className: 'btn btn-primary',
+                //            //        exportOptions: {
+                //            //            orthogonal: 'sort',
+                //            //            columns: ':visible:not(.no-export)'
+                //            //        }
+                //            //    },
+                //            //    {
+                //            //        extend: 'print',
+                //            //        text: '<i class= "fa fa-print" > </i>',
+                //            //        className: 'btn btn-info',
+                //            //        exportOptions: {
+                //            //            orthogonal: 'sort',
+                //            //            columns: ':visible:not(.no-export)'
+                //            //        }
+                //            //    },
+                //            //    {
+                //            //        text: '<i class="fa fa-info-circle"></i>',
+                //            //        //titleAttr: 'Color Explanation',
+                //            //        className: 'btn-color-explanation',
+                //            //        action: function () {
+                //            //            // Add action here if needed
+                //            //        },
+                //            //        init: function (api, node, config) {
+                //            //            $(node).popover({
+                //            //                placement: 'top',
+                //            //                content: $('#colorExplanation').html(),
+                //            //                html: true,
+                //            //                trigger: 'hover', // Show popover on hover
+                //            //                delay: { show: 0, hide: 100 } // Add a small delay to avoid flickering
+                //            //            });
+                //            //        }
+                //            //    }
+                //            //],
+                //            "select": true,
+                //            "pageLength": 10,
+                //            "searching": true,
+                //            "paging": true,
+                //            "destroy": true,
+                //            "scrollCollapse": true,
+                //            "scrollY": '600px',
+                //            "scrollX": true,
+                //            "columnDefs": [
+                //                {
+                //                    "targets": [0,4,9,10,12,14],
+                //                    "visible": false
+                //                },
+                //                {
+                //                    "targets": [3,12,13],
+                //                    "orderable": false
+                //                }
+                //            ],
+                //            "rowCallback": function (row, data) {
+                //                var enableAccess = data[7];
+                //                if (enableAccess === "2") {
+                //                    $(row).css('background-color', '#eb6534');
+                //                } else if (enableAccess === "3") {
+                //                    $(row).css('background-color', 'red');
+                //                } else{
+                //                    $(row).css('background-color', '#FAFCFE');
+                //                }
+                //            }, 
+                //            "language": {
+                //                "lengthMenu": "@Resource.GetKey("Show_DataTable") _MENU_ @Resource.GetKey("Entries_Per_Page")",
+                //                "zeroRecords": "@Resource.GetKey("No_Matching_Records_Found_DataTable")",
+                //                "info": "@Resource.GetKey("Show_DataTable") _START_ @Resource.GetKey("To_DataTable") _END_ @Resource.GetKey("Of_DataTable") _TOTAL_ @Resource.GetKey("Entries_DataTable")",
+                //                "infoEmpty": "@Resource.GetKey("Showing_Empty_DataTable")",
+                //                "infoFiltered": "(@Resource.GetKey("Filtered_From_DataTable") _MAX_ @Resource.GetKey("Total_DataTable") @Resource.GetKey("Entries_DataTable"))",
+                //                "search": "@Resource.GetKey("Search"):",
+                //                "paginate": {
+                //                    "first": "First",
+                //                    "last": "Last",
+                //                    "next": "@Resource.GetKey("Next_DataTable")",
+                //                    "previous": "@Resource.GetKey("Previous_DataTable")"
+                //                }
+                //            }
+                //        //}
+                //    //}
+                //});
             });
         });
 
-        //// Handle View Customer Cars button click
-        //$('#customersTable tbody').on('click', 'button.btn-view', function (e) {
-        //    e.preventDefault();
-        //    var id = $(this).data('id');
-        //    var url = "@Url.Action("ViewCustomerCars", "UserModels")" + '/?id=' + id;
-        //    //window.open(url, '_blank'); // For new tab
-        //    window.location.href = url; // For the current tab
-        //});
-
+        // Handle View Customer Cars button click
+        $('#customersTable tbody').on('click', 'a.btn-view', function (e) {
+            e.preventDefault();
+            //console.log("INSIDE");
+            var id = $(this).data('id');
+            //console.log("ID: " + id);
+            // Fetch data from API
+            var apiURL = '@Resources.SettingsResources.Uri';
+            $.ajax({
+                url: apiURL + '/GetUserModelByUserID/' + id, // Replace with your API endpoint
+                method: 'GET',
+                success: function (data) {
+                    // Encode data as Base64 to ensure safe transmission in URL
+                    localStorage.setItem('customerCarsData', JSON.stringify(data));
+                    // Redirect to the destination page
+                    var url = "@Url.Action("ViewCustomerCars", "UserModels")" + '/?id=' + id;
+                    window.location.href = url;
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching data:', error);
+                    // Handle error if needed
+                }
+            });
+        });
         
         // Handle email button click
         $('#customersTable tbody').on('click', 'a.btn-email', function (e) {
@@ -269,6 +707,32 @@ else
                 $('#editCustomerDIV').find('.modal').modal('show');
             });
         });
+
+        // Handle Select All
+        function selectAll() {
+            console.log("Checked");
+
+            // Check all checkboxes
+            $('#customersTable tbody input[type="checkbox"]').prop('checked', true);
+
+            // Add selected class and change background color to blue
+            $('#customersTable tbody tr').addClass('selected-row').css('background-color', '#326da8');
+        }
+
+        // Handle Diselect All
+        function deselectAll() {
+            console.log("Unhecked");
+            $('#customersTable tbody input[type="checkbox"]').prop('checked', false);
+            // Remove selected class and revert background color
+            $('#customersTable tbody tr').removeClass('selected-row').each(function () {
+                var enableAccessIndex = 5; // 7th column index (zero-based)
+                var enableAccess = $(this).find('td:eq(' + enableAccessIndex + ')').text();
+                var conditionB = true; // Sample condition, replace it with your actual condition
+
+                var color = (enableAccess === "1" && conditionB) ? '#FAFCFE' : (enableAccess === "2" ? '#eb6534' : 'red');
+                $(this).css('background-color', color);
+            });
+        }
 
         $(function () {
             var addCustomerDIVElement = $('#addCustomerDIV');

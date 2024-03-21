@@ -2,6 +2,13 @@
 //var url = 'http://alefhome.ddns.net:8082/api/'
 //var url = 'https://garagewebapi.eu/api/'
 
+// To display Greek in Buttons
+function decodeResourceText(encodedString) {
+    var textarea = document.createElement('textarea');
+    textarea.innerHTML = encodedString;
+    return textarea.value;
+}
+
 function importExcelPartial() {
     'use strict'; // v2.3.2
     var getTab = function (base64file) {
