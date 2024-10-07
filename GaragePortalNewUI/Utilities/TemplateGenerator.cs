@@ -25,7 +25,7 @@ namespace GaragePortalNewUI.Utilities
             Uri baseAddress = new Uri(@Resources.SettingsResources.Uri);
             HttpClient client = new HttpClient();
             client.BaseAddress = baseAddress;
-            IEnumerable<Users> engineers = null;
+            IEnumerable<UserViewModel> engineers = null;
             IEnumerable<UserModels> userModels = null;
             IEnumerable<ServiceHistoryWithItemsDTO> serviceHistoryDTO = null;
             //IEnumerable<ServiceHistoryWithItemsDTO> serviceHistoryItems = null;
@@ -37,7 +37,12 @@ namespace GaragePortalNewUI.Utilities
             var sb = new StringBuilder();
             using (client)
             {
-                if(entityType == 2)
+                if (entityType == 1)
+                {
+                    responseTask = client.GetAsync(client.BaseAddress + "/GetEmployees/1");
+                    reportTitle = "Employees";
+                }
+                else if(entityType == 2)
                 {
                     responseTask = client.GetAsync(client.BaseAddress + "/GetCustomers/1");
                     reportTitle = "Customers";
@@ -65,7 +70,7 @@ namespace GaragePortalNewUI.Utilities
                     var result = responseTask.Result;
                     if (result.IsSuccessStatusCode)
                     {
-                        var readTask = result.Content.ReadAsAsync<IList<Users>>();
+                        var readTask = result.Content.ReadAsAsync<IList<UserViewModel>>();
                         readTask.Wait();
                         engineers = readTask.Result;
                     }

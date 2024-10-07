@@ -2,7 +2,6 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using GarageAPI.Models.User;
-using GarageAPI.Models.UserModels;
 using GarageAPI.Models.CarModels;
 using System.Diagnostics.CodeAnalysis;
 

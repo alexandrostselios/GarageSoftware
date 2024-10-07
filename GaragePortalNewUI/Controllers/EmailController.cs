@@ -49,7 +49,7 @@ namespace GaragePortalNewUI.Controllers
                 {
                     HttpContext.Session.SetString("SuccessMessage", "Failed");
                 }
-                if(HttpContext.Session.GetString("ReceiverUserType") == "2")
+                if(HttpContext.Session.GetString("ReceiverUserType") == "1")
                 {
                     return RedirectToAction("Customers", "Users");
                 }

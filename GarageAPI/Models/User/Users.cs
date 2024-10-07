@@ -8,20 +8,20 @@ namespace GarageAPI.Models.User
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long ID { get; set; }
-        public string Name { get; set; }
+        //public string Name { get; set; }
 
-        public string Surname { get; set; }
+        //public string Surname { get; set; }
 
         public string Email { get; set; }
 
         public string Password { get; set; }
 
-        [ForeignKey("GarageDetails")]
-        public long GarageID { get; set; }
+        //[ForeignKey("GarageDetails")]
+        //public long GarageID { get; set; }
 
         public UserType UserType { get; set; }
 
-        public long? Speciality { get; set; }
+        //public long? Speciality { get; set; }
 
         [Column(TypeName = "datetime")]
         public DateTime? CreationDate { get; set; }
@@ -34,6 +34,6 @@ namespace GarageAPI.Models.User
 
         public EnableAccess EnableAccess { get; set; }
 
-        public byte[]? UserPhoto { get; set; }
+        //public byte[]? UserPhoto { get; set; }
     }
 }

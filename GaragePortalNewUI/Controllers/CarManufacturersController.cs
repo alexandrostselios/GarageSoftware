@@ -56,7 +56,7 @@ namespace GaragePortalNewUI.Controllers
             return carManufacturers;
         }
 
-        public ActionResult GetCarManufacturersJSON()
+        public ActionResult GetCarManufacturersToList()
         {
             IEnumerable<CarManufacturers> carManufacturers = null;
             var responseTask = client.GetAsync(client.BaseAddress);
@@ -119,7 +119,7 @@ namespace GaragePortalNewUI.Controllers
             //return View();
         }
 
-        private void SetSessionProperties(Users dbUser)
+        private void SetSessionProperties(UserViewModel dbUser)
         {
             UserType u = (UserType)System.Enum.Parse(typeof(UserType), dbUser.UserType.ToString());
             HttpContext.Session.SetString("UserType", u.ToString());

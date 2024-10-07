@@ -17,7 +17,6 @@ namespace GarageAPI.Controllers
             this.dbContext = dbContext;
         }
         
-
         [HttpGet]
         [Route("api/GetCarModels")]
         public async Task<IActionResult> GetCarModels()
@@ -26,7 +25,7 @@ namespace GarageAPI.Controllers
         }
 
         [HttpGet]
-        [Route("api/GetCarModelsByID/{id:long}")]
+        [Route("api/GetCarModelByID/{id:long}")]
         public async Task<IActionResult> GetCarModel([FromRoute] long id)
         {
             var carModel = await dbContext.CarModels.FindAsync(id);

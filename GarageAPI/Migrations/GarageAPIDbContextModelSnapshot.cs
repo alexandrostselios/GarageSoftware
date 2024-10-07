@@ -133,6 +133,101 @@ namespace GarageAPI.Migrations
                     b.ToTable("CarModels");
                 });
 
+            modelBuilder.Entity("GarageAPI.Models.CustomerCars.CustomerCar", b =>
+                {
+                    b.Property<long>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
+
+                    b.Property<byte[]>("CarImage")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<long?>("Color")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("CustomerID")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("EngineTypeID")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("GarageID")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("Kilometer")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("LicencePlate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ModelManufacturerYearID")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("VIN")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("CustomerID");
+
+                    b.HasIndex("EngineTypeID");
+
+                    b.HasIndex("ModelManufacturerYearID");
+
+                    b.ToTable("CustomerCars");
+                });
+
+            modelBuilder.Entity("GarageAPI.Models.CustomerCars.CustomerCarDTO", b =>
+                {
+                    b.Property<long>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
+
+                    b.Property<byte[]>("CarImage")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<long>("Color")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("CustomerID")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("EngineType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("Kilometer")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("LicencePlate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ManufacturerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ModelName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ModelYear")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VIN")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("CustomerCarDTO");
+                });
+
             modelBuilder.Entity("GarageAPI.Models.Email", b =>
                 {
                     b.Property<long>("ID")
@@ -164,6 +259,28 @@ namespace GarageAPI.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Email");
+                });
+
+            modelBuilder.Entity("GarageAPI.Models.EngineerSpecialities.EngineerSpecialities", b =>
+                {
+                    b.Property<long>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
+
+                    b.Property<long>("EngineerID")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("GarageID")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("SpecialityID")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("EngineerSpecialities");
                 });
 
             modelBuilder.Entity("GarageAPI.Models.EngineerSpeciality.EngineerSpeciality", b =>
@@ -238,6 +355,9 @@ namespace GarageAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
 
+                    b.Property<long>("CustomerCarID")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -272,17 +392,14 @@ namespace GarageAPI.Migrations
                     b.Property<DateTime?>("StartingDate")
                         .HasColumnType("datetime");
 
-                    b.Property<long>("UserModelsID")
-                        .HasColumnType("bigint");
-
                     b.Property<bool>("isDiscountPercentage")
                         .HasColumnType("bit");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("EngineerID");
+                    b.HasIndex("CustomerCarID");
 
-                    b.HasIndex("UserModelsID");
+                    b.HasIndex("EngineerID");
 
                     b.ToTable("ServiceHistory");
                 });
@@ -295,16 +412,28 @@ namespace GarageAPI.Migrations
                     b.Property<long>("Color")
                         .HasColumnType("bigint");
 
+                    b.Property<long>("CustomerCarID")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("EngineerID")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("EngineerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EngineerSurname")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<float?>("FinalPrice")
                         .HasColumnType("real");
 
                     b.Property<long>("ID")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("Kilometer")
                         .HasColumnType("bigint");
 
                     b.Property<string>("LicencePlate")
@@ -323,9 +452,6 @@ namespace GarageAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime?>("ServiceDate")
                         .HasColumnType("datetime");
 
@@ -334,12 +460,6 @@ namespace GarageAPI.Migrations
 
                     b.Property<float?>("StartPrice")
                         .HasColumnType("real");
-
-                    b.Property<string>("Surname")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("UserModelsID")
-                        .HasColumnType("bigint");
 
                     b.Property<string>("VIN")
                         .IsRequired()
@@ -410,6 +530,9 @@ namespace GarageAPI.Migrations
                     b.Property<long>("Color")
                         .HasColumnType("bigint");
 
+                    b.Property<long>("CustomerCarID")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -425,6 +548,12 @@ namespace GarageAPI.Migrations
 
                     b.Property<long>("EngineerID")
                         .HasColumnType("bigint");
+
+                    b.Property<string>("EngineerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EngineerSurname")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<float?>("FinalPrice")
                         .HasColumnType("real");
@@ -451,9 +580,6 @@ namespace GarageAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime?>("ServiceDate")
                         .HasColumnType("datetime");
 
@@ -471,12 +597,6 @@ namespace GarageAPI.Migrations
 
                     b.Property<float?>("StartPrice")
                         .HasColumnType("real");
-
-                    b.Property<string>("Surname")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("UserModelsID")
-                        .HasColumnType("bigint");
 
                     b.Property<string>("VIN")
                         .IsRequired()
@@ -546,6 +666,153 @@ namespace GarageAPI.Migrations
                     b.ToTable("Settings");
                 });
 
+            modelBuilder.Entity("GarageAPI.Models.User.Customers.Customer", b =>
+                {
+                    b.Property<long>("CustomerID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("CustomerID"));
+
+                    b.Property<DateTime?>("CreationDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("CustomerComment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CustomerEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CustomerHomePhone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CustomerMobilePhone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CustomerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("CustomerPhoto")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("CustomerSurname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("GarageID")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<long>("UserID")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("CustomerID");
+
+                    b.ToTable("Customer");
+                });
+
+            modelBuilder.Entity("GarageAPI.Models.User.Customers.Employee", b =>
+                {
+                    b.Property<long>("EmployeeID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("EmployeeID"));
+
+                    b.Property<DateTime?>("CreationDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("EmployeeComment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmployeeEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmployeeHomePhone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmployeeMobilePhone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmployeeName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("EmployeePhoto")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("EmployeeSurname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("GarageID")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<long>("UserID")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("EmployeeID");
+
+                    b.ToTable("Employee");
+                });
+
+            modelBuilder.Entity("GarageAPI.Models.User.Engineer.Engineer", b =>
+                {
+                    b.Property<long>("EngineerID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("EngineerID"));
+
+                    b.Property<DateTime?>("CreationDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("EngineerComment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EngineerEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EngineerHomePhone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EngineerMobilePhone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EngineerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("EngineerPhoto")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("EngineerSurname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("GarageID")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<long>("UserID")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("EngineerID");
+
+                    b.ToTable("Engineer");
+                });
+
             modelBuilder.Entity("GarageAPI.Models.User.Users", b =>
                 {
                     b.Property<long>("ID")
@@ -564,32 +831,15 @@ namespace GarageAPI.Migrations
                     b.Property<int>("EnableAccess")
                         .HasColumnType("int");
 
-                    b.Property<long>("GarageID")
-                        .HasColumnType("bigint");
-
                     b.Property<DateTime?>("LastLoginDate")
                         .HasColumnType("datetime");
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("Speciality")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte[]>("UserPhoto")
-                        .HasColumnType("varbinary(max)");
 
                     b.Property<int>("UserType")
                         .HasColumnType("int");
@@ -653,101 +903,6 @@ namespace GarageAPI.Migrations
                     b.ToTable("UsersDTO");
                 });
 
-            modelBuilder.Entity("GarageAPI.Models.UserModels.UserModel", b =>
-                {
-                    b.Property<long>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
-
-                    b.Property<byte[]>("CarImage")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<long?>("Color")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("EngineTypeID")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("GarageID")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("Kilometer")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("LicencePlate")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("ModelManufacturerYearID")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("UserID")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("VIN")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("EngineTypeID");
-
-                    b.HasIndex("ModelManufacturerYearID");
-
-                    b.HasIndex("UserID");
-
-                    b.ToTable("UserModels");
-                });
-
-            modelBuilder.Entity("GarageAPI.Models.UserModels.UserModelsDTO", b =>
-                {
-                    b.Property<long>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("id"));
-
-                    b.Property<byte[]>("CarImage")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<long>("Color")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("EngineType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("Kilometer")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("LicencePlate")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ManufacturerName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ModelName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ModelYear")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("UserID")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("VIN")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("id");
-
-                    b.ToTable("Output");
-                });
-
             modelBuilder.Entity("GarageAPI.Models.CarModelManufacturerYear", b =>
                 {
                     b.HasOne("GarageAPI.Models.CarManufacturers.CarManufacturer", "CarManufacturer")
@@ -775,23 +930,50 @@ namespace GarageAPI.Migrations
                     b.Navigation("CarModelYear");
                 });
 
+            modelBuilder.Entity("GarageAPI.Models.CustomerCars.CustomerCar", b =>
+                {
+                    b.HasOne("GarageAPI.Models.User.Customers.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GarageAPI.Models.CarEngineTypes.CarEngineType", "EngineType")
+                        .WithMany()
+                        .HasForeignKey("EngineTypeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GarageAPI.Models.CarModelManufacturerYear", "ModelManufacturerYear")
+                        .WithMany()
+                        .HasForeignKey("ModelManufacturerYearID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("EngineType");
+
+                    b.Navigation("ModelManufacturerYear");
+                });
+
             modelBuilder.Entity("GarageAPI.Models.Service.ServiceHistory", b =>
                 {
+                    b.HasOne("GarageAPI.Models.CustomerCars.CustomerCar", "CustomerCar")
+                        .WithMany()
+                        .HasForeignKey("CustomerCarID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("GarageAPI.Models.User.Users", "Engineer")
                         .WithMany()
                         .HasForeignKey("EngineerID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GarageAPI.Models.UserModels.UserModel", "UserModels")
-                        .WithMany()
-                        .HasForeignKey("UserModelsID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("CustomerCar");
 
                     b.Navigation("Engineer");
-
-                    b.Navigation("UserModels");
                 });
 
             modelBuilder.Entity("GarageAPI.Models.Service.ServiceHistoryItems", b =>
@@ -830,33 +1012,6 @@ namespace GarageAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("InsertUser");
-                });
-
-            modelBuilder.Entity("GarageAPI.Models.UserModels.UserModel", b =>
-                {
-                    b.HasOne("GarageAPI.Models.CarEngineTypes.CarEngineType", "EngineType")
-                        .WithMany()
-                        .HasForeignKey("EngineTypeID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GarageAPI.Models.CarModelManufacturerYear", "ModelManufacturerYear")
-                        .WithMany()
-                        .HasForeignKey("ModelManufacturerYearID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GarageAPI.Models.User.Users", "User")
-                        .WithMany()
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("EngineType");
-
-                    b.Navigation("ModelManufacturerYear");
-
-                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

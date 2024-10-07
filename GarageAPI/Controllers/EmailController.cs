@@ -21,8 +21,6 @@ namespace GarageAPI.Controllers
             var emailProviderAccount = "alexandrostsel@hotmail.com";
             var emailProviderAccountPassword = "AlexTselios123456!@#$%^?";
             var emailSignature = "\n\nYours Sincerely\nAlexandros Tselios";
-            
-            
 
             var client = new SmtpClient("smtp-mail.outlook.com", 587)
             {
@@ -30,10 +28,27 @@ namespace GarageAPI.Controllers
                 Credentials = new NetworkCredential(emailProviderAccount, emailProviderAccountPassword)
             };
 
+            bool loginSuccessful = false;
+
+            // Subscribe to the SendCompleted event to handle completion or failure
+            client.SendCompleted += (sender, e) =>
+            {
+                if (e.Error != null)
+                {
+                    // An error occurred during login, log the exception
+                    Console.WriteLine($"Error logging in to SMTP server: {e.Error.Message}");
+                }
+                else
+                {
+                    // Login successful
+                    Console.WriteLine("Login to SMTP server successful.");
+                    loginSuccessful = true;
+                }
+            };
+
             await dbContext.Email.AddAsync(email);
             await dbContext.SaveChangesAsync();
-
-            Task.Run(() => client.SendMailAsync(new MailMessage(from: emailProviderAccount, to: email.Receiver, email.Subject, email.Message + emailSignature)));
+            Task.Run(() => client.SendMailAsync(new MailMessage(from: emailProviderAccount, to: email.Receiver, email.Subject, email.Message + emailSignature)));  
         }
 
         public async Task SendEmailToListAsync(List<Email> emails)

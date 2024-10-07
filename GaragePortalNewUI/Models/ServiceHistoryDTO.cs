@@ -8,7 +8,9 @@ namespace GaragePortalNewUI.Models
 {
     public class ServiceHistoryDTO
     {
-        public long UserModelsID { get; set; }
+        public long CustomerID { get; set; }
+
+        public long CustomerCarID { get; set; }
 
         public string Description { get; set; }
 

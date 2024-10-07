@@ -1,10 +1,10 @@
-﻿@model IEnumerable<GaragePortalNewUI.Models.ServiceItems>
+﻿@model IEnumerable<GaragePortalNewUI.Models.CarModels>
 @inject LanguageService Resource
 
 <div id="addServiceItem"></div>
 <div id="editServiceItem"></div>
 
-<button class="btn btn-sm btn-primary m-2" id="btnAddServiceItem" data-bs-toggle="ajax-modal" data-bs-target="#addServiceItem" data-url="@Url.Action("AddServiceItemPartial","ServiceItems")">Add</button>
+@* <button class="btn btn-sm btn-primary m-2" id="btnAddServiceItem" data-bs-toggle="ajax-modal" data-bs-target="#addServiceItem" data-url="@Url.Action("AddServiceItemPartial","ServiceItems")">Add</button> *@
 
 <div id="totalInvoiceDiv" class="scrollit">
     <table class="table">
@@ -14,10 +14,7 @@
                     @Html.DisplayNameFor(model => model.ID)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Description)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Price)
+                    @Html.DisplayNameFor(model => model.ModelName)
                 </th>
                 <th colspan="2">Total Service Items: @Model.Count()</th>
             </tr>
@@ -31,17 +28,14 @@
                         @Html.DisplayFor(modelItem => item.ID)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Description)
+                        @Html.DisplayFor(modelItem => item.ModelName)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Price)
-                    </td>
-                    <td>
+@*                     <td>
                         <button class="btn btn-sm btn-primary m-2" id="btnEditServiceItem" data-bs-toggle="ajax-modal" data-bs-target="#editServiceItem" data-url="@Url.Action("EditServiceItemPartial","ServiceItems",new{id = @item.ID})">@Resource.GetKey("Edit")</button>
                     </td>
                     <td>
                         <a class="af" asp-controller="ServiceItems" asp-action="DeleteServiceItem" asp-route-id="@item.ID">@Resource.GetKey("Delete")</a>
-                    </td>
+                    </td> *@
                     <td colspan ="3"></td>
                 </tr>
             }
@@ -50,30 +44,30 @@
 </div>
 
 <script type="text/javascript">
-    console.log(11);
-    $(function () {
-        var addServiceItemDIVElement = $('#editServiceItem');
-        console.log(33);
-        $('button[data-bs-toggle="ajax-modal"]').click(function (event) {
-            console.log(44);
-            var url = $(this).data('url');
-            $.get(url).done(function (data) {
-                console.log(55);
-                addServiceItemDIVElement.html(data);
-                addServiceItemDIVElement.find('.modal').modal('show');
-            })
-        })
+    console.log(2222);
+    // $(function () {
+    //     var addServiceItemDIVElement = $('#editServiceItem');
+    //     console.log(33);
+    //     $('button[data-bs-toggle="ajax-modal"]').click(function (event) {
+    //         console.log(44);
+    //         var url = $(this).data('url');
+    //         $.get(url).done(function (data) {
+    //             console.log(55);
+    //             addServiceItemDIVElement.html(data);
+    //             addServiceItemDIVElement.find('.modal').modal('show');
+    //         })
+    //     })
 
-        //Save Add Makeform data
-        addServiceItemDIVElement.on('click', '[data-bs-save="modal"]', function (event) {
+    //     //Save Add Makeform data
+    //     addServiceItemDIVElement.on('click', '[data-bs-save="modal"]', function (event) {
 
-            var form = $(this).parents('.modal').find('form');
-            var actionUrl = form.attr("action");
-            var sendData = form.serialize();
-            $.post(actionUrl, sendData).done(function (data) {
-                addServiceItemDIVElement.find('.modal').modal('hide');
-                location.reload(true);
-            })
-        })
-    })
+    //         var form = $(this).parents('.modal').find('form');
+    //         var actionUrl = form.attr("action");
+    //         var sendData = form.serialize();
+    //         $.post(actionUrl, sendData).done(function (data) {
+    //             addServiceItemDIVElement.find('.modal').modal('hide');
+    //             location.reload(true);
+    //         })
+    //     })
+    // })
 </script>

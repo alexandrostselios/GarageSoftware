@@ -51,7 +51,7 @@ namespace GaragePortalNewUI.Controllers
 
                 if (result.IsSuccessStatusCode)
                 {
-                    var readTask = result.Content.ReadAsAsync<IList<Users>>();
+                    var readTask = result.Content.ReadAsAsync<IList<UserViewModel>>();
                     readTask.Wait();
                     s = readTask.Result.ToString();
                     AspNetCore.Reporting.LocalReport localReport = new AspNetCore.Reporting.LocalReport(s);

@@ -7,7 +7,7 @@ namespace GaragePortalNewUI.Models
     {
         public int ID { get; set; }
 
-        public long  UserID { get; set; }
+        public long CustomerID { get; set; }
 
         [DisplayName("Model Manufacturer")]
         public long ModelManufacturer { get; set; }

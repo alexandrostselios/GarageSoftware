@@ -2,7 +2,7 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using GarageAPI.Models.User;
-using GarageAPI.Models.UserModels;
+using GarageAPI.Models.CustomerCars;
 
 namespace GarageAPI.Models.Service
 {
@@ -11,10 +11,10 @@ namespace GarageAPI.Models.Service
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long ID { get; set; }
 
-        [ForeignKey("UserModels")]
-        public long UserModelsID { get; set; }
+        [ForeignKey("CustomerCars")]
+        public long CustomerCarID { get; set; }
 
-        public UserModel UserModels { get; set; }
+        public CustomerCar CustomerCar { get; set; }
 
         public string Description { get; set; }
 

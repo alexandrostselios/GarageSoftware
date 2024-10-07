@@ -366,6 +366,8 @@ textarea.form-control {
     vertical-align: bottom;
     white-space: nowrap;
     color: #fff;
+    max-height: 60px !important;
+    overflow-y: auto !important;
 }
 
 .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
@@ -382,13 +384,16 @@ textarea.form-control {
     position: absolute;
     left: 0;
     top: 0;
+    max-height: 60px !important;
+    overflow-y: auto !important;
 }
 
-.select2-selection--multiple {
+.select2-selection--multiple { /*.select2-results__option*/
     overflow: hidden !important;
     height: auto !important;
-    max-height: 110px !important;
-    overflow: scroll !important;
+    max-height: 60px !important; /* Display Only 2 Rows in Select2 tag*/
+    overflow-y: auto !important;
+    /*overflow: scroll !important;*/
 }
 
 .select2-hidden-accessible {
@@ -404,9 +409,9 @@ textarea.form-control {
     white-space: nowrap !important;
     #quickServiceHistorySearch {
     /*background-color: yellow;*/
-    width: 353.5px
+    width: 353.5px;
+    max-height: 60px !important;
 }
-
 
 .custom-file-button input[type=file] {
     margin-left: -2px !important;
@@ -491,4 +496,21 @@ table.dataTable tbody > tr.selected, table.dataTable tbody > tr > .selected {
 #customersTable_wrapper .btn-light-blue {
     background-color: #34baeb !important;
     color: white;
+}
+
+.btn.btn-primary.dropdown-toggle.actions-btn {
+    background-color: red !important;
+}
+
+/* Disable hover for dropdown-menu when it's not active */
+.dropdown-menu:not(.show) {
+    pointer-events: none;
+}
+
+.btn-add .fa-ban .cursor-none {
+    cursor: none; /* Hide the default cursor */
+}
+
+#engineersTable .buttons-cell {
+    vertical-align: middle;
 }

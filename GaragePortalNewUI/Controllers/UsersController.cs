@@ -11,6 +11,10 @@ using System.Net.Http.Json;
 using System.IO;
 using Microsoft.Extensions.Localization;
 using GaragePortalNewUI.Models;
+using System.Resources;
+using System.Globalization;
+using System.Reflection;
+using GaragePortalNewUI.ViewModels.Customer;
 
 namespace GaragePortalNewUI.Controllers
 {
@@ -18,6 +22,8 @@ namespace GaragePortalNewUI.Controllers
     {
         readonly Uri baseAddress = new Uri(@Resources.SettingsResources.Uri);
         readonly HttpClient client;
+        private readonly ResourceManager _resourceManager = new ResourceManager("GaragePortalNewUI.Resources.SharedResource", typeof(UsersController).Assembly);
+        private readonly CultureInfo culture = CultureInfo.CurrentCulture;
 
         public UsersController()
         {
@@ -25,180 +31,180 @@ namespace GaragePortalNewUI.Controllers
             client.BaseAddress = baseAddress;
         }
 
-        public ActionResult Customers(string searchBy, string searchValue)
-        {
-            GetSessionProperties();
-            IEnumerable<Users> customers = null;
-            var responseTask = client.GetAsync(client.BaseAddress);
-            if (string.IsNullOrEmpty(searchValue))
-            {
-                using (client){
-                    responseTask = client.GetAsync(client.BaseAddress + "/GetCustomers" + "/" + ViewBag.GarageID);
-                    responseTask.Wait();
-                    var result = responseTask.Result;
-                    if (result.IsSuccessStatusCode)
-                    {
-                        var readTask = result.Content.ReadAsAsync<IList<Users>>();
-                        readTask.Wait();
-                        customers = readTask.Result;
-                    }
-                    else
-                    {
-                        customers = Enumerable.Empty<Users>();
-                        ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
-                    }
-                }
-            }
-            else
-            {
-                using (client)
-                {
-                    if (searchBy.ToLower() == "all")
-                    {
-                        responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/0/2/" + searchValue + '/' + ViewBag.GarageID);
-                    }
-                    else if (searchBy.ToLower() == "name")
-                    {
-                        responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/1/2/" + searchValue + '/' + ViewBag.GarageID); 
-                    }else if (searchBy.ToLower() == "surname")
-                    {
-                        responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/2/2/" + searchValue + '/' + ViewBag.GarageID);
-                    }else if (searchBy.ToLower() == "email")
-                    {
-                        responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/3/2/" + searchValue + '/' + ViewBag.GarageID);
-                    }
-                    responseTask.Wait();
-                    var result = responseTask.Result;
-                    if (result.IsSuccessStatusCode)
-                    {
-                        var readTask = result.Content.ReadAsAsync<IList<Users>>();
-                        readTask.Wait();
-                        customers = readTask.Result;
-                    }
-                    else
-                    {
-                        customers = Enumerable.Empty<Users>();
-                        ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
-                    }
-                }
-            }
-            return View(customers);
-        }
+        //public ActionResult Customers(string searchBy, string searchValue)
+        //{
+        //    GetSessionProperties();
+        //    IEnumerable<UserViewModel> customers = null;
+        //    var responseTask = client.GetAsync(client.BaseAddress);
+        //    if (string.IsNullOrEmpty(searchValue))
+        //    {
+        //        using (client){
+        //            responseTask = client.GetAsync(client.BaseAddress + "/GetCustomers" + "/" + ViewBag.GarageID);
+        //            responseTask.Wait();
+        //            var result = responseTask.Result;
+        //            if (result.IsSuccessStatusCode)
+        //            {
+        //                var readTask = result.Content.ReadAsAsync<IList<UserViewModel>>();
+        //                readTask.Wait();
+        //                customers = readTask.Result;
+        //            }
+        //            else
+        //            {
+        //                customers = Enumerable.Empty<UserViewModel>();
+        //                ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        using (client)
+        //        {
+        //            if (searchBy.ToLower() == "all")
+        //            {
+        //                responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/0/2/" + searchValue + '/' + ViewBag.GarageID);
+        //            }
+        //            else if (searchBy.ToLower() == "name")
+        //            {
+        //                responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/1/2/" + searchValue + '/' + ViewBag.GarageID); 
+        //            }else if (searchBy.ToLower() == "surname")
+        //            {
+        //                responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/2/2/" + searchValue + '/' + ViewBag.GarageID);
+        //            }else if (searchBy.ToLower() == "email")
+        //            {
+        //                responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/3/2/" + searchValue + '/' + ViewBag.GarageID);
+        //            }
+        //            responseTask.Wait();
+        //            var result = responseTask.Result;
+        //            if (result.IsSuccessStatusCode)
+        //            {
+        //                var readTask = result.Content.ReadAsAsync<IList<UserViewModel>>();
+        //                readTask.Wait();
+        //                customers = readTask.Result;
+        //            }
+        //            else
+        //            {
+        //                customers = Enumerable.Empty<UserViewModel>();
+        //                ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+        //            }
+        //        }
+        //    }
+        //    return View(customers);
+        //}
 
-        public IEnumerable<Users> GetCustomersList()
-        {
-            IEnumerable<Users> customersList = null;
-            var responseTask = client.GetAsync(client.BaseAddress);
-            using (client)
-            {
-                responseTask = client.GetAsync(client.BaseAddress + "/GetCustomers" + "/1"); /*+ ViewBag.GarageID);*/
-                responseTask.Wait();
-                var result = responseTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    var readTask = result.Content.ReadAsAsync<IList<Users>>();
-                    readTask.Wait();
-                    customersList = readTask.Result;
-                }
-                else
-                {
-                    customersList = Enumerable.Empty<Users>();
-                    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
-                }
-            }
-            return customersList;
-        }
+        //public IEnumerable<UserViewModel> GetCustomersList()
+        //{
+        //    IEnumerable<UserViewModel> customersList = null;
+        //    var responseTask = client.GetAsync(client.BaseAddress);
+        //    using (client)
+        //    {
+        //        responseTask = client.GetAsync(client.BaseAddress + "/GetCustomers" + "/1"); /*+ ViewBag.GarageID);*/
+        //        responseTask.Wait();
+        //        var result = responseTask.Result;
+        //        if (result.IsSuccessStatusCode)
+        //        {
+        //            var readTask = result.Content.ReadAsAsync<IList<UserViewModel>>();
+        //            readTask.Wait();
+        //            customersList = readTask.Result;
+        //        }
+        //        else
+        //        {
+        //            customersList = Enumerable.Empty<UserViewModel>();
+        //            ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+        //        }
+        //    }
+        //    return customersList;
+        //}
 
-        public ActionResult Engineers(string searchBy, string searchValue)
-        {
-            GetSessionProperties();
-            if (HttpContext.Session.GetString("SuccessMessage")!="null")
-            {
-                HttpContext.Session.SetString("SuccessMessage", "null");
-            }
-            IEnumerable<Users> engineers = null;
-            var responseTask = client.GetAsync(client.BaseAddress);
-            if (string.IsNullOrEmpty(searchValue))
-            {
-                using (client)
-                {
-                    responseTask = client.GetAsync(client.BaseAddress + "/GetEngineers" + "/" + ViewBag.GarageID);
-                    responseTask.Wait();
-                    var result = responseTask.Result;
-                    if (result.IsSuccessStatusCode)
-                    {
-                        var readTask = result.Content.ReadAsAsync<IList<Users>>();
-                        readTask.Wait();
-                        engineers = readTask.Result;
-                    }
-                    else
-                    {
-                        engineers = Enumerable.Empty<Users>();
-                        ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
-                    }
-                }
-            }
-            else
-            {
-                using (client)
-                {
-                    if (searchBy.ToLower() == "all")
-                    {
-                        responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/0/3/" + searchValue + '/' + ViewBag.GarageID);
-                    }
-                    else if (searchBy.ToLower() == "name")
-                    {
-                        responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/1/3/" + searchValue + '/' + ViewBag.GarageID);
-                    }
-                    else if (searchBy.ToLower() == "surname")
-                    {
-                        responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/2/3/" + searchValue + '/' + ViewBag.GarageID);
-                    }
-                    else if (searchBy.ToLower() == "email")
-                    {
-                        responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/3/3/" + searchValue + '/' + ViewBag.GarageID);
-                    }
-                    responseTask.Wait();
-                    var result = responseTask.Result;
-                    if (result.IsSuccessStatusCode)
-                    {
-                        var readTask = result.Content.ReadAsAsync<IList<Users>>();
-                        readTask.Wait();
-                        engineers = readTask.Result;
-                    }
-                    else
-                    {
-                        engineers = Enumerable.Empty<Users>();
-                        ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
-                    }
-                }
-            }
-            return View(engineers);
-        }
+        //public ActionResult Engineers(string searchBy, string searchValue)
+        //{
+        //    GetSessionProperties();
+        //    if (HttpContext.Session.GetString("SuccessMessage")!="null")
+        //    {
+        //        HttpContext.Session.SetString("SuccessMessage", "null");
+        //    }
+        //    IEnumerable<UserViewModel> engineers = null;
+        //    var responseTask = client.GetAsync(client.BaseAddress);
+        //    if (string.IsNullOrEmpty(searchValue))
+        //    {
+        //        using (client)
+        //        {
+        //            responseTask = client.GetAsync(client.BaseAddress + "/GetEngineers" + "/" + ViewBag.GarageID);
+        //            responseTask.Wait();
+        //            var result = responseTask.Result;
+        //            if (result.IsSuccessStatusCode)
+        //            {
+        //                var readTask = result.Content.ReadAsAsync<IList<UserViewModel>>();
+        //                readTask.Wait();
+        //                engineers = readTask.Result;
+        //            }
+        //            else
+        //            {
+        //                engineers = Enumerable.Empty<UserViewModel>();
+        //                ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        using (client)
+        //        {
+        //            if (searchBy.ToLower() == "all")
+        //            {
+        //                responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/0/3/" + searchValue + '/' + ViewBag.GarageID);
+        //            }
+        //            else if (searchBy.ToLower() == "name")
+        //            {
+        //                responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/1/3/" + searchValue + '/' + ViewBag.GarageID);
+        //            }
+        //            else if (searchBy.ToLower() == "surname")
+        //            {
+        //                responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/2/3/" + searchValue + '/' + ViewBag.GarageID);
+        //            }
+        //            else if (searchBy.ToLower() == "email")
+        //            {
+        //                responseTask = client.GetAsync(client.BaseAddress + "/GetUsersByValue/3/3/" + searchValue + '/' + ViewBag.GarageID);
+        //            }
+        //            responseTask.Wait();
+        //            var result = responseTask.Result;
+        //            if (result.IsSuccessStatusCode)
+        //            {
+        //                var readTask = result.Content.ReadAsAsync<IList<UserViewModel>>();
+        //                readTask.Wait();
+        //                engineers = readTask.Result;
+        //            }
+        //            else
+        //            {
+        //                engineers = Enumerable.Empty<UserViewModel>();
+        //                ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+        //            }
+        //        }
+        //    }
+        //    return View(engineers);
+        //}
 
-        public IEnumerable<Users> GetEngineersList()
-        {
-            IEnumerable<Users> engineersList = null;
-            var responseTask = client.GetAsync(client.BaseAddress);
-            using (client)
-            {
-                responseTask = client.GetAsync(client.BaseAddress + "/GetEngineers" + "/1"); /*+ ViewBag.GarageID);*/
-                responseTask.Wait();
-                var result = responseTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    var readTask = result.Content.ReadAsAsync<IList<Users>>();
-                    readTask.Wait();
-                    engineersList = readTask.Result;
-                }
-                else
-                {
-                    engineersList = Enumerable.Empty<Users>();
-                    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
-                }
-            }
-            return engineersList;
-        }
+        //public IEnumerable<UserViewModel> GetEngineersList()
+        //{
+        //    IEnumerable<UserViewModel> engineersList = null;
+        //    var responseTask = client.GetAsync(client.BaseAddress);
+        //    using (client)
+        //    {
+        //        responseTask = client.GetAsync(client.BaseAddress + "/GetEngineers" + "/1"); /*+ ViewBag.GarageID);*/
+        //        responseTask.Wait();
+        //        var result = responseTask.Result;
+        //        if (result.IsSuccessStatusCode)
+        //        {
+        //            var readTask = result.Content.ReadAsAsync<IList<UserViewModel>>();
+        //            readTask.Wait();
+        //            engineersList = readTask.Result;
+        //        }
+        //        else
+        //        {
+        //            engineersList = Enumerable.Empty<UserViewModel>();
+        //            ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+        //        }
+        //    }
+        //    return engineersList;
+        //}
 
         public IActionResult Login()
         {
@@ -207,29 +213,29 @@ namespace GaragePortalNewUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> LoginHelper([Bind("Email,Password")] Users loginUser)
+        public async Task<IActionResult> LoginHelper([Bind("Email,Password")] UserViewModel loginUser)
         {
-            IEnumerable<Users> users = null;
-            Users logInUser = null;
+            IEnumerable<UserViewModel> users = null;
+            UserViewModel logInUser = null;
 
             //string host = HttpContext.Request.Host.Host.ToString();
             string host = "garagewebportal";
             // Add later + "/" + loginUser.GarageID
 
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/GetLogin/"+loginUser.Email+"/"+loginUser.Password ).Result;
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/GetLogin/"+loginUser.Email+"/"+loginUser.Password + "/1" ).Result;
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
 
                 using (client)
                 {
-                    var responseTask = client.GetAsync(client.BaseAddress + "/GetUserByEmailAndPassword/" + loginUser.Email + "/" + loginUser.Password);
+                    var responseTask = client.GetAsync(client.BaseAddress + "/GetUserByEmailAndPassword/" + loginUser.Email + "/" + loginUser.Password + "/1");
                     responseTask.Wait();
                     var result = responseTask.Result;
 
                     if (result.IsSuccessStatusCode)
                     {
-                        var readTask = result.Content.ReadAsAsync<Users>();
+                        var readTask = result.Content.ReadAsAsync<UserViewModel>();
                         readTask.Wait();
                         logInUser = readTask.Result;
                         SetSessionProperties(logInUser);
@@ -238,7 +244,7 @@ namespace GaragePortalNewUI.Controllers
 
                         if(logInUser.UserType == (long) UserType.Admin)
                         {
-                            return RedirectToAction("Customers", "Users");
+                            return RedirectToAction("Customers", "Customer");
                         }
                         else
                         {
@@ -247,7 +253,7 @@ namespace GaragePortalNewUI.Controllers
                     }
                     else
                     {
-                        users = Enumerable.Empty<Users>();
+                        users = Enumerable.Empty<UserViewModel>();
                         ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
 
                         return RedirectToAction("Login", "Users");
@@ -272,7 +278,7 @@ namespace GaragePortalNewUI.Controllers
 
         public IActionResult Logout()
         {
-            SetSessionProperties(new Users { UserType = (long) UserType.Guest, ID = -1, Name = "None", Surname = "None" });
+            SetSessionProperties(new UserViewModel { UserType = (long) UserType.Guest, ID = -1, Name = "None", Surname = "None" });
             GetSessionProperties();
 
             return RedirectToAction("Login", "Users");
@@ -282,212 +288,59 @@ namespace GaragePortalNewUI.Controllers
         {
             GetSessionProperties();
             string userID = string.Format(ViewBag.ID);
+            string garageID = string.Format(ViewBag.GarageID);
+
+            long userType = (long)(UserType)System.Enum.Parse(typeof(UserType), ViewBag.UserType.ToString());
             if (userID == null)
             {
                 return NotFound();
             }
-            Users user = null;
+            UserViewModel user = null;
             using (client)
             {
-                var responseTask = client.GetAsync(client.BaseAddress + "/GetCustomerByID/" + userID);
+                var responseTask = client.GetAsync(client.BaseAddress + "/GetUserByID/" + userID +'/' + userType + '/' + garageID);
                 responseTask.Wait();
                 var result = responseTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    var readTask = result.Content.ReadAsAsync<Users>();
+                    var readTask = result.Content.ReadAsAsync<UserViewModel>();
                     readTask.Wait();
-                    user = (Users)readTask.Result;
+                    user = (UserViewModel)readTask.Result;
                 }
             }
             return View(user);
         }
 
-        public IActionResult CreateCustomer()
-        {
-            GetSessionProperties();
-            return View();
-        }
-
-        public IActionResult CreateCustomerPartial()
-        {
-            GetSessionProperties();
-            return PartialView("_CreateCustomerPartialView");
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult CreateCustomer([Bind("ID,Name,Surname,Email,Age,Password,ConfirmPassword,UserPhoto")] Users createUser, IFormFile Image)
-        {
-            GetSessionProperties();
-            if (!(createUser.Email is null) && ModelState.IsValid)
-            {
-                createUser.UserType = 2;
-                createUser.CreationDate = DateTime.Now;
-                createUser.EnableAccess = EnableAccess.Enable;
-                using (var stream = new MemoryStream()) {
-                    Image.CopyToAsync(stream);
-                    byte[] temp = stream.ToArray();
-                    createUser.UserPhoto = temp; 
-                }
-                string data = JsonConvert.SerializeObject(createUser);
-                var contentdata = new StringContent(data);
-                HttpResponseMessage response = client.PostAsJsonAsync(client.BaseAddress + "/AddCustomer/", createUser).Result;
-
-                return RedirectToAction(nameof(Engineers));
-            }
-            //return RedirectToAction(nameof(Index));
-            return View(createUser);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult CreateCustomerPartial([Bind("ID,Name,Surname,Email,Age,Password,ConfirmPassword,UserPhoto")] Users createUser, IFormFile Image)
-        {
-            GetSessionProperties();
-            if (!(createUser.Email is null) && ModelState.IsValid)
-            {
-                createUser.UserType = 2;
-                createUser.CreationDate = DateTime.Now;
-                createUser.EnableAccess = EnableAccess.Enable;
-                createUser.UserPhoto = null;
-                if (Image != null)
-                {
-                    using (var stream = new MemoryStream())
-                    {
-                        Image.CopyToAsync(stream);
-                        byte[] temp = stream.ToArray();
-                        createUser.UserPhoto = temp;
-                    }
-                }
-                string data = JsonConvert.SerializeObject(createUser);
-                var contentdata = new StringContent(data);
-                HttpResponseMessage response = client.PostAsJsonAsync(client.BaseAddress + "/AddCustomer/", createUser).Result;
-
-                return RedirectToAction(nameof(Customers));
-            }
-            //return RedirectToAction(nameof(Index));
-            return View(createUser);
-        }
-
-        public IActionResult CreateEngineerPartial()
-        {
-            GetSessionProperties();
-            return PartialView("_CreateEngineerPartialView");
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult CreateEngineerPartial([Bind("ID,Name,Surname,Email,Age,Password,ConfirmPassword,UserPhoto,EngineerSpeciality")] Users createUser, IFormFile Image)
-        {
-            GetSessionProperties();
-            if (!(createUser.Email is null) && ModelState.IsValid)
-            {
-                createUser.UserType = 3;
-                createUser.CreationDate = DateTime.Now;
-                createUser.EnableAccess = EnableAccess.Enable;
-                createUser.UserPhoto = null;
-                if (Image != null)
-                {
-                    using (var stream = new MemoryStream())
-                    {
-                        Image.CopyToAsync(stream);
-                        byte[] temp = stream.ToArray();
-                        createUser.UserPhoto = temp;
-                    }
-                }
-                string data = JsonConvert.SerializeObject(createUser);
-                var contentdata = new StringContent(data);
-                HttpResponseMessage response = client.PostAsJsonAsync(client.BaseAddress + "/AddEngineer/", createUser).Result;
-
-                return RedirectToAction(nameof(Index));
-            }
-            //return RedirectToAction(nameof(Index));
-            return View(createUser);
-        }
-
-        public IActionResult CreateEngineer()
-        {
-            GetSessionProperties();
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult CreateEngineer([Bind("ID,Name,Surname,Email,Age,Password,ConfirmPassword,UserPhoto,EngineerSpeciality")] Users createEngineer, IFormFile Image)
-        {
-            GetSessionProperties();
-            if (!(createEngineer.Email is null) && ModelState.IsValid)
-            {
-                createEngineer.UserType = 3;
-                createEngineer.CreationDate = DateTime.Now;
-                createEngineer.EnableAccess = EnableAccess.Enable;
-                if (!(createEngineer.UserPhoto is null))
-                {
-                    using (var stream = new MemoryStream())
-                    {
-                        Image.CopyToAsync(stream);
-                        byte[] temp = stream.ToArray();
-                        createEngineer.UserPhoto = temp;
-                    }
-                }
-                string data = JsonConvert.SerializeObject(createEngineer);
-                var contentdata = new StringContent(data);
-                HttpResponseMessage response = client.PostAsJsonAsync(client.BaseAddress + "/AddEngineer/", createEngineer).Result;
-
-                return RedirectToAction(nameof(Index));
-            }
-            return View(createEngineer);
-        }
-
-        public IActionResult EditCustomerProfile(long id)
-        {
-            GetSessionProperties();
-            string customerID = string.Format(ViewBag.ID);
-            if (customerID == null)
-            {
-                return NotFound();
-            }
-            return View(null);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditCustomer(long id, [Bind("ID,Name,Surname,Email,Age,Password,ConfirmPassword,UserType,CreationDate,ModifiedDate,LastLoginDate,ChangePassword,ConvertUser,EnableAccess")] Users editCustomer, IFormFile Image)
-        {
-            if (id != editCustomer.ID)
-            {
-                return NotFound();
-            }
-
-            if (!(editCustomer.UserPhoto is null))
-            {
-                using (var stream = new MemoryStream())
-                {
-                    Image.CopyToAsync(stream);
-                    byte[] temp = stream.ToArray();
-                    editCustomer.UserPhoto = temp;
-                }
-            }
-            editCustomer.ModifiedDate = DateTime.Now;
-            HttpResponseMessage response = client.PutAsJsonAsync(client.BaseAddress + "/UpdateUser/" + editCustomer.ID, editCustomer).Result;
-
-            return RedirectToAction(nameof(Customers));
-        }
-
         public IActionResult EditMyProfile(long id)
         {
             GetSessionProperties();
-            string customerID = string.Format(ViewBag.ID);
-            if (customerID == null)
+            string userID = string.Format(ViewBag.ID);
+            string garageID = string.Format(ViewBag.GarageID);
+
+            long userType = (long)(UserType)System.Enum.Parse(typeof(UserType), ViewBag.UserType.ToString());
+            if (userID == null)
             {
                 return NotFound();
             }
-            return View(null);
+            UserViewModel user = null;
+            using (client)
+            {
+                var responseTask = client.GetAsync(client.BaseAddress + "/GetUserByID/" + userID + '/' + userType + '/' + garageID);
+                responseTask.Wait();
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<UserViewModel>();
+                    readTask.Wait();
+                    user = (UserViewModel)readTask.Result;
+                }
+            }
+            return View(user);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditMyProfile(long id, [Bind("ID,Name,Surname,Email,Age,Password,ConfirmPassword,UserType,CreationDate,ModifiedDate,LastLoginDate,ChangePassword,ConvertUser,EnableAccess")] Users editCustomer, IFormFile Image)
+        public async Task<IActionResult> EditMyProfile(long id, [Bind("ID,Name,Surname,Email,Age,Password,ConfirmPassword,UserType,CreationDate,ModifiedDate,LastLoginDate,ChangePassword,ConvertUser,EnableAccess")] UserViewModel editCustomer, IFormFile Image)
         {
             GetSessionProperties();
             if (id != editCustomer.ID)
@@ -521,11 +374,11 @@ namespace GaragePortalNewUI.Controllers
         public IActionResult EditCustomerPartial(long id, long garageID)
         {
             GetSessionProperties();
-            Users editCustomer;
+            UserViewModel editCustomer;
             var responseTask = client.GetAsync(client.BaseAddress + "/GetCustomerByID/" + id + "/" + garageID);
             responseTask.Wait();
             var result = responseTask.Result;
-            var readTask = result.Content.ReadAsAsync<Users>();
+            var readTask = result.Content.ReadAsAsync<UserViewModel>();
             readTask.Wait();
             editCustomer = readTask.Result;
             return PartialView("_EditCustomerPartialView", editCustomer);
@@ -534,11 +387,11 @@ namespace GaragePortalNewUI.Controllers
         public IActionResult EditEngineerPartial(long id, long garageID)
         {
             GetSessionProperties();
-            Users editEngineer;
+            UserViewModel editEngineer;
             var responseTask = client.GetAsync(client.BaseAddress + "/GetEngineerByID/" + id + "/" + garageID);
             responseTask.Wait();
             var result = responseTask.Result;
-            var readTask = result.Content.ReadAsAsync<Users>();
+            var readTask = result.Content.ReadAsAsync<UserViewModel>();
             readTask.Wait();
             editEngineer = readTask.Result;
             return PartialView("_EditEngineerPartialView", editEngineer);
@@ -553,30 +406,6 @@ namespace GaragePortalNewUI.Controllers
                 return NotFound();
             }
             return View(null);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditEngineer(long id, [Bind("ID,Name,Surname,Email,Age,Password,ConfirmPassword,UserType,CreationDate,ModifiedDate,LastLoginDate,ChangePassword,ConvertUser,EnableAccess,EngineerSpeciality")] Users editEngineer, IFormFile Image)
-        {
-            if (id != editEngineer.ID)
-            {
-                return NotFound();
-            }
-            if (!(editEngineer.UserPhoto is null))
-            {
-                using (var stream = new MemoryStream())
-                {
-                    Image.CopyToAsync(stream);
-                    byte[] temp = stream.ToArray();
-                    editEngineer.UserPhoto = temp;
-                }
-            }
-            editEngineer.UserType = 3;
-            editEngineer.ModifiedDate = DateTime.Now;
-            HttpResponseMessage response = client.PutAsJsonAsync(client.BaseAddress + "/UpdateUser/" + editEngineer.ID, editEngineer).Result;
-
-            return RedirectToAction(nameof(Engineers));
         }
 
         public IActionResult SendEmailToUser(long id)
@@ -606,7 +435,7 @@ namespace GaragePortalNewUI.Controllers
             return null;
         }
 
-        private void SetSessionProperties(Users dbUser)
+        private void SetSessionProperties(UserViewModel dbUser)
         {
             UserType u = (UserType)System.Enum.Parse(typeof(UserType), dbUser.UserType.ToString());
             HttpContext.Session.SetString("UserType", u.ToString());
@@ -636,12 +465,22 @@ namespace GaragePortalNewUI.Controllers
             }
             ViewBag.SuccessMessage = HttpContext.Session.GetString("SuccessMessage");
             ViewBag.GarageID = HttpContext.Session.GetString("GarageID");
+            ViewBag.CustomerCreated = HttpContext.Session.GetString("CustomerCreated");
+            ViewBag.CustomerCreatedInfo = HttpContext.Session.GetString("CustomerCreatedInfo");
+            ViewBag.EngineerCreated = HttpContext.Session.GetString("EngineerCreated");
+            ViewBag.EngineerCreatedInfo = HttpContext.Session.GetString("EngineerCreatedInfo");
         }
 
         [HttpPost]
         public ActionResult SetViewBag(string value)
         {
             HttpContext.Session.SetString("SuccessMessage", "null");
+            HttpContext.Session.SetString("CustomerCreated", "null");
+            HttpContext.Session.SetString("CustomerCreatedInfo", "null");
+            HttpContext.Session.SetString("EngineerCreated", "null");
+            HttpContext.Session.SetString("EngineerCreatedInfo", "null");
+            HttpContext.Session.SetString("EmployeeCreated", "null");
+            HttpContext.Session.SetString("EmployeeCreatedInfo", "null");
             return new EmptyResult();
         }
     }

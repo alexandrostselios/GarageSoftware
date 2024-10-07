@@ -8,7 +8,7 @@
 @if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Admin.ToString())
 {
     <p>
-        <button class="btn btn-sm btn-primary m-2" id="btnQuickAddCarServiceHistory" data-bs-toggle="ajax-modal" data-bs-target="#QuickAddCarServiceHistory" data-url="@Url.Action("QuickCreateUserModelServiceHistoryPartial","UserModels")">@Resource.GetKey("Quick_Add_Service_History")</button>
+        <button class="btn btn-sm btn-primary m-2" id="btnQuickAddCarServiceHistory" data-bs-toggle="ajax-modal" data-bs-target="#QuickAddCarServiceHistory" data-url="@Url.Action("QuickCreateUserModelServiceHistoryPartial","CustomerCars")">@Resource.GetKey("Quick_Add_Service_History")</button>
     </p>
     <div class="container-fluid">
         <div class="row d-flex justify-content-center pt-5  h-100">
@@ -65,8 +65,8 @@
     </div>
 }else{
     <div class="text-center">
-        <h1 class="display-4">Welcome</h1>
-        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+        <h1 class="display-4">@Resource.GetKey("Welcome")</h1>
+        <p>@Resource.GetKey("Welcome_Message")</p>
     </div>
 }
 

@@ -633,13 +633,13 @@
     <value>to</value>
     <comment>To_DataTable</comment>
   </data>
-  <data name="Add_Service_Item" xml:space="preserve">
-    <value>Add Service Item</value>
-    <comment>Add_Service_Item</comment>
-  </data>
   <data name="Edit_Service_Item" xml:space="preserve">
     <value>Edit Service Item</value>
     <comment>Edit_Service_Item</comment>
+  </data>
+  <data name="Add_Service_Item" xml:space="preserve">
+    <value>Add Service Item</value>
+    <comment>Add_Service_Item</comment>
   </data>
   <data name="Edit_Manufacturer" xml:space="preserve">
     <value>Edit Manufacturer</value>
@@ -688,5 +688,136 @@
   <data name="Unselect_All" xml:space="preserve">
     <value>Unselect All</value>
     <comment>Unselect_All</comment>
+  </data>
+  <data name="Actions_Table" xml:space="preserve">
+    <value>Actions</value>
+    <comment>Actions_Table</comment>
+  </data>
+  <data name="Customer_Added_Successfully" xml:space="preserve">
+    <value>Customer {0} {1} was added successfully.</value>
+    <comment>Customer_Added_Successfully</comment>
+  </data>
+  <data name="Customer_Added_Failed" xml:space="preserve">
+    <value>There was an issue creating customer {0} {1}.</value>
+    <comment>Customer_Added_Failed</comment>
+  </data>
+  <data name="Engineer_Added_Failed" xml:space="preserve">
+    <value>There was an issue creating engineer {0} {1}.</value>
+    <comment>Engineer_Added_Failed</comment>
+  </data>
+  <data name="Engineer_Added_Successfully" xml:space="preserve">
+    <value>Engineer {0} {1} was added successfully.</value>
+    <comment>Engineer_Added_Successfully</comment>
+  </data>
+  <data name="Customer_ID" xml:space="preserve">
+    <value>Customer ID</value>
+    <comment>Customer_ID</comment>
+  </data>
+  <data name="Engineer_ID" xml:space="preserve">
+    <value>Engineer ID</value>
+    <comment>Engineer_ID</comment>
+  </data>
+  <data name="EnableAccess_Disable" xml:space="preserve">
+    <value>Disable access</value>
+    <comment>EnableAccess_Disable</comment>
+  </data>
+  <data name="EnableAccess_Enable" xml:space="preserve">
+    <value>Enable access</value>
+    <comment>EnableAccess_Enable</comment>
+  </data>
+  <data name="EnableAccess_RestrictedAccess" xml:space="preserve">
+    <value>Restricted access</value>
+    <comment>EnableAccess_RestrictedAccess</comment>
+  </data>
+  <data name="No_Image_Available" xml:space="preserve">
+    <value>No Image Available</value>
+    <comment>No_Image_Available</comment>
+  </data>
+  <data name="Import_Service_Items" xml:space="preserve">
+    <value>Import Service Items</value>
+    <comment>Import_Service_Items</comment>
+  </data>
+  <data name="Import_Service_Items_Info" xml:space="preserve">
+    <value>From this menu you are able to import Service Items</value>
+    <comment>Import_Service_Items_Info</comment>
+  </data>
+  <data name="Import_Customers_Info" xml:space="preserve">
+    <value>From this menu you are able to import Customers</value>
+    <comment>Import_Customers_Info</comment>
+  </data>
+  <data name="Choose_GarageID_Column_To_Import" xml:space="preserve">
+    <value>Choose GarageID Column</value>
+    <comment>Choose_GarageID_Column_To_Import</comment>
+  </data>
+  <data name="Choose_Manufacturer_Column_To_Import" xml:space="preserve">
+    <value>Choose Manufacturer Column</value>
+    <comment>Choose_Manufacturer_Column_To_Import</comment>
+  </data>
+  <data name="Choose_Model_Column_To_Import" xml:space="preserve">
+    <value>Choose Model Column</value>
+    <comment>Choose_Model_Column_To_Import</comment>
+  </data>
+  <data name="Choose_Price_Column_To_Import" xml:space="preserve">
+    <value>Choose Price Column</value>
+    <comment>Choose_Price_Column_To_Import</comment>
+  </data>
+  <data name="Choose_Service_Item_Description_Column_To_Import" xml:space="preserve">
+    <value>Choose Description Column</value>
+    <comment>Choose_Service_Item_Description_Column_To_Import</comment>
+  </data>
+  <data name="Import_Engineers" xml:space="preserve">
+    <value>Import Engineers</value>
+    <comment>Import_Engineers</comment>
+  </data>
+  <data name="Import_Engineers_Info" xml:space="preserve">
+    <value>From this menu you are able to import Engineers</value>
+    <comment>Import_Engineers_Info</comment>
+  </data>
+  <data name="Mass_Imports" xml:space="preserve">
+    <value>Mass Imports</value>
+    <comment>Mass_Imports</comment>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Welcome</value>
+  </data>
+  <data name="Welcome_Message" xml:space="preserve">
+    <value>This is the online platform to monitor your vehicle service status.</value>
+  </data>
+  <data name="PreviousKM" xml:space="preserve">
+    <value>Previous km</value>
+  </data>
+  <data name="MobilePhone" xml:space="preserve">
+    <value>Mobile Phone</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="HomePhone" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="Employees" xml:space="preserve">
+    <value>Employees</value>
+  </data>
+  <data name="Back_To_Profile" xml:space="preserve">
+    <value>Back to My Profile</value>
+  </data>
+  <data name="List_Of_Employees" xml:space="preserve">
+    <value>List of Employees</value>
+  </data>
+  <data name="Edit_Employee_Profile" xml:space="preserve">
+    <value>Edit Employee Profile</value>
+  </data>
+  <data name="Employee_ID" xml:space="preserve">
+    <value>Employee ID</value>
+  </data>
+  <data name="Add_New_Employee" xml:space="preserve">
+    <value>Add New Employee</value>
+  </data>
+  <data name="Add_Employee_Details_Form" xml:space="preserve">
+    <value>Employee Detaisl</value>
+  </data>
+  <data name="Employee_Added_Successfully" xml:space="preserve">
+    <value>Employee {0} {1} was added successfully.</value>
+  </data>
+  <data name="Employee_Added_Failed" xml:space="preserve">
+    <value>There was an issue creating employee {0} {1}.</value>
   </data>
 </root>

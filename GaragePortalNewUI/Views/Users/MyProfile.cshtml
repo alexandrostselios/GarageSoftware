@@ -1,25 +1,34 @@
-﻿@model GaragePortalNewUI.Models.Users
+﻿@model GaragePortalNewUI.Models.UserViewModel
 @inject LanguageService Resource
 
 @{
-    ViewData["Title"] = @Resource.GetKey("My Profile");
+    ViewData["Title"] = @Resource.GetKey("My_Profile");
 }
 
-<h1>@Resource.GetKey("My Profile")</h1>
+<h1>
+    @Resource.GetKey("My_Profile")         
+    @if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Admin.ToString())
+    {
+        @:Admin
+    }else if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Employee.ToString())
+    {
+        @:Employee
+    }
+</h1>
 
 <div>
-    <dl class="row">
+    <dl class="row"> 
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Surname)
+            @Resource.GetKey("Surname")
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Surname)
+        </dd>
+        <dt class="col-sm-2">
+            @Resource.GetKey("Name")
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Email)
@@ -28,25 +37,22 @@
             @Html.DisplayFor(model => model.Email)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CreationDate)
+            @Resource.GetKey("Creation_Date")
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.CreationDate)
         </dd>
-        @if (Model.UserType == 1)
-        {
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.LastLoginDate)
-            </dt>
+        <dt class="col-sm-2">
+            @Resource.GetKey("Last_Login_Date")
+        </dt>
 
-            <dt class="col-sm-2">
-                @Html.DisplayFor(model => model.LastLoginDate)
-            </dt>
-        }
+        <dt class="col-sm-2">
+            @Html.DisplayFor(model => model.LastLoginDate)
+        </dt>
 
     </dl>
 </div>
 <div>
-    <a class="af" asp-action="EditMyProfile" asp-route-id="@ViewBag.ID">Edit</a>
+    <a class="af" asp-action="EditMyProfile" asp-route-id="@ViewBag.ID">@Resource.GetKey("Edit")</a>
     @*| <a asp-action="Index">Back to List</a>*@
 </div>

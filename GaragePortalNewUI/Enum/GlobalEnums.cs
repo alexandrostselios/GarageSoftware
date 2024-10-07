@@ -3,14 +3,17 @@
     public enum UserType
     {
         Admin = 1,
-        User = 2,
-        Guest = 3
+        Customer = 2,
+        Engineer = 3,
+        Employee = 4,
+        Guest = 5
     }
 
     public enum EnableAccess
     {
         Enable = 1,
-        Disable = 2
+        RestrictedAccess = 2,
+        Disable = 3
     }
 
     public enum FileType

@@ -1,0 +1,205 @@
+﻿@model GaragePortalNewUI.ViewModels.Customer.CustomerViewModel
+@inject LanguageService Resource
+@using GaragePortalNewUI.Enum
+@using System.Resources
+
+@{
+    ViewData["Title"] = @Resource.GetKey("Add_New_Customer");
+    ResourceManager resourceManager = new ResourceManager("GaragePortalNewUI.Resources.SharedResource", typeof(EnableAccess).Assembly);
+}
+
+<div id="AddCustomer" name="AddCustomer" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog draggable" role="document" style="max-width: 800px;">
+        <div class="modal-content">
+            <div class="modal-header dragable_touch d-block">
+                <h5 class="modal-title">@Resource.GetKey("Add_Customer_Details_Form")</h5>
+@*                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>*@
+            </div>
+            <form id="yourFormId" method="post" asp-action="CreateCustomerPartial" asp-controller="Customer" enctype="multipart/form-data">
+                <input type="hidden" name="GarageID" value="@ViewBag.GarageID" />
+                <div class="modal-body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="CustomerSurname" class="control-label">@Resource.GetKey("Surname")</label>
+                                <input asp-for="CustomerSurname" class="form-control" />
+                                <span asp-validation-for="CustomerSurname" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="CustomerName" class="control-label">@Resource.GetKey("Name")</label>
+                                <input asp-for="CustomerName" class="form-control" />
+                                <span asp-validation-for="CustomerName" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="CustomerMobilePhone" class="control-label">@Resource.GetKey("MobilePhone")</label>
+                                <input asp-for="CustomerMobilePhone" class="form-control" />
+                                <span asp-validation-for="CustomerMobilePhone" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="CustomerHomePhone" class="control-label">@Resource.GetKey("HomePhone")</label>
+                                <input asp-for="CustomerHomePhone" class="form-control" />
+                                <span asp-validation-for="CustomerHomePhone" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="CustomerEmail" class="control-label">Email</label>
+                                <input asp-for="CustomerEmail" class="form-control" id="customerEmailValidation"/>
+                                <span asp-validation-for="CustomerEmail" class="text-danger"></span>
+                                <small id="emailValidationMessage" class="text-danger" style="display:none;">Please enter a valid email address.</small>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="CustomerPassword" class="control-label">@Resource.GetKey("Password")</label>
+                                <input asp-for="CustomerPassword" type="password" class="form-control" id="customerPasswordValidation" />
+                                <span asp-validation-for="CustomerPassword" class="text-danger"></span>
+                                <small id="passwordValidationMessage" class="text-danger" style="display:none; white-space: pre-line;"></small>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="EnableAccess" class="control-label">@Resource.GetKey("Enable_Access")</label>
+                                <select id="EnableAccess" asp-for="EnableAccess" class="form-control">
+                                    @foreach (var value in Enum.GetValues(typeof(EnableAccess)))
+                                    {
+                                        <option value="@((int)value)">@resourceManager.GetString($"EnableAccess_{value}")</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="CustomerPhoto" class="control-label">@Resource.GetKey("User_Photo")</label>
+                                <input type="file" class="form-control-file form-control" id="files" asp-for="CustomerPhoto" name="Image" accept="image/*" onchange="previewImage()">
+                                <span asp-validation-for="CustomerPhoto" class="text-danger"></span>
+                                @Html.ValidationMessageFor(m => m.CustomerPhoto)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" value="Create" class="btn btn-success" id="registerButton" disabled>@Resource.GetKey("Register_Customer")</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">@Resource.GetKey("Cancel")</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('.draggable').draggable({
+            handle: '.modal-header'
+        });
+    });
+
+    const submitButton = document.getElementById("registerButton");
+    var customerEmailCounter = 1;
+    var customerPasswordCounter = 1;
+
+    /* Email Validation */
+
+    const customerEmailInput = document.getElementById("customerEmailValidation");
+    const emailMessage = document.getElementById("emailValidationMessage");
+
+    customerEmailInput.addEventListener("input", function () {
+        const email = customerEmailInput.value;
+        
+        // Simple regex for email validation (basic email format)
+        const emailRegex = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
+
+        if (emailRegex.test(email)) {
+            emailMessage.style.display = "none"; // Hide the message if valid
+            customerEmailCounter = 0;
+            //submitButton.disabled = false; // Enable the button
+        } else {
+            emailMessage.style.display = "block"; // Show the invalid email message
+            customerEmailCounter = 1;
+            //submitButton.disabled = true; // Disable the button
+        }
+        // Check the state of both inputs
+        checkSubmitButtonState();
+    });
+
+    /* Email Validation */
+
+    /* Password Validation */
+
+    const customerPasswordInput = document.getElementById("customerPasswordValidation");
+    const criteriaMessage = document.getElementById("passwordValidationMessage");
+
+    customerPasswordInput.addEventListener("focus", function () {
+        // Hide the message when the user clicks on the field
+        criteriaMessage.style.display = "none";
+    });
+
+    customerPasswordInput.addEventListener("input", function () {
+        const password = customerPasswordInput.value;
+        let messages = [];
+
+        // Check length (at least 8 characters)
+        if (password.length < 8) {
+            messages.push("Password must be at least 8 characters long.");
+        }
+
+        // Check for at least one uppercase letter
+        const upperCaseRegex = /[A-Z]/;
+        if (!upperCaseRegex.test(password)) {
+            messages.push("Password must contain at least one uppercase letter.");
+        }
+
+        // Check for at least one special character
+        const specialCharRegex = /[!@@#$%^&*(),.?":{}|<>]/;
+        if (!specialCharRegex.test(password)) {
+            messages.push("Password must contain at least one special character.");
+        }
+
+        // Update the message and button state
+        if (messages.length === 0) {
+            //submitButton.disabled = false;
+            customerPasswordCounter = 0;
+            criteriaMessage.style.display = "none"; // Hide the message if valid
+        } else {
+            //submitButton.disabled = true;
+            customerPasswordCounter = 1;
+            criteriaMessage.textContent = messages.join("\n"); // Combine messages with newline separator
+            criteriaMessage.style.display = "block"; // Show the message
+        }
+
+        // Check the state of both inputs
+        checkSubmitButtonState();
+    });
+
+    /* Password Validation */
+
+    // Function to check if both email and password are valid
+    function checkSubmitButtonState() {
+        if (customerEmailCounter === 0 && customerPasswordCounter === 0) {
+            submitButton.disabled = false; // Enable the button if both are valid
+        } else {
+            submitButton.disabled = true; // Disable the button if either is invalid
+        }
+    }
+
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

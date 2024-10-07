@@ -1,0 +1,155 @@
+﻿@model GaragePortalNewUI.ViewModels.Engineer.EngineerViewModel
+@inject LanguageService Resource
+@using GaragePortalNewUI.Enum
+@using System.Resources
+@using System.Globalization
+@{
+    ResourceManager resourceManager = new ResourceManager("GaragePortalNewUI.Resources.SharedResource", typeof(EnableAccess).Assembly);
+}
+
+<div id="EditEngineer" name="EditEngineer" class="modal" tabindex="-1" role="form">
+    <div class="modal-dialog draggable modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header dragable_touch d-block">
+                <h5 class="modal-title">@Resource.GetKey("Edit_Mechanic_Profile")</h5>
+            </div>
+            <form asp-action="EditEngineer" enctype="multipart/form-data">
+                <input type="hidden" asp-for="GarageID" value="@ViewBag.GarageID" />
+                <div class="modal-body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="col">
+                            <input type="hidden" asp-for="EngineerID" />
+                            <div class="form-group">
+                                <label asp-for="EngineerID" class="control-label">@Resource.GetKey("Engineer_ID")</label>
+                                <input asp-for="EngineerID" class="form-control" disabled />
+                                <span asp-validation-for="EngineerID" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="EnableAccess" class="control-label">@Resource.GetKey("Enable_Access")</label>
+                                <select id="EnableAccess" asp-for="EnableAccess" class="form-control">
+                                    @foreach (var value in Enum.GetValues(typeof(EnableAccess)))
+                                    {
+                                        <option value="@((int)value)">@resourceManager.GetString($"EnableAccess_{value}")</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="EngineerSurname" class="control-label">@Resource.GetKey("Surname")</label>
+                                <input asp-for="EngineerSurname" class="form-control" />
+                                <span asp-validation-for="EngineerSurname" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="EngineerName" class="control-label">@Resource.GetKey("Name")</label>
+                                <input asp-for="EngineerName" class="form-control" />
+                                <span asp-validation-for="EngineerName" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="EngineerEmail" class="control-label">@Resource.GetKey("Email")</label>
+                                <input asp-for="EngineerEmail" class="form-control" />
+                                <span asp-validation-for="EngineerEmail" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="EngineerPassword" class="control-label">@Resource.GetKey("Password")</label>
+                                <input asp-for="EngineerPassword" class="form-control" value="********" />
+                                <span asp-validation-for="EngineerPassword" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="EngineerSpecialities" class="control-label">@Resource.GetKey("Engineer_Speciality")</label>
+                                <input type="hidden" id="EngineerSpecialitiesID" value="@string.Join(",", Model.EngineerSpecialities.Select(es => $"{es.ID}:{es.Speciality}"))">
+
+                                @*<input type="hidden" id="EngineerSpecialitiesID" value="@Html.DisplayFor(modelItem => modelItem.EngineerSpecialitiesID)">*@
+                                <select id="EditEngineerSpeciality" asp-for="EngineerSpecialitiesID" class="form-control">
+                                    <option hidden value='0' disabled>--@Resource.GetKey("Select_Speciality")--</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="EngineerPhoto" class="control-label">@Resource.GetKey("UserPhoto")</label>
+                                <input type="file" class="form-control-file form-control" id="files" asp-for="EngineerPhoto" name="Image" accept="image/*" onchange="previewImage()">
+                                <span asp-validation-for="EngineerPhoto" class="text-danger"></span>
+                                @Html.ValidationMessageFor(m => m.EngineerPhoto)
+                            </div>
+                        </div>
+                    </div>
+                    @*@Html.HiddenFor(model => model.UserType)*@
+                    @Html.HiddenFor(model => model.CreationDate)
+                    @*@Html.HiddenFor(model => model.LastLoginDate)
+                    @Html.HiddenFor(model => model.EnableAccess)*@
+                    <div class="modal-footer">
+                        <button type="submit" value="Create" class="btn btn-success">@Resource.GetKey("Edit")</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">@Resource.GetKey("Cancel")</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('.draggable').draggable({
+            handle: '.modal-header'
+        });
+    });
+</script>
+
+<script type="text/javascript">
+
+    $(function () {
+        // Get the URL from data attribute
+        var url = $(this).data('url');
+
+        // Make the API call to get all options
+        $.getJSON('@Resources.SettingsResources.Uri' + '/GetEngineerSpeciality')
+            .done(function (apiData) {
+                // Get the values from the hidden input and split by comma
+                var engineerSpecialities = $("#EngineerSpecialitiesID").val().split(",");
+
+                // Append options from the API data
+                $.each(apiData, function (key, item) {
+                    // Add the option to the select dropdown
+                    $("#EditEngineerSpeciality").append($("<option></option>")
+                        .val(item.id)
+                        .text(item.speciality));
+                });
+
+                // Set selected attribute for options that match values from the model
+                engineerSpecialities.forEach(function (entry) {
+                    // Split the entry by the delimiter (":")
+                    var parts = entry.split(":");
+                    var id = parts[0];
+                    var speciality = parts[1];
+
+                    // Find the corresponding option and set selected attribute
+                    $("#EditEngineerSpeciality option[value='" + id + "']").prop('selected', true);
+                });
+
+                // Initialize select2 after all options are appended
+                $("#EditEngineerSpeciality").select2();
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                console.log("Error: " + textStatus + ": " + errorThrown);
+            });
+    });
+</script>

@@ -1,13 +1,11 @@
-﻿
-using GaragePortalNewUI.Enum;
+﻿using GaragePortalNewUI.Enum;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GaragePortalNewUI.Models
 {
     public class CustomerCars
     {
-        public long id { get; set; }
+        public long ID { get; set; }
 
         public long UserID { get; set; }
 
@@ -32,6 +30,9 @@ namespace GaragePortalNewUI.Models
 
         [DisplayName("Car Image")]
         public byte[]? CarImage { get; set; }
+
+        [DisplayName("Engine")]
+        public string EngineType { get; set; }
 
     }
 }

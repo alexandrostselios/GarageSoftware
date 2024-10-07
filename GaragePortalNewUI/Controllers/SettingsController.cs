@@ -47,6 +47,8 @@ namespace GaragePortalNewUI.Models
             }
             else if (id == 3)
             {
+                CarModelsController si = new CarModelsController();
+                List<CarModels> temp = si.GetCarModels().ToList();
                 return PartialView("_ModelsPartial");
             }
             else if (id == 4)
@@ -59,7 +61,7 @@ namespace GaragePortalNewUI.Models
             }
         }
 
-        private void SetSessionProperties(Users dbUser)
+        private void SetSessionProperties(UserViewModel dbUser)
         {
             UserType u = (UserType)System.Enum.Parse(typeof(UserType), dbUser.UserType.ToString());
             HttpContext.Session.SetString("UserType", u.ToString());

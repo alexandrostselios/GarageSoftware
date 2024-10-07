@@ -20,6 +20,7 @@ namespace GaragePortalNewUI.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private bool isProduction = false;
+        private bool isCustomer = false;
 
         readonly Uri baseAddress = new Uri(@Resources.SettingsResources.Uri);
         readonly HttpClient client = new HttpClient();
@@ -33,8 +34,12 @@ namespace GaragePortalNewUI.Controllers
         {
             /* REMOVE IN PRODUCTION */
 
-            if(!isProduction) { 
+            if(!isProduction && !isCustomer) { 
                 SetSessionPropertiesAdmin();
+            }
+            else if (!isProduction && isCustomer)
+            {
+                SetSessionPropertiesCustomer();
             }
             else
             {
@@ -118,9 +123,9 @@ namespace GaragePortalNewUI.Controllers
 
             UserType u = UserType.Admin;
             HttpContext.Session.SetString("UserType", u.ToString());
-            HttpContext.Session.SetString("ID", "1");
-            HttpContext.Session.SetString("Name", "Alexandros");
-            HttpContext.Session.SetString("Surname", "Tselios");
+            HttpContext.Session.SetString("ID", "30");
+            HttpContext.Session.SetString("Name", "Test1");
+            HttpContext.Session.SetString("Surname", "Employee1");
             client.BaseAddress = baseAddress;
             IEnumerable<Settings> settings = null;
             var responseTask = client.GetAsync(client.BaseAddress + "/GetSettings");
@@ -135,6 +140,32 @@ namespace GaragePortalNewUI.Controllers
             var lang = settings.FirstOrDefault(x => x.Description == "Language").Value;
             HttpContext.Session.SetString("Culture", lang );
             HttpContext.Session.SetString("Language", (HttpContext.Session.GetString("Culture") == "el-GR") ? "Ελληνικά":"English");
+
+            HttpContext.Session.SetString("GarageID", "1");
+        }
+
+        private void SetSessionPropertiesCustomer()
+        {
+
+            UserType u = UserType.Customer;
+            HttpContext.Session.SetString("UserType", u.ToString());
+            HttpContext.Session.SetString("ID", "3");
+            HttpContext.Session.SetString("Name", "Customer2");
+            HttpContext.Session.SetString("Surname", "Test2");
+            client.BaseAddress = baseAddress;
+            IEnumerable<Settings> settings = null;
+            var responseTask = client.GetAsync(client.BaseAddress + "/GetSettings");
+            responseTask.Wait();
+            var result = responseTask.Result;
+            if (result.IsSuccessStatusCode)
+            {
+                var readTask = result.Content.ReadAsAsync<IList<Settings>>();
+                readTask.Wait();
+                settings = readTask.Result;
+            }
+            var lang = settings.FirstOrDefault(x => x.Description == "Language").Value;
+            HttpContext.Session.SetString("Culture", lang);
+            HttpContext.Session.SetString("Language", (HttpContext.Session.GetString("Culture") == "el-GR") ? "Ελληνικά" : "English");
 
             HttpContext.Session.SetString("GarageID", "1");
         }

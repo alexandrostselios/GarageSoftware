@@ -7,7 +7,7 @@
     ViewData["Title"] = @Resource.GetKey("Settings");
 }
 
-@if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Admin.ToString())
+@if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Admin.ToString() || @ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Employee.ToString())
 {
     <div class="row">
         <div class="col-sm-5">
@@ -31,7 +31,7 @@
     <div id="addCarManufacturer"></div>
     <div id="editCarManufacturerItem"></div>
 
-    <button class="btn btn-sm btn-primary m-2" id="btnAddServiceItem" data-bs-toggle="ajax-modal" data-bs-target="#addServiceItem" data-url="@Url.Action("AddServiceItemPartial","ServiceItems")" style="display: none">Add</button>
+    <button class="btn btn-sm btn-primary m-2" id="btnAddServiceItem" data-bs-toggle="ajax-modal" data-bs-target="#addServiceItem" data-url="@Url.Action("AddServiceItemPartial", "ServiceItems")" style="display: none">@Resource.GetKey("Add_Service_Item")</button>
     <table id="serviceItemsTable" class="table table-striped" style="display: none">
         <thead>
             <tr>
@@ -39,7 +39,7 @@
                     @Resource.GetKey("ID")
                 </th >
                 <th class="all">
-                    @Resource.GetKey("Description")
+                    @Resource.GetKey("Description") Descr
                 </th>
                 <th class="all">
                     @Resource.GetKey("Price")
@@ -79,6 +79,28 @@
             
         </tbody>
     </table>
+
+    <table id="carModelsTable" class="table table-striped" style="display: none">
+        <thead>
+            <tr>
+                <th>
+                    @Resource.GetKey("ID")
+                </th>
+                <th>
+                    @Resource.GetKey("Model")
+                </th>
+                <th>
+                    GarageID
+                </th>
+                <th>
+
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+        </tbody>
+    </table>
 }
 else
 {
@@ -90,7 +112,7 @@ else
     @*    <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" />
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>*@
     <script type="text/javascript">
-        $("#serviceItemsDropdown").append($("<option></option>").val(0).html('--@Resource.GetKey("Please_Select")--'));
+        $("#serviceItemsDropdown").append($("<option disabled></option>").val(0).html('--@Resource.GetKey("Please_Select")--'));
         document.getElementById("serviceItemsDropdown").disabled = true;
 
 
@@ -102,18 +124,18 @@ else
             const container = document.getElementById('serviceItemsDropdown');
             if (value == '1') {
                 container.replaceChildren();
-                $("#serviceItemsDropdown").append($("<option></option>").val(0).html('--@Resource.GetKey("Please_Select")--'));
+                $("#serviceItemsDropdown").append($("<option selected disabled></option>").val(0).html('--@Resource.GetKey("Please_Select")--'));
                 $("#serviceItemsDropdown").append($("<option></option>").val(1).html('@Resource.GetKey("List_Of_Service_Items")'));
                 $("#serviceItemsDropdown").append($("<option></option>").val(2).html('@Resource.GetKey("List_Of_Manufacturers")'));
-                $("#serviceItemsDropdown").append($("<option></option>").val(5).html('Old Lista'));
+                //$("#serviceItemsDropdown").append($("<option></option>").val(5).html('Old Lista'));
                 $("#serviceItemsDropdown").append($("<option></option>").val(3).html('@Resource.GetKey("List_Of_Models")'));
             } else if (value == '2') {
                 container.replaceChildren();
-                $("#serviceItemsDropdown").append($("<option></option>").val(0).html('--@Resource.GetKey("Please_Select")--'));
+                $("#serviceItemsDropdown").append($("<option selected disabled></option>").val(0).html('--@Resource.GetKey("Please_Select")--'));
             } else if (value == '3') {
                 container.replaceChildren();
-                $("#serviceItemsDropdown").append($("<option></option>").val(0).html('--@Resource.GetKey("Please_Select")--'));
-                $("#serviceItemsDropdown").append($("<option></option>").val(4).html("Import"));
+                $("#serviceItemsDropdown").append($("<option selected disabled></option>").val(0).html('--@Resource.GetKey("Please_Select")--'));
+                $("#serviceItemsDropdown").append($("<option></option>").val(4).html("@Resource.GetKey("Mass_Imports")"));
             }
         }
 
@@ -128,11 +150,17 @@ else
             });
         }
 
+        // Get the button element by its ID
+        var addButton = document.getElementById("btnAddServiceItem");
+        var userType = '@ViewBag.UserType';
+
         $('#serviceItemsDropdown').change(function () {
             /* Get the selected value of dropdownlist */
             var selectedID = $(this).val();
 
             if (selectedID == 1) {
+                // Set the visibility property to "visible"
+                addButton.style.visibility = "visible";
                 $('#serviceItemsTable tbody').empty();
                 $.get('@Url.Action("GetServiceItems", "ServiceItems")', function (data) {
                     // Clear existing rows
@@ -163,7 +191,11 @@ else
                             {
                                 data: null,
                                 render: function (data, type, row) {
-                                    return '<a href="#" class="btn-edit" title="@Resource.GetKey("Edit")" id="btnEditServiceItem" data-id="' + row.id + '" ><i class="fa fa-edit" style="color:orange"></i></a> &nbsp;&nbsp;&nbsp; <a href="#" class="btn-delete" title="@Resource.GetKey("Delete")" id="btnDeleteServiceItem" data-id="' + row.id + '" ><i class="fa fa-trash" style="color:red"></i></a>';
+                                    if (userType === 'Admin') {
+                                        return '<a href="#" class="btn-edit" title="@Resource.GetKey("Edit")" id="btnEditServiceItem" data-id="' + row.id + '" ><i class="fa fa-edit" style="color:orange"></i></a> &nbsp;&nbsp;&nbsp;' +
+                                            '<a href="#" class="btn-delete" title="@Resource.GetKey("Delete")" id="btnDeleteServiceItem" data-id="' + row.id + '" ><i class="fa fa-trash" style="color:red"></i></a>';
+                                    }
+                                    return ''; // If not Admin, return empty string (no buttons)
                                 },
                                 "width": "10%",
                                 "className": "text-center"
@@ -174,6 +206,11 @@ else
                     $('#btnAddServiceItem').show();
                     var otable = $('#carManufacturersTable').dataTable();
                     $('#carManufacturersTable').dataTable().fnDestroy();
+                    otable.hide();
+                    otable.parents('div.dataTables_wrapper').first().hide();
+
+                    var otable = $('#carModelsTable').dataTable();
+                    $('#carModelsTable').dataTable().fnDestroy();
                     otable.hide();
                     otable.parents('div.dataTables_wrapper').first().hide();
                     // Initialize DataTable after data is loaded
@@ -207,8 +244,10 @@ else
                     });
                 });
             } else if (selectedID == 2) {
+                // Set the visibility property to "visible"
+                addButton.style.visibility = "hidden";
                 $('#carManufacturersTable tbody').empty();
-                $.get('@Url.Action("GetCarManufacturersJson", "CarManufacturers")', function (data) {
+                $.get('@Url.Action("GetCarManufacturers", "CarManufacturers")', function (data) {
                     // Clear existing rows
                     $('#carManufacturersTable tbody').empty();
                     // Iterate through the data and append rows to the table
@@ -231,8 +270,8 @@ else
                             {
                                 data: null,
                                 render: function (data, type, row) {
-                                    return '<button class="btn-edit" data-id="' + row.id + '"><i class="fa fa-edit"></button>'; /*@Resource.GetKey("Edit")*/
-                                }
+                                    //return '<button class="btn-edit" data-id="' + row.id + '"><i class="fa fa-edit" style="color:orange"></button>'; /*@Resource.GetKey("Edit")*/
+                                    return '<a href="#" class="btn-edit" title="@Resource.GetKey("Edit")" id="btnEditManufacturer" data-id="' + row.id + '" ><i class="fa fa-edit" style="color:orange"></i></a>';                                }
                             }
                         ]
                     });
@@ -241,6 +280,12 @@ else
                     $('#serviceItemsTable').dataTable().fnDestroy();
                     otable.hide();
                     otable.parents('div.dataTables_wrapper').first().hide();
+
+                    var otable = $('#carModelsTable').dataTable();
+                    $('#carModelsTable').dataTable().fnDestroy();
+                    otable.hide();
+                    otable.parents('div.dataTables_wrapper').first().hide();
+
                     $('#btnAddServiceItem').hide();
                     // Initialize DataTable after data is loaded
                     $('#carManufacturersTable').DataTable({
@@ -272,7 +317,8 @@ else
                         }
                     });
                 });
-            } else{
+            } else if (selectedID == 3) {
+                addButton.style.visibility = "hidden";
                 var otable = $('#serviceItemsTable').dataTable();
                 $('#serviceItemsTable').dataTable().fnDestroy();
                 otable.hide();
@@ -281,9 +327,72 @@ else
                 $('#carManufacturersTable').dataTable().fnDestroy();
                 otable.hide();
                 otable.parents('div.dataTables_wrapper').first().hide();
-                $.get("/Settings/SettingsPartialView/" + selectedID, function (data) {
+                console.log("selected id " + selectedID);
+
+                $.get('@Url.Action("GetCarModels", "CarModels")', function (data) {
+                    // Clear existing rows
+                    $('#carModelsTable tbody').empty();
+                    // Iterate through the data and append rows to the table
+                    $.each(data, function (index, item) {
+                        var row = '<tr>' +
+                            '<td>' + item.id + '</td>' +
+                            '<td>' + item.modelName + '</td>' +
+                            '<td>' + item.garageID + '</td>'
+                        // Add more cells if needed
+                        '</tr>';
+                        $('#carModelsTable tbody').append(row);
+                    });
                     $('#partialPlaceHolder').html(data);
-                    $('#partialPlaceHolder').fadeIn('slow');
+                    var table = $('#carModelsTable').DataTable({
+                        data: data,
+                        columns: [
+                            { data: 'id' },
+                            { data: 'modelName' },
+                            { data: 'garageID' },
+                            {
+                                data: null,
+                                render: function (data, type, row) {
+                                    //return '<button class="btn-edit" data-id="' + row.id + '"><i class="fa fa-edit" style="color:orange"></button>'; /*@Resource.GetKey("Edit")*/
+                                    return '<a href="#" class="btn-edit" title="@Resource.GetKey("Edit")" id="btnEditModel" data-id="' + row.id + '" ><i class="fa fa-edit" style="color:orange"></i></a>';
+                                }
+                            }
+                        ]
+                    });
+                    $('#carModelsTable').show();
+                    var otable = $('#serviceItemsTable').dataTable();
+                    $('#serviceItemsTable').dataTable().fnDestroy();
+                    otable.hide();
+                    otable.parents('div.dataTables_wrapper').first().hide();
+                    $('#btnAddServiceItem').hide();
+                    // Initialize DataTable after data is loaded
+                    $('#carModelsTable').DataTable({
+                        "pageLength": 10,
+                        "searching": true,
+                        "paging": true,
+                        "destroy": true,
+                        "scrollCollapse": true,
+                        "scrollY": '600px',
+                        "columnDefs": [
+                            {
+                                "targets": [0, 2],
+                                "visible": false
+                            }
+                        ],
+                        "language": {
+                            "lengthMenu": "@Resource.GetKey("Show_DataTable") _MENU_ @Resource.GetKey("Entries_Per_Page")",
+                            "zeroRecords": "@Resource.GetKey("No_Matching_Records_Found_DataTable")",
+                            "info": "@Resource.GetKey("Show_DataTable") _START_ @Resource.GetKey("To_DataTable") _END_ @Resource.GetKey("Of_DataTable") _TOTAL_ @Resource.GetKey("Entries_DataTable")",
+                            "infoEmpty": "@Resource.GetKey("Showing_Empty_DataTable")",
+                            "infoFiltered": "(@Resource.GetKey("Filtered_From_DataTable") _MAX_ @Resource.GetKey("Total_DataTable") @Resource.GetKey("Entries_DataTable"))",
+                            "search": "@Resource.GetKey("Search"):",
+                            "paginate": {
+                                "first": "First",
+                                "last": "Last",
+                                "next": "@Resource.GetKey("Next_DataTable")",
+                                "previous": "@Resource.GetKey("Previous_DataTable")"
+                            }
+                        }
+                    });
                 });
             }
         });
@@ -310,13 +419,25 @@ else
             });
         });
 
-        $('#carManufacturersTable tbody').on('click', 'button.btn-edit', function () {
+        $('#carManufacturersTable tbody').on('click', 'a.btn-edit', function (e) {
+            e.preventDefault();
             var id = $(this).data('id');
             var url = "@Url.Action("EditCarManufacturerPartial", "CarManufacturers")" + '/?id=' + id;
             // Load partial view into the container
             $.get(url, function (response) {
-                $('#editCarManufacturerItem').html(response);
-                $('#editCarManufacturerItem').find('.modal').modal('show');
+                $('#editServiceItem').html(response);
+                $('#editServiceItem').find('.modal').modal('show');
+            });
+        });
+
+        $('#carModelsTable tbody').on('click', 'a.btn-edit', function (e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+            var url = "@Url.Action("EditCarModelPartial", "CarModels")" + '/?id=' + id;
+            // Load partial view into the container
+            $.get(url, function (response) {
+                $('#editServiceItem').html(response);
+                $('#editServiceItem').find('.modal').modal('show');
             });
         });
 

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<GaragePortalNewUI.Models.Users>
+﻿@model IEnumerable<GaragePortalNewUI.Models.UserViewModel>
 @inject LanguageService Resource
 
 <br/><br/>
@@ -30,15 +30,38 @@
     <div class="col-sm-5">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">@Resource.GetKey("Import_Users")</h5>
-                <p class="card-text">@Resource.GetKey("Import_Users_Info")</p>
-                <button class="btn btn-sm btn-primary m-2" id="btnImportUsers" data-bs-toggle="ajax-modal" data-bs-target="#importUsers" data-url="@Url.Action("ImportUsersPartial","Import")">@Resource.GetKey("Import_Users")</button>
+                <h5 class="card-title">@Resource.GetKey("Import_Customers")</h5>
+                <p class="card-text">@Resource.GetKey("Import_Customers_Info")</p>
+                <button class="btn btn-sm btn-primary m-2" id="btnImportUsers" data-bs-toggle="ajax-modal" data-bs-target="#importUsers" data-url="@Url.Action("ImportCustomersPartial","Import")">@Resource.GetKey("Import_Customers")</button>
                 @*<a href="#" class="btn btn-primary">Go somewhere</a>*@
             </div>
         </div>
     </div>
-
+    <div class="col-sm-5">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@Resource.GetKey("Import_Engineers")</h5>
+                <p class="card-text">@Resource.GetKey("Import_Engineers_Info")</p>
+                <button class="btn btn-sm btn-primary m-2" id="btnImportUsers" data-bs-toggle="ajax-modal" data-bs-target="#importUsers" data-url="@Url.Action("ImportEngineersPartial","Import")">@Resource.GetKey("Import_Engineers")</button>
+                @*<a href="#" class="btn btn-primary">Go somewhere</a>*@
+            </div>
+        </div>
+    </div>
 </div>
+<br />
+<div class="row">
+    <div class="col-sm-5">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@Resource.GetKey("Import_Service_Items")</h5>
+                <p class="card-text">@Resource.GetKey("Import_Service_Items_Info")</p>
+                <button class="btn btn-sm btn-primary m-2" id="btnImportServiceItems" data-bs-toggle="ajax-modal" data-bs-target="#importServiceItems" data-url="@Url.Action("ImportServiceItemsPartial","Import")">@Resource.GetKey("Import_Service_Items")</button>
+                @*<a href="#" class="btn btn-primary">Go somewhere</a>*@
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div class="container-fluid">
     <div class="row d-flex justify-content-center pt-5  h-100">

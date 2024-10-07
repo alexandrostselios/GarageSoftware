@@ -4,11 +4,16 @@ using GarageAPI.Models.CarManufacturers;
 using GarageAPI.Models.CarModels;
 using GarageAPI.Models.CarModelYears;
 using GarageAPI.Models.EngineerSpeciality;
-using GarageAPI.Models.UserModels;
 using GarageAPI.Models.CarEngineTypes;
 using System.ComponentModel.DataAnnotations.Schema;
 using GarageAPI.Models.User;
 using GarageAPI.Models.Service;
+using GarageAPI.Models.EngineerSpecialities;
+using GarageAPI.Models.User.Customers;
+using GarageAPI.Models.User.Engineer;
+using GarageAPI.Models.CustomerCars;
+using System.Reflection.Emit;
+using GarageAPI.Models.User.Employees;
 
 namespace GarageAPI.Data
 {
@@ -33,9 +38,8 @@ namespace GarageAPI.Data
         public DbSet<CarModelYear> CarModelYear { get; set; }
         public DbSet<CarModelManufacturerYear> CarModelManufacturerYear { get; set; }
         public DbSet<Users> Users { get; set; }
-        public DbSet<UserModel> UserModels { get; set; }
-        public DbSet<CustomerCars> CustomerCars { get; set; }
-        public DbSet<UserModelsDTO> Output { get; set; }
+        public DbSet<CustomerCar> CustomerCars { get; set; }
+        public DbSet<CustomerCarDTO> CustomerCarDTO { get; set; }
         public DbSet<EngineerSpeciality> EngineerSpeciality { get; set; }
         public DbSet<ServiceHistory> ServiceHistory { get; set; }
         public DbSet<ServiceHistoryDTO> ServiceHistoryDTO { get; set; }
@@ -49,6 +53,12 @@ namespace GarageAPI.Data
         public DbSet<ServiceHistoryItemsDTO> ServiceHistoryItemsDTO { get; set; }
         public DbSet<ServiceHistoryWithItemsDTO> ServiceHistoryWithItemsDTO { get; set; }
         public DbSet<Report> Report { get; set; }
+        public DbSet<Customer> Customer { get; set; }
+        public DbSet<Engineer> Engineer { get; set; }
+        public DbSet<EngineerSpecialities> EngineerSpecialities { get; set; }
+
+        public DbSet<Employee> Employee { get; set; }
+
 
         private void SetCarEngineTypeData(ModelBuilder builder)
         {
@@ -1205,12 +1215,12 @@ namespace GarageAPI.Data
 
         private void SetUsersData(ModelBuilder builder)
         {
-            builder.Entity<Users>().HasData(new Users { ID = 1, Name = "Alexandros", Surname = "Tselios", Email = "atselios@classter.com", Password = "1", UserType = Enum.UserType.Admin, CreationDate = DateTime.Parse("2022-01-06 14:05:14.258"), ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable });
-            builder.Entity<Users>().HasData(new Users { ID = 2, Name = "Efthumia", Surname = "Varvagianni", Email = "efi.vanni@gmail.com", Password = "f1234!", UserType = Enum.UserType.Customer, CreationDate = DateTime.Parse("2022-02-06 09:19:46.369"), ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable });
-            builder.Entity<Users>().HasData(new Users { ID = 3, Name = "Kostas", Surname = "Kitsikou", Email = "kkitsikou@hotmail.com", Password = "gafa#$#", UserType = Enum.UserType.Customer, CreationDate = DateTime.Parse("2022-12-15 22:19:46.456"), ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable });
-            builder.Entity<Users>().HasData(new Users { ID = 4, Name = "Marios", Surname = "Papadopoulos", Email = "mpapadopoulos@yahoo.gr", Password = "MP1234@?", UserType = Enum.UserType.Customer, CreationDate = DateTime.Parse("2022-12-24 13:42:34.566"), ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Disable });
-            builder.Entity<Users>().HasData(new Users { ID = 5, Name = "Κωνσταντίνος", Surname = "Παπαδόπουλος", Email = "konpapa@yahoo.gr", Password = "DfG34#$%^", UserType = Enum.UserType.Engineer, CreationDate = DateTime.Parse("2023-02-03 20:08:23.860"), ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable, Speciality = 3 });
-            builder.Entity<Users>().HasData(new Users { ID = 6, Name = "Μιχάλης", Surname = "Μιχαήλ", Email = "mmichail@gmail.com", Password = "KavMixalis$%", UserType = Enum.UserType.Engineer, CreationDate = DateTime.Now, ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable, Speciality = 2 });
+            //builder.Entity<Users>().HasData(new Users { ID = 1, Name = "Alexandros", Surname = "Tselios", Email = "atselios@classter.com", Password = "1", UserType = Enum.UserType.Admin, CreationDate = DateTime.Parse("2022-01-06 14:05:14.258"), ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable });
+            //builder.Entity<Users>().HasData(new Users { ID = 2, Name = "Efthumia", Surname = "Varvagianni", Email = "efi.vanni@gmail.com", Password = "f1234!", UserType = Enum.UserType.Customer, CreationDate = DateTime.Parse("2022-02-06 09:19:46.369"), ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable });
+            //builder.Entity<Users>().HasData(new Users { ID = 3, Name = "Kostas", Surname = "Kitsikou", Email = "kkitsikou@hotmail.com", Password = "gafa#$#", UserType = Enum.UserType.Customer, CreationDate = DateTime.Parse("2022-12-15 22:19:46.456"), ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable });
+            //builder.Entity<Users>().HasData(new Users { ID = 4, Name = "Marios", Surname = "Papadopoulos", Email = "mpapadopoulos@yahoo.gr", Password = "MP1234@?", UserType = Enum.UserType.Customer, CreationDate = DateTime.Parse("2022-12-24 13:42:34.566"), ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Disable });
+            //builder.Entity<Users>().HasData(new Users { ID = 5, Name = "Κωνσταντίνος", Surname = "Παπαδόπουλος", Email = "konpapa@yahoo.gr", Password = "DfG34#$%^", UserType = Enum.UserType.Engineer, CreationDate = DateTime.Parse("2023-02-03 20:08:23.860"), ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable, Speciality = 3 });
+            //builder.Entity<Users>().HasData(new Users { ID = 6, Name = "Μιχάλης", Surname = "Μιχαήλ", Email = "mmichail@gmail.com", Password = "KavMixalis$%", UserType = Enum.UserType.Engineer, CreationDate = DateTime.Now, ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable, Speciality = 2 });
         }
 
         private void initDatabase(ModelBuilder builder)

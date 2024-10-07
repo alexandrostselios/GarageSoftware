@@ -1,5 +1,4 @@
-﻿using GarageAPI.Models.UserModels;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GarageAPI.Models.Service
 {

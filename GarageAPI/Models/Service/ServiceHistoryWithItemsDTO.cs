@@ -7,7 +7,7 @@ namespace GarageAPI.Models.Service
     public class ServiceHistoryWithItemsDTO
     {
         public long ID { get; set; }
-        public long UserModelsID { get; set; }
+        public long CustomerCarID { get; set; }
 
         public string? Description { get; set; }
 
@@ -20,9 +20,9 @@ namespace GarageAPI.Models.Service
 
         public float? FinalPrice { get; set; }
 
-        public string? Name { get; set; }
+        public string? EngineerName { get; set; }
 
-        public string? Surname { get; set; }
+        public string? EngineerSurname { get; set; }
 
         public string LicencePlate { get; set; }
 

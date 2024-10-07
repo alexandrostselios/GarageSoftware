@@ -56,6 +56,93 @@ function importExcelPartial() {
     }
 };
 
+//function importExcelServiceItemsPartial() {
+//    'use strict';
+
+//    var handleFileSelect = function (evt) {
+//        var files = evt.target.files;
+//        var file = files[0];
+//        if (files && file) {
+//            var reader = new FileReader();
+//            reader.onload = function (readerEvt) {
+//                var arrayBuffer = readerEvt.target.result;
+//                var data = new Uint8Array(arrayBuffer);
+//                var workbook = XLSX.read(data, { type: 'array' });
+//                var sheetNames = workbook.SheetNames;
+//                sheetNames.forEach(function (sheetName) {
+//                    var sheet = workbook.Sheets[sheetName];
+//                    var range = XLSX.utils.decode_range(sheet['!ref']);
+//                    var columnNames = [];
+//                    for (var col = range.s.c; col <= range.e.c; col++) {
+//                        var cell = XLSX.utils.encode_cell({ r: 0, c: col });
+//                        var columnName = sheet[cell].v;
+//                        columnNames.push(columnName);
+//                    }
+//                    console.log('Column names for sheet', sheetName + ':', columnNames);
+//                });
+//            };
+//            reader.readAsArrayBuffer(file);
+//        }
+//    };
+
+//    document.getElementById('inputExcelFile').addEventListener('change', handleFileSelect, false);
+//}
+
+function importExcelServiceItemsPartial() {
+
+    console.log("function");
+    'use strict';
+    var handleFileSelect = function (evt) {
+        var files = evt.target.files;
+        var file = files[0];
+        if (files && file) {
+            var reader = new FileReader();
+            reader.onload = function (readerEvt) {
+                var arrayBuffer = readerEvt.target.result;
+                var data = new Uint8Array(arrayBuffer);
+                var workbook = XLSX.read(data, { type: 'array' });
+                // Get the ID of the selected sheet
+                var selectedSheetId = $("#excelSheetOrder").val();
+
+                // Use the selected sheet ID to get the corresponding sheet
+                var selectedSheet = workbook.Sheets[selectedSheetId];
+
+                console.log("ID: " + selectedSheetId + " == Text: " + selectedSheet);
+                var sheetNames = workbook.SheetNames;
+                var firstSheet = workbook.Sheets[sheetNames[0]]; // Assuming you want to get the column names from the first sheet
+                var range = XLSX.utils.decode_range(firstSheet['!ref']);
+                var columnNames = [];
+                var columnIDs = {}; // Mapping between column names and their IDs
+                for (var col = range.s.c; col <= range.e.c; col++) {
+                    var cell = XLSX.utils.encode_cell({ r: 0, c: col });
+                    var columnName = firstSheet[cell].v;
+                    var columnID;
+                    columnNames.push(columnName);
+                    columnIDs[columnName] = columnID; // Store the mapping
+                }
+                console.log('Column names for the first sheet:', columnNames);
+                console.log('Column ids for the first sheet:', columnIDs);
+
+
+                // Populate descriptionOrder select tag with column names and IDs
+                columnNames.forEach(function (columnName) {
+                    var columnID = columnIDs[columnName]; // Get the ID from the mapping
+                    $("#descriptionOrder").append($("<option value='" + columnID + "'>" + columnName + "</option>"));
+                });
+            };
+            reader.readAsArrayBuffer(file);
+        }
+    };
+
+
+    if (window.File && window.FileReader && window.FileList && window.Blob) {
+        console.log("I do not know what to do in my life")
+        document.getElementById('inputExcelFile').addEventListener('change', handleFileSelect, false);
+    } else {
+        alert('The File APIs are not fully supported in this browser.');
+    }
+};
+
 function checkDiscountType(x) {
     if(x === 0){
         if (document.getElementById('percentage').checked) {
@@ -109,11 +196,11 @@ function getServiceItems() {
         $.getJSON(url + 'GetServiceItemsToList')
             //$.getJSON('http://alefhome.ddns.net:8082/api/GetCarManufacturersToList')
             .done(function (data) {
-                console.log(data);
+                //console.log(data);
                 // On success, 'data' contains a list of products.
                 $.each(data, function (key, item) {
                     // Add a list item for the product.
-                    console.log("ID: " + item.id + " Description: " + item.description+" Price: "+item.price);
+                    //console.log("ID: " + item.id + " Description: " + item.description+" Price: "+item.price);
                     if (item.price > 0) {
                         $("#ServiceItems").append($("<option></option>").val(item.id).html(' '+item.id + ') ' + item.description + ' (' + item.price + ' €)'));
                     } else {
@@ -150,13 +237,13 @@ function CalculatePrice() {
 function getServiceEngineers() {
     console.log("getServiceItems()");
     $(document).ready(function () {
-        $.getJSON(url + 'GetEngineers/1')
+        $.getJSON(url + 'GetEngineersToList/1')
             //$.getJSON('http://alefhome.ddns.net:8082/api/GetCarManufacturersToList')
             .done(function (data) {
                 // On success, 'data' contains a list of products.
                 $.each(data, function (key, item) {
                     // Add a list item for the product.
-                    $("#ShowEngineers").append($("<option></option>").val(item.id).html(item.surname + ' ' + item.name));
+                    $("#ShowEngineers").append($("<option></option>").val(item.engineerID).html(item.engineerSurname + ' ' + item.engineerName));
                 });
             });
     });

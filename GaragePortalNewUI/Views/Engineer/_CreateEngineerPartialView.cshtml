@@ -1,0 +1,145 @@
+﻿@model GaragePortalNewUI.ViewModels.Engineer.AddEngineerViewModel
+@inject LanguageService Resource
+@using GaragePortalNewUI.Enum
+@using System.Resources
+
+@{
+    ViewData["Title"] = @Resource.GetKey("Add_New_Engineer");
+    ResourceManager resourceManager = new ResourceManager("GaragePortalNewUI.Resources.SharedResource", typeof(EnableAccess).Assembly);
+}
+
+
+<div id="AddEngineer" name="AddEngineer" class="modal" tabindex="-1" role="form">
+    <div class="modal-dialog draggable" role="document" style="max-width: 800px;">
+        <div class="modal-content">
+            <div class="modal-header dragable_touch d-block">
+                <h5 class="modal-title">@Resource.GetKey("Add_Engineer_Details_Form")</h5>
+@*                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>*@
+            </div>
+            <form method="post" asp-action="CreateEngineerPartial" asp-controller="Engineer" enctype="multipart/form-data">
+                <input type="hidden" name="GarageID" value="@ViewBag.GarageID" />
+                <div class="modal-body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="EngineerSurname" class="control-label">@Resource.GetKey("Surname")</label>
+                                <input asp-for="EngineerSurname" class="form-control" />
+                                <span asp-validation-for="EngineerSurname" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="EngineerName" class="control-label">@Resource.GetKey("Name")</label>
+                                <input asp-for="EngineerName" class="form-control" />
+                                <span asp-validation-for="EngineerName" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="EngineerSpecialities" class="control-label">@Resource.GetKey("Engineer_Speciality")</label>
+                                <br />
+                                <select id="EngineerSpecialitiesCreation" asp-for="EngineerSpecialities" class="form-control">
+                                    <option value='0' disabled>--@Resource.GetKey("Select_Speciality")--</option> 
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="EngineerEmail" class="control-label">@Resource.GetKey("Email")</label>
+                                <input asp-for="EngineerEmail" class="form-control" />
+                                <span asp-validation-for="EngineerEmail" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="EngineerPassword" class="control-label">@Resource.GetKey("Password")</label>
+                                <input asp-for="EngineerPassword" type="password" class="form-control" />
+                                <span asp-validation-for="EngineerPassword" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="EnableAccess" class="control-label">@Resource.GetKey("Enable_Access")</label>
+                                <select id="EnableAccess" asp-for="EnableAccess" class="form-control">
+                                    @foreach (var value in Enum.GetValues(typeof(EnableAccess)))
+                                    {
+                                        <option value="@((int)value)">@resourceManager.GetString($"EnableAccess_{value}")</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="EngineerPhoto" class="control-label">@Resource.GetKey("User_Photo")</label>
+                                <input type="file" class="form-control-file form-control" id="files" asp-for="EngineerPhoto" name="Image" accept="image/*" onchange="previewImage()">
+                                <span asp-validation-for="EngineerPhoto" class="text-danger"></span>
+                                @Html.ValidationMessageFor(m => m.EngineerPhoto)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" value="Create" class="btn btn-success">@Resource.GetKey("Register_Customer")</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">@Resource.GetKey("Cancel")</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.draggable').draggable({
+            handle: '.modal-header'
+        });
+    });
+
+    $(function () {
+        var url = $(this).data('url');
+        $.get(url).done(function (data) {
+            $.getJSON('@Resources.SettingsResources.Uri' + '/GetEngineerSpeciality')
+                .done(function (data) {
+                    // On success, 'data' contains a list of products.
+                    $.each(data, function (key, item) {
+                        // Add a list item for the product.
+                        $("#EngineerSpecialitiesCreation").append($("<option></option>").val(item.id).html(item.speciality));
+                    });
+                    $("#EngineerSpecialitiesCreation").select2();
+                });
+        });
+    });
+    //$(function () {
+    //    var url = $(this).data('url');
+    //    $.get(url).done(function (data) {
+    //        $.getJSON('@Resources.SettingsResources.Uri' + '/GetEngineerSpeciality')
+    //            .done(function (data) {
+    //                // On success, 'data' contains a list of products.
+    //                $.each(data, function (key, item) {
+    //                    // Check if item.id exists within EngineerSpecialitiesID array
+    //                    var isSelected = (createUser.EngineerSpecialitiesID && createUser.EngineerSpecialitiesID.includes(item.id));
+
+    //                    // Append the option with selected attribute if isSelected is true
+    //                    $("#EditEngineerSpeciality").append($("<option></option>").val(item.id).html(item.speciality).prop('selected', isSelected));
+    //                });
+
+    //                $("#EngineerSpecialitiesCreation").select2();
+    //            });
+    //    });
+    //});
+</script>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

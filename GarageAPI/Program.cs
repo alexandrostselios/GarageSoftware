@@ -40,6 +40,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<GarageAPIDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("GarageAPIDbContext")));
 
+// Add HttpClient
+builder.Services.AddHttpClient();
+
 builder.Services.AddCors(p => p.AddPolicy("corspolicy",build =>
 {
     build.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();

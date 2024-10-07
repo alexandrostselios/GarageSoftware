@@ -19,7 +19,7 @@ namespace GaragePortalNewUI.Models
         public long InsertUserID { get; set; }
 
         [NotNull]
-        public Users InsertUser { get; set; }
+        public UserViewModel InsertUser { get; set; }
 
         [Column(TypeName = "datetime")]
         public DateTime? InsertDate { get; set; }

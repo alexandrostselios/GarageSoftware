@@ -60,6 +60,25 @@ namespace GarageAPI.Controllers
             return Ok(serviceItem);
         }
 
+        [HttpPost]
+        [Route("api/AddServiceItemByList")]
+        public async Task<IActionResult> AddServiceItemByList(List<AddServiceItemRequest> addServiceItemRequest)
+        {
+
+            for (int i = 0; i <= addServiceItemRequest.Count(); i++)
+            {
+                var serviceItem = new ServiceItems()
+                {
+                    Description = addServiceItemRequest[i].Description,
+                    Price = addServiceItemRequest[i].Price,
+                    GarageID = addServiceItemRequest[i].GarageID
+                };
+                await dbContext.ServiceItems.AddAsync(serviceItem);
+                await dbContext.SaveChangesAsync();
+            }
+            return Ok();
+        }
+
         [HttpPut]
         [Route("api/UpdateServiceItemByID/{id:long}")]
         public async Task<IActionResult> UpdateServiceItemByID([FromRoute] long id, UpdateServiceItemRequest updateServiceItemRequest)

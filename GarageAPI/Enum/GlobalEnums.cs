@@ -5,13 +5,15 @@
         Admin = 1,
         Customer = 2,
         Engineer = 3,
-        Guest = 4
+        Employee = 4,
+        Guest = 5
     }
 
     public enum EnableAccess
     {
         Enable = 1,
-        Disable = 2
+        RestrictedAccess = 2,
+        Disable = 3
     }
 
     public enum EngineType

@@ -1,0 +1,28 @@
+﻿@using GaragePortalNewUI.Models;
+@inject LanguageService Resource
+
+<div class="modal fade" id="failedCreatedUserModal" tabindex="-1" role="dialog" aria-labelledby="failedCreatedUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <p style="font-size: 3em;"><i class="fa fa-times-circle-o" style="color: red;"></i></p>
+                <p style="font-size: 1.5em;" id="failedMessageInfoPlaceholder"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary mx-auto" data-dismiss="modal" onclick="SetViewBag()">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<script>
+    $(document).ready(function () {
+        $('.draggable').draggable({
+            handle: '.modal-header'
+        });
+    });
+</script>*@
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

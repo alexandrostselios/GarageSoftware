@@ -137,10 +137,6 @@
     <value>Καταχώρηση Πελάτη</value>
     <comment>Add New Customer</comment>
   </data>
-  <data name="Add_New_Engineer" xml:space="preserve">
-    <value>Καταχώρηση Μηχανικού</value>
-    <comment>Add_New_Engineer</comment>
-  </data>
   <data name="Add_Service_History" xml:space="preserve">
     <value>Προσθήκη Ιστορικού</value>
     <comment>Add Service History</comment>
@@ -378,7 +374,7 @@
     <comment>My_Account</comment>
   </data>
   <data name="My_Profile" xml:space="preserve">
-    <value>Προφίλ</value>
+    <value>Το Προφίλ μου</value>
     <comment>My Profile</comment>
   </data>
   <data name="Name" xml:space="preserve">
@@ -638,7 +634,7 @@
     <comment>Edit_Service_Item</comment>
   </data>
   <data name="Add_Service_Item" xml:space="preserve">
-    <value>Προσθήκε Εργασίας Service</value>
+    <value>Προσθήκη Εργασίας Service</value>
     <comment>Add_Service_Item</comment>
   </data>
   <data name="Edit_Manufacturer" xml:space="preserve">
@@ -688,5 +684,135 @@
   <data name="Unselect_All" xml:space="preserve">
     <value>Αποεπιλογή Όλων</value>
     <comment>Unselect_All</comment>
+  </data>
+  <data name="Actions_Table" xml:space="preserve">
+    <value>Ενέργειες</value>
+    <comment>Actions_Table</comment>
+  </data>
+  <data name="Customer_Added_Successfully" xml:space="preserve">
+    <value>Ο πελάτης {0} {1} καταχωρήθηκε επιτυχώς.</value>
+    <comment>Customer_Added_Successfully</comment>
+  </data>
+  <data name="Customer_Added_Failed" xml:space="preserve">
+    <value>Ο πελάτης {0} {1} δεν καταχωρήθηκε.</value>
+    <comment>Customer_Added_Failed</comment>
+  </data>
+  <data name="Engineer_Added_Failed" xml:space="preserve">
+    <value>Ο μηχανικός {0} {1} δεν καταχωρήθηκε.</value>
+    <comment>Engineer_Added_Failed</comment>
+  </data>
+  <data name="Engineer_Added_Successfully" xml:space="preserve">
+    <value>Ο μηχανικός {0} {1} καταχωρήθηκε επιτυχώς.</value>
+    <comment>Engineer_Added_Successfully</comment>
+  </data>
+  <data name="Customer_ID" xml:space="preserve">
+    <value>Κωδικός πελάτη</value>
+    <comment>Customer_ID</comment>
+  </data>
+  <data name="Engineer_ID" xml:space="preserve">
+    <value>Κωδικός μηχανικού</value>
+    <comment>Engineer_ID</comment>
+  </data>
+  <data name="EnableAccess_Disable" xml:space="preserve">
+    <value>Απενεργοποίηση πρόσβασης</value>
+    <comment>EnableAccess_Disable</comment>
+  </data>
+  <data name="EnableAccess_Enable" xml:space="preserve">
+    <value>Ενεργοποίηση πρόσβασης</value>
+    <comment>EnableAccess_Enable</comment>
+  </data>
+  <data name="EnableAccess_RestrictedAccess" xml:space="preserve">
+    <value>Περιορισμένη πρόσβαση</value>
+    <comment>EnableAccess_RestrictedAccess</comment>
+  </data>
+  <data name="No_Image_Available" xml:space="preserve">
+    <value>Δεν Υπάρχει Διαθέσιμη Φωτογραφία</value>
+    <comment>No_Image_Available</comment>
+  </data>
+  <data name="Import_Service_Items" xml:space="preserve">
+    <value>Εισαγωγή Εργασιών Service</value>
+    <comment>Import_Service_Items</comment>
+  </data>
+  <data name="Import_Service_Items_Info" xml:space="preserve">
+    <value>Από εδώ μπορείτε να κάνετε μαζική εισαγωγή Εργασιών Service</value>
+    <comment>Import_Service_Items_Info</comment>
+  </data>
+  <data name="Import_Customers_Info" xml:space="preserve">
+    <value>Από εδώ μπορείτε να κάνετε μαζική εισαγωγή Πελατών</value>
+    <comment>Import_Customers_Info</comment>
+  </data>
+  <data name="Choose_GarageID_Column_To_Import" xml:space="preserve">
+    <value>Επιλέξτε την κολώνα του Garage ID</value>
+    <comment>Choose_GarageID_Column_To_Import</comment>
+  </data>
+  <data name="Choose_Manufacturer_Column_To_Import" xml:space="preserve">
+    <value>Επιλέξτε την κολώνα του Κατασκευαστή</value>
+    <comment>Choose_Manufacturer_Column_To_Import</comment>
+  </data>
+  <data name="Choose_Model_Column_To_Import" xml:space="preserve">
+    <value>Επιλέξτε την κολώνα του Μοντέλου</value>
+    <comment>Choose_Model_Column_To_Import</comment>
+  </data>
+  <data name="Choose_Price_Column_To_Import" xml:space="preserve">
+    <value>Επιλέξτε την κολώνα της Τιμής</value>
+    <comment>Choose_Price_Column_To_Import</comment>
+  </data>
+  <data name="Choose_Service_Item_Description_Column_To_Import" xml:space="preserve">
+    <value>Επιλέξτε την κολώνα της Περιγραφής</value>
+    <comment>Choose_Service_Item_Description_Column_To_Import</comment>
+  </data>
+  <data name="Import_Engineers" xml:space="preserve">
+    <value>Εισαγωγή Μηχανικών</value>
+    <comment>Import_Engineers</comment>
+  </data>
+  <data name="Import_Engineers_Info" xml:space="preserve">
+    <value>Από εδώ μπορείτε να κάνετε μαζική εισαγωγή Μηχανικών</value>
+    <comment>Import_Engineers_Info</comment>
+  </data>
+  <data name="Mass_Imports" xml:space="preserve">
+    <value>Μαζικές Εισαγωγές</value>
+    <comment>Mass_Imports</comment>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Καλώς ήρθατε</value>
+  </data>
+  <data name="Welcome_Message" xml:space="preserve">
+    <value>Αυτή είναι η πλατφόρμα παρακολούθησης των Service των οχημάτων σας.</value>
+  </data>
+  <data name="PreviousKM" xml:space="preserve">
+    <value>Προηγούμενα χλμ</value>
+  </data>
+  <data name="MobilePhone" xml:space="preserve">
+    <value>Κινητό Τηλέφωνο</value>
+  </data>
+  <data name="HomePhone" xml:space="preserve">
+    <value>Σταθερό Τηλέφωνο</value>
+  </data>
+  <data name="Employees" xml:space="preserve">
+    <value>Υπάλληλοι</value>
+  </data>
+  <data name="Back_To_Profile" xml:space="preserve">
+    <value>Πίσω στο Προφίλ μου</value>
+  </data>
+  <data name="List_Of_Employees" xml:space="preserve">
+    <value>Λίστα Υπαλλήλων</value>
+  </data>
+  <data name="Edit_Employee_Profile" xml:space="preserve">
+    <value>Επεξεργασία Προφίλ Υπαλλήλου</value>
+  </data>
+  <data name="Employee_ID" xml:space="preserve">
+    <value>Κωδικός Υπαλλήλου</value>
+  </data>
+  <data name="Add_New_Employee" xml:space="preserve">
+    <value>Καταχώρηση Υπαλλήλου</value>
+  </data>
+  <data name="Add_Employee_Details_Form" xml:space="preserve">
+    <value>Στοιχεία Υπαλλήλου</value>
+  </data>
+  <data name="Employee_Added_Successfully" xml:space="preserve">
+    <value>Ο υπάλληλος {0} {1} καταχωρήθηκε επιτυχώς.</value>
+  </data>
+  <data name="Employee_Added_Failed" xml:space="preserve">
+    <value>Ο υπάλληλος {0} {1} δεν καταχωρήθηκε.</value>
   </data>
 </root>

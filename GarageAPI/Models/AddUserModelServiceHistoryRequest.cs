@@ -1,16 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
-using GarageAPI.Models.UserModels;
 
 namespace GarageAPI.Models
 {
     [NotMapped]
-    public class AddUserModelServiceHistoryRequest
+    public class AddCustomerCarServiceHistoryRequest
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long ID { get; set; }
 
-        public long UserModelsID { get; set; }
+        public long CustomerCarID { get; set; }
 
         public string Description { get; set; }
 

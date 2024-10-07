@@ -136,7 +136,7 @@ namespace GaragePortalNewUI.Models
             //return View("~/Views/Settings/_ServiceItemsPartial.cshtml", temp);
         }
 
-        private void SetSessionProperties(Users dbUser)
+        private void SetSessionProperties(UserViewModel dbUser)
         {
             UserType u = (UserType)System.Enum.Parse(typeof(UserType), dbUser.UserType.ToString());
             HttpContext.Session.SetString("UserType", u.ToString());

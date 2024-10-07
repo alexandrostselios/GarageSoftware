@@ -1,0 +1,234 @@
+﻿@model GaragePortalNewUI.Models.AddServiceItemRequest
+@inject LanguageService Resource
+
+<div id="importServiceItems" name="importServiceItems" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog draggable" role="document" >
+        <div class="modal-content" id="modalContentCustomCSS">
+            <div class="modal-header dragable_touch d-block">
+                <h5 class="modal-title">@Resource.GetKey("Import_Service_Items")<h5>
+@*                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="trues">&times;</span>
+                </button>*@
+            </div>
+            <form method="post" asp-action="ImportServiceItems" asp-controller="Import" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    @*<input type="hidden" asp-for="UserModelsID" value="@ViewBag.CarDetailsID" />*@
+                    <input type="hidden" asp-for="GarageID" value="@ViewBag.GarageID" />
+                    <!-- Hidden fields to store selected values -->
+                    <input type="hidden" id="selectedGarageIDOrder" name="selectedGarageIDOrder" />
+                    <input type="hidden" id="selectedPriceOrder" name="selectedPriceOrder" />
+                    <input type="hidden" id="selectedDescriptionOrder" name="selectedDescriptionOrder" />
+                    @*<div class="form-row importCarManufacturers">*@
+                    <div class="input-group custom-file-button importCarManufacturers">
+                        <label class="input-group-text labelImport" for="inputGroupFile">File</label>
+                        <input type="file" class="form-control" name="file" id="inputExcelFile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+                        @*<button class="buttonImport" type="submit">@Resource.GetKey("Import_Manufacturers_From_Excel")</button>*@
+                    </div>
+                   @* </div>*@
+                    <div class="form-row importCarManufacturers">
+                        <div class="form-group col-sm-4">
+                            <label for="sheetOrder">@Resource.GetKey("Choose_Sheet_To_Import")</label>
+                            @*<input type="text" id="nameOrder" name="sheetOrder" class="form-control" />*@
+                            <select id="excelSheetOrder" name="sheetOrder" class="form-control"></select>
+                        </div>
+                        <br />
+                        <div class="form-group col-sm-4">
+                            <label for="descriptionOrder">@Resource.GetKey("Choose_Service_Item_Description_Column_To_Import")</label>
+                            <select id="descriptionOrder" name="descriptionOrder" class="form-control"></select>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label for="priceOrder">@Resource.GetKey("Choose_Price_Column_To_Import")</label>
+                            <select id="priceOrder" name="priceOrder" class="form-control"></select>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label for="garageIDOrder">@Resource.GetKey("Choose_GarageID_Column_To_Import")</label>
+                            <select id="garageIDOrder" name="garageIDOrder" class="form-control"></select>
+                        </div>
+@*                        <div class="form-group col-sm-4">
+                            <label for="descriptionOrder">Choose Model Name column</label>
+                            <input type="text" id="descriptionOrder" name="descriptionOrder" class="form-control" />
+                        </div>*@
+@*                        <div class="form-group col-sm-4">
+                            <label for="priceOrder">Choose Price column</label>
+                            <input type="text" id="priceOrder" name="priceOrder" class="form-control" />
+                        </div>*@
+@*                        <div class="form-group col-sm-4">
+                            <label for="garageIDOrder">Choose Garage ID column</label>
+                            <input type="text" id="garageIDOrder" name="garageIDOrder" class="form-control" />
+                        </div>*@
+                    </div>
+                   
+                    <div class="modal-footer">
+                        <button type="submit" value="Create" class="btn btn-success">@Resource.GetKey("Import")</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">@Resource.GetKey("Cancel")</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.draggable').draggable({
+            handle: '.modal-header'
+        });
+        document.getElementById("excelSheetOrder").disabled = true;
+        document.getElementById("priceOrder").disabled = true;
+        document.getElementById("descriptionOrder").disabled = true;
+        document.getElementById("garageIDOrder").disabled = true;
+    });
+
+    $('#importCarModels').keypress(
+        function (event) {
+            if (event.which == '13') {
+                console.log("Enter Pressed");
+                event.preventDefault();
+            }
+        });
+
+    $(document).ready(function () {
+        $('#excelSheetOrder').on('change', function () {
+            importExcelServiceItemsPartial();
+        });
+    });
+
+    $(document).ready(function () {
+        function setSelectedValues() {
+            // Get the selected option elements
+            var garageIDOrderOption = document.getElementById("garageIDOrder").selectedOptions[0];
+            var priceOrderOption = document.getElementById("priceOrder").selectedOptions[0];
+            var descriptionOrderOption = document.getElementById("descriptionOrder").selectedOptions[0];
+
+            // Get the id attributes of the selected options
+            var garageIDOrderValue = garageIDOrderOption ? garageIDOrderOption.id : "";
+            var priceOrderValue = priceOrderOption ? priceOrderOption.id : "";
+            var descriptionOrderValue = descriptionOrderOption ? descriptionOrderOption.id : "";
+
+            console.log("Garage ID Order ID: " + garageIDOrderValue);
+            console.log("Price Order ID: " + priceOrderValue);
+            console.log("Description Order ID: " + descriptionOrderValue);
+
+            // Set the values of the hidden fields
+            document.getElementById("selectedGarageIDOrder").value = garageIDOrderValue;
+            document.getElementById("selectedPriceOrder").value = priceOrderValue;
+            document.getElementById("selectedDescriptionOrder").value = descriptionOrderValue;
+        }
+
+
+        // Call the function when the form is submitted
+        $("form").submit(function () {
+            setSelectedValues();
+        });
+
+        // Call the function initially to set the values if defaults are already set
+        setSelectedValues();
+    });
+
+    $(function () {
+        let fileInput = document.getElementById("inputExcelFile");
+        fileInput.addEventListener("change", function () {
+            //console.log("66");
+            // check if the file is selected or not
+            if (fileInput.files.length == 0) {
+                //console.log("77");
+                document.getElementById("excelSheetOrder").disabled = true;
+                document.getElementById("priceOrder").disabled = true;
+                document.getElementById("descriptionOrder").disabled = true;
+                document.getElementById("garageIDOrder").disabled = true;      
+            } else {
+                //console.log("88");
+                document.getElementById("excelSheetOrder").disabled = false;
+                document.getElementById("priceOrder").disabled = false;
+                document.getElementById("descriptionOrder").disabled = false;
+                document.getElementById("garageIDOrder").disabled = false;
+            }
+        });
+    });
+
+    var file; // Declare file globally
+
+    $(document).ready(function () {
+        $('#inputExcelFile').change(function (evt) {
+            files = evt.target.files;
+            file = files[0];
+            if (files && file) {
+                var reader = new FileReader();
+                reader.onload = function (readerEvt) {
+                    var arrayBuffer = readerEvt.target.result;
+                    var data = new Uint8Array(arrayBuffer);
+                    var workbook = XLSX.read(data, { type: 'array' });
+                    var sheetNames = workbook.SheetNames;
+
+                    $("#excelSheetOrder").empty(); // Clear the select options
+
+                    sheetNames.forEach(function (sheetName, index) {
+                        $("#excelSheetOrder").append($("<option></option>")
+                            .attr("value", index)
+                            .text(sheetName));
+                    });
+
+                    // Populate descriptionOrder select tag with column names from the first sheet
+                    var firstSheet = workbook.Sheets[sheetNames[0]]; // Assuming you want to get the column names from the first sheet
+                    populateDescriptionOrder(firstSheet);
+                };
+                reader.readAsArrayBuffer(file);
+            }
+        });
+
+        $('#excelSheetOrder').change(function () {
+            importExcelServiceItemsPartial();
+        });
+    });
+
+    function importExcelServiceItemsPartial() {
+        var selectedSheetIndex = $("#excelSheetOrder").val();
+        var selectedSheetName = $("#excelSheetOrder option:selected").text();
+
+        console.log("Selected sheet index:", selectedSheetIndex);
+        console.log("Selected sheet name:", selectedSheetName);
+
+        var reader = new FileReader();
+        reader.onload = function (readerEvt) {
+            var arrayBuffer = readerEvt.target.result;
+            var data = new Uint8Array(arrayBuffer);
+            var workbook = XLSX.read(data, { type: 'array' });
+            var sheetNames = workbook.SheetNames;
+
+            var selectedSheet = workbook.Sheets[sheetNames[selectedSheetIndex]];
+            populateDescriptionOrder(selectedSheet);
+        };
+        reader.readAsArrayBuffer(file);
+    }
+
+    function populateDescriptionOrder(sheet) {
+        var range = XLSX.utils.decode_range(sheet['!ref']);
+        var columnNames = [];
+        var columnIDs = {}; // Mapping between column names and their IDs
+        for (var col = range.s.c; col <= range.e.c; col++) {
+            var cell = XLSX.utils.encode_cell({ r: 0, c: col });
+            var columnName = sheet[cell].v;
+            var columnID = col + 1; // Generate ID based on column index
+            columnNames.push(columnName);
+            columnIDs[columnName] = columnID; // Store the mapping
+        }
+        console.log('Column names for the selected sheet:', columnNames);
+        console.log('Column ids for the first sheet:', columnIDs);
+
+        // Clear and populate descriptionOrder select tag with column names
+        $("#descriptionOrder").empty();
+        $("#priceOrder").empty();
+        $("#garageIDOrder").empty();
+        columnNames.forEach(function (columnName) {
+            var columnID = columnIDs[columnName]; // Get the ID from the mapping
+            $("#descriptionOrder").append($("<option value='" + columnID + "'>" + columnName + "</option>"));
+            $("#priceOrder").append($("<option value='" + columnID + "'>" + columnName + "</option>"));
+            $("#garageIDOrder").append($("<option value='" + columnID + "'>" + columnName + "</option>"));
+        });
+    }
+  
+</script>

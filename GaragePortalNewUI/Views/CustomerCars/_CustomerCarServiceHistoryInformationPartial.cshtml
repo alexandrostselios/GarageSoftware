@@ -1,0 +1,175 @@
+﻿@model GaragePortalNewUI.Models.ServiceHistoryWithItemsDTO
+@inject LanguageService Resource
+
+@{
+    ViewData["Title"] = "Information";
+}
+
+<div id="CarServiceHistoryInformation" name="CarServiceHistoryInformation" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog draggable" role="document" >
+        <div class="modal-content" id="modalContentCustomCSS">
+            <div class="modal-header dragable_touch d-block">
+                <h5 class="modal-title">Information<h5>
+@*                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>*@
+            </div>
+            <form method="post" asp-action="QuickCreateUserModelServiceHistory" asp-controller="UserModels" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="GarageID" value="@ViewBag.GarageID" />
+                    <input type="hidden" asp-for="UserModelsID" value="@ViewBag.CarDetailsID" />
+                    <input type="hidden" asp-for="ID" value="@ViewBag.SHID" />
+                    <div class="form-row quickServiceHistory">
+                        <div class="form-group col-sm-3">
+                            <label asp-for="ServiceDate" class="control-label">@Resource.GetKey("Service_Date")</label>
+                            <input id="ServiceDateInfo" class="form-control" disabled />
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <label asp-for="ServiceKilometer" class="control-label">@Resource.GetKey("Service_Kilometer")</label>
+                            <input id="ServiceKilometerInfo" class="form-control" disabled />
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label asp-for="EngineerID" class="control-label">@Resource.GetKey("Service_Engineer")</label>
+                            <br />
+                            <input type="hidden" id="EngineerID" value="@Html.DisplayFor(modelItem => modelItem.EngineerID)">
+                            <select id="ShowEngineers" asp-for="EngineerID" class="form-control" disabled>
+                                @*<option value='0'>--@Resource.GetKey("Select_Engineer")--</option>*@
+                            </select>
+                            <span asp-validation-for="EngineerID" class="text-danger"></span>
+                            <br />
+                        </div>
+                    </div>
+                    <div class="form-group quickServiceHistoryServiceItems">
+                        <label asp-for="ServiceItemID" class="control-label">@Resource.GetKey("List_Of_Service_Items")</label>
+                        <br />       
+                        <input type="hidden" id="ServiceItemIDTest" value="@Html.DisplayFor(modelItem => modelItem.ServiceItemID)">
+                        <select id="ServiceItemID" asp-for="ServiceItemID" class="form-control" multiple disabled>
+                            @*<option value='0'>--@Resource.GetKey("Select_Service_Items")--</option>*@
+                        </select>
+                        <span asp-validation-for="ServiceItemID" class="text-danger"></span>
+                        <br />
+                    </div>
+                    <div class="form-group quickServiceHistoryCommentBox">
+                        <label asp-for="Description" class="control-label">@Resource.GetKey("General_Comment")</label>
+                        <textarea id="GeneralCommentInfo" class="form-control" rows="4" cols="50" disabled></textarea>
+                    </div>
+                    <div class="form-row quickServiceHistoryPrice">
+                        <div class="form-group col-sm-4 ">
+                            <div class="input-icon input-icon-right">
+                                <label asp-for="StartPrice" class="control-label">@Resource.GetKey("Start_Price")</label>
+                                <input id="StartPriceInfo" class="form-control" placeholder="0,00" disabled />
+                                <i>€</i>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-4 ">
+                            <div class="input-icon input-icon-right">
+                                <label asp-for="DiscountPrice" class="control-label">@Resource.GetKey("Discount_Price")</label>&nbsp;&nbsp;
+                                <input type="checkbox" id="percentage" name="percentage" onclick="checkDiscountType(0)" disabled />
+                                <label for="horns">@Resource.GetKey("Price_Percentage")</label>
+                                <input class="form-control" placeholder="0,00" onchange="setFinalPrice()" id="discountPrice" disabled>
+                                <input class="form-control" placeholder="0,00" onchange="setFinalPrice()" id="discountPricePercentage" disabled>
+                                <i id="discountPriceSymbol">€</i>
+                                <i id="discountPricePercentageSymbol">%</i>
+                                <span asp-validation-for="DiscountPrice" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-4 ">
+                            <div class="input-icon input-icon-right">
+                                <label asp-for="FinalPrice" class="control-label">@Resource.GetKey("Final_Price")</label>
+                                <input id="FinalPriceInfo" class="form-control" placeholder="0,00" disabled />
+                                <i>€</i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="PrintServiceHistory()">@Resource.GetKey("Service_Print")</button>
+                        <button type="button" class="btn btn-success" data-dismiss="modal">@Resource.GetKey("ΟΚ")</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+
+    function PrintServiceHistory() {
+        console.log("PrintServiceHistory()");
+        window.location = window.location.origin + '/PdfCreator/CreatePDF?entityType=5&serviceHistoryID=' + document.getElementById("ID").value ;
+    }
+
+
+    $(document).ready(function () {
+        //LoadServiceHistoryItems();
+        $('.draggable').draggable({
+            handle: '.modal-header'
+        });
+
+        $('#ServiceItemID').select2({
+            multiple: true
+        });
+        checkDiscountType(1);
+
+        /* Fill Modal with Data */
+        var serviceURL = '@Resources.SettingsResources.Uri' + '/GetCarServiceHistoryByServiceHistoryID/' + document.getElementById('ID').value;
+        console.log("ServiceURL: " + serviceURL);
+        $.ajax({
+            type: "GET",
+            url: serviceURL,
+            dataType: 'json',
+            success: successFunc,
+            error: errorFunc
+        });
+
+        function successFunc(data, status) {
+            for (i = 0; i < data.length; i++) {
+                console.log(data[i]);
+                if (data[i].serviceItemID !== null) {
+                    if (data[i].serviceItemPrice > 0) {
+                        $("#ServiceItemID").append($("<option value=" + data[i].serviceItemID + " selected='selected'>" + ' ' + data[i].serviceItemID + ') ' + data[i].serviceItemDescription + ' (' + data[i].serviceItemPrice + ' €)' + "</option>"));
+                    } else {
+                        $("#ServiceItemID").append($("<option value=" + data[i].serviceItemID + " selected='selected'>" + ' ' + data[i].serviceItemID + ') ' + data[i].serviceItemDescription + ' (--)' + "</option>"));
+                    }
+                }
+            };
+            document.getElementById('ServiceKilometerInfo').value = data[0].serviceKilometer;
+            document.getElementById('ServiceDateInfo').value = data[0].serviceDate;
+            document.getElementById('GeneralCommentInfo').value = data[0].description;
+            document.getElementById('StartPriceInfo').value = data[0].startPrice;
+            
+            console.log(data[0].isDiscountPercentage);
+            if (data[0].isDiscountPercentage){
+                $("#discountPrice").hide();
+                $("#discountPriceSymbol").hide();
+                $("#discountPricePercentage").show();
+                $("#discountPricePercentageSymbol").show();
+                $("#percentage").prop("checked", true);
+                document.getElementById('discountPricePercentage').value = data[0].discountPercentage;
+                console.log(data[0].discountPricePercentage);
+            }else{
+                document.getElementById('discountPrice').value = data[0].discountPrice;
+            }
+            
+            document.getElementById('FinalPriceInfo').value = data[0].finalPrice;
+            $("#ShowEngineers").append($("<option value=" + data[0].engineerID + " selected='selected'>" + data[0].engineerSurname + " " + data[0].engineerName + "</option>"));
+        }
+
+        function errorFunc() {
+            alert('error');
+        }
+    })
+
+    $('#CarServiceHistoryInformation').keypress(
+        function (event) {
+            if (event.which == '13') {
+                console.log("Enter Pressed");
+                event.preventDefault();
+                $('#CarServiceHistoryInformation').modal('hide');
+            }
+        }
+    );
+</script>

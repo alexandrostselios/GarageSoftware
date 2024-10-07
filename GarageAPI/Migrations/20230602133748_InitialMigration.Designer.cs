@@ -6581,6 +6581,9 @@ namespace GarageAPI.Migrations
                     b.Property<long>("UserID")
                         .HasColumnType("bigint");
 
+                    //b.Property<long>("EngineTypeID")
+                    //    .HasColumnType("bigint");
+
                     b.Property<string>("VIN")
                         .HasColumnType("nvarchar(max)");
 
@@ -6589,6 +6592,8 @@ namespace GarageAPI.Migrations
                     b.HasIndex("ModelManufacturerYearID");
 
                     b.HasIndex("UserID");
+
+                    //b.HasIndex("EngineTypeID");
 
                     b.ToTable("UserModels");
                 });
@@ -6827,9 +6832,17 @@ namespace GarageAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    //b.HasOne("GarageAPI.Models.CarEngineType", "CarEngineType")
+                    //    .WithMany()
+                    //    .HasForeignKey("EngineTypeID")
+                    //    .OnDelete(DeleteBehavior.Cascade)
+                    //    .IsRequired();
+
                     b.Navigation("ModelManufacturerYear");
 
                     b.Navigation("User");
+
+                    //b.Navigation("CarEngineType");
                 });
 #pragma warning restore 612, 618
         }

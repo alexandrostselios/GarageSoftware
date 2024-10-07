@@ -1,4 +1,5 @@
 ﻿using System;
+using GarageAPI.Enum;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -184,10 +185,10 @@ namespace GarageAPI.Migrations
                 name: "UserModels",
                 columns: table => new
                 {
-                    ID = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ID = table.Column<long>(type: "bigint", nullable: false).Annotation("SqlServer:Identity", "1, 1"),
                     UserID = table.Column<long>(type: "bigint", nullable: false),
                     ModelManufacturerYearID = table.Column<long>(type: "bigint", nullable: false),
+                    //EngineTypeID = table.Column<long>(type: "bigint", nullable: false),
                     LicencePlate = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     VIN = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Color = table.Column<long>(type: "bigint", nullable: true),
@@ -209,6 +210,12 @@ namespace GarageAPI.Migrations
                         principalTable: "Users",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.NoAction);
+                    //table.ForeignKey(
+                    //    name: "FK_UserModels_CarEngineType_EngineTypeID",
+                    //    column: x => x.EngineTypeID,
+                    //    principalTable: "CarEngineType",
+                    //    principalColumn: "ID",
+                    //    onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -1512,7 +1519,7 @@ namespace GarageAPI.Migrations
 
             migrationBuilder.InsertData(
                 table: "UserModels",
-                columns: new[] { "ID", "UserID", "ModelManufacturerYearID", "LicencePlate", "VIN", "Color", "Kilometer" },
+                columns: new[] { "ID", "UserID", "ModelManufacturerYearID", "LicencePlate", "VIN", "Color", "Kilometer"},
                 values: new object[,]
                 {
                     {1L, 1L, 56L, "KBB1234", "AFG94025607385960", 101, 156125},
@@ -1521,6 +1528,12 @@ namespace GarageAPI.Migrations
                     {4L, 2L, 5L,"XEZ6532", "KHX94000007259841", 5, 220653},
                     {5L, 2L, 6L, "KBH1452", "JNKCV61E09M303716", 6, 65402},
                     {6L, 3L, 6L, "AHZ1495", "JH4DA9460MS032070", 6, 9563}
+                    //{1L, 1L, 56L, "KBB1234", "AFG94025607385960", 101, 156125, 3L},
+                    //{2L, 1L, 81L, "EYX2536", "VNKKG3D253B048254", 142, 27450, 3L},
+                    //{3L, 1L, 3L,"NIZ1234", "NLHBA51BABZ063524", 4, 88956, 2L},
+                    //{4L, 2L, 5L,"XEZ6532", "KHX94000007259841", 5, 220653, 2L},
+                    //{5L, 2L, 6L, "KBH1452", "JNKCV61E09M303716", 6, 65402, 4L},
+                    //{6L, 3L, 6L, "AHZ1495", "JH4DA9460MS032070", 6, 9563, 8L}
                 });
 
             migrationBuilder.InsertData(
@@ -1656,6 +1669,11 @@ namespace GarageAPI.Migrations
                 name: "IX_UserModels_UserID",
                 table: "UserModels",
                 column: "UserID");
+
+            //migrationBuilder.CreateIndex(
+            //    name: "IX_UserModels_EngineTypeID",
+            //    table: "UserModels",
+            //    column: "EngineTypeID");
         }
 
         /// <inheritdoc />

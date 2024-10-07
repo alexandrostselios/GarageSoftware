@@ -1,0 +1,720 @@
+﻿@model IEnumerable<GaragePortalNewUI.ViewModels.Customer.CustomerViewModel>
+@inject LanguageService Resource
+
+@{
+    ViewData["Title"] = @Resource.GetKey("List_of_Customers");
+}
+
+@if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Admin.ToString() || @ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Employee.ToString())
+{
+    @Html.Partial("~/PartialViews/_SuccessEmailSendPartialView.cshtml")
+    @Html.Partial("~/PartialViews/_FailedEmailSendPartialView.cshtml")
+    @Html.Partial("~/PartialViews/_SuccessUserCreationPartialView.cshtml")
+    @Html.Partial("~/PartialViews/_FailedUserCreationPartialView.cshtml")
+    @Html.Partial("~/PartialViews/_UserColorsExplanationPartialView.cshtml")
+
+    <button class="btn btn-sm btn-primary m-2" id="btnAddCustomer" data-bs-toggle="ajax-modal" data-bs-target="#AddCustomer" data-url="@Url.Action("CreateCustomerPartial")">@Resource.GetKey("Add_New_Customer")</button>
+    <div id="addCustomerDIV"></div>
+    <div id="editCustomerDIV"></div>
+    <div id="addcarServiceHistoryDiv"></div>
+    <div id="sendEmailToCustomer"></div>
+
+    <br>
+    <br>
+    <div id="customersPlaceHolder"></div>
+
+    <table id="customersTable" class="table table-striped" style="display: none">
+        <thead>
+            <tr>
+                <th class="all">
+                    @Resource.GetKey("ID")
+                </th>
+                <th class="all">
+                    @Resource.GetKey("Surname")
+                </th>
+                <th class="all">
+                    @Resource.GetKey("Name")
+                </th>
+                <th class="all">
+                    @Resource.GetKey("Email")
+                </th>
+                <th class="all">
+                    @Resource.GetKey("User_Photo")
+                </th>
+                @*<th class="all">
+                    @Resource.GetKey("Password")
+                </th>*@
+                <th class="all">
+                    @Resource.GetKey("Modified_Date")
+                </th>
+                <th class="all">
+                    @Resource.GetKey("Last_Login_Date")
+                </th>
+@*                <th class="all">
+                    @Resource.GetKey("Enable_Access")
+                </th>*@
+@*                <th class="all">
+                    @Resource.GetKey("Engineer_Speciality")
+                </th>*@
+                <th class="all">
+                    @Resource.GetKey("GarageID")
+                </th>
+                <th class="all">
+                    @Resource.GetKey("Creation_Date")
+                </th>
+@*                <th class="all">
+                    @Resource.GetKey("UserType")
+                </th>*@
+                <th class="all">
+
+                </th>
+                <th class="all">
+
+                </th>
+                <th class="all">
+
+                </th>
+                <th class="all">
+
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+        @*    <td>
+                <button class="actions-btn">Actions</button>
+                <div class="actions-menu">
+                    <ul>
+                        <li>Edit</li>
+                        <li>See Cars</li>
+                    </ul>
+                </div>
+            </td>*@
+        </tbody>
+    </table>
+}
+else
+{
+    <p><center>You are not authorized to access this page</center></p>
+}
+
+
+
+@section scripts{
+
+    <script type="text/javascript">
+
+        /* Start Success Customer Creation Info Pop Up */
+
+        var successMessageInfo = "@Html.Raw(ViewBag.CustomerCreatedInfo)";
+        var successMessage = "@ViewBag.CustomerCreated";
+        
+        if (successMessage == "Successfully") {
+            $(document).ready(function () {
+                $('#successCreatedUserModal').modal('show');
+                $('#successMessageInfoPlaceholder').text(successMessageInfo); // Set the success message
+                $('#successCreatedUserModal').on('shown.bs.modal', function () {
+                    // Get the modal dialog
+                    var modalDialog = $(this).find('.modal-dialog');
+                    // Calculate top margin for centering
+                    var marginTop = ($(window).height() - modalDialog.outerHeight()) / 2;
+                    // Set the top margin
+                    modalDialog.css('margin-top', marginTop);
+                });
+            });
+        }else if (successMessage == "Failed"){
+            $(document).ready(function () {
+                $('#failedCreatedUserModal').modal('show');
+                $('#failedMessageInfoPlaceholder').text(successMessageInfo); // Set the success message
+                $('#failedCreatedUserModal').on('shown.bs.modal', function () {
+                    // Get the modal dialog
+                    var modalDialog = $(this).find('.modal-dialog');
+                    // Calculate top margin for centering
+                    var marginTop = ($(window).height() - modalDialog.outerHeight()) / 2;
+                    // Set the top margin
+                    modalDialog.css('margin-top', marginTop);
+                });
+            });
+        }
+
+        /* End Success Customer Creation Info Pop Up */
+
+        let table; // Declare the table variable outside the scope of the callback function
+        var originalRowColors = [];
+        $(function(){
+            $('#customersTable tbody').empty();
+            $.get('@Url.Action("GetCustomersList", "Customer")', function (data) {
+                // Clear existing rows
+                $('#customersTable tbody').empty();
+                // Iterate through the data and append rows to the table
+                $.each(data, function (index, item) {
+                    var row = '<tr>' +
+                        '<td>' + item.name + '</td>' +
+                        '<td>' + item.surname + '</td>'+
+                        '</tr>';
+                    $('#customersTable tbody').append(row);
+                });
+                //console.log("Before Init");
+                console.log(data);
+                table = $('#customersTable').DataTable({
+                    dom: "<'row'<'col-sm-6'B><'col-sm-6'<'pull-right'lf>>>" +
+                        "<'row'<'col-sm-12'tr>>" +
+                        "<'row'<'col-sm-5'i><'col-sm-1'><'col-sm-6'p>>",
+                    initComplete: function () {
+                        // Add spacing between "Show x entries" and "Search" elements
+                        $('.dataTables_length').css('margin-right', '20px');
+                    },
+                    buttons: [
+                        {
+                            text: '<i class="fa fa-check-square-o"></i>',
+                            className: 'btn btn-success', // Add a custom class to the button
+                            action: function () {
+                                table.rows({ page: 'current' }).select(); // Select visible rows on current page
+                                //table.rows().select();
+                                var selectedRows = table.rows({ selected: true }).nodes(); // Get selected rows
+                                $(selectedRows).css('background-color', '#34baeb'); // Set background color to blue for selected rows
+                            },
+                            init: function (api, node, config) {
+                                $(node).tooltip({
+                                    title: decodeResourceText('@Resource.GetKey("Select_All")'), // Tooltip text
+                                    placement: 'bottom', // Tooltip placement
+                                    trigger: 'hover' // Show tooltip on hover
+                                });
+                            }
+                        },
+                        {
+                            text: '<i class="fa fa-minus-square-o"></i>',
+                            className: 'btn btn-danger',
+                            action: function () {
+                                table.rows({ page: 'current' }).deselect(); // Deselect visible rows on current page
+                                //table.rows().deselect();
+                                var deselectedRows = table.rows().nodes(); // Get all rows
+                                $(deselectedRows).css('background-color', function (index) {
+                                    return originalRowColors[index]; // Restore original background color for each row
+                                });
+                            },
+                            init: function (api, node, config) {
+                                $(node).tooltip({
+                                    title: decodeResourceText('@Resource.GetKey("Unselect_All")'), // Tooltip text
+                                    placement: 'bottom', // Tooltip placement
+                                    trigger: 'hover' // Show tooltip on hover
+                                });
+                            }
+                        },
+                        {
+                            extend: 'excelHtml5',
+                            text: '<i class="fa fa-file-excel-o"></i>',
+                            className: 'btn btn-primary',
+                            exportOptions: {
+                                orthogonal: 'sort',
+                                columns: ':visible:not(.no-export)'
+                            },
+                            customize: function (xlsx) {
+                                var selectedRowCount = table.rows({ selected: true }).count();
+                                console.log("Selected: " + selectedRowCount);
+
+                                if (selectedRowCount === 0) {
+                                    if (!xlsx.xl.worksheets['sheet1.xml'].sheetData) {
+                                        xlsx.xl.worksheets['sheet1.xml'].sheetData = [];
+                                    }
+                                    var messageRow = {
+                                        row: [
+                                            {
+                                                c: [
+                                                    { v: 'No rows selected!', s: { fontId: 2 } }
+                                                ]
+                                            }
+                                        ]
+                                    };
+                                    xlsx.xl.worksheets['sheet1.xml'].sheetProtection = { password: '1234', sheet: true };
+                                    xlsx.xl.worksheets['sheet1.xml'].sheetViews = [{ showGridLines: false }];
+                                    xlsx.xl.worksheets['sheet1.xml'].sheetFormatPr = { defaultRowHeight: 15 };
+                                    xlsx.xl.worksheets['sheet1.xml'].dimension = { ref: "A1:B2" };
+
+                                    // Prepend the message row to the sheetData array
+                                    xlsx.xl.worksheets['sheet1.xml'].sheetData.unshift(messageRow);
+                                }
+                            },
+                            init: function (api, node, config) {
+                                $(node).tooltip({
+                                    title: decodeResourceText('@Resource.GetKey("Export_To_Excel")'), // Tooltip text
+                                    placement: 'bottom', // Tooltip placement
+                                    trigger: 'hover' // Show tooltip on hover
+                                });
+                            }
+                        },
+                        {
+                            extend: 'print',
+                            text: '<i class= "fa fa-print" ></i>',
+                            className: 'btn btn-warning',
+                            exportOptions: {
+                                orthogonal: 'sort',
+                                rows: { selected: true }, // Only export selected rows
+                                columns: ':visible:not(.no-export)'
+                            },
+                            init: function (api, node, config) {
+                                $(node).tooltip({
+                                    title: decodeResourceText('@Resource.GetKey("Print")'), // Tooltip text
+                                    placement: 'bottom', // Tooltip placement
+                                    trigger: 'hover' // Show tooltip on hover
+                                });
+                            }
+                        },
+                        {
+                            extend: 'print',
+                            text: '<i class="fa fa-file-pdf-o"></i>',
+                            className: 'btn btn-dark',
+                            exportOptions: {
+                                orthogonal: 'sort',
+                                rows: { selected: true }, // Only export selected rows
+                                columns: ':visible:not(.no-export)'
+                            },
+                            init: function (api, node, config) {
+                                $(node).tooltip({
+                                    title: decodeResourceText('PDF'), // Tooltip text
+                                    placement: 'bottom', // Tooltip placement
+                                    trigger: 'hover' // Show tooltip on hover
+                                });
+                            },
+                            action: function (e, dt, button, config) {
+                                // Set window location to the download endpoint
+                                window.location.href = '/PdfCreator/CreatePDF?entityType=2';
+                            }
+                        },
+                        {
+                            text: '<i class="fa fa-info-circle"></i>',
+                            //titleAttr: 'Color Explanation',
+                            className: 'btn btn-info',
+                            action: function () {
+                                // Add action here if needed
+                            },
+                            init: function (api, node, config) {
+                                $(node).popover({
+                                    placement: 'top',
+                                    content: $('#colorExplanation').html(),
+                                    html: true,
+                                    trigger: 'hover', // Show popover on hover
+                                    delay: { show: 0, hide: 100 } // Add a small delay to avoid flickering
+                                }).on('shown.bs.popover', function () {
+                                    $('.popover-content').css('font-size', '12px'); // Set font size for popover content
+                                    $('.popover').css('max-width', '200px'); // Set max width for popover
+                                });
+                            }
+                        }
+                    ],
+                    data: data,
+                    columns: [
+                        //{
+                        //data: null,
+                        //    render: function (data, type, row) {
+                        //        return '<div class="dropdown">' +
+                        //            '<button class="btn btn-primary actions-btn" type="button" aria-expanded="false">' + '@Resource.GetKey("Actions_Table")' + '</button>' +
+                        //            '<ul class="dropdown-menu" aria-labelledby="actionsDropdown">' +
+                        //            '<li><a class="dropdown-item actions-edit" href="#" data-id="' + row.id + '"><i class="fa fa-edit" style="color:orange"></i> &nbsp; @Resource.GetKey("Edit")</a></li>' +
+                        //            '<li><a class="dropdown-item actions-see-cars" href="#" data-id="' + row.id + '"><i class="fa fa-car" style="color:black"></i> &nbsp; @Resource.GetKey("List_Of_User_Cars")</a></li>' +
+                        //            '</ul>' +
+                        //            '</div>';               
+                        //    }
+                        //},
+                        { data: 'customerID', "visible": false},
+                        { data: 'customerSurname' },
+                        { data: 'customerName' },
+                        { data: 'customerEmail' },
+                        { data: 'customerPhoto',
+                            render: function (data, type, row) {
+                                var customerPhoto = row.customerPhoto;
+                                if (customerPhoto) {
+                                    return '<img src="data:image/jpg;base64,' + customerPhoto + '"width="40px height="50px">';
+                                } else {
+                                    return ''; // or some placeholder image if userPhoto is null or empty
+                                }
+                            },
+                            "className": "text-center"
+                        },
+                        {
+                            data: 'modifiedDate',
+                            render: function (data, type, row) {
+                                var modifiedDate = row.modifiedDate;
+
+                                if (type === 'display' && modifiedDate) {
+                                    var formattedDate = moment(modifiedDate).format('DD-MM-YYYY');
+                                    return formattedDate;
+                                }
+
+                                // Return the original data for sorting and filtering
+                                return data;
+                            }
+                            //"className": "text-center"
+                        },
+                        { data: 'lastLoginDate',
+                            render: function (data, type, row) {
+                                var lastLoginDate = row.lastLoginDate;
+
+                                if (type === 'display' && lastLoginDate) {
+                                    var formattedDate = moment(lastLoginDate).format('DD-MM-YYYY');
+                                    return formattedDate;
+                                }
+
+                                // Return the original data for sorting and filtering
+                                return data;
+                            },
+                            "className": "text-center"
+                        },
+                        //{ data: 'enableAccess' },
+                        
+                        { data: 'garageID' },
+                        { data: 'creationDate',
+                            render: function (data, type, row) {
+                                var creationDate = row.creationDate;
+
+                                if (type === 'display' && creationDate) {
+                                    var formattedDate = moment(creationDate).format('DD-MM-YYYY');
+                                    return formattedDate;
+                                }
+
+                                // Return the original data for sorting and filtering
+                                return data;
+                            }
+                            //"className": "text-center"
+                        },
+                        //{ data: 'userType'},
+                        {
+                        data: null,
+                        render: function (data, type, row, meta) {
+                            var enableAccess = row.enableAccess; // Get the value of enableAccess from the row data
+                            var customerID = row.customerId;
+                            var url = "@Url.Action("ViewCustomerCars", "UserModels")" + '/?id=' + customerID;
+                            var buttonHtml = '<div class="btn-group" role="group">';
+
+                            buttonHtml += '<a href="#" class="btn btn-view" title="@Resource.GetKey("List_Of_User_Cars")" data-id="' + customerID + '"><i class="fa fa-car" style="color:black"></i></a>';
+                            buttonHtml += '<a href="#" class="btn btn-email" title="@Resource.GetKey("Send_Email")" data-id="' + customerID + '" data-email="' + row.email + '" ><i class="fa fa-envelope" style="color:#0366d6"></i></a>';
+                                buttonHtml += '<a href="#" class="btn btn-edit" title="@Resource.GetKey("Edit")" id="btnEditCustomer" data-id="' + customerID + '" ><i class="fas fa-user-edit" style="color:red"></i></a>';
+
+                            if (enableAccess === 3) {
+                                buttonHtml += '<a href="#" class="btn btn-add" data-disabled="true" title="@Resource.GetKey("Add_Service_History")" id="btnAddCarServiceHistory" data-id="" >';
+                                buttonHtml += '<i class="fa fa-wrench" style="color:green"></i></a>';
+                            } else {
+                                buttonHtml += '<a href="#" class="btn btn-add" title="@Resource.GetKey("Add_Service_History")" id="btnAddCarServiceHistory" data-id="' + customerID + '" >';
+                                buttonHtml += '<i class="fa fa-wrench" style="color:green"></i>';
+                                buttonHtml += '<i class="fa fa-ban" style="color:red; visibility: hidden;"></i></a>';
+                            }
+                            buttonHtml += '</div>';
+                            return buttonHtml;
+                        },
+                            "width": "150px"
+                            //"className": "text-center"
+                        },
+                        {
+                            data: null,
+                            render: function (data, type, row) {
+                                return '<input type="checkbox">';
+                            }
+                        },
+                        {
+                            data: null,
+                            "render": function (data, type, row, meta) {
+                                return null; // This will display nothing in the column
+                            }
+                        },
+                        {
+                            data: null,
+                            "render": function (data, type, row, meta) {
+                                return null; // This will display nothing in the column
+                            }
+                        }
+                    ],
+                    select: {style: 'multi'},
+                    "columnDefs": [
+                        {
+                            "targets": [0,7,10],
+                            "visible": false
+                        }
+                        ,{
+                            "targets": [0, 3, 4, 7, 9, 10, 11, 12],
+                            "orderable": false
+                        }
+                        //,
+                        //{
+                        //    "targets": [9,10,11,12],
+                        //    "className": 'buttons-cell'
+                        //}
+                    ],
+                    "rowCallback": function (row, data) {
+                        var enableAccess = data.enableAccess;
+                        console.log("Enable Access: " + enableAccess);
+                        if (enableAccess === 2) {
+                            //console.log("2");
+                            $(row).css('background-color', '#fcba03');
+                        } else if (enableAccess === 3) {
+                            // console.log("3");
+                            $(row).css('background-color', '#aca8b3'); //#eb6534
+                            //disable service icon btnAddCarServiceHistory
+                        } else{
+                            //console.log("Other");
+                            $(row).css('background-color', '#FAFCFE');
+                        }
+                        originalRowColors.push($(row).css('background-color'));
+
+                        $('td', row).css('vertical-align', 'middle'); // For vertical middle allignment
+                    }, 
+                    "language": {
+                        "lengthMenu": "@Resource.GetKey("Show_DataTable") _MENU_ @Resource.GetKey("Entries_Per_Page")",
+                        "zeroRecords": "@Resource.GetKey("No_Matching_Records_Found_DataTable")",
+                        "info": "@Resource.GetKey("Show_DataTable") _START_ @Resource.GetKey("To_DataTable") _END_ @Resource.GetKey("Of_DataTable") _TOTAL_ @Resource.GetKey("Entries_DataTable")",
+                        "infoEmpty": "@Resource.GetKey("Showing_Empty_DataTable")",
+                        "infoFiltered": "(@Resource.GetKey("Filtered_From_DataTable") _MAX_ @Resource.GetKey("Total_DataTable") @Resource.GetKey("Entries_DataTable"))",
+                        "search": "@Resource.GetKey("Search"):",
+                        "select": {
+                            rows: {
+                                _: '%d @Resource.GetKey("Rows_Selected")',
+                                0: '',
+                                1: '@Resource.GetKey("One_Row_Selected")'
+                            }
+                        },
+                        "paginate": {
+                            "first": "First",
+                            "last": "Last",
+                            "next": "@Resource.GetKey("Next_DataTable")",
+                            "previous": "@Resource.GetKey("Previous_DataTable")"
+                        }
+                    }
+                });
+
+                //console.log("After Init");
+                $('#customersTable').show();
+                // Listen for row selection event
+                $('#customersTable tbody').on('click', 'tr', function () {
+                    // Toggle selected class
+                    $(this).toggleClass('selected');
+                    var rowIndex = $(this).index(); // Get the index of the clicked row
+                    if ($(this).hasClass('selected')) {
+                        $(this).css('background-color', '#34baeb');
+                    } else {
+                        $(this).css('background-color', originalRowColors[rowIndex]);
+                    }
+                });
+            });
+        });
+
+        $(document).ready(function () {
+            // Show the ban icon and set it as the cursor on hover for disabled buttons
+            $(document).on('mouseenter', '.btn-add[data-disabled="true"]', function () {
+                $(this).find('.fa-ban').css('visibility', 'visible');
+                $(this).css('cursor', 'url("/images/ban.png"), auto');
+            });
+
+            // Hide the ban icon and revert to default cursor when mouse leaves the disabled button
+            $(document).on('mouseleave', '.btn-add[data-disabled="true"]', function () {
+                $(this).find('.fa-ban').css('visibility', 'hidden');
+                $(this).css('cursor', 'auto');
+            });
+        });
+
+        // Handle View Customer Cars button click
+        $('#customersTable tbody').on('click', 'a.btn-view', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            //var id = $(this).data('customerID');
+            var rowData = table.row($(this).closest('tr')).data();
+            var id = rowData.customerID;
+            console.log("ID: "+id);
+            // Fetch data from API
+            var apiURL = '@Resources.SettingsResources.Uri';
+            $.ajax({
+                url: apiURL + '/GetCustomerCarsByCustomerID/' + @ViewBag.GarageID + '/' + id, // Replace with your API endpoint
+                method: 'GET',
+                success: function (data) {
+                    // Encode data as Base64 to ensure safe transmission in URL
+                    localStorage.setItem('customerCarsData', JSON.stringify(data));
+                    // Redirect to the destination page
+                    var url = "@Url.Action("ViewCustomerCars", "CustomerCars")" + '/?id=' + id;
+                    window.location.href = url;
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching data:', error);
+                    // Handle error if needed
+                }
+            });
+        });
+
+        // Handle Actions View Customer Cars button click
+        $('#customersTable tbody').on('click', '.actions-see-cars', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var id = $(this).data('id');
+            // Fetch data from API
+            var apiURL = '@Resources.SettingsResources.Uri';
+            $.ajax({
+                url: apiURL + '/GetCustomerCarsByCustomerID/' + id, // Replace with your API endpoint
+                method: 'GET',
+                success: function (data) {
+                    // Encode data as Base64 to ensure safe transmission in URL
+                    localStorage.setItem('customerCarsData', JSON.stringify(data));
+                    // Redirect to the destination page
+                    var url = "@Url.Action("ViewCustomerCars", "UserModels")" + '/?id=' + id;
+                    window.location.href = url;
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching data:', error);
+                    // Handle error if needed
+                }
+            });
+        });
+        
+        // Handle email button click
+        $('#customersTable tbody').on('click', 'a.btn-email', function (e) {
+            e.preventDefault(); // Prevent the default link behavior (navigating away)
+            e.stopPropagation();
+            var rowData = $('#customersTable').DataTable().row($(this).closest('tr')).data();
+            var id = rowData.customerID;
+            var email = $(this).data('email');
+            var url = "@Url.Action("SendEmailToUser", "Email")" + '/?id=' + id + '&usertype=1'; //'&email'= + email;
+            // Load partial view into the modal body
+            $.get(url, function (response) {
+                $('#sendEmailToCustomer').html(response);
+                $('#sendEmailToCustomer').find('.modal').modal('show');
+            });
+        });
+
+        // Handle edit button click
+        $('#customersTable tbody').on('click', 'a.btn-edit', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            // Get the DataTables row associated with the clicked edit button
+            var rowData = $('#customersTable').DataTable().row($(this).closest('tr')).data();
+            // Retrieve the customerID value from the row data
+            var id = rowData.customerID;
+            var url = "@Url.Action("EditCustomerPartial", "Customer")" + '/?id=' + id + '&&garageID=' + @ViewBag.GarageID;
+            // Load partial view into the container
+            $.get(url, function (response) {
+                $('#editCustomerDIV').html(response);
+                $('#editCustomerDIV').find('.modal').modal('show');
+            });
+        });
+
+        // Handle Actions create service history button click
+        $('#customersTable tbody').on('click', 'a.btn-add', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if ($(this).attr('data-disabled') !== 'true') {
+                console.log("test test");
+                // Get the DataTables row associated with the clicked edit button
+                var rowData = $('#customersTable').DataTable().row($(this).closest('tr')).data();
+                // Retrieve the customerID value from the row data
+                var id = rowData.customerID;
+                var url = "@Url.Action("QuickCreateUserModelServiceHistoryPartial", "CustomerCars")" + '/?customerID=' + id;
+                // Load partial view into the container
+                $.get(url, function (response) {
+                    $('#addcarServiceHistoryDiv').html(response);
+                    $('#addcarServiceHistoryDiv').find('.modal').modal('show');
+                });
+            }
+        });
+
+        // Handle Select All
+        function selectAll() {
+            // Check all checkboxes
+            $('#customersTable tbody input[type="checkbox"]').prop('checked', true);
+
+            // Add selected class and change background color to blue
+            $('#customersTable tbody tr').addClass('selected-row').css('background-color', '#326da8');
+        }
+
+        // Handle Diselect All
+        function deselectAll() {
+            $('#customersTable tbody input[type="checkbox"]').prop('checked', false);
+            // Remove selected class and revert background color
+            $('#customersTable tbody tr').removeClass('selected-row').each(function () {
+                var enableAccessIndex = 5; // 7th column index (zero-based)
+                var enableAccess = $(this).find('td:eq(' + enableAccessIndex + ')').text();
+                var conditionB = true; // Sample condition, replace it with your actual condition
+                var color = (enableAccess === "1" && conditionB) ? '#FAFCFE' : (enableAccess === "2" ? '#eb6534' : 'red');
+                $(this).css('background-color', color);
+            });
+        }
+
+        $(function () {
+            var addCustomerDIVElement = $('#addCustomerDIV');
+
+            $('button[data-bs-toggle="ajax-modal"]').click(function (event) {
+                var url = $(this).data('url');
+                $.get(url).done(function (data) {
+                    addCustomerDIVElement.html(data);
+                    addCustomerDIVElement.find('.modal').modal('show');
+                })
+            })
+
+            //Save Add Makeform data
+            // Event listener for form submission within the modal
+            addCustomerDIVElement.on('submit', 'form', function (event) {
+                event.preventDefault(); // Prevent default form submission
+
+                var form = $(this);
+                var actionUrl = form.attr("action");
+                var sendData = form.serialize();
+
+                $.post(actionUrl, sendData).done(function (data) {
+                    // Replace modal content with response
+                    addCustomerDIVElement.html(data);
+
+                    // Check if validation errors exist
+                    if (addCustomerDIVElement.find('.modal').find('.text-danger').length > 0) {
+                        // If validation errors exist, keep the modal open
+                        addCustomerDIVElement.find('.modal').modal('show');
+                    } else {
+                        // If no validation errors, hide the modal
+                        addCustomerDIVElement.find('.modal').modal('hide');
+                        // Reload the page
+                        location.reload(true);
+                    }
+                });
+            });
+
+            // Event listener for modal show event
+            addCustomerDIVElement.on('show.bs.modal', '.modal', function () {
+                // Remove all modal backdrops
+                $('.modal-backdrop').remove();
+            });
+        })
+
+        var message = "@ViewBag.SuccessMessage";
+        if (message == "Successfully") {
+            $(document).ready(function () {
+                $('#successEmailSendModal').modal('show');
+                $('#successEmailSendModal').on('shown.bs.modal', function () {
+                    // Get the modal dialog
+                    var modalDialog = $(this).find('.modal-dialog');
+                    // Calculate top margin for centering
+                    var marginTop = ($(window).height() - modalDialog.outerHeight()) / 2;
+                    // Set the top margin
+                    modalDialog.css('margin-top', marginTop);
+                });
+            });
+        } else if (message == "Failed") {
+            $(document).ready(function () {
+                $('#failedEmailSendModal').modal('show');
+                $('#failedEmailSendModal').on('shown.bs.modal', function () {
+                    // Get the modal dialog
+                    var modalDialog = $(this).find('.modal-dialog');
+                    // Calculate top margin for centering
+                    var marginTop = ($(window).height() - modalDialog.outerHeight()) / 2;
+                    // Set the top margin
+                    modalDialog.css('margin-top', marginTop);
+                });
+            });
+        }
+ 
+        function SetViewBag() {
+            $.ajax({
+                type: "POST",
+                url: '/Users/SetViewBag',
+                data: '{ value: null}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "text",
+                success: function (r) {
+
+                }
+            });
+        }
+    </script>
+}

@@ -1,159 +1,162 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GarageAPI.Data;
-using GarageAPI.Models;
+using GarageAPI.Models.CustomerCars;
+using GarageAPI.Models.User.Customers;
+using GarageAPI.Enum;
 
 namespace GarageAPI.Controllers
 {
+    [ApiController]
     public class CustomerCarsController : Controller
     {
-        private readonly GarageAPIDbContext _context;
+        private readonly GarageAPIDbContext dbContext;
 
         public CustomerCarsController(GarageAPIDbContext context)
         {
-            _context = context;
+            dbContext = context;
         }
 
-        // GET: CustomerCars
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        [Route("api/GetUserModels/{garageID:long}")]
+        public async Task<IActionResult> GetUserModels(long garageID)
         {
-              return View(await _context.CustomerCars.ToListAsync());
-        }
-
-        // GET: CustomerCars/Details/5
-        public async Task<IActionResult> Details(long? id)
-        {
-            if (id == null || _context.CustomerCars == null)
-            {
-                return NotFound();
-            }
-
-            var customerCars = await _context.CustomerCars
-                .FirstOrDefaultAsync(m => m.id == id);
-            if (customerCars == null)
-            {
-                return NotFound();
-            }
-
-            return View(customerCars);
-        }
-
-        // GET: CustomerCars/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: CustomerCars/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,UserID,ManufacturerDescription,ModelID,ModelDescription,ModelYear,LicencePlate,VIN,Color,Kilometer")] CustomerCars customerCars)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(customerCars);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(customerCars);
-        }
-
-        // GET: CustomerCars/Edit/5
-        public async Task<IActionResult> Edit(long? id)
-        {
-            if (id == null || _context.CustomerCars == null)
-            {
-                return NotFound();
-            }
-
-            var customerCars = await _context.CustomerCars.FindAsync(id);
-            if (customerCars == null)
-            {
-                return NotFound();
-            }
-            return View(customerCars);
-        }
-
-        // POST: CustomerCars/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("id,UserID,ManufacturerDescription,ModelID,ModelDescription,ModelYear,LicencePlate,VIN,Color,Kilometer")] CustomerCars customerCars)
-        {
-            if (id != customerCars.id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
+            // Fetch customer details
+            var customerDetails = await dbContext.Customer
+                .Where(c => c.GarageID == garageID)
+                .Select(c => new
                 {
-                    _context.Update(customerCars);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
+                    c.CustomerID,
+                    c.CustomerName,
+                    c.CustomerSurname
+                })
+                .ToListAsync();
+
+            if (customerDetails == null || !customerDetails.Any())
+            {
+                // Handle if no customer details found
+                return NotFound("No customer details found for the specified garage.");
+            }
+
+            // Fetch customer cars for the specified garage
+            var customerCars = await dbContext.CustomerCars
+                .Where(cc => cc.GarageID == garageID)
+                .Include(cc => cc.Customer)
+                .Include(cc => cc.ModelManufacturerYear.CarManufacturer)
+                .Include(cc => cc.ModelManufacturerYear.CarModel)
+                .Include(cc => cc.EngineType)
+                .ToListAsync();
+
+            // Group customer cars by customer
+            var groupedCustomerCars = customerCars
+                .GroupBy(cc => cc.Customer)
+                .Select(group => new
                 {
-                    if (!CustomerCarsExists(customerCars.id))
+                    CustomerID = group.Key.CustomerID,
+                    CustomerName = group.Key.CustomerName,
+                    CustomerSurname = group.Key.CustomerSurname,
+                    Cars = group.Select(cc => new
                     {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(customerCars);
+                        cc.ID,
+                        ManufacturerName = cc.ModelManufacturerYear.CarManufacturer.ManufacturerName,
+                        ModelName = cc.ModelManufacturerYear.CarModel.ModelName,
+                        EngineType = cc.EngineType.EngineType,
+                        cc.LicencePlate,
+                        cc.VIN,
+                        cc.Color,
+                        cc.Kilometer,
+                        cc.CarImage,
+                        cc.GarageID
+                    }).ToList()
+                }).ToList();
+
+            return Ok(groupedCustomerCars);
         }
 
-        // GET: CustomerCars/Delete/5
-        public async Task<IActionResult> Delete(long? id)
+        //return Ok(await dbContext.CustomerCars.ToListAsync());
+
+        [HttpGet]
+        [Route("api/GetCustomerCarsByCustomerID/{garageID:long}/{customerID:long}")]
+        public async Task<IActionResult> GetCustomerCarsByCustomerID([FromRoute] long garageID, long customerID)
         {
-            if (id == null || _context.CustomerCars == null)
+            string StoredProc = "exec GetCustomerCars @CustomerID = " + customerID;
+            List<CustomerCarDTO> customerCars = await dbContext.CustomerCarDTO.FromSqlRaw(StoredProc).ToListAsync();
+            //List<OutputsController> outt = new OutputsController(dbContext).Getoutput();
+
+            if (customerCars == null || customerCars.Count == 0)
+            {
+                return NotFound("No cars found for the specified customer ID.");
+            }
+            return Ok(customerCars);
+        }
+
+        [HttpGet]
+        [Route("api/GetCustomerCarByCarID/{carID:long}")]
+        public async Task<IActionResult> GetCustomerCarByCarID([FromRoute] long carID)
+        {
+            string StoredProc = "exec GetCustomerCar @CustomerCarID = " + carID;
+            List<CustomerCarDTO> userModelCar = await dbContext.CustomerCarDTO.FromSqlRaw(StoredProc).ToListAsync();
+
+            if (userModelCar == null)
             {
                 return NotFound();
             }
-
-            var customerCars = await _context.CustomerCars
-                .FirstOrDefaultAsync(m => m.id == id);
-            if (customerCars == null)
-            {
-                return NotFound();
-            }
-
-            return View(customerCars);
+            return Ok(userModelCar);
         }
 
-        // POST: CustomerCars/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(long id)
+        [HttpPost]
+        [Route("api/AddCustomerCar")]
+        public async Task<IActionResult> AddCustomerCar(AddCustomerCarRequest addCustomerCarRequest)
         {
-            if (_context.CustomerCars == null)
+            //var temp = dbContext.CarModelManufacturerYear.Where(x => x.CarManufacturer.ID == addUserModelRequest.ModelManufacturer && x.CarModel.ID == addUserModelRequest.Model && x.CarModelYear.ID == addUserModelRequest.ModelYear);
+           
+            var userModel = new CustomerCar()
             {
-                return Problem("Entity set 'GarageAPIDbContext.CustomerCars'  is null.");
-            }
-            var customerCars = await _context.CustomerCars.FindAsync(id);
-            if (customerCars != null)
-            {
-                _context.CustomerCars.Remove(customerCars);
-            }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+                Customer = await dbContext.Customer.FindAsync(addCustomerCarRequest.CustomerID),
+                ModelManufacturerYear = dbContext.CarModelManufacturerYear.FirstOrDefault(x => x.CarManufacturer.ID == addCustomerCarRequest.ModelManufacturer 
+                        && x.CarModel.ID == addCustomerCarRequest.Model
+                        && x.CarModelYear.ID == addCustomerCarRequest.ModelYear),
+                LicencePlate = addCustomerCarRequest.LicencePlate,
+                VIN = addCustomerCarRequest.VIN,
+                Color = addCustomerCarRequest.Color,
+                Kilometer = addCustomerCarRequest.Kilometer,
+                CarImage = addCustomerCarRequest.CarImage,
+                EngineType = await dbContext.CarEngineType.FindAsync(addCustomerCarRequest.EngineTypeID)
+            };
+            await dbContext.CustomerCars.AddAsync(userModel);
+            await dbContext.SaveChangesAsync();
+
+            return Ok(userModel);
         }
 
-        private bool CustomerCarsExists(long id)
+        [HttpPut]
+        [Route("api/UpdateCustomerCar/{id:long}")]
+        public async Task<IActionResult> UpdateCustomerCar([FromRoute] long id, UpdateCustomerCarRequest updateUserModelRequest)
         {
-          return _context.CustomerCars.Any(e => e.id == id);
+            var userModel = await dbContext.CustomerCars.FindAsync(id);
+            if (userModel != null)
+            {
+                userModel.Color = updateUserModelRequest.Color;
+                userModel.CarImage = updateUserModelRequest.CarImage;
+                await dbContext.SaveChangesAsync();
+                return Ok(userModel);
+            }
+            return Ok(userModel);
+        }
+
+        [HttpDelete]
+        [Route("api/DeleteUserModel/{id:long}")]
+        public async Task<IActionResult> DeleteUserModel([FromRoute] long id)
+        {
+            var serviceHistoryHelper = await new ServiceHistoryController(this.dbContext).DeleteServiceHistoryByUserModelID(id);
+            var userModel = await dbContext.CustomerCars.FindAsync(id);
+            if (userModel != null)
+            {
+                dbContext.Remove(userModel);
+                await dbContext.SaveChangesAsync();
+                return Ok(userModel);
+            }
+            return Ok();
         }
     }
 }

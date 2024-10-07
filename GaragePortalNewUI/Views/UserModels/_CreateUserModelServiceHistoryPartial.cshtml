@@ -14,7 +14,7 @@
             <form method="post" asp-action="CreateUserModelServiceHistory" asp-controller="UserModels" enctype="multipart/form-data">
                 <div class="modal-body">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" asp-for="UserModelsID" value="@ViewBag.CarDetailsID" />
+                    <input type="hidden" asp-for="CustomerCarID" value="@ViewBag.CarDetailsID" />
                     <input type="hidden" asp-for="GarageID" value="@ViewBag.GarageID" />
                     <div class="form-row ServiceHistory">
                         <div class="form-group col-sm-4">

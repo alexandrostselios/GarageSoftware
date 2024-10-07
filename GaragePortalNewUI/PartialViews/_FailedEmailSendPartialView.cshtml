@@ -1,0 +1,28 @@
+﻿@using GaragePortalNewUI.Models;
+@inject LanguageService Resource
+
+<div class="modal fade" id="failedEmailSendModal" tabindex="-1" role="dialog" aria-labelledby="failedEmailSendModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <center>
+                    <p>@Resource.GetKey("Your_email_did_not_send.")</p>
+                    <p>@Resource.GetKey("Please_try_again_later.")</p>
+                </center>
+                <center><button type="button" class="btn btn-primary" data-dismiss="modal" onclick="SetViewBag()">OK</button></center>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<script>
+    $(document).ready(function () {
+        $('.draggable').draggable({
+            handle: '.modal-header'
+        });
+    });
+</script>*@
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

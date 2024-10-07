@@ -48,7 +48,11 @@ namespace GaragePortalNewUI.Controllers
 
             var file = _converter.Convert(pdf);
 
-            if (entityType == 2)
+            if (entityType == 1)
+            {
+                return File(file, "application/pdf", "Employees " + DateTime.Now.Day + "-" + DateTime.Now.Month + "-" + DateTime.Now.Year + "-" + DateTime.Now.Hour + "-" + DateTime.Now.Minute + "-" + DateTime.Now.Millisecond + ".pdf");
+            }
+            else if (entityType == 2)
             {
                 return File(file, "application/pdf", "Customers " + DateTime.Now.Day + "-" + DateTime.Now.Month + "-" + DateTime.Now.Year + "-" + DateTime.Now.Hour + "-" + DateTime.Now.Minute + "-" + DateTime.Now.Millisecond + ".pdf");
             }

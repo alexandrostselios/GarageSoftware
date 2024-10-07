@@ -4,6 +4,11 @@ using GarageAPI.Data;
 using GarageAPI.Enum;
 using GarageAPI.Models.User;
 using GarageAPI.Models;
+using Microsoft.Data.SqlClient;
+using GarageAPI.Models.User.Customers;
+using GarageAPI.ViewModels;
+using GarageAPI.Models.EngineerSpeciality;
+using GarageAPI.Models.User.Engineer;
 
 namespace GarageAPI.Controllers
 {
@@ -27,52 +32,101 @@ namespace GarageAPI.Controllers
         }
 
         [HttpGet]
-        [Route("api/GetCustomers/{garageID:long}")]
-        public async Task<IActionResult> GetCustomers(long garageID)
+        [Route("api/GetUserByEmailAndPassword/{email}/{password}/{garageID}")]
+        public async Task<IActionResult> GetUserByEmailAndPassword([FromRoute] string email, string password, long garageID)
         {
-            return Ok(await dbContext.Users.Where(c => (c.UserType == Enum.UserType.Customer || c.UserType == Enum.UserType.Admin) && c.GarageID == garageID).ToListAsync());
-        }
+            //var loginUser = await dbContext.Users
+            //    .Join(dbContext.Customer,
+            //        user => user.ID,
+            //        customer => customer.UserID,
+            //        (user, customer) => new { User = user, Customer = customer })
+            //    .Where(joined => joined.Customer.GarageID == garageID &&
+            //                     joined.User.Email == email &&
+            //                     joined.User.Password == password)
+            //    .Select(joined => new LoginViewModel
+            //    {
+            //        ID = joined.User.ID, // Assuming ID is the user identifier
+            //        Email = joined.User.Email,
+            //        Password = joined.User.Password, // Use caution with passwords
+            //        Name = joined.Customer.CustomerName,
+            //        Surname = joined.Customer.CustomerSurname,
+            //        UserType = joined.User.UserType,
+            //        GarageID = joined.Customer.GarageID
+            //    })
+            //    .FirstOrDefaultAsync();
 
-        [HttpGet]
-        [Route("api/GetCustomerByID/{id:long}/{garageID:long}")]
-        public async Task<IActionResult> GetCustomerByID([FromRoute] long id, long garageID)
-        {
-            var user = await dbContext.Users.FirstOrDefaultAsync(x => x.ID == id && x.GarageID == garageID);
-            if (user == null)
+            var loginUser = await dbContext.Users
+                .Where(user => user.Email == email && user.Password == password)
+                .Select(user => new
+                {
+                    User = user,
+                    Customer = user.UserType == UserType.Customer ?
+                        dbContext.Customer.FirstOrDefault(customer => customer.UserID == user.ID && customer.GarageID == garageID) :
+                        null,
+                    Employee = (user.UserType == UserType.Admin || user.UserType == UserType.Employee) ?
+                        dbContext.Employee.FirstOrDefault(employee => employee.UserID == user.ID) :
+                        null
+                })
+                .FirstOrDefaultAsync();
+
+            //var user = await dbContext.Users.FirstOrDefaultAsync(c => c.Email == email && c.Password == password);
+            if (loginUser == null)
             {
                 return NotFound();
             }
-            return Ok(user);
-        }
+            LoginViewModel result;
 
-        [HttpGet]
-        [Route("api/GetUserByEmailAndPassword/{email}/{password}")]
-        public async Task<IActionResult> GetUserByEmailAndPassword([FromRoute] string email, string password)
-        {
-            var user = await dbContext.Users.FirstOrDefaultAsync(c => c.Email == email && c.Password == password);
-            if (user == null)
+            if (loginUser.User.UserType == UserType.Customer && loginUser.Customer != null)
             {
-                return NotFound();
+                result = new LoginViewModel
+                {
+                    ID = loginUser.User.ID,
+                    Email = loginUser.User.Email,
+                    Password = loginUser.User.Password, // Use caution with passwords
+                    Name = loginUser.Customer.CustomerName,
+                    Surname = loginUser.Customer.CustomerSurname,
+                    UserType = loginUser.User.UserType,
+                    GarageID = loginUser.Customer.GarageID
+                };
+                return Ok(result);
             }
-            return Ok(user);
+            else if ((loginUser.User.UserType == UserType.Admin || loginUser.User.UserType == UserType.Employee) && loginUser.Employee != null)
+            {
+                result = new LoginViewModel
+                {
+                    ID = loginUser.User.ID,
+                    Email = loginUser.User.Email,
+                    Password = loginUser.User.Password, // Use caution with passwords
+                    Name = loginUser.Employee.EmployeeName, // Adjust according to your Employee model
+                    Surname = loginUser.Employee.EmployeeSurname, // Adjust according to your Employee model
+                    UserType = loginUser.User.UserType,
+                    GarageID = loginUser.Employee.GarageID // Adjust if needed
+                };
+                return Ok(result);
+            }
+            return null;
         }
 
         [HttpGet]
-        [Route("api/GetLogin/{email}/{password}")] //Add later /{garageID}
-        public async Task<IActionResult> GetLogin([FromRoute] string email, string password)
+        [Route("api/GetLogin/{email}/{password}/{garageID}")] //Add later /{garageID}
+        public async Task<IActionResult> GetLogin([FromRoute] string email, string password, long garageID)
         {
-            Users loginuser = await dbContext.Users.FirstOrDefaultAsync(c => c.Email == email && c.Password == password);
-            if (loginuser == null)
+            var loginUser = await dbContext.Users
+                .Where(joined => joined.Email == email &&
+                                    joined.Password == password)
+                .FirstOrDefaultAsync();
+
+            if (loginUser == null)
             {
                 return new ContentResult() { Content = "No such user or wrong email", StatusCode = (int)ResponseCode.NoUserFound };
             }
             else
             {
-                if (loginuser.Password == password)
+                if (loginUser.Password == password)
                 {
-                    if (loginuser.EnableAccess == EnableAccess.Enable)
+                    if (loginUser.EnableAccess == EnableAccess.Enable)
                     {
-                        return new ContentResult() { Content = "Login", StatusCode = (int) ResponseCode.Success };
+                        return new ContentResult() { Content = "Login", StatusCode = (int)ResponseCode.Success };
                     }
                     else
                     {
@@ -87,170 +141,131 @@ namespace GarageAPI.Controllers
         }
 
         [HttpGet]
-        [Route("api/GetEngineers/{garageID:long}")]
-        public async Task<IActionResult> GetEngineers(long garageID)
+        [Route("api/GetUserByID/{userID:long}/{userType:long}/{garageID:long}")]
+        public async Task<IActionResult> GetUserByID([FromRoute] long userID,long userType ,long garageID)
         {
-            string StoredProc = "exec GetEngineers @GarageID = " + garageID;
-            List<UsersDTO> carEngineers = await dbContext.UsersDTO.FromSqlRaw(StoredProc).ToListAsync();
+            UserViewModel userViewModel;
 
-            if (carEngineers == null)
+            if (userType == 1 || userType == 4) //Admin
             {
-                return NotFound();
+                var query = from employee in dbContext.Employee
+                            join user in dbContext.Users
+                            on employee.UserID equals user.ID
+                            where  employee.GarageID == garageID
+                            select new UserViewModel
+                            {
+                                ID = employee.EmployeeID,
+                                Surname = employee.EmployeeSurname,
+                                Name = employee.EmployeeName,
+                                Email = employee.EmployeeEmail,
+                                CreationDate = employee.CreationDate,
+                                ModifiedDate = employee.ModifiedDate,
+                                GarageID = employee.GarageID,
+                                UserID = employee.UserID,
+                                HomePhone = employee.EmployeeHomePhone,
+                                MobilePhone = employee.EmployeeMobilePhone,
+                                Comment = employee.EmployeeComment,
+                                // Populate additional properties from Users table
+                                EnableAccess = (long)user.EnableAccess,
+                                LastLoginDate = user.LastLoginDate,
+                                Photo = employee.EmployeePhoto
+                            };
+
+                userViewModel = await query.FirstOrDefaultAsync();
             }
-            return Ok(carEngineers);
-        }
-
-        [HttpGet]
-        [Route("api/GetEngineerByID/{id:long}/{garageID:long}")]
-        public async Task<IActionResult> GetEngineerByID([FromRoute] long id, long garageID)
-        {
-            string StoredProc = "exec GetEngineerByID @EngineerID = " + id + ", @GarageID = " + garageID;
-            //var engineer = await dbContext.Users.FindAsync(id);
-            List<UsersDTO> engineer = await dbContext.UsersDTO.FromSqlRaw(StoredProc).ToListAsync();
-            if (engineer == null)
+            else if (userType == 2) //User
             {
-                return NotFound();
-            }
-            return Ok(engineer.First());
-        }
+                var query = from customer in dbContext.Customer
+                            join user in dbContext.Users
+                            on customer.UserID equals user.ID
+                            where customer.CustomerID == userID && customer.GarageID == garageID
+                            select new UserViewModel
+                            {
+                                ID = customer.CustomerID,
+                                Surname = customer.CustomerSurname,
+                                Name = customer.CustomerName,
+                                Email = customer.CustomerEmail,
+                                CreationDate = customer.CreationDate,
+                                ModifiedDate = customer.ModifiedDate,
+                                GarageID = customer.GarageID,
+                                UserID = customer.UserID,
+                                HomePhone = customer.CustomerHomePhone,
+                                MobilePhone = customer.CustomerMobilePhone,
+                                Comment = customer.CustomerComment,
+                                // Populate additional properties from Users table
+                                EnableAccess = (long)user.EnableAccess,
+                                LastLoginDate = user.LastLoginDate,
+                                Photo = customer.CustomerPhoto
+                            };
 
-        [HttpGet]
-        [Route("api/GetUsersByValue/{searchBy}/{usertype}/{value}/{garageID}")]
-        public async Task<IActionResult> GetUsersByValue([FromRoute] int searchBy,int usertype, string value, long garageID)
-        {
-            var user = new List<Users>();
-            if (usertype == 2)
+                userViewModel = await query.FirstOrDefaultAsync();
+            }else if (userType == 3)
             {
-                if (searchBy == 0 && usertype == 2)
-                {
-                    user = await dbContext.Users.Where(c => (c.Name.Contains(value) || c.Surname.Contains(value) || c.Email.Contains(value) && (c.UserType == UserType.Admin || c.UserType == UserType.Customer) && (c.GarageID == garageID))).ToListAsync();
-                }
-                else if (searchBy == 1 && usertype == 2)
-                {
-                    user = await dbContext.Users.Where(c => c.Name.Contains(value) && (c.UserType == UserType.Admin || c.UserType == UserType.Customer) && (c.GarageID == garageID)).ToListAsync();
-                }
-                else if (searchBy == 2 && usertype == 2)
-                {
-                    user = await dbContext.Users.Where(c => c.Surname.Contains(value) && (c.UserType == UserType.Admin || c.UserType == UserType.Customer) && (c.GarageID == garageID)).ToListAsync();
-                }
-                else if (searchBy == 3 && usertype == 2)
-                {
-                    user = await dbContext.Users.Where(c => c.Email.Contains(value) && (c.UserType == UserType.Admin || c.UserType == UserType.Customer) && (c.GarageID == garageID)).ToListAsync();
-                }
-                return Ok(user);
-            }
-            else
-            {
-                if (searchBy == 0)
-                {
-                    user = await dbContext.Users.Where(c => (c.Name.Contains(value) || c.Surname.Contains(value) || c.Email.Contains(value)) && c.UserType == UserType.Engineer && c.GarageID == garageID).ToListAsync();
-                }
+                // Query Engineer by ID
+                var engineer = await dbContext.Engineer.FirstOrDefaultAsync(e => e.EngineerID == userID && e.GarageID == garageID);
 
-                else if (searchBy == 1)
-                {
-                    user = await dbContext.Users.Where(c => c.Name.Contains(value) && c.UserType == UserType.Engineer && c.GarageID == garageID).ToListAsync();
-                }
-
-                else if (searchBy == 2)
-                {
-                    user = await dbContext.Users.Where(c => c.Surname.Contains(value) && c.UserType == UserType.Engineer && c.GarageID == garageID).ToListAsync();
-                }
-                else
-                {
-                    user = await dbContext.Users.Where(c => c.Email.Contains(value) && c.UserType == UserType.Engineer && c.GarageID == garageID).ToListAsync();
-                }
-                if (user == null)
+                if (engineer == null)
                 {
                     return NotFound();
                 }
-                var engineersDTO = new List<UsersDTO>();
-                for (int i = 0; i < user.Count(); i++) {
-                    engineersDTO.Add(new UsersDTO
+
+                // Query EngineerSpecialities for the given engineerID
+                var engineerSpecialities = await dbContext.EngineerSpecialities
+                    .Where(es => es.EngineerID == userID)
+                    .Select(es => es.SpecialityID) // Select only the SpecialityID
+                    .ToListAsync();
+
+                // Query the table containing SpecialityDescription
+                var specialities = await dbContext.EngineerSpeciality
+                    .Where(sp => engineerSpecialities.Contains(sp.ID)) // Filter by SpecialityID
+                    .Select(sp => new EngineerSpeciality
                     {
-                        ID = user[i].ID,
-                        Name = user[i].Name,
-                        Surname = user[i].Surname,
-                        Email = user[i].Email,
-                        CreationDate = user[i].CreationDate,
-                        LastLoginDate = user[i].LastLoginDate,
-                        ModifiedDate = user[i].ModifiedDate,
-                        UserPhoto = user[i].UserPhoto,
-                        EngineerSpeciality = (await dbContext.EngineerSpeciality.FirstOrDefaultAsync(x => x.ID == user[i].Speciality && x.GarageID == garageID)).Speciality
-                    });  
-                }
-                return Ok(engineersDTO);
+                        ID = sp.ID,
+                        Speciality = sp.Speciality
+                    })
+                    .ToListAsync();
+
+                var query = from engineerGet in dbContext.Engineer
+                            join user in dbContext.Users
+                on engineerGet.UserID equals user.ID
+                            where engineerGet.EngineerID == userID && engineerGet.GarageID == garageID
+                            select new EngineerViewModel
+                            {
+                                EngineerID = engineerGet.EngineerID,
+                                EngineerSurname = engineerGet.EngineerSurname,
+                                EngineerName = engineerGet.EngineerName,
+                                EngineerEmail = engineerGet.EngineerEmail,
+                                CreationDate = engineerGet.CreationDate,
+                                ModifiedDate = engineerGet.ModifiedDate,
+                                GarageID = engineerGet.GarageID,
+                                UserID = engineerGet.UserID,
+                                EngineerHomePhone = engineerGet.EngineerHomePhone,
+                                EngineerMobilePhone = engineerGet.EngineerMobilePhone,
+                                EngineerComment = engineerGet.EngineerComment,
+                                // Populate additional properties from Users table
+                                EnableAccess = (long)user.EnableAccess,
+                                LastLoginDate = user.LastLoginDate,
+                                EngineerPhoto = engineerGet.EngineerPhoto,
+                                EngineerSpecialities = specialities
+                            };
+
+                var engineerViewModel = await query.FirstOrDefaultAsync();
+
+                return Ok(engineerViewModel);
             }
-        }
-
-        [HttpPost]
-        [Route("api/AddCustomer")]
-        public async Task<IActionResult> AddCustomer(AddCustomerRequest addUserRequest)
-        {
-            var user = new Users()
+            else
             {
-                Name = addUserRequest.Name,
-                Surname = addUserRequest.Surname,
-                Email = addUserRequest.Email,  
-                Password = addUserRequest.Password, 
-                GarageID = addUserRequest.GarageID,
-                CreationDate = addUserRequest.CreationDate,
-                UserType = addUserRequest.UserType,
-                EnableAccess = addUserRequest.EnableAccess,
-                UserPhoto = addUserRequest.UserPhoto
-            };
-            await dbContext.Users.AddAsync(user);
-            await dbContext.SaveChangesAsync();
-
-            return Ok(user);
-        }
-
-        [HttpPost]
-        [Route("api/AddEngineer")]
-        public async Task<IActionResult> AddEngineer(AddEngineerRequest addEngineerRequest)
-        {
-            var engineer = new Users()
-            {
-                Name = addEngineerRequest.Name,
-                Surname = addEngineerRequest.Surname,
-                Email = addEngineerRequest.Email,
-                Password = addEngineerRequest.Password,
-                GarageID = addEngineerRequest.GarageID,
-                CreationDate = addEngineerRequest.CreationDate,
-                UserType = addEngineerRequest.UserType,
-                EnableAccess = addEngineerRequest.EnableAccess,
-                UserPhoto = addEngineerRequest.UserPhoto,
-                Speciality = addEngineerRequest.EngineerSpeciality
-            };
-            await dbContext.Users.AddAsync(engineer);
-            await dbContext.SaveChangesAsync();
-
-            return Ok(engineer);
-        }
-
-        [HttpPost]
-        [Route("api/AddUserList")]
-        public async Task<IActionResult> AddUserList(List<AddUserRequest> addUserRequest)
-        {
-            for (int i = 0; i <= addUserRequest.Count(); i++)
-            {
-                var engineer = new Users()
-                {
-                    Name = addUserRequest[i].Name,
-                    Surname = addUserRequest[i].Surname,
-                    Email = addUserRequest[i].Email,
-                    Password = addUserRequest[i].Password,
-                    GarageID = addUserRequest[i].GarageID,
-                    CreationDate = addUserRequest[i].CreationDate,
-                    UserType = addUserRequest[i].UserType,
-                    EnableAccess = addUserRequest[i].EnableAccess,
-                    UserPhoto = addUserRequest[i].UserPhoto,
-                    Speciality = addUserRequest[i].Speciality
-                };
-                await dbContext.Users.AddAsync(engineer);
-                await dbContext.SaveChangesAsync();
+                return NotFound();
             }
 
-            return Ok();
+            if (userViewModel != null)
+            {
+                return Ok(userViewModel);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         [HttpPost]
@@ -262,7 +277,7 @@ namespace GarageAPI.Controllers
             {
                 Email tempEmail = new Email
                 {
-                    GarageID = user.GarageID,
+                    GarageID = 1,
                     SenderID = email.SenderID,
                     ReceiverID = email.ReceiverID,
                     Receiver = user.Email,
@@ -308,27 +323,6 @@ namespace GarageAPI.Controllers
             return Ok();
         }
 
-        [HttpPut]
-        [Route("api/UpdateUser/{id:long}")]
-        public async Task<IActionResult> UpdateUser([FromRoute] long id, UpdateUserRequest updateUserRequest)
-        {
-            var user = await dbContext.Users.FindAsync(id);
-            if (user != null)
-            {
-                if (!(updateUserRequest.Name is null )) user.Name = updateUserRequest.Name;
-                if (!(updateUserRequest.Surname is null)) user.Surname = updateUserRequest.Surname;
-                if (!(updateUserRequest.Email is null)) user.Email = updateUserRequest.Email;
-                if (!(updateUserRequest.Password is null)) user.Password = updateUserRequest.Password;
-                if (!(updateUserRequest.LastLoginDate is null)) user.LastLoginDate = updateUserRequest.LastLoginDate;
-                if (!(updateUserRequest.ModifiedDate is null)) user.ModifiedDate = updateUserRequest.ModifiedDate;
-                if (updateUserRequest.UserType == UserType.Engineer) if (!(updateUserRequest.EngineerSpeciality is null)) user.Speciality = updateUserRequest.EngineerSpeciality;
-                if (!(updateUserRequest.UserPhoto is null)) user.UserPhoto = updateUserRequest.UserPhoto;
-                await dbContext.SaveChangesAsync();
-                return Ok(user);
-            }
-            return NotFound();
-        }
-
         [HttpDelete]
         [Route("api/DeleteUserByID/{id:long}")]
         public async Task<IActionResult> DeleteUserByID([FromRoute] long id)
@@ -337,6 +331,20 @@ namespace GarageAPI.Controllers
             if (user != null)
             {
                 dbContext.Remove(user);
+                await dbContext.SaveChangesAsync();
+                return Ok(user);
+            }
+            return NotFound();
+        }
+
+        [HttpPut]
+        [Route("api/UserAccountAccess/{id:long}/{enableAccess:int}")]
+        public async Task<IActionResult> UserAccountAccess([FromRoute] long id, int enableAccess)
+        {
+            var user = await dbContext.Users.FindAsync(id);
+            if (user != null)
+            {
+                user.EnableAccess = (EnableAccess)enableAccess;
                 await dbContext.SaveChangesAsync();
                 return Ok(user);
             }
