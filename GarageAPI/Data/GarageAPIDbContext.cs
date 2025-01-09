@@ -43,7 +43,7 @@ namespace GarageAPI.Data
         public DbSet<EngineerSpeciality> EngineerSpeciality { get; set; }
         public DbSet<ServiceHistory> ServiceHistory { get; set; }
         public DbSet<ServiceHistoryDTO> ServiceHistoryDTO { get; set; }
-        public DbSet<CarEngineType> CarEngineType { get; set; }
+        public DbSet<CarFuelType> CarFuelType { get; set; }
         public DbSet<UsersDTO> UsersDTO { get; set; }
         public DbSet<Settings> Settings { get; set; }
         public DbSet<Email> Email { get; set; }
@@ -56,21 +56,20 @@ namespace GarageAPI.Data
         public DbSet<Customer> Customer { get; set; }
         public DbSet<Engineer> Engineer { get; set; }
         public DbSet<EngineerSpecialities> EngineerSpecialities { get; set; }
-
         public DbSet<Employee> Employee { get; set; }
 
 
-        private void SetCarEngineTypeData(ModelBuilder builder)
-        {
-            builder.Entity<CarEngineType>().HasData(new CarEngineType { ID = 1L, EngineType = "--" });
-            builder.Entity<CarEngineType>().HasData(new CarEngineType { ID = 2L, EngineType = "Petrol" });
-            builder.Entity<CarEngineType>().HasData(new CarEngineType { ID = 3L, EngineType = "Diesel" });
-            builder.Entity<CarEngineType>().HasData(new CarEngineType { ID = 4L, EngineType = "Hybrid Petrol" });
-            builder.Entity<CarEngineType>().HasData(new CarEngineType { ID = 5L, EngineType = "Hybrid Diesel" });
-            builder.Entity<CarEngineType>().HasData(new CarEngineType { ID = 6L, EngineType = "LNG" });
-            builder.Entity<CarEngineType>().HasData(new CarEngineType { ID = 7L, EngineType = "CNG" });
-            builder.Entity<CarEngineType>().HasData(new CarEngineType { ID = 8L, EngineType = "Electric" });
-        }
+        //private void SetCarEngineTypeData(ModelBuilder builder)
+        //{
+        //    builder.Entity<CarFuelType>().HasData(new CarFuelType { ID = 1L, EngineType = "--" });
+        //    builder.Entity<CarFuelType>().HasData(new CarFuelType { ID = 2L, EngineType = "Petrol" });
+        //    builder.Entity<CarFuelType>().HasData(new CarFuelType { ID = 3L, EngineType = "Diesel" });
+        //    builder.Entity<CarFuelType>().HasData(new CarFuelType { ID = 4L, EngineType = "Hybrid Petrol" });
+        //    builder.Entity<CarFuelType>().HasData(new CarFuelType { ID = 5L, EngineType = "Hybrid Diesel" });
+        //    builder.Entity<CarFuelType>().HasData(new CarFuelType { ID = 6L, EngineType = "LNG" });
+        //    builder.Entity<CarFuelType>().HasData(new CarFuelType { ID = 7L, EngineType = "CNG" });
+        //    builder.Entity<CarFuelType>().HasData(new CarFuelType { ID = 8L, EngineType = "Electric" });
+        //}
 
         private void SetCarManufacturerData(ModelBuilder builder)
         {
@@ -1225,7 +1224,7 @@ namespace GarageAPI.Data
 
         private void initDatabase(ModelBuilder builder)
         {
-            SetCarEngineTypeData(builder);
+            //SetCarEngineTypeData(builder);
             SetCarManufacturerData(builder);
             SetCarModelData(builder);
             SetCarModelManufacturerYear(builder);

@@ -137,6 +137,9 @@
     <value>Καταχώρηση Πελάτη</value>
     <comment>Add New Customer</comment>
   </data>
+  <data name="Add_New_Engineer" xml:space="preserve">
+    <value>Καταχώρηση Μηχανικού</value>
+  </data>
   <data name="Add_Service_History" xml:space="preserve">
     <value>Προσθήκη Ιστορικού</value>
     <comment>Add Service History</comment>
@@ -486,7 +489,7 @@
     <comment>Service_Information</comment>
   </data>
   <data name="List_Of_Service_Items" xml:space="preserve">
-    <value>Εργασίες Service</value>
+    <value>Λίστα Εργασιών Service</value>
     <comment>List_Of_Service_Items</comment>
   </data>
   <data name="Service_Kilometer" xml:space="preserve">
@@ -814,5 +817,23 @@
   </data>
   <data name="Employee_Added_Failed" xml:space="preserve">
     <value>Ο υπάλληλος {0} {1} δεν καταχωρήθηκε.</value>
+  </data>
+  <data name="Edit_Model" xml:space="preserve">
+    <value>Επεξεργασία Δεδομένων Μοντέλου</value>
+  </data>
+  <data name="Fuel_Type" xml:space="preserve">
+    <value>Τύπος Καυσίμου</value>
+  </data>
+  <data name="Select_Fuel_Type" xml:space="preserve">
+    <value>Επιλέξτε Καύσιμο</value>
+  </data>
+  <data name="Edit_Fuel_Type" xml:space="preserve">
+    <value>Επεξεργασία Τύπου Καυσίμου</value>
+  </data>
+  <data name="List_Of_Fuel_Types" xml:space="preserve">
+    <value>Λίστα Τύπων Καυσίμων</value>
+  </data>
+  <data name="General_Lists" xml:space="preserve">
+    <value>Γενικές Λίστες</value>
   </data>
 </root>

@@ -20,14 +20,14 @@ namespace GarageAPI.Controllers
         [Route("api/GetCarEngineTypesToList")]
         public async Task<IActionResult> GetCarEngineType()
         {
-            return Ok(await dbContext.CarEngineType.ToListAsync());
+            return Ok(await dbContext.CarFuelType.ToListAsync());
         }
 
         [HttpGet]
         [Route("api/GetCarEngineTypeByID/{id:long}")]
         public async Task<IActionResult> GetCarEngineType([FromRoute] long id)
         {
-            var carEngine = await dbContext.CarEngineType.FindAsync(id);
+            var carEngine = await dbContext.CarFuelType.FindAsync(id);
             if (carEngine == null)
             {
                 return NotFound();
@@ -39,12 +39,12 @@ namespace GarageAPI.Controllers
         [Route("api/AddCarEngineType")]
         public async Task<IActionResult> AddCarEngineType(AddCarEngineTypeRequest addCarEngineTypeRequest)
         {
-            var carEngineType = new CarEngineType()
+            var carEngineType = new CarFuelType()
             {
-               EngineType = addCarEngineTypeRequest.EngineType,
+               FuelType = addCarEngineTypeRequest.EngineType,
                GarageID = addCarEngineTypeRequest.GarageID
             };
-            await dbContext.CarEngineType.AddAsync(carEngineType);
+            await dbContext.CarFuelType.AddAsync(carEngineType);
             await dbContext.SaveChangesAsync();
 
             return Ok(carEngineType);
@@ -52,12 +52,12 @@ namespace GarageAPI.Controllers
 
         [HttpPut]
         [Route("api/UpdateCarEngineType/{engineTypeID:long}/{garageID:long}")]
-        public async Task<IActionResult> UpdateUser([FromRoute] long engineTypeID, long garageID, [FromBody] UpdateCarEngineTypeRequest updateCarEngineTypeRequest)
+        public async Task<IActionResult> UpdateCarEngineType([FromRoute] long engineTypeID, long garageID, [FromBody] UpdateCarEngineTypeRequest updateCarEngineTypeRequest)
         {
-            var carEngineType = await dbContext.CarEngineType.FirstOrDefaultAsync(x => x.ID == engineTypeID && x.GarageID == garageID);
+            var carEngineType = await dbContext.CarFuelType.FirstOrDefaultAsync(x => x.ID == engineTypeID && x.GarageID == garageID);
             if (carEngineType != null)
             {
-                carEngineType.EngineType = updateCarEngineTypeRequest.EngineType;
+                carEngineType.FuelType = updateCarEngineTypeRequest.FuelType;
 
                 await dbContext.SaveChangesAsync();
                 return Ok(carEngineType);
@@ -69,7 +69,7 @@ namespace GarageAPI.Controllers
         [Route("api/DeleteCarEngineTypeByID/{engineID:long}/{garageID:long}")]
         public async Task<IActionResult> DeleteCarEngineTypeByID([FromRoute] long engineID, long garageID)
         {
-            var carEngineType = await dbContext.CarEngineType.FirstOrDefaultAsync(x => x.ID == engineID && x.GarageID == garageID);
+            var carEngineType = await dbContext.CarFuelType.FirstOrDefaultAsync(x => x.ID == engineID && x.GarageID == garageID);
 
             if (carEngineType != null)
             {

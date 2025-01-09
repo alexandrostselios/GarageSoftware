@@ -11,7 +11,6 @@ using GarageAPI.Models;
 using GarageAPI.Models.Service;
 using GarageAPI.Enum;
 using GarageAPI.Models.User;
-using GarageAPI.Models.CustomerCars;
 
 namespace GarageAPI.Controllers
 {
@@ -117,6 +116,33 @@ namespace GarageAPI.Controllers
             await dbContext.ServiceHistory.AddAsync(serviceHistory);
             await dbContext.SaveChangesAsync();
 
+            // Get the newly inserted row
+            var newServiceHistoryGet = serviceHistory;
+
+            // Handle NotifyNextService flag logic manually here
+            var allServiceHistoryRecords = await dbContext.ServiceHistory
+                .Where(sh => sh.CustomerCarID == newServiceHistoryGet.CustomerCarID
+                        && sh.GarageID == newServiceHistoryGet.GarageID)
+                .OrderBy(sh => sh.ServiceDate)
+                .ToListAsync();
+
+            // Update previous records to set NotifyNextService to 0
+            foreach (var oldService in allServiceHistoryRecords)
+            {
+                if (oldService.ServiceDate < newServiceHistoryGet.ServiceDate)
+                {
+                    oldService.NotifyNextService = false;
+                    dbContext.ServiceHistory.Update(oldService);
+                }
+            }
+
+            // Set the NotifyNextService flag for the newly inserted record
+            newServiceHistoryGet.NotifyNextService = true;
+            dbContext.ServiceHistory.Update(newServiceHistoryGet);
+
+            // Commit the transaction
+            await dbContext.SaveChangesAsync();
+
             #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
             ServiceHistory serviceHistoryGet = await dbContext.ServiceHistory.FirstOrDefaultAsync(x => x.CustomerCar == serviceHistory.CustomerCar &&
                 x.GarageID == serviceHistory.GarageID &&
@@ -173,6 +199,20 @@ namespace GarageAPI.Controllers
             //    return Ok(serviceHistory);
             //}
             return NotFound();
+        }
+
+        [HttpPut]
+        [Route("api/UpdateServiceHistoryNotification/{id:long}/{notify:bool}")]
+        public async Task<IActionResult> UpdateServiceHistoryNotification([FromRoute] long id, bool notify)
+        {
+            var serviceHistory = await dbContext.ServiceHistory.FindAsync(id);
+            if (serviceHistory != null)
+            {
+                serviceHistory.NotifyNextService = notify;
+                await dbContext.SaveChangesAsync();
+                return Ok(serviceHistory);
+            }
+            return Ok(serviceHistory);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace GarageAPI.Models.CustomerCars
 
         public CarModelManufacturerYear ModelManufacturerYear { get; set; }
 
-        public CarEngineType EngineType { get; set; }
+        public CarFuelType EngineType { get; set; }
 
         public string? LicencePlate { get; set; }
 

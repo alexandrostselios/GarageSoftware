@@ -2,6 +2,6 @@
 {
     public class UpdateCarEngineTypeRequest
     {
-        public string EngineType { get; set; }
+        public string FuelType { get; set; }
     }
 }

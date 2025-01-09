@@ -654,4 +654,22 @@
   <data name="Employee_Added_Failed" xml:space="preserve">
     <value />
   </data>
+  <data name="Edit_Model" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Fuel_Type" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Select_Fuel_Type" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Edit_Fuel_Type" xml:space="preserve">
+    <value />
+  </data>
+  <data name="List_Of_Fuel_Types" xml:space="preserve">
+    <value />
+  </data>
+  <data name="General_Lists" xml:space="preserve">
+    <value />
+  </data>
 </root>

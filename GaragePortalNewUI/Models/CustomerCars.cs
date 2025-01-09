@@ -32,7 +32,6 @@ namespace GaragePortalNewUI.Models
         public byte[]? CarImage { get; set; }
 
         [DisplayName("Engine")]
-        public string EngineType { get; set; }
-
+        public string FuelType { get; set; }
     }
 }

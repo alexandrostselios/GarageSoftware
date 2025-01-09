@@ -117,4 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Select_Fuel_Type" xml:space="preserve">
+    <value>Επιλέξτε Τύπο Καυσίμου</value>
+  </data>
+  <data name="Fuel_Type" xml:space="preserve">
+    <value>Τύπος Καυσίμου</value>
+  </data>
 </root>

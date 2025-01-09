@@ -46,5 +46,9 @@ namespace GarageAPI.Models.Service
         public long GarageID { get; set; }
 
         public bool isDiscountPercentage { get; set; }
+
+        public long? NotifyDays {  get; set; }
+        
+        public bool? NotifyNextService { get; set; }
     }
 }

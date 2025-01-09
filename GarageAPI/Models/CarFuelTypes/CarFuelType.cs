@@ -5,13 +5,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GarageAPI.Models.CarEngineTypes
 {
-    public class CarEngineType
+    public class CarFuelType
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long ID { get; set; }
 
-        public String EngineType { get; set; }
+        public String FuelType { get; set; }
 
         [ForeignKey("GarageDetails")]
         public long GarageID { get; set; }

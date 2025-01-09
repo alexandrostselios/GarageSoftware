@@ -56,38 +56,6 @@ function importExcelPartial() {
     }
 };
 
-//function importExcelServiceItemsPartial() {
-//    'use strict';
-
-//    var handleFileSelect = function (evt) {
-//        var files = evt.target.files;
-//        var file = files[0];
-//        if (files && file) {
-//            var reader = new FileReader();
-//            reader.onload = function (readerEvt) {
-//                var arrayBuffer = readerEvt.target.result;
-//                var data = new Uint8Array(arrayBuffer);
-//                var workbook = XLSX.read(data, { type: 'array' });
-//                var sheetNames = workbook.SheetNames;
-//                sheetNames.forEach(function (sheetName) {
-//                    var sheet = workbook.Sheets[sheetName];
-//                    var range = XLSX.utils.decode_range(sheet['!ref']);
-//                    var columnNames = [];
-//                    for (var col = range.s.c; col <= range.e.c; col++) {
-//                        var cell = XLSX.utils.encode_cell({ r: 0, c: col });
-//                        var columnName = sheet[cell].v;
-//                        columnNames.push(columnName);
-//                    }
-//                    console.log('Column names for sheet', sheetName + ':', columnNames);
-//                });
-//            };
-//            reader.readAsArrayBuffer(file);
-//        }
-//    };
-
-//    document.getElementById('inputExcelFile').addEventListener('change', handleFileSelect, false);
-//}
-
 function importExcelServiceItemsPartial() {
 
     console.log("function");
@@ -196,23 +164,36 @@ function getServiceItems() {
         $.getJSON(url + 'GetServiceItemsToList')
             //$.getJSON('http://alefhome.ddns.net:8082/api/GetCarManufacturersToList')
             .done(function (data) {
-                //console.log(data);
                 // On success, 'data' contains a list of products.
                 $.each(data, function (key, item) {
-                    // Add a list item for the product.
-                    //console.log("ID: " + item.id + " Description: " + item.description+" Price: "+item.price);
                     if (item.price > 0) {
-                        $("#ServiceItems").append($("<option></option>").val(item.id).html(' '+item.id + ') ' + item.description + ' (' + item.price + ' €)'));
-                    } else {
-                        $("#ServiceItems").append($("<option></option>").val(item.id).html(' ' +item.id + ') ' + item.description + ' (--)'));
+                        if (item.id == 1) {
+                            console.log("Item is 1");
+                            $("#ServiceItems").append($("<option></option>").val(item.id).html(' ' + item.id + ') ' + item.description + ' (' + item.price + ' €)').prop("selected", true));
+                        } else {
+                            $("#ServiceItems").append($("<option></option>").val(item.id).html(' ' + item.id + ') ' + item.description + ' (' + item.price + ' €)'));
+                        }
+                    }
+                    else {
+                        if (item.id == 1) {
+                            //console.log("Item is 1");
+                            $("#ServiceItems").append($("<option></option>").val(item.id).html(' ' + item.id + ') ' + item.description + ' (--)').prop("selected", true));
+                        } else {
+                            $("#ServiceItems").append($("<option></option>").val(item.id).html(' ' + item.id + ') ' + item.description + ' (--)'));
+                        }
                     }
                 });
+
+                // Trigger select2 re-initialization after populating the options
+                $('#ServiceItems').trigger('change'); // Reinitialize select2
             });
     });
 }
 
 function CalculatePrice() {
     const options = document.getElementById("ServiceItems").options;
+    //console.log("Options in CalculatePrice:", options);
+
     let sum = 0.00;
     for (let i = 0; i < options.length; i++) {
         if (options[i].selected) {
@@ -229,7 +210,7 @@ function CalculatePrice() {
             }
         }
     }
-    //console.log("Sum is: " + sum);
+    console.log("Sum is: " + sum);
     document.getElementById("StartPrice").value = sum;
     setFinalPrice();
 };

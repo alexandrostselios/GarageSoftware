@@ -25,6 +25,7 @@ namespace GarageAPI.Migrations
                     table.PrimaryKey("PK_ServiceItems", x => x.ID);
                 });
 
+            migrationBuilder.Sql("INSERT INTO ServiceItems(Description,  Price,  GarageID )VALUES (N'Γενικός Έλεγχος',17,1)");
             migrationBuilder.Sql("INSERT INTO ServiceItems(Description,  Price,  GarageID )VALUES (N'Αλλαγή Δίσκων Μπροστά',12,1)");
             migrationBuilder.Sql("INSERT INTO ServiceItems(Description,  Price,  GarageID )VALUES (N'Αλλαγή Δίσκων Πίσω',10,1)");
             migrationBuilder.Sql("INSERT INTO ServiceItems(Description,  Price,  GarageID )VALUES (N'Αλλαγή Ελαστικών',NULL,1)");

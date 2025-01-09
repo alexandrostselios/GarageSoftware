@@ -48,7 +48,7 @@
                         </div>
                         <div class="form-group col-sm-5">
                             <label asp-for="ServiceKilometer" class="control-label">
-                                @Resource.GetKey("Service_Kilometer") <span id="kilometerDisplay"></span>
+                                @Resource.GetKey("Service_Kilometer") <span id="kilometerDisplay" style="color: red;"></span>
                             </label>
 
                             <input asp-for="ServiceKilometer" class="form-control" id="serviceKilometer" />
@@ -67,8 +67,8 @@
                     <div class="form-group quickServiceHistoryServiceItems">
                         <label asp-for="ServiceItemsList" class="control-label">@Resource.GetKey("List_Of_Service_Items") (@Resource.GetKey("Select_Multiple_Service_Items"))</label>
                         <br />
-                        <button type="button" onclick="selectAll()"><i class="fa fa-check" style="color:green"></i></button>
-                        <button type="button" onclick="deselectAll()"><i class="fa fa-times" style="color:red"></i></button>
+                        <button type="button" onclick="selectAll()" style="background-color:green; border-radius: 8px;"><i class="fa fa-check" style="color:white"></i></button>
+                        <button type="button" onclick="deselectAll()" style="background-color:red; border-radius: 8px;"><i class="fa fa-times" style="color:white"></i></button>
                         <select id="ServiceItems" asp-for="ServiceItemsList" class="form-control select2" onchange="CalculatePrice()" multiple>
                             @*<option value='0'>--@Resource.GetKey("Select_Service_Items")--</option>*@
                         </select>
@@ -122,7 +122,12 @@
 </div>
 
 <script type="text/javascript">
+
     $(document).ready(function () {
+
+        $("form").on("submit", function () {
+            $("#ShowCustomerCars").prop("disabled", false); // Enable the select before submission
+        });
 
         $('.draggable').draggable({
             handle: '.modal-header'
@@ -135,6 +140,7 @@
         });
         checkDiscountType(0);
         getServiceItems();
+        //CalculatePrice(); // Call the function on page load
 
         disableSubmitButton(0);
 
@@ -146,21 +152,39 @@
 
             if (selectedCarId && carData[selectedCarId]) {
                 var carKilometers = carData[selectedCarId].kilometers;
-                console.log("Input: "+inputKilometers);
+                //console.log("Input: "+inputKilometers);
                 // Check if input kilometers are greater than the car's kilometers
                 if (inputKilometers < carKilometers) {
                     $(this).next('.text-danger').text('Cannot be less than current car’s kilometers (' + carKilometers + ').');
                     disableSubmitButton(0);
-               } else if(inputKilometers === null || inputKilometers === undefined || isNaN(inputKilometers)){
+                } else if(inputKilometers === null || inputKilometers === undefined || isNaN(inputKilometers)){
                     $(this).next('.text-danger').text('You need to set Kilometers');
                     disableSubmitButton(0);
-              } else {
+                } else {
                     $(this).next('.text-danger').text(''); // Clear error message
                     //submitButton.prop("disabled", false); // Enable the submit button
                     disableSubmitButton(1);
                 }
+
+                disableBasedOnSelectedServiceItems();
             }
         });
+
+        $('#ServiceItems').on('input', function () {
+            disableBasedOnSelectedServiceItems();
+        });
+
+        function disableBasedOnSelectedServiceItems() {
+            var selectedServiceItem = $("#ServiceItems").val();
+
+            if (selectedServiceItem && selectedServiceItem.length > 0) {
+                console.log("Options selected:", selectedServiceItem);
+                disableSubmitButton(1);
+            } else {
+                console.log("No options selected.");
+                disableSubmitButton(0);
+            }
+        }
 
         $('#ShowCustomerCars').on('change', function () {
             var selectedCarId = $(this).val(); // Get the selected car ID
@@ -200,8 +224,16 @@
     }
 
     function deselectAll() {
-        $('#ServiceItems option').prop('selected', false);
-        $('#ServiceItems').trigger('change');
+        // $('#ServiceItems option').prop('selected', false);
+        // $('#ServiceItems').trigger('change');
+          // Deselect all options
+    $('#ServiceItems option').prop('selected', false);
+
+    // Select the option with value = "1"
+    $('#ServiceItems option[value="1"]').prop('selected', true);
+
+    // Trigger the change event
+    $('#ServiceItems').trigger('change');
     }
     
     getServiceEngineers();
@@ -280,7 +312,10 @@
                         $.each(data, function (key, item) {
                             // Add a list item for the product.
                             $("#ShowCustomerCars option[value='0']").remove();
-                            $("#ShowCustomerCars").append($("<option></option>").val(item.id).html(item.manufacturerName + ' ' + item.modelName + ' ' + item.modelYear + ' (' + item.licencePlate + ' - ' + item.vin + ')')); $("#ShowCustomerCars").prop("disabled", true);
+                            //$("#ShowCustomerCars").append($("<option></option>").val(item.id).html(item.manufacturerName + ' ' + item.modelName + ' ' + item.modelYear + ' (' + item.licencePlate + ' - ' + item.vin + ')')); $("#ShowCustomerCars").prop("disabled", true);
+                            $("#ShowCustomerCars").append($("<option></option>").val(item.id).html(item.manufacturerName + ' ' + item.modelName + ' ' + item.modelYear + ' (' + item.licencePlate + ' - ' + item.vin + ')').prop("selected", true)); 
+                            $("#ShowCustomerCars").prop("disabled",true);
+                            console.log("ID: "+item.id + " Model Name: "+item.modelName);
                             carData[item.id] = {
                                 manufacturerName: item.manufacturerName,
                                 modelName: item.modelName,
@@ -295,7 +330,6 @@
             }
         });
     }
-
 
     function clearDataModels() {
         var container = document.getElementById('ShowCustomerCars');
@@ -342,7 +376,6 @@
             });
     }
 </script>
-
 
 @section Scripts {
     @{

@@ -22,7 +22,7 @@ namespace GarageAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("GarageAPI.Models.CarEngineTypes.CarEngineType", b =>
+            modelBuilder.Entity("GarageAPI.Models.CarEngineTypes.CarFuelType", b =>
                 {
                     b.Property<long>("ID")
                         .ValueGeneratedOnAdd()
@@ -240,7 +240,7 @@ namespace GarageAPI.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("InsDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<string>("Message")
                         .IsRequired()
@@ -379,6 +379,12 @@ namespace GarageAPI.Migrations
 
                     b.Property<long>("GarageID")
                         .HasColumnType("bigint");
+
+                    b.Property<long?>("NotifyDays")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool?>("NotifyNextService")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("ServiceDate")
                         .HasColumnType("datetime");
@@ -715,7 +721,7 @@ namespace GarageAPI.Migrations
                     b.ToTable("Customer");
                 });
 
-            modelBuilder.Entity("GarageAPI.Models.User.Customers.Employee", b =>
+            modelBuilder.Entity("GarageAPI.Models.User.Employees.Employee", b =>
                 {
                     b.Property<long>("EmployeeID")
                         .ValueGeneratedOnAdd()
@@ -938,7 +944,7 @@ namespace GarageAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GarageAPI.Models.CarEngineTypes.CarEngineType", "EngineType")
+                    b.HasOne("GarageAPI.Models.CarEngineTypes.CarFuelType", "EngineType")
                         .WithMany()
                         .HasForeignKey("EngineTypeID")
                         .OnDelete(DeleteBehavior.Cascade)

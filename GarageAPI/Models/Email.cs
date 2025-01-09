@@ -18,6 +18,7 @@ namespace GarageAPI.Models
 
         public string Message { get; set; }
 
+        [Column(TypeName = "datetime")]
         public DateTime InsDate { get; set; }
 
         [ForeignKey("GarageDetails")]

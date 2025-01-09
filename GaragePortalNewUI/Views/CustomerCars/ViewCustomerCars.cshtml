@@ -47,16 +47,18 @@
                 </th>
                 <th class="all">
                     @Resource.GetKey("Car_Image")
-                </th>
+                </th> 
                 <th class="all">
                     @Resource.GetKey("Engine_Type")
                 </th>
                 <th class="all">
                     @Resource.GetKey("VIN")
                 </th>
+                <th></th>
                 <th class="all">
 
                 </th>
+                
             </tr>
         </thead>
 
@@ -169,7 +171,7 @@ else if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Customer.ToString(
                         },
                         "className": "text-center"
                     },
-                    { data: 'engineType' },
+                    { data: 'fuelType' },
                     { data: 'vin'},
                     {
                         data: null,
@@ -184,6 +186,11 @@ else if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Customer.ToString(
                         },
                         "width": "80px",
                         "className": "text-center"
+                    },
+                    {data: null,
+                    "render": function (data, type, row, meta) {
+                                return null; // This will display nothing in the column
+                     }
                     }
                 ]
             });
@@ -197,7 +204,7 @@ else if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Customer.ToString(
                 "scrollY": '600px',
                 "columnDefs": [
                     {
-                        "targets": [0],
+                        "targets": [0, 7],
                         "visible": false
                     },
                     {
@@ -220,6 +227,8 @@ else if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Customer.ToString(
                     }
                 }
             });
+
+            console.log("CustomerUserID: " + @ViewBag.CustomerUserID);
         });
 
         // Handle Actions create service history button click
@@ -232,6 +241,7 @@ else if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Customer.ToString(
                 console.log("ID: " + id);
                 var url = "@Url.Action("QuickCreateUserModelServiceHistoryPartial", "CustomerCars")" + '?customerID=' + @ViewBag.CustomerUserID + '&customerCarID=' + id;
                 console.log("URL: " + url);
+                console.log("CustomerUserID: " + @ViewBag.CustomerUserID + " == ID: " + id);
                 // Load partial view into the container
                 $.get(url, function (response) {
                     $('#addCustomerCarServiceHistoryDiv').html(response);

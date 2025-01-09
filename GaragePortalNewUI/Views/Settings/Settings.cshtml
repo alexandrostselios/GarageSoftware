@@ -13,7 +13,7 @@
         <div class="col-sm-5">
             <select class="form-control" style="width:300px" id="settingsItemsDropdown" onchange="testFunction()">
                 <option value="0" selected disabled>--@Resource.GetKey("Please_Select")--</option>
-                <option value="1">General Lists</option>
+                <option value="1">@Resource.GetKey("General_Lists")</option>
                 <option value="2">@Resource.GetKey("System_Settings")</option>
                 <option value="3">@Resource.GetKey("Utilities")</option>
             </select>
@@ -101,6 +101,28 @@
         <tbody>
         </tbody>
     </table>
+
+    <table id="carFuelTypeTable" class="table table-striped" style="display: none">
+        <thead>
+            <tr>
+                <th>
+                    @Resource.GetKey("ID")
+                </th>
+                <th>
+                    @Resource.GetKey("Fuel_Type")
+                </th>
+                <th>
+                    GarageID
+                </th>
+                <th>
+
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+        </tbody>
+    </table>
 }
 else
 {
@@ -129,6 +151,7 @@ else
                 $("#serviceItemsDropdown").append($("<option></option>").val(2).html('@Resource.GetKey("List_Of_Manufacturers")'));
                 //$("#serviceItemsDropdown").append($("<option></option>").val(5).html('Old Lista'));
                 $("#serviceItemsDropdown").append($("<option></option>").val(3).html('@Resource.GetKey("List_Of_Models")'));
+                $("#serviceItemsDropdown").append($("<option></option>").val(4).html('@Resource.GetKey("List_Of_Fuel_Types")'));
             } else if (value == '2') {
                 container.replaceChildren();
                 $("#serviceItemsDropdown").append($("<option selected disabled></option>").val(0).html('--@Resource.GetKey("Please_Select")--'));
@@ -192,8 +215,12 @@ else
                                 data: null,
                                 render: function (data, type, row) {
                                     if (userType === 'Admin') {
-                                        return '<a href="#" class="btn-edit" title="@Resource.GetKey("Edit")" id="btnEditServiceItem" data-id="' + row.id + '" ><i class="fa fa-edit" style="color:orange"></i></a> &nbsp;&nbsp;&nbsp;' +
+                                        if(data.id === 1){
+                                            return '<a href="#" class="btn-edit" title="@Resource.GetKey("Edit")" id="btnEditServiceItem" data-id="' + row.id + '" ><i class="fa fa-edit" style="color:orange"></i></a> &nbsp;&nbsp;&nbsp;';
+                                        }else{
+                                            return '<a href="#" class="btn-edit" title="@Resource.GetKey("Edit")" id="btnEditServiceItem" data-id="' + row.id + '" ><i class="fa fa-edit" style="color:orange"></i></a> &nbsp;&nbsp;&nbsp;' +
                                             '<a href="#" class="btn-delete" title="@Resource.GetKey("Delete")" id="btnDeleteServiceItem" data-id="' + row.id + '" ><i class="fa fa-trash" style="color:red"></i></a>';
+                                        }
                                     }
                                     return ''; // If not Admin, return empty string (no buttons)
                                 },
@@ -208,9 +235,11 @@ else
                     $('#carManufacturersTable').dataTable().fnDestroy();
                     otable.hide();
                     otable.parents('div.dataTables_wrapper').first().hide();
-
                     var otable = $('#carModelsTable').dataTable();
                     $('#carModelsTable').dataTable().fnDestroy();
+                    otable.hide();
+                    var otable = $('#carFuelTypeTable').dataTable();
+                    $('#carFuelTypeTable').dataTable().fnDestroy();
                     otable.hide();
                     otable.parents('div.dataTables_wrapper').first().hide();
                     // Initialize DataTable after data is loaded
@@ -280,9 +309,11 @@ else
                     $('#serviceItemsTable').dataTable().fnDestroy();
                     otable.hide();
                     otable.parents('div.dataTables_wrapper').first().hide();
-
                     var otable = $('#carModelsTable').dataTable();
                     $('#carModelsTable').dataTable().fnDestroy();
+                    otable.hide();
+                    var otable = $('#carFuelTypeTable').dataTable();
+                    $('#carFuelTypeTable').dataTable().fnDestroy();
                     otable.hide();
                     otable.parents('div.dataTables_wrapper').first().hide();
 
@@ -325,6 +356,9 @@ else
                 otable.parents('div.dataTables_wrapper').first().hide();
                 var otable = $('#carManufacturersTable').dataTable();
                 $('#carManufacturersTable').dataTable().fnDestroy();
+                otable.hide();
+                var otable = $('#carFuelTypeTable').dataTable();
+                $('#carFuelTypeTable').dataTable().fnDestroy();
                 otable.hide();
                 otable.parents('div.dataTables_wrapper').first().hide();
                 console.log("selected id " + selectedID);
@@ -394,6 +428,85 @@ else
                         }
                     });
                 });
+            } else if (selectedID == 4) {
+                addButton.style.visibility = "hidden";
+                var otable = $('#serviceItemsTable').dataTable();
+                $('#serviceItemsTable').dataTable().fnDestroy();
+                otable.hide();
+                otable.parents('div.dataTables_wrapper').first().hide();
+                var otable = $('#carManufacturersTable').dataTable();
+                $('#carManufacturersTable').dataTable().fnDestroy();
+                otable.hide();
+                var otable = $('#carModelsTable').dataTable();
+                $('#carModelsTable').dataTable().fnDestroy();
+                otable.hide();
+                otable.parents('div.dataTables_wrapper').first().hide();
+                console.log("selected id " + selectedID);
+
+                $.get('@Url.Action("GetCarFuelTypes", "CarFuelType")', function (data) {
+                    // Clear existing rows
+                    $('#carFuelTypeTable tbody').empty();
+                    // Iterate through the data and append rows to the table
+                    $.each(data, function (index, item) {
+                        var row = '<tr>' +
+                            '<td>' + item.id + '</td>' +
+                            '<td>' + item.engineType + '</td>' +
+                            '<td>' + item.garageID + '</td>'
+                        // Add more cells if needed
+                        '</tr>';
+                        $('#carFuelTypeTable tbody').append(row);
+                    });
+                    $('#partialPlaceHolder').html(data);
+                    var table = $('#carFuelTypeTable').DataTable({
+                        data: data,
+                        columns: [
+                            { data: 'id' },
+                            { data: 'fuelType' },
+                            { data: 'garageID' },
+                            {
+                                data: null,
+                                render: function (data, type, row) {
+                                    return '<a href="#" class="btn-edit" title="@Resource.GetKey("Edit")" id="btnEditFuelType" data-id="' + row.id + '" ><i class="fa fa-edit" style="color:orange"></i></a>';
+                                }
+                            }
+                        ]
+                    });
+                    $('#carFuelTypeTable').show();
+                    var otable = $('#serviceItemsTable').dataTable();
+                    $('#serviceItemsTable').dataTable().fnDestroy();
+                    otable.hide();
+                    otable.parents('div.dataTables_wrapper').first().hide();
+                    $('#btnAddServiceItem').hide();
+                    // Initialize DataTable after data is loaded
+                    $('#carFuelTypeTable').DataTable({
+                        "pageLength": 10,
+                        "searching": true,
+                        "paging": true,
+                        "destroy": true,
+                        "scrollCollapse": true,
+                        "scrollY": '600px',
+                        "columnDefs": [
+                            {
+                                "targets": [0, 2],
+                                "visible": false
+                            }
+                        ],
+                        "language": {
+                            "lengthMenu": "@Resource.GetKey("Show_DataTable") _MENU_ @Resource.GetKey("Entries_Per_Page")",
+                            "zeroRecords": "@Resource.GetKey("No_Matching_Records_Found_DataTable")",
+                            "info": "@Resource.GetKey("Show_DataTable") _START_ @Resource.GetKey("To_DataTable") _END_ @Resource.GetKey("Of_DataTable") _TOTAL_ @Resource.GetKey("Entries_DataTable")",
+                            "infoEmpty": "@Resource.GetKey("Showing_Empty_DataTable")",
+                            "infoFiltered": "(@Resource.GetKey("Filtered_From_DataTable") _MAX_ @Resource.GetKey("Total_DataTable") @Resource.GetKey("Entries_DataTable"))",
+                            "search": "@Resource.GetKey("Search"):",
+                            "paginate": {
+                                "first": "First",
+                                "last": "Last",
+                                "next": "@Resource.GetKey("Next_DataTable")",
+                                "previous": "@Resource.GetKey("Previous_DataTable")"
+                            }
+                        }
+                    });
+                });
             }
         });
 
@@ -434,6 +547,18 @@ else
             e.preventDefault();
             var id = $(this).data('id');
             var url = "@Url.Action("EditCarModelPartial", "CarModels")" + '/?id=' + id;
+            // Load partial view into the container
+            $.get(url, function (response) {
+                $('#editServiceItem').html(response);
+                $('#editServiceItem').find('.modal').modal('show');
+            });
+        });
+
+
+        $('#carFuelTypeTable tbody').on('click', 'a.btn-edit', function (e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+            var url = "@Url.Action("EditCarFuelTypePartial", "CarFuelType")" + '/?id=' + id;
             // Load partial view into the container
             $.get(url, function (response) {
                 $('#editServiceItem').html(response);

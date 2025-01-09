@@ -34,13 +34,14 @@ namespace GaragePortalNewUI.Controllers
 
         public async Task<IActionResult> ViewCustomerCars(long id)
         {
-            GetSessionProperties();
+            //GetSessionProperties();
             string userID = id.ToString(); // No need for string.Format here
             if (string.IsNullOrEmpty(userID))
             {
                 return NotFound();
             }
             HttpContext.Session.SetString("CustomerUserID", id.ToString());
+            GetSessionProperties();
 
             IEnumerable<CustomerCars> userCars = null;
             try
@@ -266,9 +267,9 @@ namespace GaragePortalNewUI.Controllers
         // POST: UserModels/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CustomerID,ModelManufacturer,Model,ModelYear,LicencePlate,VIN,Color,Kilometer,EngineTypeID")] UserModelsDTO userModels)
+        public async Task<IActionResult> Create([Bind("CustomerID,ModelManufacturer,Model,ModelYear,LicencePlate,VIN,Color,Kilometer,GarageID,FuelType")] UserModelsDTO userModels)
         {
-            userModels.EngineTypeID = 1;
+            //userModels.EngineTypeID = 1;
             GetSessionProperties();
             if (ModelState.IsValid && userModels.CustomerID > 0)
             {
@@ -286,7 +287,6 @@ namespace GaragePortalNewUI.Controllers
             return PartialView("_CreateUserModelServiceHistoryPartial");
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateUserModelServiceHistory(long UserModelsID, [Bind("UserModelsID", "Description", "ServiceDate", "ServiceKilometer", "EngineerID", "StartPrice", "DiscountPrice", "DiscountPercentage", "FinalPrice", "StartingDate", "StartingTime", "FinishingDate", "FinishingTime","GarageID", "ServiceItemsList")] ServiceHistoryDTO serviceHistoryDTO)
@@ -303,7 +303,6 @@ namespace GaragePortalNewUI.Controllers
             //return View("CreateUserModelServiceHistory");
         }
 
-
         public IActionResult QuickCreateUserModelServiceHistoryPartial(long? customerID, long? customerCarID)
         {
             HttpContext.Session.SetString("CustomerUserID", customerID.ToString());
@@ -311,7 +310,6 @@ namespace GaragePortalNewUI.Controllers
             GetSessionProperties();
             return PartialView("_QuickCreateUserModelServiceHistoryPartial");
         }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -421,29 +419,5 @@ namespace GaragePortalNewUI.Controllers
         {
             return true;
         }
-
-        //public IEnumerable<UserModels> GetCustomerCarsList(long id)
-        //{
-        //    IEnumerable<UserModels> customerCarsList = null;
-        //    var responseTask = client.GetAsync(client.BaseAddress);
-        //    using (client)
-        //    {
-        //        responseTask = client.GetAsync(client.BaseAddress + "/GetUserModelByUserID" + "/"+id); /*+ ViewBag.GarageID);*/
-        //        responseTask.Wait();
-        //        var result = responseTask.Result;
-        //        if (result.IsSuccessStatusCode)
-        //        {
-        //            var readTask = result.Content.ReadAsAsync<IList<UserModels>>();
-        //            readTask.Wait();
-        //            customerCarsList = readTask.Result;
-        //        }
-        //        else
-        //        {
-        //            customerCarsList = Enumerable.Empty<UserModels>();
-        //            ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
-        //        }
-        //    }
-        //    return customerCarsList;
-        //}
     }
 }

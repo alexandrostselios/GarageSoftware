@@ -32,7 +32,7 @@ namespace GarageAPI.Models.Service
 
         public long GarageID { get; set; }
 
-        public string EngineType { get; set; }
+        public string FuelType { get; set; }
 
         public string ModelName { get; set; }
 

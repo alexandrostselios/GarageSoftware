@@ -490,7 +490,7 @@
     <comment>Service_Information</comment>
   </data>
   <data name="List_Of_Service_Items" xml:space="preserve">
-    <value>Service Items</value>
+    <value>List Of Service Items</value>
     <comment>List_Of_Service_Items</comment>
   </data>
   <data name="Service_Kilometer" xml:space="preserve">
@@ -819,5 +819,23 @@
   </data>
   <data name="Employee_Added_Failed" xml:space="preserve">
     <value>There was an issue creating employee {0} {1}.</value>
+  </data>
+  <data name="Edit_Model" xml:space="preserve">
+    <value>Edit Model</value>
+  </data>
+  <data name="Fuel_Type" xml:space="preserve">
+    <value>Fuel Type</value>
+  </data>
+  <data name="Select_Fuel_Type" xml:space="preserve">
+    <value>Select Fuel</value>
+  </data>
+  <data name="Edit_Fuel_Type" xml:space="preserve">
+    <value>Edit Fuel Type</value>
+  </data>
+  <data name="List_Of_Fuel_Types" xml:space="preserve">
+    <value>List Οf Fuel Types</value>
+  </data>
+  <data name="General_Lists" xml:space="preserve">
+    <value>General Lists</value>
   </data>
 </root>

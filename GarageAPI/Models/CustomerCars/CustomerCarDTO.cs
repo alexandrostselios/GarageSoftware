@@ -26,7 +26,7 @@ namespace GarageAPI.Models.CustomerCars
 
         public byte[]? CarImage { get; set; }
 
-        public string EngineType {get; set; }
+        public string FuelType {get; set; }
 
     }
 }

@@ -60,7 +60,7 @@ namespace GarageAPI.Controllers
                         cc.ID,
                         ManufacturerName = cc.ModelManufacturerYear.CarManufacturer.ManufacturerName,
                         ModelName = cc.ModelManufacturerYear.CarModel.ModelName,
-                        EngineType = cc.EngineType.EngineType,
+                        EngineType = cc.EngineType.FuelType,
                         cc.LicencePlate,
                         cc.VIN,
                         cc.Color,
@@ -121,7 +121,8 @@ namespace GarageAPI.Controllers
                 Color = addCustomerCarRequest.Color,
                 Kilometer = addCustomerCarRequest.Kilometer,
                 CarImage = addCustomerCarRequest.CarImage,
-                EngineType = await dbContext.CarEngineType.FindAsync(addCustomerCarRequest.EngineTypeID)
+                EngineType = await dbContext.CarFuelType.FindAsync(addCustomerCarRequest.FuelType),
+                GarageID = addCustomerCarRequest.GarageID
             };
             await dbContext.CustomerCars.AddAsync(userModel);
             await dbContext.SaveChangesAsync();
