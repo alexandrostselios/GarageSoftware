@@ -677,3 +677,7 @@ FodyWeavers.xsd
 /GarageAPI/.vs/ProjectEvaluation/garageapi.metadata.v6.1
 /GarageAPI/.vs/GarageAPI/v17/.futdcache.v2
 /GarageAPI/.vs/ProjectEvaluation/garageapi.projects.v6.1
+/GarageAPI/.vs/GarageAPI/v17/HierarchyCache.v1.txt
+/GarageAPI/bin/Release/net6.0/win-x86/GarageAPI.exe
+/GarageAPI/bin/Release/net6.0/GarageAPI.exe
+/GarageAPI/obj/Release/net6.0/PubTmp/Out/GarageAPI.exe
