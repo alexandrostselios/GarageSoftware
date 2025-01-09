@@ -681,3 +681,6 @@ FodyWeavers.xsd
 /GarageAPI/bin/Release/net6.0/win-x86/GarageAPI.exe
 /GarageAPI/bin/Release/net6.0/GarageAPI.exe
 /GarageAPI/obj/Release/net6.0/PubTmp/Out/GarageAPI.exe
+/GaragePortalNewUI/.vs/GaragePortalNewUI/config/applicationhost.config
+/GaragePortalNewUI/.vs/GaragePortalNewUI/v17/.futdcache.v2
+/GaragePortalNewUI/bin/Release/net5.0/GaragePortalNewUI.exe
