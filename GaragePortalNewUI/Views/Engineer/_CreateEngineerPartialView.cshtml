@@ -41,11 +41,16 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <label asp-for="EngineerSpecialities" class="control-label">@Resource.GetKey("Engineer_Speciality")</label>
-                                <br />
-                                <select id="EngineerSpecialitiesCreation" asp-for="EngineerSpecialities" class="form-control">
-                                    <option value='0' disabled>--@Resource.GetKey("Select_Speciality")--</option> 
-                                </select>
+                                <label asp-for="EngineerHomePhone" class="control-label">@Resource.GetKey("HomePhone")</label>
+                                <input asp-for="EngineerHomePhone" class="form-control" />
+                                <span asp-validation-for="EngineerHomePhone" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="EngineerMobilePhone" class="control-label">@Resource.GetKey("MobilePhone")</label>
+                                <input asp-for="EngineerMobilePhone" class="form-control" />
+                                <span asp-validation-for="EngineerMobilePhone" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
@@ -68,6 +73,15 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
+                                <label asp-for="EngineerSpecialities" class="control-label">@Resource.GetKey("Engineer_Speciality")</label>
+                                <br />
+                                <select id="EngineerSpecialitiesCreation" asp-for="EngineerSpecialities" class="form-control">
+                                    <option value='0' disabled>--@Resource.GetKey("Select_Speciality")--</option> 
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
                                 <label asp-for="EnableAccess" class="control-label">@Resource.GetKey("Enable_Access")</label>
                                 <select id="EnableAccess" asp-for="EnableAccess" class="form-control">
                                     @foreach (var value in Enum.GetValues(typeof(EnableAccess)))
@@ -77,9 +91,18 @@
                                 </select>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
+                         <div class="col">
+                            <div class="form-group">
+                                <label asp-for="EngineerComment" class="control-label">@Resource.GetKey("Comments")</label>
+                                <input asp-for="EngineerComment" class="form-control" />
+                                <span asp-validation-for="EngineerComment" class="text-danger"></span>
+                            </div>
+                        </div>
                         <div class="col">
                             <div class="form-group">
-                                <label asp-for="EngineerPhoto" class="control-label">@Resource.GetKey("User_Photo")</label>
+                                <label asp-for="EngineerPhoto" class="control-label">@Resource.GetKey("UserPhoto")</label>
                                 <input type="file" class="form-control-file form-control" id="files" asp-for="EngineerPhoto" name="Image" accept="image/*" onchange="previewImage()">
                                 <span asp-validation-for="EngineerPhoto" class="text-danger"></span>
                                 @Html.ValidationMessageFor(m => m.EngineerPhoto)

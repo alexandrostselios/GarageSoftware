@@ -256,7 +256,7 @@ namespace GaragePortalNewUI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateCustomerPartial([Bind("ID,CustomerName,CustomerSurname,CustomerEmail,Age,CustomerPassword,ConfirmPassword,CustomerPhoto,CustomerMobilePhone,CustomerHomePhone,GarageID")] CustomerViewModel createUser, IFormFile Image)
+        public IActionResult CreateCustomerPartial([Bind("ID,CustomerName,CustomerSurname,CustomerEmail,Age,CustomerPassword,ConfirmPassword,CustomerPhoto,CustomerMobilePhone,CustomerHomePhone,GarageID,CustomerComment")] CustomerViewModel createUser, IFormFile Image)
         {
             GetSessionProperties();
             if (!(createUser.CustomerEmail is null) && ModelState.IsValid)
@@ -354,7 +354,7 @@ namespace GaragePortalNewUI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditCustomer(long customerID, [Bind("CustomerID,CustomerName,CustomerSurname,CustomerEmail,CustomerPhoto,CreationDate,CustomerMobilePhone,ModifiedDate,LastLoginDate,EnableAccess,GarageID")] CustomerViewModel editCustomer, IFormFile Image)
+        public async Task<IActionResult> EditCustomer(long customerID, [Bind("CustomerID,CustomerName,CustomerSurname,CustomerEmail,CustomerPhoto,CreationDate,CustomerMobilePhone,CustomerHomePhone,ModifiedDate,LastLoginDate,EnableAccess,GarageID,CustomerComment")] CustomerViewModel editCustomer, IFormFile Image)
         {
             if (customerID != editCustomer.CustomerID)
             {

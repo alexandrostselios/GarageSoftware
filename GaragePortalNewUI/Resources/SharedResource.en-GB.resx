@@ -838,4 +838,8 @@
   <data name="General_Lists" xml:space="preserve">
     <value>General Lists</value>
   </data>
+  <data name="UserPhoto" xml:space="preserve">
+    <value>Photo</value>
+    <comment>UserPhoto</comment>
+  </data>
 </root>

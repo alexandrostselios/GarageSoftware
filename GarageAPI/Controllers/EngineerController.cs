@@ -337,6 +337,10 @@ namespace GarageAPI.Controllers
                 if (!(updateEngineerRequest.EngineerEmail is null)) engineer.EngineerEmail = updateEngineerRequest.EngineerEmail;
                 if (!(updateEngineerRequest.ModifiedDate is null)) engineer.ModifiedDate = updateEngineerRequest.ModifiedDate;
                 if (!(updateEngineerRequest.EngineerPhoto is null)) engineer.EngineerPhoto = updateEngineerRequest.EngineerPhoto;
+                if (!(updateEngineerRequest.EngineerHomePhone is null)) engineer.EngineerHomePhone = updateEngineerRequest.EngineerHomePhone;
+                if (!(updateEngineerRequest.EngineerMobilePhone is null)) engineer.EngineerMobilePhone = updateEngineerRequest.EngineerMobilePhone;
+                if (!(updateEngineerRequest.EngineerComment is null)) engineer.EngineerComment = updateEngineerRequest.EngineerComment;
+                
 
                 // Get existing engineer specialities
                 var existingSpecialities = await dbContext.EngineerSpecialities

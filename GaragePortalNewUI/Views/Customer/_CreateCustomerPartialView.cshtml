@@ -40,16 +40,16 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <label asp-for="CustomerMobilePhone" class="control-label">@Resource.GetKey("MobilePhone")</label>
-                                <input asp-for="CustomerMobilePhone" class="form-control" />
-                                <span asp-validation-for="CustomerMobilePhone" class="text-danger"></span>
+                                <label asp-for="CustomerHomePhone" class="control-label">@Resource.GetKey("HomePhone")</label>
+                                <input asp-for="CustomerHomePhone" class="form-control" />
+                                <span asp-validation-for="CustomerHomePhone" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group">
-                                <label asp-for="CustomerHomePhone" class="control-label">@Resource.GetKey("HomePhone")</label>
-                                <input asp-for="CustomerHomePhone" class="form-control" />
-                                <span asp-validation-for="CustomerHomePhone" class="text-danger"></span>
+                                <label asp-for="CustomerMobilePhone" class="control-label">@Resource.GetKey("MobilePhone")</label>
+                                <input asp-for="CustomerMobilePhone" class="form-control" />
+                                <span asp-validation-for="CustomerMobilePhone" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
@@ -68,7 +68,6 @@
                                 <input asp-for="CustomerPassword" type="password" class="form-control" id="customerPasswordValidation" />
                                 <span asp-validation-for="CustomerPassword" class="text-danger"></span>
                                 <small id="passwordValidationMessage" class="text-danger" style="display:none; white-space: pre-line;"></small>
-
                             </div>
                         </div>
                     </div>
@@ -90,6 +89,15 @@
                                 <input type="file" class="form-control-file form-control" id="files" asp-for="CustomerPhoto" name="Image" accept="image/*" onchange="previewImage()">
                                 <span asp-validation-for="CustomerPhoto" class="text-danger"></span>
                                 @Html.ValidationMessageFor(m => m.CustomerPhoto)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="CustomerComment" class="control-label">@Resource.GetKey("Comments")</label>
+                                <input asp-for="CustomerComment" class="form-control" />
+                                <span asp-validation-for="CustomerComment" class="text-danger"></span>
                             </div>
                         </div>
                     </div>

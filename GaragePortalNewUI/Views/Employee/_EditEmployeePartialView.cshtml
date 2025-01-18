@@ -13,33 +13,13 @@
         <!-- Adjust the max-width as needed -->
         <div class="modal-content">
             <div class="modal-header dragable_touch d-block">
-                <h5 class="modal-title">@Resource.GetKey("Edit_Employee_Profile")</h5>
+                <h5 class="modal-title">@Resource.GetKey("Edit_Employee_Profile") (@Resource.GetKey("Employee_ID"): @Model.EmployeeID)</h5>
             </div>
             <form asp-action="EditEmployee" enctype="multipart/form-data">
                 <input type="hidden" asp-for="GarageID" value="@ViewBag.GarageID" />
                 <div class="modal-body">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="row">
-                        <div class="col">
-                            <input type="hidden" asp-for="EmployeeID" />
-                            <div class="form-group">
-                                <label asp-for="EmployeeID" class="control-label">@Resource.GetKey("Employee_ID")</label>
-                                <input asp-for="EmployeeID" class="form-control" disabled />
-                                <span asp-validation-for="EmployeeID" class="text-danger"></span>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-group">
-                                <label asp-for="EnableAccess" class="control-label">@Resource.GetKey("Enable_Access")</label>
-                                <select id="EnableAccess" asp-for="EnableAccess" class="form-control">
-                                    @foreach (var value in Enum.GetValues(typeof(EnableAccess)))
-                                    {
-                                        <option value="@((int)value)">@resourceManager.GetString($"EnableAccess_{value}")</option>
-                                    }
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+                    <input type="hidden" asp-for="EmployeeID" />
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
@@ -59,9 +39,9 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <label asp-for="EmployeeEmail" class="control-label">@Resource.GetKey("Email")</label>
-                                <input asp-for="EmployeeEmail" class="form-control" />
-                                <span asp-validation-for="EmployeeEmail" class="text-danger"></span>
+                                <label asp-for="EmployeeHomePhone" class="control-label">@Resource.GetKey("HomePhone")</label>
+                                <input asp-for="EmployeeHomePhone" class="form-control" />
+                                <span asp-validation-for="EmployeeHomePhone" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="col">
@@ -75,10 +55,47 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
+                                <label asp-for="EmployeeEmail" class="control-label">@Resource.GetKey("Email")</label>
+                                <input asp-for="EmployeeEmail" class="form-control" />
+                                <span asp-validation-for="EmployeeEmail" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="EmployeePassword" class="control-label">@Resource.GetKey("Password")</label>
+                                <input asp-for="EmployeePassword" type="password" class="form-control" id="employeePasswordValidation" />
+                                <span asp-validation-for="EmployeePassword" class="text-danger"></span>
+                                <small id="passwordValidationMessage" class="text-danger" style="display:none; white-space: pre-line;"></small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="EnableAccess" class="control-label">@Resource.GetKey("Enable_Access")</label>
+                                <select id="EnableAccess" asp-for="EnableAccess" class="form-control">
+                                    @foreach (var value in Enum.GetValues(typeof(EnableAccess)))
+                                    {
+                                        <option value="@((int)value)">@resourceManager.GetString($"EnableAccess_{value}")</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
                                 <label asp-for="EmployeePhoto" class="control-label">@Resource.GetKey("UserPhoto")</label>
                                 <input type="file" class="form-control-file form-control" id="files" asp-for="EmployeePhoto" name="Image" accept="image/*" onchange="previewImage()">
                                 <span asp-validation-for="EmployeePhoto" class="text-danger"></span>
                                 @Html.ValidationMessageFor(m => m.EmployeePhoto)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="EmployeeComment" class="control-label">@Resource.GetKey("Comments")</label>
+                                <input asp-for="EmployeeComment" class="form-control" />
+                                <span asp-validation-for="EmployeeComment" class="text-danger"></span>
                             </div>
                         </div>
                     </div>

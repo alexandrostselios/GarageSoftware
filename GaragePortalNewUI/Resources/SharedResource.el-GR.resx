@@ -836,4 +836,8 @@
   <data name="General_Lists" xml:space="preserve">
     <value>Γενικές Λίστες</value>
   </data>
+  <data name="UserPhoto" xml:space="preserve">
+    <value>Φωτογραφία</value>
+    <comment>UserPhoto</comment>
+  </data>
 </root>
