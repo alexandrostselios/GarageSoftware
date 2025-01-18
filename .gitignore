@@ -684,3 +684,7 @@ FodyWeavers.xsd
 /GaragePortalNewUI/.vs/GaragePortalNewUI/config/applicationhost.config
 /GaragePortalNewUI/.vs/GaragePortalNewUI/v17/.futdcache.v2
 /GaragePortalNewUI/bin/Release/net5.0/GaragePortalNewUI.exe
+/GarageAPI/obj/Debug/net6.0/GarageAPI.AssemblyInfo.cs
+/GarageAPI/obj/Debug/net6.0/GarageAPI.AssemblyInfoInputs.cache
+/GaragePortalNewUI/obj/Debug/net5.0/GaragePortalNewUI.AssemblyInfo.cs
+/GaragePortalNewUI/obj/Debug/net5.0/GaragePortalNewUI.AssemblyInfoInputs.cache
