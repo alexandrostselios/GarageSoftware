@@ -139,7 +139,7 @@ namespace GarageAPI.Controllers
                 Password = addCustomerRequest.CustomerPassword,
                 CreationDate = addCustomerRequest.CreationDate,
                 UserType = Enum.UserType.Customer,
-                EnableAccess = addCustomerRequest.EnableAccess
+                EnableAccess = addCustomerRequest.EnableAccess,
                 // Add other user properties as needed
             };
             await dbContext.Users.AddAsync(user);
@@ -219,6 +219,7 @@ namespace GarageAPI.Controllers
                 if (!(updateCustomerRequest.CustomerPhoto is null)) customer.CustomerPhoto = updateCustomerRequest.CustomerPhoto;
                 if (!(updateCustomerRequest.CustomerHomePhone is null)) customer.CustomerHomePhone = updateCustomerRequest.CustomerHomePhone;
                 if (!(updateCustomerRequest.CustomerMobilePhone is null)) customer.CustomerMobilePhone = updateCustomerRequest.CustomerMobilePhone;
+                if (!(updateCustomerRequest.CustomerComment is null)) customer.CustomerComment = updateCustomerRequest.CustomerComment;
 
                 // Find the user entity associated with the customer
                 var user = await dbContext.Users.FirstOrDefaultAsync(u => u.ID == customer.UserID);

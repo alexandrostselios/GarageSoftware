@@ -40,16 +40,16 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <label asp-for="EmployeeMobilePhone" class="control-label">@Resource.GetKey("MobilePhone")</label>
-                                <input asp-for="EmployeeMobilePhone" class="form-control" />
-                                <span asp-validation-for="EmployeeMobilePhone" class="text-danger"></span>
+                                <label asp-for="EmployeeHomePhone" class="control-label">@Resource.GetKey("HomePhone")</label>
+                                <input asp-for="EmployeeHomePhone" class="form-control" />
+                                <span asp-validation-for="EmployeeHomePhone" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group">
-                                <label asp-for="EmployeeHomePhone" class="control-label">@Resource.GetKey("HomePhone")</label>
-                                <input asp-for="EmployeeHomePhone" class="form-control" />
-                                <span asp-validation-for="EmployeeHomePhone" class="text-danger"></span>
+                                <label asp-for="EmployeeMobilePhone" class="control-label">@Resource.GetKey("MobilePhone")</label>
+                                <input asp-for="EmployeeMobilePhone" class="form-control" />
+                                <span asp-validation-for="EmployeeMobilePhone" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
@@ -90,6 +90,15 @@
                                 <input type="file" class="form-control-file form-control" id="files" asp-for="EmployeePhoto" name="Image" accept="image/*" onchange="previewImage()">
                                 <span asp-validation-for="EmployeePhoto" class="text-danger"></span>
                                 @Html.ValidationMessageFor(m => m.EmployeePhoto)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="EmployeeComment" class="control-label">@Resource.GetKey("Comments")</label>
+                                <input asp-for="EmployeeComment" class="form-control" />
+                                <span asp-validation-for="EmployeeComment" class="text-danger"></span>
                             </div>
                         </div>
                     </div>

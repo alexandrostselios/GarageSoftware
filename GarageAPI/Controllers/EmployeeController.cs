@@ -211,6 +211,7 @@ namespace GarageAPI.Controllers
                 if (!(updateEmployeeRequest.EmployeePhoto is null)) employee.EmployeePhoto = updateEmployeeRequest.EmployeePhoto;
                 if (!(updateEmployeeRequest.EmployeeHomePhone is null)) employee.EmployeeHomePhone = updateEmployeeRequest.EmployeeHomePhone;
                 if (!(updateEmployeeRequest.EmployeeMobilePhone is null)) employee.EmployeeMobilePhone = updateEmployeeRequest.EmployeeMobilePhone;
+                if (!(updateEmployeeRequest.EmployeeComment is null)) employee.EmployeeComment = updateEmployeeRequest.EmployeeComment;
 
                 // Find the user entity associated with the Employee
                 var user = await dbContext.Users.FirstOrDefaultAsync(u => u.ID == employee.UserID);

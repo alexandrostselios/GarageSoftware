@@ -136,7 +136,7 @@ namespace GaragePortalNewUI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateEngineerPartial([Bind("EngineerID,EngineerName,EngineerSurname,EngineerEmail,EngineerPassword,EngineerPhoto,EngineerSpecialities,GarageID")] AddEngineerViewModel createUser, IFormFile Image)
+        public IActionResult CreateEngineerPartial([Bind("EngineerID,EngineerName,EngineerSurname,EngineerEmail,EngineerPassword,EngineerPhoto,EngineerSpecialities,GarageID,EngineerMobilePhone,EngineerHomePhone,EngineerComment")] AddEngineerViewModel createUser, IFormFile Image)
         {
             GetSessionProperties();
             if (!(createUser.EngineerEmail is null) && ModelState.IsValid)
@@ -224,7 +224,7 @@ namespace GaragePortalNewUI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditEngineer(long engineerID, [Bind("EngineerID,EngineerName,EngineerSurname,EngineerEmail,CreationDate,ModifiedDate,LastLoginDate,EnableAccess,EngineerPassword,GarageID,EngineerSpecialitiesID")] UpdateEngineerViewModel editEngineer, IFormFile Image)
+        public async Task<IActionResult> EditEngineer(long engineerID, [Bind("EngineerID,EngineerName,EngineerSurname,EngineerEmail,CreationDate,ModifiedDate,LastLoginDate,EnableAccess,EngineerPassword,GarageID,EngineerSpecialitiesID,EngineerMobilePhone,EngineerHomePhone,EngineerComment")] UpdateEngineerViewModel editEngineer, IFormFile Image)
         {
             if (engineerID != editEngineer.EngineerID)
             {

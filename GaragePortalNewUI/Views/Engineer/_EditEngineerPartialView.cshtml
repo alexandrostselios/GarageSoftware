@@ -11,13 +11,14 @@
     <div class="modal-dialog draggable modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header dragable_touch d-block">
-                <h5 class="modal-title">@Resource.GetKey("Edit_Mechanic_Profile")</h5>
+                <h5 class="modal-title">@Resource.GetKey("Edit_Mechanic_Profile") (@Resource.GetKey("Engineer_ID"): @Model.EngineerID)</h5>
             </div>
             <form asp-action="EditEngineer" enctype="multipart/form-data">
                 <input type="hidden" asp-for="GarageID" value="@ViewBag.GarageID" />
                 <div class="modal-body">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="row">
+                    <input type="hidden" asp-for="EngineerID" />
+@*                    <div class="row">
                         <div class="col">
                             <input type="hidden" asp-for="EngineerID" />
                             <div class="form-group">
@@ -37,7 +38,7 @@
                                 </select>
                             </div>
                         </div>
-                    </div>
+                    </div>*@
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
@@ -51,6 +52,22 @@
                                 <label asp-for="EngineerName" class="control-label">@Resource.GetKey("Name")</label>
                                 <input asp-for="EngineerName" class="form-control" />
                                 <span asp-validation-for="EngineerName" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="EngineerHomePhone" class="control-label">@Resource.GetKey("HomePhone")</label>
+                                <input asp-for="EngineerHomePhone" class="form-control" />
+                                <span asp-validation-for="EngineerHomePhone" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="EngineerMobilePhone" class="control-label">@Resource.GetKey("MobilePhone")</label>
+                                <input asp-for="EngineerMobilePhone" class="form-control" />
+                                <span asp-validation-for="EngineerMobilePhone" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
@@ -80,6 +97,26 @@
                                 <select id="EditEngineerSpeciality" asp-for="EngineerSpecialitiesID" class="form-control">
                                     <option hidden value='0' disabled>--@Resource.GetKey("Select_Speciality")--</option>
                                 </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="EnableAccess" class="control-label">@Resource.GetKey("Enable_Access")</label>
+                                <select id="EnableAccess" asp-for="EnableAccess" class="form-control">
+                                    @foreach (var value in Enum.GetValues(typeof(EnableAccess)))
+                                    {
+                                        <option value="@((int)value)">@resourceManager.GetString($"EnableAccess_{value}")</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="EngineerComment" class="control-label">@Resource.GetKey("Comments")</label>
+                                <input asp-for="EngineerComment" class="form-control" />
+                                <span asp-validation-for="EngineerComment" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="col">

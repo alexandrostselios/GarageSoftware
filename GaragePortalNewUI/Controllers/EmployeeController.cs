@@ -124,7 +124,7 @@ namespace GaragePortalNewUI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateEmployeePartial([Bind("ID,EmployeeName,EmployeeSurname,EmployeeEmail,Age,EmployeePassword,EmployeePassword,EmployeePhoto,EmployeeMobilePhone,EmployeeHomePhone,GarageID,EnableAccess")] EmployeeViewModel createUser, IFormFile Image)
+        public IActionResult CreateEmployeePartial([Bind("ID,EmployeeName,EmployeeSurname,EmployeeEmail,Age,EmployeePassword,EmployeePassword,EmployeePhoto,EmployeeMobilePhone,EmployeeHomePhone,GarageID,EnableAccess,EmployeeComment")] EmployeeViewModel createUser, IFormFile Image)
         {
             GetSessionProperties();
             if (!(createUser.EmployeeEmail is null) && ModelState.IsValid)
@@ -184,7 +184,7 @@ namespace GaragePortalNewUI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditEmployee(long employeeID, [Bind("EmployeeID,EmployeeName,EmployeeSurname,EmployeeEmail,EmployeePhoto,CreationDate,EmployeeMobilePhone,ModifiedDate,LastLoginDate,EnableAccess,GarageID")] EmployeeViewModel editEmployee, IFormFile Image)
+        public async Task<IActionResult> EditEmployee(long employeeID, [Bind("EmployeeID,EmployeeName,EmployeeSurname,EmployeeEmail,EmployeePhoto,CreationDate,EmployeeMobilePhone,EmployeeHomePhone,ModifiedDate,LastLoginDate,EnableAccess,GarageID,EmployeeComment")] EmployeeViewModel editEmployee, IFormFile Image)
         {
             if (employeeID != editEmployee.EmployeeID)
             {
