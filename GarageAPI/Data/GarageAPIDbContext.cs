@@ -14,6 +14,7 @@ using GarageAPI.Models.User.Engineer;
 using GarageAPI.Models.CustomerCars;
 using System.Reflection.Emit;
 using GarageAPI.Models.User.Employees;
+using GarageAPI.Models.ServiceAppointment;
 
 namespace GarageAPI.Data
 {
@@ -57,19 +58,9 @@ namespace GarageAPI.Data
         public DbSet<Engineer> Engineer { get; set; }
         public DbSet<EngineerSpecialities> EngineerSpecialities { get; set; }
         public DbSet<Employee> Employee { get; set; }
+        public DbSet<ServiceAppointment> ServiceAppointment { get; set; }
 
-
-        //private void SetCarEngineTypeData(ModelBuilder builder)
-        //{
-        //    builder.Entity<CarFuelType>().HasData(new CarFuelType { ID = 1L, EngineType = "--" });
-        //    builder.Entity<CarFuelType>().HasData(new CarFuelType { ID = 2L, EngineType = "Petrol" });
-        //    builder.Entity<CarFuelType>().HasData(new CarFuelType { ID = 3L, EngineType = "Diesel" });
-        //    builder.Entity<CarFuelType>().HasData(new CarFuelType { ID = 4L, EngineType = "Hybrid Petrol" });
-        //    builder.Entity<CarFuelType>().HasData(new CarFuelType { ID = 5L, EngineType = "Hybrid Diesel" });
-        //    builder.Entity<CarFuelType>().HasData(new CarFuelType { ID = 6L, EngineType = "LNG" });
-        //    builder.Entity<CarFuelType>().HasData(new CarFuelType { ID = 7L, EngineType = "CNG" });
-        //    builder.Entity<CarFuelType>().HasData(new CarFuelType { ID = 8L, EngineType = "Electric" });
-        //}
+        public DbSet<ServiceAppointmentViewModel> ServiceAppointmentViewModel { get; set; }
 
         private void SetCarManufacturerData(ModelBuilder builder)
         {

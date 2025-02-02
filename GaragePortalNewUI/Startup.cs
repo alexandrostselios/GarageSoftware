@@ -90,7 +90,8 @@ namespace GaragePortalNewUI
                 var supportedCultures = new List<CultureInfo>
                 {
                     new CultureInfo("en-GB"),
-                    new CultureInfo("el-GR")
+                    new CultureInfo("el-GR"),
+                    new CultureInfo("de-DE")
                 };
                 
                 options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture(culture: lang, uiCulture: lang);

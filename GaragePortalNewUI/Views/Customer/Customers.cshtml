@@ -17,6 +17,7 @@
     <div id="addCustomerDIV"></div>
     <div id="editCustomerDIV"></div>
     <div id="addcarServiceHistoryDiv"></div>
+    <div id="addServiceAppointmentDiv"></div>
     <div id="sendEmailToCustomer"></div>
 
     <br>
@@ -39,32 +40,26 @@
                     @Resource.GetKey("Email")
                 </th>
                 <th class="all">
+                    @Resource.GetKey("Mobile_Phone")
+                </th>
+                <th class="all">
                     @Resource.GetKey("User_Photo")
                 </th>
-                @*<th class="all">
-                    @Resource.GetKey("Password")
-                </th>*@
+                <th class="all">
+                    @Resource.GetKey("Comments")
+                </th>
                 <th class="all">
                     @Resource.GetKey("Modified_Date")
                 </th>
                 <th class="all">
                     @Resource.GetKey("Last_Login_Date")
                 </th>
-@*                <th class="all">
-                    @Resource.GetKey("Enable_Access")
-                </th>*@
-@*                <th class="all">
-                    @Resource.GetKey("Engineer_Speciality")
-                </th>*@
                 <th class="all">
                     @Resource.GetKey("GarageID")
                 </th>
                 <th class="all">
                     @Resource.GetKey("Creation_Date")
                 </th>
-@*                <th class="all">
-                    @Resource.GetKey("UserType")
-                </th>*@
                 <th class="all">
 
                 </th>
@@ -141,6 +136,8 @@ else
 
         let table; // Declare the table variable outside the scope of the callback function
         var originalRowColors = [];
+        // Get the Greek value for "All" and store it in a JavaScript variable
+        var allText = '@Html.Raw(Resource.GetKey("All"))';  // Ensuring proper handling of Greek characters
         $(function(){
             $('#customersTable tbody').empty();
             $.get('@Url.Action("GetCustomersList", "Customer")', function (data) {
@@ -164,6 +161,9 @@ else
                         // Add spacing between "Show x entries" and "Search" elements
                         $('.dataTables_length').css('margin-right', '20px');
                     },
+                    // "scrollY": "700px",   // Set height for the vertical scroll
+                    // "scrollCollapse": false, // Allow the table to collapse when there is less data
+                    // "scrollX": false ,      // Disable horizontal scrolling
                     buttons: [
                         {
                             text: '<i class="fa fa-check-square-o"></i>',
@@ -304,22 +304,11 @@ else
                     ],
                     data: data,
                     columns: [
-                        //{
-                        //data: null,
-                        //    render: function (data, type, row) {
-                        //        return '<div class="dropdown">' +
-                        //            '<button class="btn btn-primary actions-btn" type="button" aria-expanded="false">' + '@Resource.GetKey("Actions_Table")' + '</button>' +
-                        //            '<ul class="dropdown-menu" aria-labelledby="actionsDropdown">' +
-                        //            '<li><a class="dropdown-item actions-edit" href="#" data-id="' + row.id + '"><i class="fa fa-edit" style="color:orange"></i> &nbsp; @Resource.GetKey("Edit")</a></li>' +
-                        //            '<li><a class="dropdown-item actions-see-cars" href="#" data-id="' + row.id + '"><i class="fa fa-car" style="color:black"></i> &nbsp; @Resource.GetKey("List_Of_User_Cars")</a></li>' +
-                        //            '</ul>' +
-                        //            '</div>';               
-                        //    }
-                        //},
                         { data: 'customerID', "visible": false},
                         { data: 'customerSurname' },
                         { data: 'customerName' },
                         { data: 'customerEmail' },
+                        { data: 'customerMobilePhone' },
                         { data: 'customerPhoto',
                             render: function (data, type, row) {
                                 var customerPhoto = row.customerPhoto;
@@ -331,6 +320,7 @@ else
                             },
                             "className": "text-center"
                         },
+                        { data: 'customerComment' },
                         {
                             data: 'modifiedDate',
                             render: function (data, type, row) {
@@ -388,15 +378,19 @@ else
 
                             buttonHtml += '<a href="#" class="btn btn-view" title="@Resource.GetKey("List_Of_User_Cars")" data-id="' + customerID + '"><i class="fa fa-car" style="color:black"></i></a>';
                             buttonHtml += '<a href="#" class="btn btn-email" title="@Resource.GetKey("Send_Email")" data-id="' + customerID + '" data-email="' + row.email + '" ><i class="fa fa-envelope" style="color:#0366d6"></i></a>';
-                                buttonHtml += '<a href="#" class="btn btn-edit" title="@Resource.GetKey("Edit")" id="btnEditCustomer" data-id="' + customerID + '" ><i class="fas fa-user-edit" style="color:red"></i></a>';
+                            buttonHtml += '<a href="#" class="btn btn-edit" title="@Resource.GetKey("Edit")" id="btnEditCustomer" data-id="' + customerID + '" ><i class="fas fa-user-edit" style="color:red"></i></a>';
 
                             if (enableAccess === 3) {
                                 buttonHtml += '<a href="#" class="btn btn-add" data-disabled="true" title="@Resource.GetKey("Add_Service_History")" id="btnAddCarServiceHistory" data-id="" >';
                                 buttonHtml += '<i class="fa fa-wrench" style="color:green"></i></a>';
+                                buttonHtml += '<a href="#" class="btn btn-add" data-disabled="true" title="@Resource.GetKey("Add_Service_Appointment_Form")" id="btnAddCarServiceHistory" data-id="" >';
+                                buttonHtml += '<i class="far fa-calendar-check" style="color:blue"></i></a>';
                             } else {
                                 buttonHtml += '<a href="#" class="btn btn-add" title="@Resource.GetKey("Add_Service_History")" id="btnAddCarServiceHistory" data-id="' + customerID + '" >';
                                 buttonHtml += '<i class="fa fa-wrench" style="color:green"></i>';
                                 buttonHtml += '<i class="fa fa-ban" style="color:red; visibility: hidden;"></i></a>';
+                                buttonHtml += '<a href="#" class="btn btn-add-service-appointment" title="@Resource.GetKey("Add_Service_Appointment_Form")" id="btnAddServiceAppointment" data-id="' + customerID + '" >';
+                                buttonHtml += '<i class="far fa-calendar-check" style="color:blue"></i>';
                             }
                             buttonHtml += '</div>';
                             return buttonHtml;
@@ -426,11 +420,11 @@ else
                     select: {style: 'multi'},
                     "columnDefs": [
                         {
-                            "targets": [0,7,10],
+                            "targets": [0, 5, 8, 9, 12],
                             "visible": false
                         }
                         ,{
-                            "targets": [0, 3, 4, 7, 9, 10, 11, 12],
+                            "targets": [0, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13],
                             "orderable": false
                         }
                         //,
@@ -457,6 +451,7 @@ else
 
                         $('td', row).css('vertical-align', 'middle'); // For vertical middle allignment
                     }, 
+
                     "language": {
                         "lengthMenu": "@Resource.GetKey("Show_DataTable") _MENU_ @Resource.GetKey("Entries_Per_Page")",
                         "zeroRecords": "@Resource.GetKey("No_Matching_Records_Found_DataTable")",
@@ -477,7 +472,9 @@ else
                             "next": "@Resource.GetKey("Next_DataTable")",
                             "previous": "@Resource.GetKey("Previous_DataTable")"
                         }
-                    }
+                    },
+                    "lengthMenu":   [[10, 25, 50, 100, -1],  // Array for custom entries in the dropdown (can add more or less)
+                                    [10, 25, 50, 100, allText]]  // This will display 'All' instead of -1
                 });
 
                 //console.log("After Init");
@@ -607,6 +604,26 @@ else
                 $.get(url, function (response) {
                     $('#addcarServiceHistoryDiv').html(response);
                     $('#addcarServiceHistoryDiv').find('.modal').modal('show');
+                });
+            }
+        });
+
+        // Handle Actions create service appointment button click
+        $('#customersTable tbody').on('click', 'a.btn-add-service-appointment', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if ($(this).attr('data-disabled') !== 'true') {
+                // Get the DataTables row associated with the clicked edit button
+                var rowData = $('#customersTable').DataTable().row($(this).closest('tr')).data();
+                // Retrieve the customerID value from the row data
+                var id = rowData.customerID;
+                var url = "@Url.Action("CreateServiceAppointmentPartial", "ServiceAppointment")" + '/?customerID=' + id;
+                console.log("URL: "+ url);
+
+                //Load partial view into the container
+                $.get(url, function (response) {
+                    $('#addServiceAppointmentDiv').html(response);
+                    $('#addServiceAppointmentDiv').find('.modal').modal('show');
                 });
             }
         });

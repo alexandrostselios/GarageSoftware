@@ -21,7 +21,7 @@
                     <input type="hidden" id="selectedDescriptionOrder" name="selectedDescriptionOrder" />
                     @*<div class="form-row importCarManufacturers">*@
                     <div class="input-group custom-file-button importCarManufacturers">
-                        <label class="input-group-text labelImport" for="inputGroupFile">File</label>
+                        <label class="input-group-text labelImport" for="inputGroupFile">@Resource.GetKey("File")</label>
                         <input type="file" class="form-control" name="file" id="inputExcelFile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
                         @*<button class="buttonImport" type="submit">@Resource.GetKey("Import_Manufacturers_From_Excel")</button>*@
                     </div>
@@ -45,20 +45,7 @@
                             <label for="garageIDOrder">@Resource.GetKey("Choose_GarageID_Column_To_Import")</label>
                             <select id="garageIDOrder" name="garageIDOrder" class="form-control"></select>
                         </div>
-@*                        <div class="form-group col-sm-4">
-                            <label for="descriptionOrder">Choose Model Name column</label>
-                            <input type="text" id="descriptionOrder" name="descriptionOrder" class="form-control" />
-                        </div>*@
-@*                        <div class="form-group col-sm-4">
-                            <label for="priceOrder">Choose Price column</label>
-                            <input type="text" id="priceOrder" name="priceOrder" class="form-control" />
-                        </div>*@
-@*                        <div class="form-group col-sm-4">
-                            <label for="garageIDOrder">Choose Garage ID column</label>
-                            <input type="text" id="garageIDOrder" name="garageIDOrder" class="form-control" />
-                        </div>*@
                     </div>
-                   
                     <div class="modal-footer">
                         <button type="submit" value="Create" class="btn btn-success">@Resource.GetKey("Import")</button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">@Resource.GetKey("Cancel")</button>
@@ -93,6 +80,7 @@
 
     $(document).ready(function () {
         $('#excelSheetOrder').on('change', function () {
+            $("#excelSheetOrder").empty(); // Clear the select options
             importExcelServiceItemsPartial();
         });
     });

@@ -51,7 +51,7 @@ namespace GaragePortalNewUI.Models
                 List<CarModels> temp = si.GetCarModels().ToList();
                 return PartialView("_ModelsPartial");
             }
-            else if (id == 4)
+            else if (id == 6)
             {
                 return PartialView("_UtilitiesPartial");
             }

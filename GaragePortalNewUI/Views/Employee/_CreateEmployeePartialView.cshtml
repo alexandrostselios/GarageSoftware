@@ -6,6 +6,7 @@
 @{
     ViewData["Title"] = @Resource.GetKey("Add_New_Employee");
     ResourceManager resourceManager = new ResourceManager("GaragePortalNewUI.Resources.SharedResource", typeof(EnableAccess).Assembly);
+    string aspAction = (Model != null ? "EditEmployee" : "CreateEmployeePartial"); // In order to use the same page for both Create/Edit
 }
 
 <div id="AddEmployee" name="AddEmployee" class="modal" tabindex="-1" role="dialog">
@@ -17,7 +18,10 @@
                     <span aria-hidden="true">&times;</span>
                 </button>*@
             </div>
-            <form id="yourFormId" method="post" asp-action="CreateEmployeePartial" asp-controller="Employee" enctype="multipart/form-data">
+            <script>
+                console.log("Action: @aspAction");
+            </script>
+            <form id="yourFormId" method="post" asp-action="@aspAction" asp-controller="Employee" enctype="multipart/form-data">
                 <input type="hidden" name="GarageID" value="@ViewBag.GarageID" />
                 <div class="modal-body">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -47,7 +51,7 @@
                         </div>
                         <div class="col">
                             <div class="form-group">
-                                <label asp-for="EmployeeMobilePhone" class="control-label">@Resource.GetKey("MobilePhone")</label>
+                                <label asp-for="EmployeeMobilePhone" class="control-label">@Resource.GetKey("Mobile_Phone")</label>
                                 <input asp-for="EmployeeMobilePhone" class="form-control" />
                                 <span asp-validation-for="EmployeeMobilePhone" class="text-danger"></span>
                             </div>

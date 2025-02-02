@@ -786,13 +786,6 @@
   <data name="PreviousKM" xml:space="preserve">
     <value>Previous km</value>
   </data>
-  <data name="MobilePhone" xml:space="preserve">
-    <value>Mobile Phone</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="HomePhone" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
   <data name="Employees" xml:space="preserve">
     <value>Employees</value>
   </data>
@@ -841,5 +834,80 @@
   <data name="UserPhoto" xml:space="preserve">
     <value>Photo</value>
     <comment>UserPhoto</comment>
+  </data>
+  <data name="List_Of_Engineer_Specialities" xml:space="preserve">
+    <value>List Of Engineer Specialities</value>
+  </data>
+  <data name="Edit_Engineer_Speciality" xml:space="preserve">
+    <value>Edit Engineer Speciality</value>
+  </data>
+  <data name="Add_Engineer_Speciality" xml:space="preserve">
+    <value>Add Engineer Speciality</value>
+  </data>
+  <data name="Import_Engineer_Specialities" xml:space="preserve">
+    <value>Import Engineer Specialities</value>
+  </data>
+  <data name="Import_Engineer_Specialities_Info" xml:space="preserve">
+    <value>From this menu you are able to import Engineer Specialities</value>
+  </data>
+  <data name="Choose_Engineer_Speciality_Description_Column_To_Import" xml:space="preserve">
+    <value>Choose Engineer Speciality Column</value>
+  </data>
+  <data name="File" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="Service_Appointment_Pending" xml:space="preserve">
+    <value>Pending</value>
+  </data>
+  <data name="Service_Appointment_Completed" xml:space="preserve">
+    <value>Completed</value>
+  </data>
+  <data name="Service_Appointment_Cancelled" xml:space="preserve">
+    <value>Cancelled</value>
+  </data>
+  <data name="List_Of_Service_Appointments" xml:space="preserve">
+    <value>List Of Service Appointments</value>
+  </data>
+  <data name="Service_Appointment_Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Service_Appointment_Comments" xml:space="preserve">
+    <value>Comments</value>
+  </data>
+  <data name="Service_Appointment_ID" xml:space="preserve">
+    <value>Appointment ID</value>
+  </data>
+  <data name="Edit_Service_Appointment" xml:space="preserve">
+    <value>Edit Service Appointment</value>
+  </data>
+  <data name="Service_Appointment_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="ServiceAppointmentStatus_Cancelled" xml:space="preserve">
+    <value>Cancelled</value>
+  </data>
+  <data name="ServiceAppointmentStatus_Completed" xml:space="preserve">
+    <value>Completed</value>
+  </data>
+  <data name="ServiceAppointmentStatus_Pending" xml:space="preserve">
+    <value>Pending</value>
+  </data>
+  <data name="Complete" xml:space="preserve">
+    <value>Complete</value>
+  </data>
+  <data name="Customer_Name_Surname" xml:space="preserve">
+    <value>Name &amp; Surname</value>
+  </data>
+  <data name="Add_Service_Appointment_Form" xml:space="preserve">
+    <value>Add Service Appointment</value>
+  </data>
+  <data name="Import_Employees_Info" xml:space="preserve">
+    <value>From this menu you are able to import Employees</value>
+  </data>
+  <data name="Import_Employees" xml:space="preserve">
+    <value>Import Employees</value>
+  </data>
+  <data name="Mobile_Phone" xml:space="preserve">
+    <value>Mobile Phone</value>
   </data>
 </root>

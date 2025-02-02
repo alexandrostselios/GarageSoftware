@@ -1,0 +1,21 @@
+﻿@using GaragePortalNewUI.Models;
+@inject LanguageService Resource
+
+<div id="colorExplanation" class="color-explanation" style="display: none;">
+    <div>
+        <span style="display: inline-block; width: 15px; height: 15px; background-color: #FAFCFE; margin-right: 5px; border: 1px solid black;"></span>
+        <span style="vertical-align: super; font-size: 12px;">@Resource.GetKey("Service_Appointment_Pending")</span>
+    </div>
+    <div>
+        <span style="display: inline-block; width: 15px; height: 15px; background-color: #f0be63; margin-right: 5px; border: 1px solid black;"></span>
+        <span style="vertical-align: super; font-size: 12px;">@Resource.GetKey("Service_Appointment_Cancelled")</span>
+    </div>
+    <div>
+        <span style="display: inline-block; width: 15px; height: 15px; background-color: #95d479 ; margin-right: 5px; border: 1px solid black;"></span>
+        <span style="vertical-align: super; font-size: 12px;">@Resource.GetKey("Service_Appointment_Completed")</span>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

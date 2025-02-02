@@ -1,0 +1,916 @@
+﻿@model IEnumerable<GaragePortalNewUI.ViewModels.ServiceAppointmentViewModel>
+@inject LanguageService Resource
+
+@{
+    ViewData["Title"] = @Resource.GetKey("List_Of_Service_Appointments");
+}
+
+@if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Admin.ToString())
+{
+    @Html.Partial("~/PartialViews/_ServiceAppointmentsColorsExplanationPartialView.cshtml")
+    //@Html.Partial("~/PartialViews/_SuccessUserCreationPartialView.cshtml")
+    //@Html.Partial("~/PartialViews/_FailedUserCreationPartialView.cshtml")
+
+    <button class="btn btn-sm btn-primary m-2" id="btnAddServiceAppointment" data-bs-toggle="ajax-modal" data-bs-target="#AddServiceAppointment" data-url="@Url.Action("CreateServiceAppointmentPartial")">@Resource.GetKey("Add_Service_Appointment_Form")</button>
+    <div id="addServiceAppointmentDIV"></div>
+    <div id="editServiceAppointmentDIV"></div>
+    <br>
+    <br>
+    <table id="serviceAppointmentsTable" class="table table-striped" style="display: none">
+        <thead>
+            <tr>
+                <th class="all">
+                    ID
+                </th>
+                <th class="all">
+                    @Resource.GetKey("Customer_Name_Surname")
+                </th>
+                <th class="all">
+                    @Resource.GetKey("Customer CarID")
+                </th>
+                <th class="all">
+                    @Resource.GetKey("Model_Manufacturer")
+                </th>
+                <th class="all">
+                    @Resource.GetKey("Model")
+                </th>
+                <th class="all">
+                    @Resource.GetKey("Licence_Plate")
+                </th>
+                <th class="all">
+                    @Resource.GetKey("VIN")
+                </th>
+                <th class="all">
+                    @Resource.GetKey("Color")
+                </th>
+                 <th class="all">
+                    @Resource.GetKey("Kilometer")
+                </th>
+                <th class="all">
+                    @Resource.GetKey("Service_Appointment_Date")
+                </th>
+                <th class="all">
+                    @Resource.GetKey("Service_Appointment_Comments")
+                </th>
+                <th class="all">
+                    serviceAppointmentStatus
+                </th>
+                <th class="all">
+                    GarageID
+                </th>
+                <th class="all">
+
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+        </tbody>
+    </table>
+}
+else
+{
+     @Html.Partial("~/PartialViews/_ServiceAppointmentsColorsExplanationPartialView.cshtml")
+    //@Html.Partial("~/PartialViews/_SuccessUserCreationPartialView.cshtml")
+    //@Html.Partial("~/PartialViews/_FailedUserCreationPartialView.cshtml")
+
+    <button class="btn btn-sm btn-primary m-2" id="btnAddServiceAppointment" data-bs-toggle="ajax-modal" data-bs-target="#AddServiceAppointment" data-url="@Url.Action("CreateServiceAppointmentPartial", new { customerID = ViewBag.ID })">@Resource.GetKey("Add_Service_Appointment_Form")</button>
+    <div id="addServiceAppointmentDIV"></div>
+    <div id="editServiceAppointmentDIV"></div>
+    <br>
+    <br>
+    <table id="customerServiceAppointmentsTable" class="table table-striped" style="display: none">
+        <thead>
+            <tr>
+                <th class="all">
+                    ID
+                </th>
+                <th class="all">
+                    @Resource.GetKey("Customer_Name_Surname")
+                </th>
+                <th class="all">
+                    @Resource.GetKey("Customer CarID")
+                </th>
+                <th class="all">
+                    @Resource.GetKey("Model_Manufacturer")
+                </th>
+                <th class="all">
+                    @Resource.GetKey("Model")
+                </th>
+                <th class="all">
+                    @Resource.GetKey("Licence_Plate")
+                </th>
+                <th class="all">
+                    @Resource.GetKey("VIN")
+                </th>
+                <th class="all">
+                    @Resource.GetKey("Color")
+                </th>
+                 <th class="all">
+                    @Resource.GetKey("Kilometer")
+                </th>
+                <th class="all">
+                    @Resource.GetKey("Service_Appointment_Date")
+                </th>
+                <th class="all">
+                    @Resource.GetKey("Service_Appointment_Comments")
+                </th>
+                <th class="all">
+                    serviceAppointmentStatus
+                </th>
+                <th class="all">
+                    GarageID
+                </th>
+                <th class="all">
+
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+        </tbody>
+    </table>
+}
+
+
+
+@section scripts{
+    <script type="text/javascript">
+         /* Start Success Engineer Info Pop Up */
+
+        var successMessageInfo = "Good";
+        var successMessage = "@ViewBag.ServiceAppointmentCreated";
+        console.log("Message: "+ successMessage);
+        // if (successMessage == "Successfully") {
+        //     $(document).ready(function () {
+        //         $('#successCreatedUserModal').modal('show');
+        //         $('#successMessageInfoPlaceholder').text(successMessageInfo); // Set the success message
+        //         $('#successCreatedUserModal').on('shown.bs.modal', function () {
+        //             // Get the modal dialog
+        //             var modalDialog = $(this).find('.modal-dialog');
+        //             // Calculate top margin for centering
+        //             var marginTop = ($(window).height() - modalDialog.outerHeight()) / 2;
+        //             // Set the top margin
+        //             modalDialog.css('margin-top', marginTop);
+        //         });
+        //     });
+        // } else if (successMessage == "Failed") {
+        //     $(document).ready(function () {
+        //         $('#failedCreatedUserModal').modal('show');
+        //         $('#failedMessageInfoPlaceholder').text(successMessageInfo); // Set the success message
+        //         $('#failedCreatedUserModal').on('shown.bs.modal', function () {
+        //             // Get the modal dialog
+        //             var modalDialog = $(this).find('.modal-dialog');
+        //             // Calculate top margin for centering
+        //             var marginTop = ($(window).height() - modalDialog.outerHeight()) / 2;
+        //             // Set the top margin
+        //             modalDialog.css('margin-top', marginTop);
+        //         });
+        //     });
+        // }
+
+        /* End Success Engineer Creation Info Pop Up */
+
+
+        var table;
+        var originalRowColors = [];
+        // Get the Greek value for "All" and store it in a JavaScript variable
+        var allText = '@Html.Raw(Resource.GetKey("All"))';  // Ensuring proper handling of Greek characters
+        var customerUserType = '@ViewBag.UserType';
+        console.log("CustomerID: "+ customerUserType);
+        if(customerUserType === "Admin" || customerUserType === "Employee"){
+            $(function () {
+                $('#serviceAppointmentsTable tbody').empty();
+                $.get('@Url.Action("GetServiceAppointments", "ServiceAppointment")',  { customerID: 0 },function (data) {
+                    // Clear existing rows
+                    $('#serviceAppointmentsTable tbody').empty();
+                    // Iterate through the data and append rows to the table
+                    $.each(data, function (index, item) {
+                        var row = '<tr>' +
+                            '<td>' + item.id + '</td>' +
+                            '<td>' + item.customer + '</td>'+
+                            '<td>' + item.customerCarID + '</td>'+
+                            '<td>' + item.kilometer + '</td>' +
+                            '<td>' + item.licencePlate + '</td>' +
+                            '<td>' + item.manufacturerName + '</td>' +
+                            '<td>' + item.modelName + '</td>' +
+                            '<td>' + item.vin + '</td>' +
+                            '<td>' + item.color + '</td>' +
+                            '<td>' + item.serviceAppointmentDate + '</td>' +
+                            '<td>' + item.serviceAppointmentComments + '</td>' +
+                            '<td>' + item.serviceAppointmentStatus + '</td>' +
+                            '<td>' + item.garageID + '</td>' +
+                            '</tr>';
+                        $('#serviceAppointmentsTable tbody').append(row);
+                    });
+                    //$('#customersPlaceHolder').html(data);
+                    console.log(data);
+                    table = $('#serviceAppointmentsTable').DataTable({
+                        dom: "<'row'<'col-sm-6'B><'col-sm-6'<'pull-right'lf>>>" +
+                            "<'row'<'col-sm-12'tr>>" +
+                            "<'row'<'col-sm-5'i><'col-sm-1'><'col-sm-6'p>>",
+                        initComplete: function () {
+                            // Add spacing between "Show x entries" and "Search" elements
+                            $('.dataTables_length').css('margin-right', '20px');
+                        },
+                        buttons: [
+                            {
+                                text: '<i class="fa fa-check-square-o"></i>',
+                                className: 'btn btn-success',
+                                action: function () {
+                                    table.rows({ page: 'current' }).select(); // Select visible rows on current page
+                                    //table.rows().select();
+                                    var selectedRows = table.rows({ selected: true }).nodes(); // Get selected rows
+                                    $(selectedRows).css('background-color', '#34baeb'); // Set background color to blue for selected rows
+                                },
+                                init: function (api, node, config) {
+                                    $(node).tooltip({
+                                        title: decodeResourceText('@Resource.GetKey("Select_All")'), // Tooltip text
+                                        placement: 'bottom', // Tooltip placement
+                                        trigger: 'hover' // Show tooltip on hover
+                                    });
+                                }
+                            },
+                            {
+                                text: '<i class="fa fa-minus-square-o"></i>',
+                                className: 'btn btn-danger',
+                                action: function () {
+                                    table.rows({ page: 'current' }).deselect(); // Deselect visible rows on current page
+                                    //table.rows().deselect();
+                                    var deselectedRows = table.rows().nodes(); // Get all rows
+                                    $(deselectedRows).css('background-color', function (index) {
+                                        return originalRowColors[index]; // Restore original background color for each row
+                                    });
+                                },
+                                init: function (api, node, config) {
+                                    $(node).tooltip({
+                                        title: decodeResourceText('@Resource.GetKey("Unselect_All")'), // Tooltip text
+                                        placement: 'bottom', // Tooltip placement
+                                        trigger: 'hover' // Show tooltip on hover
+                                    });
+                                }
+                            },
+                            {
+                                extend: 'excelHtml5',
+                                text: '<i class="fa fa-file-excel-o"></i>',
+                                className: 'btn btn-primary',
+                                exportOptions: {
+                                    orthogonal: 'sort',
+                                    columns: ':visible:not(.no-export)'
+                                },
+                                customize: function (xlsx) {
+                                    var selectedRowCount = table.rows({ selected: true }).count();
+                                    console.log("Selected: " + selectedRowCount);
+
+                                    if (selectedRowCount === 0) {
+                                        if (!xlsx.xl.worksheets['sheet1.xml'].sheetData) {
+                                            xlsx.xl.worksheets['sheet1.xml'].sheetData = [];
+                                        }
+                                        var messageRow = {
+                                            row: [
+                                                {
+                                                    c: [
+                                                        { v: 'No rows selected!', s: { fontId: 2 } }
+                                                    ]
+                                                }
+                                            ]
+                                        };
+                                        xlsx.xl.worksheets['sheet1.xml'].sheetProtection = { password: '1234', sheet: true };
+                                        xlsx.xl.worksheets['sheet1.xml'].sheetViews = [{ showGridLines: false }];
+                                        xlsx.xl.worksheets['sheet1.xml'].sheetFormatPr = { defaultRowHeight: 15 };
+                                        xlsx.xl.worksheets['sheet1.xml'].dimension = { ref: "A1:B2" };
+
+                                        // Prepend the message row to the sheetData array
+                                        xlsx.xl.worksheets['sheet1.xml'].sheetData.unshift(messageRow);
+                                    }
+                                },
+                                init: function (api, node, config) {
+                                    $(node).tooltip({
+                                        title: decodeResourceText('@Resource.GetKey("Export_To_Excel")'), // Tooltip text
+                                        placement: 'bottom', // Tooltip placement
+                                        trigger: 'hover' // Show tooltip on hover
+                                    });
+                                }
+                            },
+                            {
+                                extend: 'print',
+                                text: '<i class="fa fa-print"> </i>',
+                                className: 'btn btn-warning',
+                                exportOptions: {
+                                    orthogonal: 'sort',
+                                    rows: { selected: true }, // Only export selected rows
+                                    columns: ':visible:not(.no-export)'
+                                },
+                                init: function (api, node, config) {
+                                    $(node).tooltip({
+                                        title: decodeResourceText('@Resource.GetKey("Print")'), // Tooltip text
+                                        placement: 'bottom', // Tooltip placement
+                                        trigger: 'hover' // Show tooltip on hover
+                                    });
+                                }
+                            },
+                            {
+                                extend: 'print',
+                                text: '<i class="fa fa-file-pdf-o"></i>',
+                                className: 'btn btn-dark',
+                                exportOptions: {
+                                    orthogonal: 'sort',
+                                    rows: { selected: true }, // Only export selected rows
+                                    columns: ':visible:not(.no-export)'
+                                },
+                                init: function (api, node, config) {
+                                    $(node).tooltip({
+                                        title: decodeResourceText('PDF'), // Tooltip text
+                                        placement: 'bottom', // Tooltip placement
+                                        trigger: 'hover' // Show tooltip on hover
+                                    });
+                                },
+                                action: function (e, dt, button, config) {
+                                    // Set window location to the download endpoint
+                                    window.location.href = '/PdfCreator/CreatePDF?entityType=3';
+                                }
+                            },
+                            {
+                                text: '<i class="fa fa-info-circle"></i>',
+                                //titleAttr: 'Color Explanation',
+                                className: 'btn btn-info',
+                                action: function () {
+                                    // Add action here if needed
+                                },
+                                init: function (api, node, config) {
+                                    $(node).popover({
+                                        placement: 'top',
+                                        content: $('#colorExplanation').html(),
+                                        html: true,
+                                        trigger: 'hover', // Show popover on hover
+                                        delay: { show: 0, hide: 100 } // Add a small delay to avoid flickering
+                                    }).on('shown.bs.popover', function () {
+                                        $('.popover-content').css('font-size', '12px'); // Set font size for popover content
+                                        $('.popover').css('max-width', '200px'); // Set max width for popover
+                                    });
+                                }
+                            }
+                        ],
+                        data: data,
+                        columns: [
+                            { data:  'id'},
+                            { data: 'customer' },
+                            { data: 'customerCarID' },
+                            { data: 'manufacturerName' },
+                            { data: 'modelName' },
+                            { data: 'licencePlate' },
+                            { data: 'vin' },
+                            { data: 'color' },
+                            { data: 'kilometer' },
+                            { data: 'serviceAppointmentDate' },
+                            { data: 'serviceAppointmentComments' }, 
+                            { data: 'serviceAppointmentStatus' },
+                            { data: 'garageID' },
+                            {
+                                data: null,
+                                render: function (data, type, row) {
+                                    return '<div class="btn-group" role="group"><a href="#" class="btn btn-edit" title="@Resource.GetKey("Edit")" id="btnEditServiceAppointment" data-id="' + row.id + '" ><i class="fa fa-pencil-square-o" style="color:blue"></i></a>'+
+                                    '<a href="#" class="btn btn-pending" title="@Resource.GetKey("Pending")" id="btnPendingServiceAppointment" data-id="' + row.id + '" ><i class="fa fa-clock-o"></i></a>' +
+                                    '<a href="#" class="btn btn-complete" title="@Resource.GetKey("Complete")" id="btnCompleteServiceAppointment" data-id="' + row.id + '" ><i class="fa fa-check-circle-o" style="color:green"></i></a>' +
+                                    '<a href="#" class="btn btn-cancel" title="@Resource.GetKey("Cancel")" id="btnCancelServiceAppointment" data-id="' + row.id + '" ><i class="fa fa-times" style="color:red"></i></a>' +
+
+                                    '</div>';
+                                },
+                                "width": "150px"
+                            } 
+                        ],
+                        "columnDefs": [
+                            {
+                                "targets": [0, 2, 6, 7, 11, 12],
+                                "visible": false
+                            }
+                            , {
+                                "targets": [0, 2, 3, 4, 5, 6, 7, 8, 10 ,12],
+                                "orderable": false
+                            }
+                        ],
+                        select: {style: 'multi'},
+                        "rowCallback": function (row, data) {
+                            var serviceAppointmentStatus = data.serviceAppointmentStatus;
+                            if (serviceAppointmentStatus === 1) {
+                                //console.log("2");
+                                $(row).css('background-color', '#FAFCFE');
+                            } else if (serviceAppointmentStatus === 2) {
+                                // console.log("3");
+                                $(row).css('background-color', '#f0be63'); //#eb6534
+                                //disable service icon btnAddCarServiceHistory
+                            } else if (serviceAppointmentStatus === 3) {
+                                //console.log("Other");
+                                $(row).css('background-color', '#95d479');
+                            }
+                            originalRowColors.push($(row).css('background-color'));
+                            $('td', row).css('vertical-align', 'middle'); // For vertical middle allignment
+                        },
+                        "language": {
+                            "lengthMenu": "@Resource.GetKey("Show_DataTable") _MENU_ @Resource.GetKey("Entries_Per_Page")",
+                            "zeroRecords": "@Resource.GetKey("No_Matching_Records_Found_DataTable")",
+                            "info": "@Resource.GetKey("Show_DataTable") _START_ @Resource.GetKey("To_DataTable") _END_ @Resource.GetKey("Of_DataTable") _TOTAL_ @Resource.GetKey("Entries_DataTable")",
+                            "infoEmpty": "@Resource.GetKey("Showing_Empty_DataTable")",
+                            "infoFiltered": "(@Resource.GetKey("Filtered_From_DataTable") _MAX_ @Resource.GetKey("Total_DataTable") @Resource.GetKey("Entries_DataTable"))",
+                            "search": "@Resource.GetKey("Search"):",
+                            "select": {
+                                rows: {
+                                    _: '%d @Resource.GetKey("Rows_Selected")',
+                                    0: '',
+                                    1: '@Resource.GetKey("One_Row_Selected")'
+                                }
+                            },
+                            "paginate": {
+                                "first": "First",
+                                "last": "Last",
+                                "next": "@Resource.GetKey("Next_DataTable")",
+                                "previous": "@Resource.GetKey("Previous_DataTable")"
+                            }
+                        },
+                        "lengthMenu":   [[10, 25, 50, 100, -1],  // Array for custom entries in the dropdown (can add more or less)
+                                        [10, 25, 50, 100, allText]]  // This will display 'All' instead of -1
+                    });
+                });
+
+                $('#serviceAppointmentsTable').show();
+
+                $('#serviceAppointmentsTable tbody').on('click', 'tr', function () {
+                    // Toggle selected class
+                    $(this).toggleClass('selected');
+                    var rowIndex = $(this).index(); // Get the index of the clicked row
+                    if ($(this).hasClass('selected')) {
+                        console.log("selected");
+                        $(this).css('background-color', '#34baeb');
+                    } else {
+                        console.log("Unselected");
+                        $(this).css('background-color', originalRowColors[rowIndex]);
+                    }
+                });
+            });
+        }else{
+            $(function () {
+	            $('#customerServiceAppointmentsTable tbody').empty();
+	            $.get('@Url.Action("GetServiceAppointments", "ServiceAppointment")',  { customerID: '@ViewBag.ID' },function (data) {
+		            // Clear existing rows
+		            $('#customerServiceAppointmentsTable tbody').empty();
+		            // Iterate through the data and append rows to the table
+		            $.each(data, function (index, item) {
+			            var row = '<tr>' +
+				            '<td>' + item.id + '</td>' +
+				            '<td>' + item.customer + '</td>'+
+				            '<td>' + item.customerCarID + '</td>'+
+				            '<td>' + item.kilometer + '</td>' +
+				            '<td>' + item.licencePlate + '</td>' +
+				            '<td>' + item.manufacturerName + '</td>' +
+				            '<td>' + item.modelName + '</td>' +
+				            '<td>' + item.vin + '</td>' +
+				            '<td>' + item.color + '</td>' +
+				            '<td>' + item.serviceAppointmentDate + '</td>' +
+				            '<td>' + item.serviceAppointmentComments + '</td>' +
+				            '<td>' + item.serviceAppointmentStatus + '</td>' +
+				            '<td>' + item.garageID + '</td>' +
+				            '</tr>';
+			            $('#customerServiceAppointmentsTable tbody').append(row);
+		            });
+		            //$('#customersPlaceHolder').html(data);
+		            console.log(data);
+		            table = $('#customerServiceAppointmentsTable').DataTable({
+			            dom: "<'row'<'col-sm-6'B><'col-sm-6'<'pull-right'lf>>>" +
+				            "<'row'<'col-sm-12'tr>>" +
+				            "<'row'<'col-sm-5'i><'col-sm-1'><'col-sm-6'p>>",
+			            initComplete: function () {
+				            // Add spacing between "Show x entries" and "Search" elements
+				            $('.dataTables_length').css('margin-right', '20px');
+			            },
+			            buttons: [
+				            {
+					            text: '<i class="fa fa-check-square-o"></i>',
+					            className: 'btn btn-success',
+					            action: function () {
+						            table.rows({ page: 'current' }).select(); // Select visible rows on current page
+						            //table.rows().select();
+						            var selectedRows = table.rows({ selected: true }).nodes(); // Get selected rows
+						            $(selectedRows).css('background-color', '#34baeb'); // Set background color to blue for selected rows
+					            },
+					            init: function (api, node, config) {
+						            $(node).tooltip({
+							            title: decodeResourceText('@Resource.GetKey("Select_All")'), // Tooltip text
+							            placement: 'bottom', // Tooltip placement
+							            trigger: 'hover' // Show tooltip on hover
+						            });
+					            }
+				            },
+				            {
+					            text: '<i class="fa fa-minus-square-o"></i>',
+					            className: 'btn btn-danger',
+					            action: function () {
+						            table.rows({ page: 'current' }).deselect(); // Deselect visible rows on current page
+						            //table.rows().deselect();
+						            var deselectedRows = table.rows().nodes(); // Get all rows
+						            $(deselectedRows).css('background-color', function (index) {
+							            return originalRowColors[index]; // Restore original background color for each row
+						            });
+					            },
+					            init: function (api, node, config) {
+						            $(node).tooltip({
+							            title: decodeResourceText('@Resource.GetKey("Unselect_All")'), // Tooltip text
+							            placement: 'bottom', // Tooltip placement
+							            trigger: 'hover' // Show tooltip on hover
+						            });
+					            }
+				            },
+				            {
+					            extend: 'excelHtml5',
+					            text: '<i class="fa fa-file-excel-o"></i>',
+					            className: 'btn btn-primary',
+					            exportOptions: {
+						            orthogonal: 'sort',
+						            columns: ':visible:not(.no-export)'
+					            },
+					            customize: function (xlsx) {
+						            var selectedRowCount = table.rows({ selected: true }).count();
+						            console.log("Selected: " + selectedRowCount);
+
+						            if (selectedRowCount === 0) {
+							            if (!xlsx.xl.worksheets['sheet1.xml'].sheetData) {
+								            xlsx.xl.worksheets['sheet1.xml'].sheetData = [];
+							            }
+							            var messageRow = {
+								            row: [
+									            {
+										            c: [
+											            { v: 'No rows selected!', s: { fontId: 2 } }
+										            ]
+									            }
+								            ]
+							            };
+							            xlsx.xl.worksheets['sheet1.xml'].sheetProtection = { password: '1234', sheet: true };
+							            xlsx.xl.worksheets['sheet1.xml'].sheetViews = [{ showGridLines: false }];
+							            xlsx.xl.worksheets['sheet1.xml'].sheetFormatPr = { defaultRowHeight: 15 };
+							            xlsx.xl.worksheets['sheet1.xml'].dimension = { ref: "A1:B2" };
+
+							            // Prepend the message row to the sheetData array
+							            xlsx.xl.worksheets['sheet1.xml'].sheetData.unshift(messageRow);
+						            }
+					            },
+					            init: function (api, node, config) {
+						            $(node).tooltip({
+							            title: decodeResourceText('@Resource.GetKey("Export_To_Excel")'), // Tooltip text
+							            placement: 'bottom', // Tooltip placement
+							            trigger: 'hover' // Show tooltip on hover
+						            });
+					            }
+				            },
+				            {
+					            extend: 'print',
+					            text: '<i class="fa fa-print"> </i>',
+					            className: 'btn btn-warning',
+					            exportOptions: {
+						            orthogonal: 'sort',
+						            rows: { selected: true }, // Only export selected rows
+						            columns: ':visible:not(.no-export)'
+					            },
+					            init: function (api, node, config) {
+						            $(node).tooltip({
+							            title: decodeResourceText('@Resource.GetKey("Print")'), // Tooltip text
+							            placement: 'bottom', // Tooltip placement
+							            trigger: 'hover' // Show tooltip on hover
+						            });
+					            }
+				            },
+				            {
+					            extend: 'print',
+					            text: '<i class="fa fa-file-pdf-o"></i>',
+					            className: 'btn btn-dark',
+					            exportOptions: {
+						            orthogonal: 'sort',
+						            rows: { selected: true }, // Only export selected rows
+						            columns: ':visible:not(.no-export)'
+					            },
+					            init: function (api, node, config) {
+						            $(node).tooltip({
+							            title: decodeResourceText('PDF'), // Tooltip text
+							            placement: 'bottom', // Tooltip placement
+							            trigger: 'hover' // Show tooltip on hover
+						            });
+					            },
+					            action: function (e, dt, button, config) {
+						            // Set window location to the download endpoint
+						            window.location.href = '/PdfCreator/CreatePDF?entityType=3';
+					            }
+				            },
+				            {
+					            text: '<i class="fa fa-info-circle"></i>',
+					            //titleAttr: 'Color Explanation',
+					            className: 'btn btn-info',
+					            action: function () {
+						            // Add action here if needed
+					            },
+					            init: function (api, node, config) {
+						            $(node).popover({
+							            placement: 'top',
+							            content: $('#colorExplanation').html(),
+							            html: true,
+							            trigger: 'hover', // Show popover on hover
+							            delay: { show: 0, hide: 100 } // Add a small delay to avoid flickering
+						            }).on('shown.bs.popover', function () {
+							            $('.popover-content').css('font-size', '12px'); // Set font size for popover content
+							            $('.popover').css('max-width', '200px'); // Set max width for popover
+						            });
+					            }
+				            }
+			            ],
+			            data: data,
+			            columns: [
+				            { data:  'id'},
+				            { data: 'customer' },
+				            { data: 'customerCarID' },
+				            { data: 'manufacturerName' },
+				            { data: 'modelName' },
+				            { data: 'licencePlate' },
+				            { data: 'vin' },
+				            { data: 'color' },
+				            { data: 'kilometer' },
+				            { data: 'serviceAppointmentDate' },
+				            { data: 'serviceAppointmentComments' }, 
+				            { data: 'serviceAppointmentStatus' },
+				            { data: 'garageID' },
+                            {
+                                data: null,
+                                render: function (data, type, row) {
+                                    let editButton = '';
+                                    let cancelButton = '';
+
+                                    // Show cancel button only if serviceAppointmentStatus is not 2 or 3
+                                    if (row.serviceAppointmentStatus !== 2 && row.serviceAppointmentStatus !== 3) {
+                                        editButton = '<a href="#" class="btn btn-edit" title="@Resource.GetKey("Edit")" id="btnEditServiceAppointment" data-id="' + row.id + '" ><i class="fa fa-pencil-square-o" style="color:blue"></i></a>';
+                                        cancelButton = '<a href="#" class="btn btn-cancel" title="@Resource.GetKey("Cancel")" id="btnCancelServiceAppointment" data-id="' + row.id + '" ><i class="fa fa-times" style="color:red"></i></a>';
+                                    }
+
+                                    return '<div class="btn-group" role="group">' +
+                                        editButton + cancelButton +
+                                        '</div>';
+                                },
+                                "width": "150px"
+                            }
+
+				            // {
+					           //  data: null,
+					           //  render: function (data, type, row) {
+						          //   return '<div class="btn-group" role="group"><a href="#" class="btn btn-edit" title="@Resource.GetKey("Edit")" id="btnEditServiceAppointment" data-id="' + row.id + '" ><i class="fa fa-pencil-square-o" style="color:blue"></i></a>'+
+						          //   '<a href="#" class="btn btn-cancel" title="@Resource.GetKey("Cancel")" id="btnCancelServiceAppointment" data-id="' + row.id + '" ><i class="fa fa-times" style="color:red"></i></a>' +
+
+						          //   '</div>';
+					           //  },
+					           //  "width": "150px"
+				            // } 
+			            ],
+			            "columnDefs": [
+				            {
+					            "targets": [0, 1, 2, 6, 7, 11, 12],
+					            "visible": false
+				            }
+				            , {
+					            "targets": [0, 2, 3, 4, 5, 6, 7, 8, 10 ,12],
+					            "orderable": false
+				            }
+			            ],
+			            select: {style: 'multi'},
+			            "rowCallback": function (row, data) {
+				            var serviceAppointmentStatus = data.serviceAppointmentStatus;
+				            if (serviceAppointmentStatus === 1) {
+					            //console.log("2");
+					            $(row).css('background-color', '#FAFCFE');
+				            } else if (serviceAppointmentStatus === 2) {
+					            // console.log("3");
+					            $(row).css('background-color', '#f0be63'); //#eb6534
+					            //disable service icon btnAddCarServiceHistory
+				            } else if (serviceAppointmentStatus === 3) {
+					            //console.log("Other");
+					            $(row).css('background-color', '#95d479');
+				            }
+				            originalRowColors.push($(row).css('background-color'));
+				            $('td', row).css('vertical-align', 'middle'); // For vertical middle allignment
+			            },
+			            "language": {
+				            "lengthMenu": "@Resource.GetKey("Show_DataTable") _MENU_ @Resource.GetKey("Entries_Per_Page")",
+				            "zeroRecords": "@Resource.GetKey("No_Matching_Records_Found_DataTable")",
+				            "info": "@Resource.GetKey("Show_DataTable") _START_ @Resource.GetKey("To_DataTable") _END_ @Resource.GetKey("Of_DataTable") _TOTAL_ @Resource.GetKey("Entries_DataTable")",
+				            "infoEmpty": "@Resource.GetKey("Showing_Empty_DataTable")",
+				            "infoFiltered": "(@Resource.GetKey("Filtered_From_DataTable") _MAX_ @Resource.GetKey("Total_DataTable") @Resource.GetKey("Entries_DataTable"))",
+				            "search": "@Resource.GetKey("Search"):",
+				            "select": {
+					            rows: {
+						            _: '%d @Resource.GetKey("Rows_Selected")',
+						            0: '',
+						            1: '@Resource.GetKey("One_Row_Selected")'
+					            }
+				            },
+				            "paginate": {
+					            "first": "First",
+					            "last": "Last",
+					            "next": "@Resource.GetKey("Next_DataTable")",
+					            "previous": "@Resource.GetKey("Previous_DataTable")"
+				            }
+			            },
+			            "lengthMenu":   [[10, 25, 50, 100, -1],  // Array for custom entries in the dropdown (can add more or less)
+							            [10, 25, 50, 100, allText]]  // This will display 'All' instead of -1
+		            });
+	            });
+
+	            $('#customerServiceAppointmentsTable').show();
+
+	            $('#customerServiceAppointmentsTable tbody').on('click', 'tr', function () {
+		            // Toggle selected class
+		            $(this).toggleClass('selected');
+		            var rowIndex = $(this).index(); // Get the index of the clicked row
+		            if ($(this).hasClass('selected')) {
+			            console.log("selected");
+			            $(this).css('background-color', '#34baeb');
+		            } else {
+			            console.log("Unselected");
+			            $(this).css('background-color', originalRowColors[rowIndex]);
+		            }
+	            });
+            });
+        }
+
+        // Handle edit button click
+        $('#serviceAppointmentsTable tbody').on('click', 'a.btn-edit', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            // Get the DataTables row associated with the clicked edit button
+            var rowData = $('#serviceAppointmentsTable').DataTable().row($(this).closest('tr')).data();
+            // Retrieve the customerID value from the row data
+            var id = rowData.id
+            var customerID = rowData.customerID
+            var customerCarID = rowData.customerCarID
+            // console.log("ID: " + id);
+            // console.log("Customer ID: " + customerID);
+            // console.log("Customer Car ID: " + customerCarID);
+            var url = "@Url.Action("EditServiceAppointmentPartial", "ServiceAppointment")" + '/?id=' + id + '&&customerID=' + customerID + '&&customerCarID=' + customerCarID + '&&garageID=' + @ViewBag.GarageID 
+                // Load partial view into the container
+                $.get(url, function (response) {
+                    $('#editServiceAppointmentDIV').html(response);
+                    $('#editServiceAppointmentDIV').find('.modal').modal('show');
+                });
+        });
+
+        $('#customerServiceAppointmentsTable tbody').on('click', 'a.btn-edit', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            // Get the DataTables row associated with the clicked edit button
+            var rowData = $('#customerServiceAppointmentsTable').DataTable().row($(this).closest('tr')).data();
+            // Retrieve the customerID value from the row data
+            var id = rowData.id
+            var customerID = rowData.customerID
+            var customerCarID = rowData.customerCarID
+            // console.log("ID: " + id);
+            // console.log("Customer ID: " + customerID);
+            // console.log("Customer Car ID: " + customerCarID);
+            var url = "@Url.Action("EditServiceAppointmentPartial", "ServiceAppointment")" + '/?id=' + id + '&&customerID=' + customerID + '&&customerCarID=' + customerCarID + '&&garageID=' + @ViewBag.GarageID 
+                // Load partial view into the container
+                $.get(url, function (response) {
+                    $('#editServiceAppointmentDIV').html(response);
+                    $('#editServiceAppointmentDIV').find('.modal').modal('show');
+                });
+        });
+
+        // Handle pending button click
+        $('#serviceAppointmentsTable tbody').on('click', 'a.btn-pending', function (e) {
+            var serviceAppointmentId = $(this).data("id");
+            var type = 1;
+            var garageId = @ViewBag.GarageID;
+
+             $.ajax({
+                url: "/ServiceAppointment/UpdateServiceAppointmentStatus",
+                type: "POST",
+                data: { ServiceAppointmentID: serviceAppointmentId, type: type, garageID: garageId },
+                success: function (response) {
+                    if (response.success) {
+                        // ✅ Refresh the whole page to reload data
+                        location.reload();
+                    } else {
+                        alert("Update failed: " + response.message);
+                    }
+                },
+                error: function () {
+                    alert("Error updating appointment.");
+                }
+            });
+        });
+
+        // Handle complete button click
+        $('#serviceAppointmentsTable tbody').on('click', 'a.btn-complete', function (e) {
+            var serviceAppointmentId = $(this).data("id");
+            var type = 3;
+            var garageId = @ViewBag.GarageID;
+
+             $.ajax({
+                url: "/ServiceAppointment/UpdateServiceAppointmentStatus",
+                type: "POST",
+                data: { ServiceAppointmentID: serviceAppointmentId, type: type, garageID: garageId },
+                success: function (response) {
+                    if (response.success) {
+                        // ✅ Refresh the whole page to reload data
+                        location.reload();
+                    } else {
+                        alert("Update failed: " + response.message);
+                    }
+                },
+                error: function () {
+                    alert("Error updating appointment.");
+                }
+            });
+        });
+
+        // Handle cancel button click
+        $('#serviceAppointmentsTable tbody').on('click', 'a.btn-cancel', function (e) {
+            var serviceAppointmentId = $(this).data("id");
+            var type = 2;
+            var garageId = @ViewBag.GarageID;
+
+             $.ajax({
+                url: "/ServiceAppointment/UpdateServiceAppointmentStatus",
+                type: "POST",
+                data: { ServiceAppointmentID: serviceAppointmentId, type: type, garageID: garageId },
+                success: function (response) {
+                    if (response.success) {
+                        // ✅ Refresh the whole page to reload data
+                        location.reload();
+                    } else {
+                        alert("Update failed: " + response.message);
+                    }
+                },
+                error: function () {
+                    alert("Error updating appointment.");
+                }
+            });
+        });
+
+        $('#customerServiceAppointmentsTable tbody').on('click', 'a.btn-cancel', function (e) {
+            var serviceAppointmentId = $(this).data("id");
+            var type = 2;
+            var garageId = @ViewBag.GarageID;
+
+             $.ajax({
+                url: "/ServiceAppointment/UpdateServiceAppointmentStatus",
+                type: "POST",
+                data: { ServiceAppointmentID: serviceAppointmentId, type: type, garageID: garageId },
+                success: function (response) {
+                    if (response.success) {
+                        // ✅ Refresh the whole page to reload data
+                        location.reload();
+                    } else {
+                        alert("Update failed: " + response.message);
+                    }
+                },
+                error: function () {
+                    alert("Error updating appointment.");
+                }
+            });
+        });
+
+         $(function () {
+            var addaddServiceAppointmentDIVElement = $('#addServiceAppointmentDIV');
+            $('button[data-bs-toggle="ajax-modal"]').click(function (event) {
+                var url = $(this).data('url');
+                $.get(url).done(function (data) {
+                    addaddServiceAppointmentDIVElement.html(data);
+                    addaddServiceAppointmentDIVElement.find('.modal').modal('show');
+                })
+            })
+
+            //Save Add Makeform data
+            addaddServiceAppointmentDIVElement.on('click', '[data-bs-save="modal"]', function (event) {
+                var form = $(this).parents('.modal').find('form');
+                var actionUrl = form.attr("action");
+                var sendData = form.serialize();
+                $.post(actionUrl, sendData).done(function (data) {
+                    addaddServiceAppointmentDIVElement.find('.modal').modal('hide');
+                    location.reload(true);
+                })
+            })
+        })
+
+        function SetViewBag() {
+            $.ajax({
+                type: "POST",
+                url: '/ServiceAppointment/SetViewBag',
+                data: '{ value: null}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "text",
+                success: function (r) {
+
+                }
+            });
+        }
+
+
+
+   
+
+    </script>
+}

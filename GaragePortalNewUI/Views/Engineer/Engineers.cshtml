@@ -5,7 +5,7 @@
     ViewData["Title"] = @Resource.GetKey("List_Of_Engineers");
 }
 
-@if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Admin.ToString())
+@if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Admin.ToString() || @ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Employee.ToString())
 {
     @Html.Partial("~/PartialViews/_SuccessEmailSendPartialView.cshtml")
     @Html.Partial("~/PartialViews/_FailedEmailSendPartialView.cshtml")

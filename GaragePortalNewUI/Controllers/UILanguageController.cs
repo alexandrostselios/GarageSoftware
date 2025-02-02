@@ -30,10 +30,15 @@ namespace GaragePortalNewUI.Controllers
                 HttpContext.Session.SetString("Language", "English");
                 HttpContext.Session.SetString("Culture", "en-GB");
             }
-            else
+            else if (culture == "el-GR")
             {
                 HttpContext.Session.SetString("Language", "Ελληνικά");
                 HttpContext.Session.SetString("Culture", "el-GR");
+            }
+            else if (culture == "de-DE")
+            {
+                HttpContext.Session.SetString("Language", "Deutch");
+                HttpContext.Session.SetString("Culture", "de-DE");
             }
             HttpContext.Session.SetString("SuccessMessage", "null");
         }

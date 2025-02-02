@@ -14,7 +14,9 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddTransient<IEmailService, EmailService>();
 
         // Add notification service
-        services.AddHostedService<NotificationService>();
+        services.AddHostedService<ServiceExpirationReminderNotification>();
+        services.AddHostedService<ServiceAppointmentReminderNotification>();
+
     })
     .Build();
 

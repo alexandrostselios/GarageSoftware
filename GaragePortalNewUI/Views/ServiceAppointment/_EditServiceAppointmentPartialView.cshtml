@@ -1,0 +1,272 @@
+﻿@model GaragePortalNewUI.ViewModels.ServiceAppointmentViewModel
+@inject LanguageService Resource
+@using GaragePortalNewUI.Enum
+@using System.Resources
+@using System.Globalization
+@{
+    ResourceManager resourceManager = new ResourceManager("GaragePortalNewUI.Resources.SharedResource", typeof(ServiceAppointmentStatus).Assembly);
+}
+
+<div id="EditEngineer" name="EditEngineer" class="modal" tabindex="-1" role="form">
+    <div class="modal-dialog draggable modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header dragable_touch d-block">
+                <h5 class="modal-title">@Resource.GetKey("Edit_Service_Appointment") (@Resource.GetKey("Service_Appointment_ID"): @Model.ID)</h5>
+            </div>
+            <form asp-action="EditServiceAppointment" enctype="multipart/form-data">
+                <input type="hidden" asp-for="GarageID" value="@ViewBag.GarageID" />
+                <input type="hidden" asp-for="ID" value="@Model.ID" />
+                <div class="modal-body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="CustomerID" class="control-label">@Resource.GetKey("Customer_Name_Surname")</label>
+                                <select id="ShowCustomers" asp-for="CustomerID" onchange="getCustomerCarsTolist()" class=" form-control select2">
+                                    <option value='0'>--@Resource.GetKey("Select_Customer")--</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="ServiceAppointmentDate" class="control-label">@Resource.GetKey("Service_Appointment_Date")</label>
+                                <input asp-for="ServiceAppointmentDate" class="form-control" />
+                                <span asp-validation-for="ServiceAppointmentDate" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="ServiceAppointmentStatus" class="control-label">@Resource.GetKey("Service_Appointment_Status")</label>
+                                <select id="ServiceAppointmentStatus" asp-for="ServiceAppointmentStatus" class="form-control">
+                                    @foreach (var value in Enum.GetValues(typeof(ServiceAppointmentStatus)))
+                                    {
+                                        <option value="@((int)value)">@resourceManager.GetString($"ServiceAppointmentStatus_{value}")</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group quickServiceHistory">
+                                <label asp-for="CustomerCarID" class="control-label asterisk">@Resource.GetKey("Customer_Car")</label>
+                                <select id="ShowCustomerCars" asp-for="CustomerCarID" class="form-control" required>
+                                    <option value='0' selected>--@Resource.GetKey("Select_Car")--</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Kilometer" class="control-label">@Resource.GetKey("Kilometer")</label>
+                                <input asp-for="Kilometer" class="form-control" id="serviceKilometer" />
+                                <span asp-validation-for="Kilometer" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="ServiceAppointmentComments" class="control-label">@Resource.GetKey("Service_Appointment_Comments")</label>
+                                <input asp-for="ServiceAppointmentComments" class="form-control" />
+                                <span asp-validation-for="ServiceAppointmentComments" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" value="Create" class="btn btn-success">@Resource.GetKey("Edit")</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">@Resource.GetKey("Cancel")</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('.draggable').draggable({
+            handle: '.modal-header'
+        });
+    });
+</script>
+
+<script type="text/javascript">
+
+    $('#serviceKilometer').on('input', function () {
+            var inputKilometers = parseInt($(this).val());
+            var selectedCarId = $("#ShowCustomerCars").val();
+
+            var submitButton = $('button[type="submit"]');
+
+            if (selectedCarId && carData[selectedCarId]) {
+                var carKilometers = carData[selectedCarId].kilometers;
+                //console.log("Input: "+inputKilometers);
+                // Check if input kilometers are greater than the car's kilometers
+                if (inputKilometers < carKilometers) {
+                    $(this).next('.text-danger').text('Cannot be less than current car’s kilometers (' + carKilometers + ').');
+                    disableSubmitButton(0);
+                } else if(inputKilometers === null || inputKilometers === undefined || isNaN(inputKilometers)){
+                    $(this).next('.text-danger').text('You need to set Kilometers');
+                    disableSubmitButton(0);
+                } else {
+                    $(this).next('.text-danger').text(''); // Clear error message
+                    //submitButton.prop("disabled", false); // Enable the submit button
+                    disableSubmitButton(1);
+                }
+            }
+        });
+
+    function disableSubmitButton(type){
+        var submitButton = $('button[type="submit"]');
+        if(type === 0){
+            submitButton.prop("disabled", true);
+            // Set the visibility of the .fa-ban icon inside the submit button to visible
+            submitButton.find('.fa-ban').css('visibility', 'visible');
+            // Set the custom cursor (ban icon) for the submit button
+            submitButton.css('cursor', 'url("/images/ban.png"), auto');
+        }else{
+            submitButton.prop("disabled", false); // Enable the submit button
+            submitButton.find('.fa-ban').css('visibility', 'hidden');
+            submitButton.css('cursor', 'auto');
+        }
+    }
+
+    $(function () {
+        var url = $(this).data('url');
+        var customerID = "@ViewBag.CustomerUserID";
+        var garageID = "@ViewBag.GarageID";
+        var customerCarID = "@ViewBag.CustomerCarID";
+
+        $.get(url).done(function (data) {
+            if (customerID == null || customerID ==='undefined' || customerID ==="") {
+                $.getJSON('@Resources.SettingsResources.Uri' + '/GetCustomersToList/' + garageID)
+                    //$.getJSON('http://alefhome.ddns.net:8082/api/GetCarManufacturersToList')
+                    .done(function (data) {
+                        // On success, 'data' contains a list of products.
+                        $.each(data, function (key, item) {
+                            // Add a list item for the product.
+                            $("#ShowCustomers").append($("<option></option>").val(item.customerID).html(item.customerSurname + ' ' + item.customerName));
+                        });
+                    });
+            }else{
+                $.getJSON('@Resources.SettingsResources.Uri' + '/GetCustomerByIDToList/' + customerID + '/' + garageID)
+                    //$.getJSON('http://alefhome.ddns.net:8082/api/GetCarManufacturersToList')
+                    .done(function (data) {
+                        // On success, 'data' contains a list of products.
+                        $.each(data, function (key, item) {
+                            // Add a list item for the product.
+                            $("#ShowCustomers option[value='0']").remove();
+                            $("#ShowCustomers").append($("<option selected></option>").val(item.customerID).html(item.customerSurname + ' ' + item.customerName));
+                            $("#ShowCustomers").prop("disabled", true);
+
+                            if (customerCarID == null || customerCarID === 'undefined' || customerCarID === "") {
+                                //console.log("getCustomerCars");
+                                getCustomerCarsTolist();
+                            }else{
+                                //console.log("getCustomerCar ++");
+                                getCustomerCarTolist();
+                            }
+                        });
+                    });
+            }
+        });
+    });
+
+    function getCustomerCarTolist() {
+        var url = $(this).data('url');
+        var customerCarID = "@ViewBag.CustomerCarID";
+        var garageID = "@ViewBag.GarageID";
+        $.get(url).done(function (data) {
+            if (customerCarID == null || customerCarID === 'undefined' || customerCarID === "") {
+                console.log("Not Exist");
+            } else {
+                console.log("Exist");
+                $.getJSON('@Resources.SettingsResources.Uri' + '/GetCustomerCarByCarID/' + customerCarID)
+                    //$.getJSON('http://alefhome.ddns.net:8082/api/GetCarManufacturersToList')
+                    .done(function (data) {
+                        // Clear the carData object
+                        carData = {}; // Reset car data
+                        // On success, 'data' contains a list of products.
+                        $.each(data, function (key, item) {
+                            // Add a list item for the product.
+                            $("#ShowCustomerCars option[value='0']").remove();
+                            //$("#ShowCustomerCars").append($("<option></option>").val(item.id).html(item.manufacturerName + ' ' + item.modelName + ' ' + item.modelYear + ' (' + item.licencePlate + ' - ' + item.vin + ')')); $("#ShowCustomerCars").prop("disabled", true);
+                            $("#ShowCustomerCars").append($("<option></option>").val(item.id).html(item.manufacturerName + ' ' + item.modelName + ' ' + item.modelYear + ' (' + item.licencePlate + ' - ' + item.vin + ')').prop("selected", true));
+                            $("#ShowCustomerCars").prop("disabled",true);
+                            //console.log("ID: "+item.id + " Model Name: "+item.modelName);
+                            carData[item.id] = {
+                                manufacturerName: item.manufacturerName,
+                                modelName: item.modelName,
+                                modelYear: item.modelYear,
+                                licencePlate: item.licencePlate,
+                                vin: item.vin,
+                                kilometers: parseInt(item.kilometer, 10) // Assuming this field exists
+                            };
+                            //updateKilometerDisplay(item.id);
+                        });
+                    });
+                SetViewBag();
+            }
+        });
+    }
+
+     function clearDataModels() {
+        var container = document.getElementById('ShowCustomerCars');
+        while (container.childNodes.length > 2) {
+            container.removeChild(container.lastChild);
+        }
+        // updateKilometerDisplay(-1);
+    }
+
+    function getCustomerCarsTolist(){
+        var e = document.getElementById("ShowCustomers");
+        var value = e.value;
+        clearDataModels();
+        var customerCarID = "@ViewBag.CustomerCarID";
+        //updateKilometerDisplay(-1);
+        //var url = $(this).data('url');
+        $.getJSON('@Resources.SettingsResources.Uri' + '/GetCustomerCarsByCustomerID/' + @ViewBag.GarageID + '/' + value)
+            //$.getJSON('http://alefhome.ddns.net:8082/api/GetCarManufacturersToList')
+            .done(function (data) {
+                var counter = 1;
+                // Clear the carData object
+                carData = {}; // Reset car data
+                // On success, 'data' contains a list of products.
+                $.each(data, function (key, item) {
+                    carData[item.id] = {
+                        manufacturerName: item.manufacturerName,
+                        modelName: item.modelName,
+                        modelYear: item.modelYear,
+                        licencePlate: item.licencePlate,
+                        vin: item.vin,
+                        kilometers: parseInt(item.kilometer, 10) // Assuming this field exists
+                    };
+                    // Add a list item for the product.
+                    $("#ShowCustomerCars").append($("<option></option>").val(item.id).html(counter + ') ' + item.manufacturerName + ' ' + item.modelName + ' ' + item.modelYear + ' (' + item.licencePlate + ' - ' + item.vin + ')'));
+                    counter++;
+                });
+                SetViewBag();
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                // Handle the error gracefully
+                console.log("Error fetching data: " + textStatus + " - " + errorThrown);
+                if (jqXHR.status === 404) {
+                    console.log("No cars found for this customer");
+                }
+            });
+    }
+
+     function SetViewBag() {
+            $.ajax({
+                type: "POST",
+                url: '/ServiceAppointment/SetViewBag',
+                data: '{ value: null}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "text",
+                success: function (r) {
+
+                }
+            });
+        }
+</script>

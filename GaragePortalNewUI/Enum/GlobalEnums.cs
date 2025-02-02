@@ -181,4 +181,11 @@
         Yellow,
         YellowGreen
     }
+
+    public enum ServiceAppointmentStatus
+    {
+        Pending = 1,
+        Cancelled = 2,
+        Completed = 3
+    }
 }

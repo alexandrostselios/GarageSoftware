@@ -10,6 +10,7 @@ using OfficeOpenXml;
 using GaragePortalNewUI.Enum;
 using System.Web.WebPages;
 using System.Globalization;
+using GaragePortalNewUI.Models.EngineerSpeciality;
 
 namespace GaragePortalNewUI.Controllers
 {
@@ -32,7 +33,7 @@ namespace GaragePortalNewUI.Controllers
                 using (var package = new ExcelPackage(stream))
                 {
                     ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-                    ExcelWorksheet workSheet = package.Workbook.Worksheets[sheetOrder-1];
+                    ExcelWorksheet workSheet = package.Workbook.Worksheets[sheetOrder];
                     var rowCount = workSheet.Dimension.Rows;
                     for (int row = 2; row <= rowCount; row++)
                     {
@@ -64,7 +65,7 @@ namespace GaragePortalNewUI.Controllers
                 using (var package = new ExcelPackage(stream))
                 {
                     ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-                    ExcelWorksheet workSheet = package.Workbook.Worksheets[sheetOrder-1];
+                    ExcelWorksheet workSheet = package.Workbook.Worksheets[sheetOrder];
                     var rowCount = workSheet.Dimension.Rows;
                     for (int row = 2; row <= rowCount; row++)
                     {
@@ -156,6 +157,43 @@ namespace GaragePortalNewUI.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public IActionResult ImportEmployeesPartial()
+        {
+            return PartialView("_ImportEmployeesPartial");
+        }
+
+        public async Task<IActionResult> ImportEmployees(IFormFile file, int sheetOrder, int surnameOrder, int nameOrder, int emailOrder, int passwordOrder, int enableAccessOrder, int userTypeOrder, int garageIDOrder)
+        {
+            List<AddCustomerRequest> list = new List<AddCustomerRequest>();
+            using (var stream = new MemoryStream())
+            {
+                await file.CopyToAsync(stream);
+                using (var package = new ExcelPackage(stream))
+                {
+                    ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                    ExcelWorksheet workSheet = package.Workbook.Worksheets[sheetOrder - 1];
+                    var rowCount = workSheet.Dimension.Rows;
+                    for (int row = 2; row <= rowCount; row++)
+                    {
+                        list.Add(new AddCustomerRequest
+                        {
+                            CustomerSurname = workSheet.Cells[row, surnameOrder].Value.ToString().Trim(),
+                            CustomerName = workSheet.Cells[row, nameOrder].Value.ToString().Trim(),
+                            CustomerEmail = workSheet.Cells[row, emailOrder].Value.ToString().Trim(),
+                            Password = workSheet.Cells[row, passwordOrder].Value.ToString().Trim(),
+                            GarageID = Int64.Parse(workSheet.Cells[row, garageIDOrder].Value.ToString()),
+                            UserType = (UserType)Int64.Parse(workSheet.Cells[row, userTypeOrder].Value.ToString()),
+                            EnableAccess = (EnableAccess)Int64.Parse(workSheet.Cells[row, enableAccessOrder].Value.ToString())
+                        });
+                    }
+                }
+            }
+            client.BaseAddress = baseAddress;
+            HttpResponseMessage response = client.PostAsJsonAsync(client.BaseAddress + "/AddCustomerByList/", list).Result;
+
+            return RedirectToAction("Index", "Home");
+        }
+
 
         public IActionResult ImportServiceItemsPartial()
         {
@@ -201,6 +239,38 @@ namespace GaragePortalNewUI.Controllers
             }
             client.BaseAddress = baseAddress;
             HttpResponseMessage response = client.PostAsJsonAsync(client.BaseAddress + "/AddServiceItemByList/", list).Result;
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult ImportEngineerSpecialitiesPartial()
+        {
+            return PartialView("_ImportEngineerSpecialitiesPartial");
+        }
+
+        public async Task<IActionResult> ImportEngineerSpecialities(IFormFile file, int sheetOrder, int engineerSpecialityOrder, int garageIDOrder)
+        {
+            List<EngineerSpeciality> list = new List<EngineerSpeciality>();
+            using (var stream = new MemoryStream())
+            {
+                await file.CopyToAsync(stream);
+                using (var package = new ExcelPackage(stream))
+                {
+                    ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                    ExcelWorksheet workSheet = package.Workbook.Worksheets[sheetOrder];
+                    var rowCount = workSheet.Dimension.Rows;
+                    for (int row = 2; row <= rowCount; row++)
+                    {
+                        list.Add(new EngineerSpeciality
+                        {
+                            Speciality = workSheet.Cells[row, engineerSpecialityOrder].Value.ToString().Trim(),
+                            GarageID = Int64.Parse(workSheet.Cells[row, garageIDOrder].Value.ToString())
+                        });
+                    }
+                }
+            }
+            client.BaseAddress = baseAddress;
+            HttpResponseMessage response = client.PostAsJsonAsync(client.BaseAddress + "/AddEngineerSpecialityList/", list).Result;
 
             return RedirectToAction("Index", "Home");
         }

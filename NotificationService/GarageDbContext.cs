@@ -19,5 +19,6 @@ namespace GarageNotificationService.Data
 
         public DbSet<ServiceHistory> ServiceHistory { get; set; }
 
+        public DbSet<ServiceAppointment> ServiceAppointment { get; set; }
     }
 }

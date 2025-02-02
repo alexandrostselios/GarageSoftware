@@ -17,7 +17,7 @@
                     <input type="hidden" asp-for="GarageID" value="@ViewBag.GarageID" />
                     @*<div class="form-row importCarManufacturers">*@
                     <div class="input-group custom-file-button importCustomers">
-                        <label class="input-group-text labelImport" for="inputGroupFile">File</label>
+                        <label class="input-group-text labelImport" for="inputGroupFile">@Resource.GetKey("File")</label>
                         <input type="file" class="form-control" name="file" id="inputExcelFile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
                         @*<button class="buttonImport" type="submit">@Resource.GetKey("Import_Manufacturers_From_Excel")</button>*@
                     </div>

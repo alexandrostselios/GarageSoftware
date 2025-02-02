@@ -6,10 +6,8 @@ namespace GarageNotificationService.Models.Service
 {
     public class ServiceHistory
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long ID { get; set; }
 
-        [Column(TypeName = "datetime")]
         public DateTime? ServiceDate { get; set; }
 
         public long ServiceKilometer { get; set; }

@@ -179,7 +179,7 @@ else if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Customer.ToString(
                             var id = row.id;
                             var url = "@Url.Action("ViewCustomerCars", "UserModels")" + '/?id=' + id;
                             return '<div class="btn-group" role="group">' +
-                                '<a href="#" class="btn btn-edit" title="@Resource.GetKey("Edit_Car_Details")" id="btnEditCarDetails" data-id="' + row.id + '" ><i class="fa fa-edit" style="color:red"></i></a>' +
+                                '<a href="#" class="btn btn-edit" title="@Resource.GetKey("Edit_Car_Details")" id="btnEditCarDetails" data-id="' + row.id + '" ><i class="fa fa-info-circle" style="color:blue"></i></a>' +
                                 '<a href="#" class="btn btn-serviceRegistration" title="@Resource.GetKey("Add_Service_History")" id="btnCreateCustomerCarServiceHistory" data-id="' + row.id + '" ><i class="fa fa-wrench" style="color:green"></i></a>' +
                                 '<a href="#" class="btn btn-serviceHistory" title="@Resource.GetKey("View_Car_History")" id="btnViewCarServiceHistory" data-id="' + row.id + '" ><i class="fas fa-book" style="color:orange"></i></a>' +
                                 '</div>';

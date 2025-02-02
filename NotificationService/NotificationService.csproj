@@ -13,4 +13,8 @@
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
     <PackageReference Include="NETCore.MailKit" Version="2.1.0" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Email\" />
+  </ItemGroup>
 </Project>

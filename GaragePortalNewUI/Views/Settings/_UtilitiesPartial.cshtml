@@ -8,7 +8,7 @@
     <div class="col-sm-5">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">@Resource.GetKey("Import_Car_Manufacturers")</h5>
+                <h5 class="card-title"><i class="fas fa-circle text-success"></i> @Resource.GetKey("Import_Car_Manufacturers")</h5>
                 <p class="card-text">@Resource.GetKey("Import_Car_Manufacturers_Info")</p>
                 <button class="btn btn-sm btn-primary m-2" id="btnImportCarManufacturers" data-bs-toggle="ajax-modal" data-bs-target="#importCarManufacturers" data-url="@Url.Action("ImportCarManufacturersPartial","Import")">@Resource.GetKey("Import_Car_Manufacturers")</button>
                 @*<a href="#" class="btn btn-primary">Go somewhere</a>*@
@@ -18,7 +18,7 @@
     <div class="col-sm-5">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">@Resource.GetKey("Import_Car_Models")</h5>
+                <h5 class="card-title"><i class="fas fa-circle text-success"></i> @Resource.GetKey("Import_Car_Models")</h5>
                 <p class="card-text">@Resource.GetKey("Import_Car_Models_Info")</p>
                 <button class="btn btn-sm btn-primary m-2" id="btnImportCarModels" data-bs-toggle="ajax-modal" data-bs-target="#importCarModels" data-url="@Url.Action("ImportCarModelsPartial","Import")">@Resource.GetKey("Import_Car_Models")</button>
             </div>
@@ -30,7 +30,7 @@
     <div class="col-sm-5">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">@Resource.GetKey("Import_Customers")</h5>
+                <h5 class="card-title"><i class="fas fa-circle text-danger"></i> @Resource.GetKey("Import_Customers")</h5>
                 <p class="card-text">@Resource.GetKey("Import_Customers_Info")</p>
                 <button class="btn btn-sm btn-primary m-2" id="btnImportUsers" data-bs-toggle="ajax-modal" data-bs-target="#importUsers" data-url="@Url.Action("ImportCustomersPartial","Import")">@Resource.GetKey("Import_Customers")</button>
                 @*<a href="#" class="btn btn-primary">Go somewhere</a>*@
@@ -40,7 +40,7 @@
     <div class="col-sm-5">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">@Resource.GetKey("Import_Engineers")</h5>
+                <h5 class="card-title"><i class="fas fa-circle text-danger"></i> @Resource.GetKey("Import_Engineers")</h5>
                 <p class="card-text">@Resource.GetKey("Import_Engineers_Info")</p>
                 <button class="btn btn-sm btn-primary m-2" id="btnImportUsers" data-bs-toggle="ajax-modal" data-bs-target="#importUsers" data-url="@Url.Action("ImportEngineersPartial","Import")">@Resource.GetKey("Import_Engineers")</button>
                 @*<a href="#" class="btn btn-primary">Go somewhere</a>*@
@@ -53,9 +53,32 @@
     <div class="col-sm-5">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">@Resource.GetKey("Import_Service_Items")</h5>
+                <h5 class="card-title"><i class="fas fa-circle text-danger"></i> @Resource.GetKey("Import_Employees")</h5>
+                <p class="card-text">@Resource.GetKey("Import_Employees_Info")</p>
+                <button class="btn btn-sm btn-primary m-2" id="btnImportUsers" data-bs-toggle="ajax-modal" data-bs-target="#importUsers" data-url="@Url.Action("ImportEmployeesPartial", "Import")">@Resource.GetKey("Import_Employees")</button>
+                @*<a href="#" class="btn btn-primary">Go somewhere</a>*@
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-5">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-circle text-success"></i> @Resource.GetKey("Import_Service_Items")</h5>
                 <p class="card-text">@Resource.GetKey("Import_Service_Items_Info")</p>
                 <button class="btn btn-sm btn-primary m-2" id="btnImportServiceItems" data-bs-toggle="ajax-modal" data-bs-target="#importServiceItems" data-url="@Url.Action("ImportServiceItemsPartial","Import")">@Resource.GetKey("Import_Service_Items")</button>
+                @*<a href="#" class="btn btn-primary">Go somewhere</a>*@
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-sm-5">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-circle text-success"></i> @Resource.GetKey("Import_Engineer_Specialities")</h5>
+                <p class="card-text">@Resource.GetKey("Import_Engineer_Specialities_Info")</p>
+                <button class="btn btn-sm btn-primary m-2" id="btnImportEngineerSpecialities" data-bs-toggle="ajax-modal" data-bs-target="#importEngineerSpecialities" data-url="@Url.Action("ImportEngineerSpecialitiesPartial", "Import")">@Resource.GetKey("Import_Engineer_Specialities")</button>
                 @*<a href="#" class="btn btn-primary">Go somewhere</a>*@
             </div>
         </div>
@@ -70,25 +93,6 @@
     </div>
 </div>
 
-@*<p>
-    <form method="post" asp-controller="Import" asp-action="ImportCarModels" enctype="multipart/form-data">
-        <div class="input-group custom-file-button">
-            <label class="input-group-text labelImport" for="inputModelsFile">@Resource.GetKey("Model")</label>
-            <input type="file" class="form-control" name="file" id="inputModelsFile" accept=".xlsx, .xls, .csv">
-            <button class="buttonImport"  type="submit">Import Models from Excel</button>
-        </div>
-    </form>
-</p>
-
-<p>
-    <form method="post" asp-controller="Import" asp-action="ImportCustomers" enctype="multipart/form-data">
-        <div class="input-group custom-file-button">
-            <label class="input-group-text labelImport" for="inputCustomersFile">@Resource.GetKey("Customers")</label>
-            <input type="file" class="form-control" name="file"  id="inputCustomersFile" accept=".xlsx, .xls, .csv">
-            <button class="buttonImport" type="submit">Import Customers from Excel</button>
-        </div>
-    </form>
-</p>*@
 
 <script type="text/javascript">
     console.log(11);

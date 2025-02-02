@@ -621,9 +621,6 @@
   <data name="PreviousKM" xml:space="preserve">
     <value />
   </data>
-  <data name="MobilePhone" xml:space="preserve">
-    <value />
-  </data>
   <data name="HomePhone" xml:space="preserve">
     <value />
   </data>
@@ -670,6 +667,87 @@
     <value />
   </data>
   <data name="General_Lists" xml:space="preserve">
+    <value />
+  </data>
+  <data name="UserPhoto" xml:space="preserve">
+    <value />
+  </data>
+  <data name="List_Of_Engineer_Specialities" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Edit_Engineer_Speciality" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Add_Engineer_Speciality" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Import_Engineer_Specialities" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Import_Engineer_Specialities_Info" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Choose_Engineer_Speciality_Description_Column_To_Import" xml:space="preserve">
+    <value />
+  </data>
+  <data name="File" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Service_Appointment_Pending" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Service_Appointment_Completed" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Service_Appointment_Cancelled" xml:space="preserve">
+    <value />
+  </data>
+  <data name="List_Of_Service_Appointments" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Service_Appointment_Date" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Service_Appointment_Comments" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Service_Appointment_ID" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Edit_Service_Appointment" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Service_Appointment_Status" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ServiceAppointmentStatus_Cancelled" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ServiceAppointmentStatus_Completed" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ServiceAppointmentStatus_Pending" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Complete" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Customer_Name_Surname" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Add_Service_Appointment_Form" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Import_Employees_Info" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Import_Employees" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Mobile_Phone" xml:space="preserve">
+    <value />
+  </data>
+  <data name="String1" xml:space="preserve">
     <value />
   </data>
 </root>

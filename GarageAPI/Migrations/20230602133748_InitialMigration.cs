@@ -1497,7 +1497,7 @@ namespace GarageAPI.Migrations
                 values: new object[,]
                 {
                     { 1L, "Γενικά καλή εικόνα του οχήματος. Παρατηρείται μια φθορά στα ελαστικά. Σε 8000 χιλιόμετρα συστήνεται η αντικατάσταση τους.", null, null, 5L, 55f, new DateTime(2022, 12, 7, 13, 24, 10, 552, DateTimeKind.Unspecified), new DateTime(2022, 12, 6, 20, 40, 10, 552, DateTimeKind.Unspecified), 65080L, 55f, new DateTime(2022, 12, 7, 13, 24, 10, 552, DateTimeKind.Unspecified), 1L },
-                    { 2L, "Αλλαγή ιμάντα χρονισμού", null, null, 5L, 95f, new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Unspecified), new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Unspecified), 70898L, 95f, new DateTime(2023, 2, 6, 15, 38, 10, 552, DateTimeKind.Unspecified), 1L },
+                    { 2L, "Αλλαγή ιμάντα χρονισμού", null, null, 5L, 85f, new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Unspecified), new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Unspecified), 70898L, 95f, new DateTime(2023, 2, 6, 15, 38, 10, 552, DateTimeKind.Unspecified), 1L },
                     { 3L, "Αλλαγή Ελαστικων", null, null, 5L, 100f, new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Unspecified), new DateTime(2023, 4, 6, 20, 40, 10, 552, DateTimeKind.Unspecified), 85365L, 100f, new DateTime(2023, 4, 6, 15, 38, 10, 552, DateTimeKind.Unspecified), 1L },
                     { 4L, "Γενικός Έλεγχος όλα ΟΚ", null, null, 5L, 100f, new DateTime(2023, 2, 6, 20, 40, 10, 552, DateTimeKind.Unspecified), new DateTime(2023, 4, 6, 20, 40, 10, 552, DateTimeKind.Unspecified), 233659L, 90f, new DateTime(2023, 4, 6, 15, 38, 10, 552, DateTimeKind.Unspecified), 5L }
                 });

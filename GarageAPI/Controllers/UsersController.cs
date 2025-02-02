@@ -35,26 +35,6 @@ namespace GarageAPI.Controllers
         [Route("api/GetUserByEmailAndPassword/{email}/{password}/{garageID}")]
         public async Task<IActionResult> GetUserByEmailAndPassword([FromRoute] string email, string password, long garageID)
         {
-            //var loginUser = await dbContext.Users
-            //    .Join(dbContext.Customer,
-            //        user => user.ID,
-            //        customer => customer.UserID,
-            //        (user, customer) => new { User = user, Customer = customer })
-            //    .Where(joined => joined.Customer.GarageID == garageID &&
-            //                     joined.User.Email == email &&
-            //                     joined.User.Password == password)
-            //    .Select(joined => new LoginViewModel
-            //    {
-            //        ID = joined.User.ID, // Assuming ID is the user identifier
-            //        Email = joined.User.Email,
-            //        Password = joined.User.Password, // Use caution with passwords
-            //        Name = joined.Customer.CustomerName,
-            //        Surname = joined.Customer.CustomerSurname,
-            //        UserType = joined.User.UserType,
-            //        GarageID = joined.Customer.GarageID
-            //    })
-            //    .FirstOrDefaultAsync();
-
             var loginUser = await dbContext.Users
                 .Where(user => user.Email == email && user.Password == password)
                 .Select(user => new

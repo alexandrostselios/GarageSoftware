@@ -303,6 +303,7 @@ function getYearsForModel(modelID,culture) {
 }
 
 function clearDataModels() {
+    console.log("ClearDataModels");
     const container = document.getElementById('ShowModels');
     container.replaceChildren();
 }

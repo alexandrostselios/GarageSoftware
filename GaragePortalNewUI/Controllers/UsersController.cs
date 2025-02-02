@@ -15,6 +15,8 @@ using System.Resources;
 using System.Globalization;
 using System.Reflection;
 using GaragePortalNewUI.ViewModels.Customer;
+using GaragePortalNewUI.ViewModels.Engineer;
+using GaragePortalNewUI.ViewModels.Employee;
 
 namespace GaragePortalNewUI.Controllers
 {
@@ -240,9 +242,41 @@ namespace GaragePortalNewUI.Controllers
                         logInUser = readTask.Result;
                         SetSessionProperties(logInUser);
                         logInUser.LastLoginDate = DateTime.Now;
-                        HttpResponseMessage loginResponse = client.PutAsJsonAsync(client.BaseAddress + "/UpdateUser/" + logInUser.ID, logInUser).Result;
+                        
+                        if (logInUser.UserType == 2)
+                        {
+                            CustomerLoginViewModel customerLoginViewModel = new CustomerLoginViewModel()
+                            {
+                                CustomerID = logInUser.ID,
+                                GarageID = logInUser.GarageID,
+                                LastLoginDate = logInUser.LastLoginDate
+                            };
+                            HttpResponseMessage loginResponse = client.PutAsJsonAsync(client.BaseAddress + "/UpdateCustomerLogin/" + customerLoginViewModel.CustomerID, customerLoginViewModel).Result;
+                        }
+                        else if (logInUser.UserType == 3)
+                        {
+                            EngineerLoginViewModel engineerLoginViewModel = new EngineerLoginViewModel()
+                            {
+                                EngineerID = logInUser.ID,
+                                GarageID = logInUser.GarageID,
+                                LastLoginDate = logInUser.LastLoginDate
+                            };
+                            HttpResponseMessage loginResponse = client.PutAsJsonAsync(client.BaseAddress + "/UpdateEngineerLogin/" + engineerLoginViewModel.EngineerID, engineerLoginViewModel).Result;
 
-                        if(logInUser.UserType == (long) UserType.Admin)
+                        }
+                        else if (logInUser.UserType == 1 || logInUser.UserType == 4)
+                        {
+                            EmployeeLoginViewModel employeeLoginViewModel = new EmployeeLoginViewModel()
+                            {
+                                EmployeeID = logInUser.ID,
+                                GarageID = logInUser.GarageID,
+                                LastLoginDate = logInUser.LastLoginDate
+                            };
+                            HttpResponseMessage loginResponse = client.PutAsJsonAsync(client.BaseAddress + "/UpdateEmployeeLogin/" + employeeLoginViewModel.EmployeeID, employeeLoginViewModel).Result;
+
+                        }
+
+                        if(logInUser.UserType == (long) UserType.Admin || logInUser.UserType == (long)UserType.Employee)
                         {
                             return RedirectToAction("Customers", "Customer");
                         }
@@ -481,6 +515,8 @@ namespace GaragePortalNewUI.Controllers
             HttpContext.Session.SetString("EngineerCreatedInfo", "null");
             HttpContext.Session.SetString("EmployeeCreated", "null");
             HttpContext.Session.SetString("EmployeeCreatedInfo", "null");
+            HttpContext.Session.SetString("ServiceAppointmentCreated", "null");
+            //HttpContext.Session.SetString("ServiceAppointmentCreatedInfo", "null");
             return new EmptyResult();
         }
     }

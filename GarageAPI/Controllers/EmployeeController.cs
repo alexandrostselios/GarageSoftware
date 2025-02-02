@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using GarageAPI.Models.User.Employee;
 using GarageAPI.ViewModels;
 using GarageAPI.Models.User.Employees;
+using GarageAPI.Models.User.Customers;
+using GarageAPI.Models.User.Engineers;
 
 namespace GarageAPI.Controllers
 {
@@ -273,6 +275,37 @@ namespace GarageAPI.Controllers
             await dbContext.SaveChangesAsync();
 
             return Ok(employee);
+        }
+
+        [HttpPut]
+        [Route("api/UpdateEmployeeLogin/{employeeID:long}")]
+        public async Task<IActionResult> UpdateEmployeeLogin([FromRoute] long employeeID, UpdateEmployeeLogin updateEmployeeLogin)
+        {
+
+            // Find the user entity associated with the customer
+            var user = await dbContext.Users.FirstOrDefaultAsync(u => u.ID == employeeID);
+
+            if (user != null)
+            {
+                // Find the customer entity by ID
+                var employee = await dbContext.Employee.FirstOrDefaultAsync(x => x.UserID == user.ID);
+
+                if (employee != null)
+                {
+                    if (updateEmployeeLogin.LastLoginDate != null) user.LastLoginDate = updateEmployeeLogin.LastLoginDate;
+                    // Save changes to both entities
+                    await dbContext.SaveChangesAsync();
+                    return Ok(new { Employee = employee, User = user }); // Return updated entities
+                }
+                else
+                {
+                    return NotFound("Employee not found");
+                }
+            }
+            else
+            {
+                return NotFound("Employee not found");
+            }
         }
     }
 }

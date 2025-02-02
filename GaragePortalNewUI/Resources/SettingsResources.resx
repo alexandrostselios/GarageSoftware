@@ -137,4 +137,13 @@
     <value>https://garagewebapi.eu/api</value>
     <comment>UriWeb</comment>
   </data>
+  <data name="Select_Fuel_Type" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Fuel_Type" xml:space="preserve">
+    <value />
+  </data>
+  <data name="List_Of_Service_Appointments" xml:space="preserve">
+    <value />
+  </data>
 </root>

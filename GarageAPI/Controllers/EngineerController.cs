@@ -423,5 +423,35 @@ namespace GarageAPI.Controllers
                 return NotFound("Engineer not found");
             }
         }
+
+        [HttpPut]
+        [Route("api/UpdateEngineerLogin/{engineerID:long}")]
+        public async Task<IActionResult> UpdateEngineerLogin([FromRoute] long engineerID, UpdateCustomerLogin updateEngineerLogin)
+        {
+            // Find the customer entity by ID
+            var engineer = await dbContext.Customer.FindAsync(engineerID);
+
+            if (engineer != null)
+            {
+                // Find the user entity associated with the customer
+                var user = await dbContext.Users.FirstOrDefaultAsync(u => u.ID == engineer.UserID);
+
+                if (user != null)
+                {
+                    if (updateEngineerLogin.LastLoginDate != null) user.LastLoginDate = updateEngineerLogin.LastLoginDate;
+                    // Save changes to both entities
+                    await dbContext.SaveChangesAsync();
+                    return Ok(new { Engineer = engineer, User = user }); // Return updated entities
+                }
+                else
+                {
+                    return NotFound("User not found");
+                }
+            }
+            else
+            {
+                return NotFound("Customer not found");
+            }
+        }
     }
 }

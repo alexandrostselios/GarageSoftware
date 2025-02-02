@@ -5,6 +5,7 @@ using GarageAPI.Models.EngineerSpeciality;
 using GarageAPI.Models;
 using GarageAPI.Models.CarModelYears;
 using System.Linq;
+using GarageAPI.Models.CarModels;
 
 namespace GarageAPI.Controllers
 {
@@ -40,6 +41,7 @@ namespace GarageAPI.Controllers
         {
             var engineerSpeciality = new EngineerSpeciality()
             {
+                GarageID = addEngineerSpecialityRequest.GarageID,
                 Speciality = addEngineerSpecialityRequest.Speciality
             };
             await dbContext.EngineerSpeciality.AddAsync(engineerSpeciality);
@@ -48,11 +50,29 @@ namespace GarageAPI.Controllers
             return Ok(engineerSpeciality);
         }
 
-        [HttpPut]
-        [Route("api/UpdateEngineerSpecialityByID/{id:long}")]
-        public async Task<IActionResult> UpdateEngineerSpecialityByID([FromRoute] long id, UpdateEngineerSpecialityRequest updateEngineerSpecialityRequest)
+        [HttpPost]
+        [Route("api/AddEngineerSpecialityList")]
+        public async Task<IActionResult> AddEngineerSpecialityList(List<AddEngineerSpecialityRequest> addEngineerSpecialityRequest)
         {
-            var engineerSpeciality = await dbContext.EngineerSpeciality.FindAsync(id);
+            for (int i = 0; i <= addEngineerSpecialityRequest.Count(); i++)
+            {
+                var engineerSpeciality = new EngineerSpeciality()
+                {
+                    Speciality = addEngineerSpecialityRequest[i].Speciality,
+                    GarageID = addEngineerSpecialityRequest[i].GarageID
+                };
+                await dbContext.EngineerSpeciality.AddAsync(engineerSpeciality);
+                await dbContext.SaveChangesAsync();
+            }
+
+            return Ok();
+        }
+
+        [HttpPut]
+        [Route("api/UpdateEngineerSpecialityByID/{id:long}/{garageID:long}")]
+        public async Task<IActionResult> UpdateEngineerSpecialityByID([FromRoute] long id, long garageID, UpdateEngineerSpecialityRequest updateEngineerSpecialityRequest)
+        {
+            var engineerSpeciality = await dbContext.EngineerSpeciality.FirstOrDefaultAsync(c => c.ID == id && c.GarageID == garageID);
             if (engineerSpeciality != null)
             {
                 engineerSpeciality.Speciality = updateEngineerSpecialityRequest.Speciality;

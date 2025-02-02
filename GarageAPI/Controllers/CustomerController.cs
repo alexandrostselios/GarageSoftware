@@ -52,7 +52,7 @@ namespace GarageAPI.Controllers
                             CustomerMobilePhone = customer.CustomerMobilePhone,
                             CustomerComment = customer.CustomerComment,
                             // Additional properties from Users table
-                            EnableAccess = (long) user.EnableAccess,
+                            EnableAccess = (long)user.EnableAccess,
                             LastLoginDate = user.LastLoginDate,
                             CustomerPhoto = customer.CustomerPhoto
                         };
@@ -91,7 +91,7 @@ namespace GarageAPI.Controllers
                             CustomerMobilePhone = customer.CustomerMobilePhone,
                             CustomerComment = customer.CustomerComment,
                             // Populate additional properties from Users table
-                            EnableAccess = (long) user.EnableAccess,
+                            EnableAccess = (long)user.EnableAccess,
                             LastLoginDate = user.LastLoginDate,
                             CustomerPhoto = customer.CustomerPhoto
                         };
@@ -168,7 +168,7 @@ namespace GarageAPI.Controllers
         [Route("api/AddCustomerByList")]
         public async Task<IActionResult> AddCustomerByList(List<AddCustomerRequest> addCustomerRequest)
         {
-            for(int i = 0; i <= addCustomerRequest.Count; i++)
+            for (int i = 0; i <= addCustomerRequest.Count; i++)
             {
                 var user = new Users()
                 {
@@ -227,7 +227,7 @@ namespace GarageAPI.Controllers
                 if (user != null)
                 {
                     // Update properties of the user entity
-                    if (updateCustomerRequest.EnableAccess != null)  user.EnableAccess = (EnableAccess)updateCustomerRequest.EnableAccess;
+                    if (updateCustomerRequest.EnableAccess != null) user.EnableAccess = (EnableAccess)updateCustomerRequest.EnableAccess;
                     if (updateCustomerRequest.LastLoginDate != null) user.LastLoginDate = updateCustomerRequest.LastLoginDate;
                     if (updateCustomerRequest.ModifiedDate != null) user.ModifiedDate = updateCustomerRequest.ModifiedDate;
                     if (updateCustomerRequest.CustomerEmail != null) user.Email = updateCustomerRequest.CustomerEmail;
@@ -235,6 +235,36 @@ namespace GarageAPI.Controllers
                     // Save changes to both entities
                     await dbContext.SaveChangesAsync();
 
+                    return Ok(new { Customer = customer, User = user }); // Return updated entities
+                }
+                else
+                {
+                    return NotFound("User not found");
+                }
+            }
+            else
+            {
+                return NotFound("Customer not found");
+            }
+        }
+
+        [HttpPut]
+        [Route("api/UpdateCustomerLogin/{customerID:long}")]
+        public async Task<IActionResult> UpdateCustomerLogin([FromRoute] long customerID, UpdateCustomerLogin updateCustomerLogin)
+        {
+            // Find the customer entity by ID
+            var customer = await dbContext.Customer.FindAsync(customerID);
+
+            if (customer != null)
+            {
+                // Find the user entity associated with the customer
+                var user = await dbContext.Users.FirstOrDefaultAsync(u => u.ID == customer.UserID);
+
+                if (user != null)
+                {
+                    if (updateCustomerLogin.LastLoginDate != null) user.LastLoginDate = updateCustomerLogin.LastLoginDate;
+                    // Save changes to both entities
+                    await dbContext.SaveChangesAsync();
                     return Ok(new { Customer = customer, User = user }); // Return updated entities
                 }
                 else

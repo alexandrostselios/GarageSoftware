@@ -19,7 +19,7 @@ namespace GaragePortalNewUI.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private bool isProduction = false;
+        private bool isProduction = true;
         private bool isCustomer = false;
 
         readonly Uri baseAddress = new Uri(@Resources.SettingsResources.Uri);
@@ -41,12 +41,12 @@ namespace GaragePortalNewUI.Controllers
             {
                 SetSessionPropertiesCustomer();
             }
-            else
-            {
-                HttpContext.Session.SetString("Language", "Ελληνικά");
-                HttpContext.Session.SetString("Culture", "el-GR");
-                HttpContext.Session.SetString("GarageID", "1");
-            }
+            //else
+            //{
+            //    HttpContext.Session.SetString("Language", "Ελληνικά");
+            //    HttpContext.Session.SetString("Culture", "el-GR");
+            //    HttpContext.Session.SetString("GarageID", "1");
+            //}
 
             /* REMOVE IN PRODUCTION */
             GetSessionProperties();
@@ -139,7 +139,9 @@ namespace GaragePortalNewUI.Controllers
             }
             var lang = settings.FirstOrDefault(x => x.Description == "Language").Value;
             HttpContext.Session.SetString("Culture", lang );
-            HttpContext.Session.SetString("Language", (HttpContext.Session.GetString("Culture") == "el-GR") ? "Ελληνικά":"English");
+            HttpContext.Session.SetString("Language",
+                HttpContext.Session.GetString("Culture") == "el-GR" ? "Ελληνικά" :
+                (HttpContext.Session.GetString("Culture") == "en-GB" ? "English" : "Deutch"));
 
             HttpContext.Session.SetString("GarageID", "1");
         }
@@ -149,9 +151,9 @@ namespace GaragePortalNewUI.Controllers
 
             UserType u = UserType.Customer;
             HttpContext.Session.SetString("UserType", u.ToString());
-            HttpContext.Session.SetString("ID", "3");
-            HttpContext.Session.SetString("Name", "Customer2");
-            HttpContext.Session.SetString("Surname", "Test2");
+            HttpContext.Session.SetString("ID", "2");
+            HttpContext.Session.SetString("Name", "Customer1");
+            HttpContext.Session.SetString("Surname", "Test1");
             client.BaseAddress = baseAddress;
             IEnumerable<Settings> settings = null;
             var responseTask = client.GetAsync(client.BaseAddress + "/GetSettings");

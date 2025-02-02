@@ -1,0 +1,917 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Account_Settings" xml:space="preserve">
+    <value>Kontoeinstellungen</value>
+    <comment>Account_Settings</comment>
+  </data>
+  <data name="Add_Customer_Details_Form" xml:space="preserve">
+    <value>Kundendetails</value>
+    <comment>Add_Customer_Details_Form</comment>
+  </data>
+  <data name="Add_Engineer_Details_Form" xml:space="preserve">
+    <value>Ingenieur Details</value>
+    <comment>Add_Engineer_Details_Form</comment>
+  </data>
+  <data name="Add_New_Car" xml:space="preserve">
+    <value>Neues Auto Hinzufügen</value>
+    <comment>Add New Car</comment>
+  </data>
+  <data name="Add_New_Customer" xml:space="preserve">
+  <value>Neuen Kunden hinzufügen</value>
+  <comment>Add New Customer</comment>
+</data>
+<data name="Add_New_Engineer" xml:space="preserve">
+  <value>Neuen Ingenieur hinzufügen</value>
+  <comment>Add_New_Engineer</comment>
+</data>
+<data name="Add_Service_History" xml:space="preserve">
+  <value>Serviceverlauf hinzufügen</value>
+  <comment>Add Service History</comment>
+</data>
+<data name="All" xml:space="preserve">
+  <value>Alle</value>
+  <comment>All</comment>
+</data>
+<data name="Cancel" xml:space="preserve">
+  <value>Abbrechen</value>
+  <comment>Cancel</comment>
+</data>
+<data name="Car_Image" xml:space="preserve">
+  <value>Auto Bild</value>
+  <comment>Car Image</comment>
+</data>
+<data name="Choose_Sheet_To_Import" xml:space="preserve">
+  <value>Wählen Sie ein Blatt zum Importieren</value>
+  <comment>Choose_Sheet_To_Import</comment>
+</data>
+<data name="Close" xml:space="preserve">
+  <value>Schließen</value>
+  <comment>Close</comment>
+</data>
+<data name="Color" xml:space="preserve">
+  <value>Farbe</value>
+  <comment>Color</comment>
+</data>
+<data name="Comments" xml:space="preserve">
+  <value>Kommentare</value>
+  <comment>Comments</comment>
+</data>
+<data name="Creation_Date" xml:space="preserve">
+  <value>Erstellungsdatum</value>
+  <comment>Creation_Date</comment>
+</data>
+<data name="Customer" xml:space="preserve">
+  <value>Kunde</value>
+  <comment>Customer</comment>
+</data>
+<data name="Customers" xml:space="preserve">
+  <value>Kunden</value>
+  <comment>Customers</comment>
+</data>
+<data name="Customer_Car" xml:space="preserve">
+  <value>Kundenauto</value>
+  <comment>Customer_Car</comment>
+</data>
+<data name="Delete" xml:space="preserve">
+  <value>Löschen</value>
+  <comment>Delete</comment>
+</data>
+<data name="Discount_Price" xml:space="preserve">
+  <value>Rabatt</value>
+  <comment>Discount_Price</comment>
+</data>
+<data name="Download_Engineers" xml:space="preserve">
+  <value>Ingenieurliste herunterladen</value>
+  <comment>Download_Engineers</comment>
+</data>
+<data name="Download_Users" xml:space="preserve">
+  <value>Benutzerliste herunterladen</value>
+  <comment>Download_Users</comment>
+</data>
+<data name="Download_User_Cars" xml:space="preserve">
+  <value>Liste der Benutzerautos herunterladen</value>
+  <comment>Download_User_Cars</comment>
+</data>
+<data name="Edit" xml:space="preserve">
+  <value>Bearbeiten</value>
+  <comment>Edit</comment>
+</data>
+<data name="Edit_Car_Details" xml:space="preserve">
+  <value>Autodetails bearbeiten</value>
+  <comment>Edit Car Details</comment>
+</data>
+<data name="Edit_Customer_Profile" xml:space="preserve">
+  <value>Kundenprofil bearbeiten</value>
+  <comment>Edit_Customer_Profile</comment>
+</data>
+<data name="Edit_Mechanic_Profile" xml:space="preserve">
+  <value>Mechanikerprofil bearbeiten</value>
+  <comment>Edit_Mechanic_Profile</comment>
+</data>
+<data name="Edit_Profile" xml:space="preserve">
+  <value>Profil bearbeiten</value>
+  <comment>Edit Profile</comment>
+</data>
+<data name="Engineer" xml:space="preserve">
+  <value>Ingenieur</value>
+  <comment>Engineer</comment>
+</data>
+<data name="Engineers" xml:space="preserve">
+  <value>Ingenieure</value>
+  <comment>Engineers</comment>
+</data>
+<data name="Engineer_Speciality" xml:space="preserve">
+  <value>Fachgebiet</value>
+  <comment>Engineer_Speciality</comment>
+</data>
+<data name="Engine_Type" xml:space="preserve">
+  <value>Kraftstoff</value>
+  <comment>Engine_Type</comment>
+</data>
+<data name="Enter_Details_for_Quick_Search" xml:space="preserve">
+  <value>Schnellsuche für Kunden</value>
+  <comment>Enter_Details_for_Quick_Search</comment>
+</data>
+<data name="Enter_Details_for_Quick_Service_History_Search" xml:space="preserve">
+  <value>Schnellsuche für Servicehistorie</value>
+  <comment>Enter_Details_for_Quick_Service_History_Search</comment>
+</data>
+<data name="Enter_Details_for_Search" xml:space="preserve">
+  <value>Details für die Suche eingeben</value>
+  <comment>Enter_Details_for_Search</comment>
+</data>
+<data name="Final_Price" xml:space="preserve">
+  <value>Endpreis</value>
+  <comment>Final_Price</comment>
+</data>
+<data name="General_Comment" xml:space="preserve">
+  <value>Allgemeiner Kommentar</value>
+  <comment>General_Comment</comment>
+</data>
+<data name="Home" xml:space="preserve">
+  <value>Startseite</value>
+  <comment>Home</comment>
+</data>
+<data name="Import" xml:space="preserve">
+  <value>Importieren</value>
+  <comment>Import</comment>
+</data>
+<data name="Import_Car_Manufacturers" xml:space="preserve">
+  <value>Autohersteller importieren</value>
+  <comment>Import_Car_Manufacturers</comment>
+</data>
+<data name="Import_Car_Manufacturers_Info" xml:space="preserve">
+  <value>Über dieses Menü können Sie Autohersteller importieren</value>
+  <comment>Import_Car_Manufacturers_Info</comment>
+</data>
+<data name="Import_Car_Models" xml:space="preserve">
+  <value>Automodelle importieren</value>
+  <comment>Import_Car_Models</comment>
+</data>
+<data name="Import_Car_Models_Info" xml:space="preserve">
+  <value>Über dieses Menü können Sie Automodelle importieren</value>
+  <comment>Import_Car_Models_Info</comment>
+</data>
+<data name="Import_Customers" xml:space="preserve">
+  <value>Kunden importieren</value>
+  <comment>Import_Customers</comment>
+</data>
+<data name="Import_Manufacturers_From_Excel" xml:space="preserve">
+  <value>Hersteller aus Excel importieren</value>
+  <comment>Import_Manufacturers_From_Excel</comment>
+</data>
+<data name="Import_Users" xml:space="preserve">
+  <value>Benutzer importieren</value>
+  <comment>Import_Users</comment>
+</data>
+<data name="Import_Users_Info" xml:space="preserve">
+  <value>Über dieses Menü können Sie Benutzer importieren</value>
+  <comment>Import_Users_Info</comment>
+</data>
+<data name="Kilometer" xml:space="preserve">
+  <value>Kilometer</value>
+  <comment>Kilometer</comment>
+</data>
+<data name="Language" xml:space="preserve">
+  <value>Sprache</value>
+  <comment>Language</comment>
+</data>
+<data name="Last_Login_Date" xml:space="preserve">
+  <value>Letzter Login</value>
+  <comment>Last_Login_Date</comment>
+</data>
+<data name="Licence_Plate" xml:space="preserve">
+  <value>Kennzeichen</value>
+  <comment>Licence Plate</comment>
+</data>
+<data name="List_of_Customers" xml:space="preserve">
+  <value>Kundenliste</value>
+  <comment>List of Customers</comment>
+</data>
+<data name="List_Of_Engineers" xml:space="preserve">
+  <value>Ingenieursliste</value>
+  <comment>List_Of_Engineers</comment>
+</data>
+<data name="List_Of_Manufacturers" xml:space="preserve">
+  <value>Herstellerliste</value>
+  <comment>List_Of_Manufacturers</comment>
+</data>
+<data name="List_Of_Models" xml:space="preserve">
+  <value>Modelliste</value>
+  <comment>List_Of_Models</comment>
+</data>
+<data name="List_Of_MyCars" xml:space="preserve">
+  <value>Meine Autos</value>
+  <comment>List_Of_MyCars</comment>
+</data>
+<data name="List_Of_User_Cars" xml:space="preserve">
+  <value>Liste der Benutzerautos</value>
+  <comment>List_Of_User_Cars</comment>
+</data>
+<data name="Login" xml:space="preserve">
+  <value>Einloggen</value>
+  <comment>Login</comment>
+</data>
+<data name="Logout" xml:space="preserve">
+  <value>Ausloggen</value>
+  <comment>Logout</comment>
+</data>
+<data name="Message" xml:space="preserve">
+  <value>Nachricht</value>
+  <comment>Message</comment>
+</data>
+<data name="Model" xml:space="preserve">
+  <value>Modell</value>
+  <comment>Model</comment>
+</data>
+<data name="Model_Manufacturer" xml:space="preserve">
+  <value>Modellhersteller</value>
+  <comment>Model Manufacturer</comment>
+</data>
+<data name="Model_Year" xml:space="preserve">
+  <value>Jahr</value>
+  <comment>Model_Year</comment>
+</data>
+<data name="Modified_Date" xml:space="preserve">
+  <value>Änderungsdatum</value>
+  <comment>Modified_Date</comment>
+</data>
+<data name="My_Account" xml:space="preserve">
+  <value>Mein Konto</value>
+  <comment>My_Account</comment>
+</data>
+<data name="My_Profile" xml:space="preserve">
+  <value>Mein Profil</value>
+  <comment>My Profile</comment>
+</data>
+<data name="Name" xml:space="preserve">
+  <value>Name</value>
+  <comment>Name</comment>
+</data>
+<data name="Password" xml:space="preserve">
+  <value>Passwort</value>
+  <comment>Password</comment>
+</data>
+
+  <data name="Please_Select" xml:space="preserve">
+    <value>Bitte auswählen</value>
+    <comment>Please_Select</comment>
+</data>
+<data name="Please_try_again_later." xml:space="preserve">
+    <value>Bitte versuchen Sie es später noch einmal.</value>
+    <comment>Please_try_again_later.</comment>
+</data>
+<data name="Price" xml:space="preserve">
+    <value>Preis</value>
+    <comment>Price</comment>
+</data>
+<data name="Price_Percentage" xml:space="preserve">
+    <value>Preisprozentsatz</value>
+    <comment>Price_Percentage</comment>
+</data>
+<data name="Privacy" xml:space="preserve">
+    <value>Datenschutz</value>
+    <comment>Privacy</comment>
+</data>
+<data name="Quick_Add_Service_History" xml:space="preserve">
+    <value>Schnelles Hinzufügen von Servicehistorie</value>
+    <comment>Quick_Add_Service_History</comment>
+</data>
+<data name="Register" xml:space="preserve">
+    <value>Registrieren</value>
+    <comment>Register</comment>
+</data>
+<data name="Register_Customer" xml:space="preserve">
+    <value>Kunden registrieren</value>
+    <comment>Register_Customer</comment>
+</data>
+<data name="Save" xml:space="preserve">
+    <value>Speichern</value>
+    <comment>Save</comment>
+</data>
+<data name="Search" xml:space="preserve">
+    <value>Suche</value>
+    <comment>Search</comment>
+</data>
+<data name="SearchBy" xml:space="preserve">
+    <value>Suche nach</value>
+    <comment>SearchBy</comment>
+</data>
+<data name="Select_Car" xml:space="preserve">
+    <value>Auto auswählen</value>
+    <comment>Select_Car</comment>
+</data>
+<data name="Select_Customer" xml:space="preserve">
+    <value>Kunde auswählen</value>
+    <comment>Select_Customer</comment>
+</data>
+<data name="Select_Engineer" xml:space="preserve">
+    <value>Ingenieur auswählen</value>
+    <comment>Select_Engineer</comment>
+</data>
+<data name="Select_Manufacturer" xml:space="preserve">
+    <value>Hersteller auswählen</value>
+    <comment>Select_Manufacturer</comment>
+</data>
+<data name="Select_Model" xml:space="preserve">
+    <value>Modell auswählen</value>
+    <comment>Select_Model</comment>
+</data>
+<data name="Select_Multiple_Service_Items" xml:space="preserve">
+    <value>Bitte halten Sie die STRG-Taste gedrückt, um mehrere auszuwählen</value>
+    <comment>Select_Multiple_Service_Items</comment>
+</data>
+<data name="Select_Service_Items" xml:space="preserve">
+    <value>Service-Artikel auswählen</value>
+    <comment>Select_Service_Items</comment>
+</data>
+<data name="Select_Speciality" xml:space="preserve">
+    <value>Fachgebiet auswählen</value>
+    <comment>Select_Speciality</comment>
+</data>
+<data name="Select_Year" xml:space="preserve">
+    <value>Jahr auswählen</value>
+    <comment>Select_Year</comment>
+</data>
+<data name="Send_Email" xml:space="preserve">
+    <value>E-Mail senden</value>
+    <comment>Send_Email</comment>
+</data>
+<data name="Service_Date" xml:space="preserve">
+    <value>Servicedatum</value>
+    <comment>Service_Date</comment>
+</data>
+<data name="Service_Engineer" xml:space="preserve">
+    <value>Service-Ingenieur</value>
+    <comment>Service_Engineer</comment>
+</data>
+<data name="Service_FinalPrice" xml:space="preserve">
+    <value>Service Endpreis</value>
+    <comment>Service_FinalPrice</comment>
+</data>
+<data name="Service_Information" xml:space="preserve">
+    <value>Serviceinformationen</value>
+    <comment>Service_Information</comment>
+</data>
+<data name="List_Of_Service_Items" xml:space="preserve">
+    <value>Liste der Service-Artikel</value>
+    <comment>List_Of_Service_Items</comment>
+</data>
+<data name="Service_Kilometer" xml:space="preserve">
+    <value>Service-Kilometer</value>
+    <comment>Service_Kilometer</comment>
+</data>
+<data name="Service_Print" xml:space="preserve">
+    <value>Drucken</value>
+    <comment>Service_Print</comment>
+</data>
+<data name="Service_StartPrice" xml:space="preserve">
+    <value>Service Startpreis</value>
+    <comment>Service_StartPrice</comment>
+</data>
+<data name="Settings" xml:space="preserve">
+    <value>Einstellungen</value>
+    <comment>Settings</comment>
+</data>
+<data name="Start_Price" xml:space="preserve">
+    <value>Startpreis</value>
+    <comment>Start_Price</comment>
+</data>
+<data name="Subject" xml:space="preserve">
+    <value>Betreff</value>
+    <comment>Subject</comment>
+</data>
+<data name="Surname" xml:space="preserve">
+    <value>Nachname</value>
+    <comment>Surname</comment>
+</data>
+<data name="System_Settings" xml:space="preserve">
+    <value>Systemeinstellungen</value>
+    <comment>System_Settings</comment>
+</data>
+<data name="Total" xml:space="preserve">
+    <value>Gesamt</value>
+    <comment>Total</comment>
+</data>
+<data name="Total_Cars" xml:space="preserve">
+    <value>Gesamtanzahl der Autos</value>
+    <comment>Total_Cars</comment>
+</data>
+<data name="Total_Customers" xml:space="preserve">
+    <value>Gesamtanzahl der Kunden</value>
+    <comment>Total_Customers</comment>
+</data>
+<data name="Total_Engineers" xml:space="preserve">
+    <value>Gesamtanzahl der Ingenieure</value>
+    <comment>Total_Engineers</comment>
+</data>
+<data name="Total_Users" xml:space="preserve">
+    <value>Gesamtanzahl der Benutzer</value>
+    <comment>Total_Users</comment>
+</data>
+<data name="User_Photo" xml:space="preserve">
+    <value>Foto</value>
+    <comment>User_Photo</comment>
+</data>
+<data name="Utilities" xml:space="preserve">
+    <value>Dienstprogramme</value>
+    <comment>Utilities</comment>
+</data>
+<data name="View_Cars" xml:space="preserve">
+    <value>Autos anzeigen</value>
+    <comment>View_Cars</comment>
+</data>
+<data name="View_Car_Details" xml:space="preserve">
+    <value>Fahrzeugdetails anzeigen</value>
+    <comment>View_Car_Details</comment>
+</data>
+<data name="View_Car_History" xml:space="preserve">
+    <value>Fahrzeughistorie anzeigen</value>
+    <comment>View_Car_History</comment>
+</data>
+<data name="VIN_Number" xml:space="preserve">
+    <value>VIN-Nummer</value>
+    <comment>VIN_Number</comment>
+</data>
+<data name="Your_email_did_not_send." xml:space="preserve">
+    <value>Ihre E-Mail wurde nicht gesendet</value>
+    <comment>Your_email_did_not_send.</comment>
+</data>
+<data name="Your_email_has_been_sent_successfully." xml:space="preserve">
+    <value>Ihre E-Mail wurde erfolgreich gesendet.</value>
+    <comment>Your_email_has_been_sent_successfully.</comment>
+</data>
+<data name="ΟΚ" xml:space="preserve">
+    <value>OK</value>
+    <comment>ΟΚ</comment>
+</data>
+<data name="Description" xml:space="preserve">
+    <value>Beschreibung</value>
+    <comment>Description</comment>
+</data>
+<data name="Entries_DataTable" xml:space="preserve">
+    <value>Einträge</value>
+    <comment>Entries_DataTable</comment>
+</data>
+<data name="Entries_Per_Page" xml:space="preserve">
+    <value>Einträge pro Seite</value>
+    <comment>Entries_Per_Page</comment>
+</data>
+<data name="Filtered_From_DataTable" xml:space="preserve">
+    <value>gefiltert von</value>
+    <comment>Filtered_From_DataTable</comment>
+</data>
+<data name="ID" xml:space="preserve">
+    <value>ID</value>
+    <comment>ID</comment>
+</data>
+<data name="Next_DataTable" xml:space="preserve">
+    <value>Weiter</value>
+    <comment>Next_DataTable</comment>
+</data>
+<data name="No_Matching_Records_Found_DataTable" xml:space="preserve">
+    <value>Keine passenden Einträge gefunden</value>
+    <comment>No_Matching_Records_Found_DataTable</comment>
+</data>
+<data name="Of_DataTable" xml:space="preserve">
+    <value>von</value>
+    <comment>Of_DataTable</comment>
+</data>
+<data name="Previous_DataTable" xml:space="preserve">
+    <value>Zurück</value>
+    <comment>Previous_DataTable</comment>
+</data>
+
+  <data name="Showing_Empty_DataTable" xml:space="preserve">
+    <value>Zeige 0 bis 0 von 0 Einträgen</value>
+    <comment>Showing_Empty_DataTable</comment>
+</data>
+<data name="Show_DataTable" xml:space="preserve">
+    <value>Zeigen</value>
+    <comment>Show_DataTables</comment>
+</data>
+<data name="Total_DataTable" xml:space="preserve">
+    <value>Gesamt</value>
+    <comment>Total_DataTable</comment>
+</data>
+<data name="To_DataTable" xml:space="preserve">
+    <value>bis</value>
+    <comment>To_DataTable</comment>
+</data>
+<data name="Edit_Service_Item" xml:space="preserve">
+    <value>Serviceelement bearbeiten</value>
+    <comment>Edit_Service_Item</comment>
+</data>
+<data name="Add_Service_Item" xml:space="preserve">
+    <value>Serviceelement hinzufügen</value>
+    <comment>Add_Service_Item</comment>
+</data>
+<data name="Edit_Manufacturer" xml:space="preserve">
+    <value>Hersteller bearbeiten</value>
+    <comment>Edit_Manufacturer</comment>
+</data>
+<data name="Enable_Access" xml:space="preserve">
+    <value>Login-Zugang</value>
+    <comment>Enable_Access</comment>
+</data>
+<data name="Send" xml:space="preserve">
+    <value>Absenden</value>
+    <comment>Send</comment>
+</data>
+<data name="Blocked_Access" xml:space="preserve">
+    <value>Blockierter Zugang</value>
+    <comment>Blocked_Access</comment>
+</data>
+<data name="Enabled_Access" xml:space="preserve">
+    <value>Aktivierter Zugang</value>
+    <comment>Enabled_Access</comment>
+</data>
+<data name="Restricted_Access" xml:space="preserve">
+    <value>Beschränkter Zugang</value>
+    <comment>Restricted_Access</comment>
+</data>
+<data name="Rows_Selected" xml:space="preserve">
+    <value>Zeilen ausgewählt</value>
+    <comment>Rows_Selected</comment>
+</data>
+<data name="One_Row_Selected" xml:space="preserve">
+    <value>1 Zeile ausgewählt</value>
+    <comment>One_Row_Selected</comment>
+</data>
+<data name="Export_To_Excel" xml:space="preserve">
+    <value>Exportieren nach Excel</value>
+    <comment>Export_To_Excel</comment>
+</data>
+<data name="Print" xml:space="preserve">
+    <value>Drucken</value>
+    <comment>Print</comment>
+</data>
+<data name="Select_All" xml:space="preserve">
+    <value>Alle auswählen</value>
+    <comment>Select_All</comment>
+</data>
+<data name="Unselect_All" xml:space="preserve">
+    <value>Alle abwählen</value>
+    <comment>Unselect_All</comment>
+</data>
+<data name="Actions_Table" xml:space="preserve">
+    <value>Aktionen</value>
+    <comment>Actions_Table</comment>
+</data>
+<data name="Customer_Added_Successfully" xml:space="preserve">
+    <value>Kunde {0} {1} wurde erfolgreich hinzugefügt.</value>
+    <comment>Customer_Added_Successfully</comment>
+</data>
+<data name="Customer_Added_Failed" xml:space="preserve">
+    <value>Es gab ein Problem beim Erstellen des Kunden {0} {1}.</value>
+    <comment>Customer_Added_Failed</comment>
+</data>
+<data name="Engineer_Added_Failed" xml:space="preserve">
+    <value>Es gab ein Problem beim Erstellen des Ingenieurs {0} {1}.</value>
+    <comment>Engineer_Added_Failed</comment>
+</data>
+<data name="Engineer_Added_Successfully" xml:space="preserve">
+    <value>Ingenieur {0} {1} wurde erfolgreich hinzugefügt.</value>
+    <comment>Engineer_Added_Successfully</comment>
+</data>
+<data name="Customer_ID" xml:space="preserve">
+    <value>Kundennummer</value>
+    <comment>Customer_ID</comment>
+</data>
+<data name="Engineer_ID" xml:space="preserve">
+    <value>Ingenieur-Nummer</value>
+    <comment>Engineer_ID</comment>
+</data>
+<data name="EnableAccess_Disable" xml:space="preserve">
+    <value>Zugang deaktivieren</value>
+    <comment>EnableAccess_Disable</comment>
+</data>
+<data name="EnableAccess_Enable" xml:space="preserve">
+    <value>Zugang aktivieren</value>
+    <comment>EnableAccess_Enable</comment>
+</data>
+<data name="EnableAccess_RestrictedAccess" xml:space="preserve">
+    <value>Beschränkter Zugang</value>
+    <comment>EnableAccess_RestrictedAccess</comment>
+</data>
+<data name="No_Image_Available" xml:space="preserve">
+    <value>Kein Bild verfügbar</value>
+    <comment>No_Image_Available</comment>
+</data>
+<data name="Import_Service_Items" xml:space="preserve">
+    <value>Service-Elemente importieren</value>
+    <comment>Import_Service_Items</comment>
+</data>
+<data name="Import_Service_Items_Info" xml:space="preserve">
+    <value>In diesem Menü können Sie Service-Elemente importieren</value>
+    <comment>Import_Service_Items_Info</comment>
+</data>
+<data name="Import_Customers_Info" xml:space="preserve">
+    <value>In diesem Menü können Sie Kunden importieren</value>
+    <comment>Import_Customers_Info</comment>
+</data>
+<data name="Choose_GarageID_Column_To_Import" xml:space="preserve">
+    <value>Wählen Sie die GarageID-Spalte</value>
+    <comment>Choose_GarageID_Column_To_Import</comment>
+</data>
+<data name="Choose_Manufacturer_Column_To_Import" xml:space="preserve">
+    <value>Wählen Sie die Hersteller-Spalte</value>
+    <comment>Choose_Manufacturer_Column_To_Import</comment>
+</data>
+<data name="Choose_Model_Column_To_Import" xml:space="preserve">
+    <value>Wählen Sie die Modell-Spalte</value>
+    <comment>Choose_Model_Column_To_Import</comment>
+</data>
+<data name="Choose_Price_Column_To_Import" xml:space="preserve">
+    <value>Wählen Sie die Preis-Spalte</value>
+    <comment>Choose_Price_Column_To_Import</comment>
+</data>
+<data name="Choose_Service_Item_Description_Column_To_Import" xml:space="preserve">
+    <value>Wählen Sie die Beschreibung-Spalte</value>
+    <comment>Choose_Service_Item_Description_Column_To_Import</comment>
+</data>
+<data name="Import_Engineers" xml:space="preserve">
+    <value>Ingenieure importieren</value>
+    <comment>Import_Engineers</comment>
+</data>
+<data name="Import_Engineers_Info" xml:space="preserve">
+    <value>In diesem Menü können Sie Ingenieure importieren</value>
+    <comment>Import_Engineers_Info</comment>
+</data>
+<data name="Mass_Imports" xml:space="preserve">
+    <value>Massendatenimport</value>
+    <comment>Mass_Imports</comment>
+</data>
+<data name="Welcome" xml:space="preserve">
+    <value>Willkommen</value>
+</data>
+<data name="Welcome_Message" xml:space="preserve">
+    <value>Dies ist die Online-Plattform zur Überwachung des Fahrzeugservice-Status.</value>
+</data>
+<data name="PreviousKM" xml:space="preserve">
+    <value>Vorherige km</value>
+</data>
+<data name="Employees" xml:space="preserve">
+    <value>Angestellte</value>
+</data>
+<data name="Back_To_Profile" xml:space="preserve">
+    <value>Zurück zu meinem Profil</value>
+</data>
+
+<data name="List_Of_Employees" xml:space="preserve">
+    <value>Liste der Mitarbeiter</value>
+</data>
+<data name="Edit_Employee_Profile" xml:space="preserve">
+    <value>Profil des Mitarbeiters bearbeiten</value>
+</data>
+<data name="Employee_ID" xml:space="preserve">
+    <value>Mitarbeiter-ID</value>
+</data>
+<data name="Add_New_Employee" xml:space="preserve">
+    <value>Neuen Mitarbeiter hinzufügen</value>
+</data>
+<data name="Add_Employee_Details_Form" xml:space="preserve">
+    <value>Mitarbeiterdetails</value>
+</data>
+<data name="Employee_Added_Successfully" xml:space="preserve">
+    <value>Mitarbeiter {0} {1} wurde erfolgreich hinzugefügt.</value>
+</data>
+<data name="Employee_Added_Failed" xml:space="preserve">
+    <value>Es gab ein Problem beim Erstellen des Mitarbeiters {0} {1}.</value>
+</data>
+<data name="Edit_Model" xml:space="preserve">
+    <value>Modell bearbeiten</value>
+</data>
+<data name="Fuel_Type" xml:space="preserve">
+    <value>Kraftstoffart</value>
+</data>
+<data name="Select_Fuel_Type" xml:space="preserve">
+    <value>Kraftstoff auswählen</value>
+</data>
+<data name="Edit_Fuel_Type" xml:space="preserve">
+    <value>Kraftstoffart bearbeiten</value>
+</data>
+<data name="List_Of_Fuel_Types" xml:space="preserve">
+    <value>Liste der Kraftstoffarten</value>
+</data>
+<data name="General_Lists" xml:space="preserve">
+    <value>Allgemeine Listen</value>
+</data>
+<data name="UserPhoto" xml:space="preserve">
+    <value>Foto</value>
+    <comment>UserPhoto</comment>
+</data>
+<data name="List_Of_Engineer_Specialities" xml:space="preserve">
+    <value>Liste der Ingenieur-Spezialitäten</value>
+</data>
+<data name="Edit_Engineer_Speciality" xml:space="preserve">
+    <value>Ingenieur-Spezialität bearbeiten</value>
+</data>
+<data name="Add_Engineer_Speciality" xml:space="preserve">
+    <value>Ingenieur-Spezialität hinzufügen</value>
+</data>
+<data name="Import_Engineer_Specialities" xml:space="preserve">
+    <value>Ingenieur-Spezialitäten importieren</value>
+</data>
+<data name="Import_Engineer_Specialities_Info" xml:space="preserve">
+    <value>Über dieses Menü können Sie Ingenieur-Spezialitäten importieren</value>
+</data>
+<data name="Choose_Engineer_Speciality_Description_Column_To_Import" xml:space="preserve">
+    <value>Spalte der Ingenieur-Spezialität wählen</value>
+</data>
+<data name="File" xml:space="preserve">
+    <value>Datei</value>
+</data>
+<data name="Service_Appointment_Pending" xml:space="preserve">
+    <value>Ausstehend</value>
+</data>
+<data name="Service_Appointment_Completed" xml:space="preserve">
+    <value>Abgeschlossen</value>
+</data>
+<data name="Service_Appointment_Cancelled" xml:space="preserve">
+    <value>Storniert</value>
+</data>
+<data name="List_Of_Service_Appointments" xml:space="preserve">
+    <value>Liste der Service-Termine</value>
+</data>
+<data name="Service_Appointment_Date" xml:space="preserve">
+    <value>Datum</value>
+</data>
+<data name="Service_Appointment_Comments" xml:space="preserve">
+    <value>Kommentare</value>
+</data>
+<data name="Service_Appointment_ID" xml:space="preserve">
+    <value>Termin-ID</value>
+</data>
+<data name="Edit_Service_Appointment" xml:space="preserve">
+    <value>Service-Termin bearbeiten</value>
+</data>
+<data name="Service_Appointment_Status" xml:space="preserve">
+    <value>Status</value>
+</data>
+<data name="ServiceAppointmentStatus_Cancelled" xml:space="preserve">
+    <value>Storniert</value>
+</data>
+<data name="ServiceAppointmentStatus_Completed" xml:space="preserve">
+    <value>Abgeschlossen</value>
+</data>
+<data name="ServiceAppointmentStatus_Pending" xml:space="preserve">
+    <value>Ausstehend</value>
+</data>
+<data name="Complete" xml:space="preserve">
+    <value>Abgeschlossen</value>
+</data>
+<data name="Customer_Name_Surname" xml:space="preserve">
+    <value>Name Nachname</value>
+</data>
+<data name="Add_Service_Appointment_Form" xml:space="preserve">
+    <value>Service-Termin hinzufügen</value>
+</data>
+<data name="Import_Employees_Info" xml:space="preserve">
+    <value>Über dieses Menü können Sie Mitarbeiter importieren</value>
+</data>
+<data name="Import_Employees" xml:space="preserve">
+    <value>Mitarbeiter importieren</value>
+</data>
+<data name="Mobile_Phone" xml:space="preserve">
+    <value>Handy</value>
+</data>
+
+</root>

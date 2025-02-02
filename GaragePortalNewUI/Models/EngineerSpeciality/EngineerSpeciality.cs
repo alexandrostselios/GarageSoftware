@@ -5,5 +5,7 @@
         public long ID { get; set; }
 
         public string Speciality { get; set; }
+
+        public long GarageID { get; set; }
     }
 }

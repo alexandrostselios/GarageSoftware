@@ -8,15 +8,15 @@ using System.Net.Http.Json;
 using System.Resources;
 using System.Text.Json;
 
-public class NotificationService : BackgroundService
+public class ServiceExpirationReminderNotification : BackgroundService
 {
-    private readonly ILogger<NotificationService> _logger;
+    private readonly ILogger<ServiceExpirationReminderNotification> _logger;
     private readonly IServiceProvider _serviceProvider;
 
     readonly Uri baseAddress = new Uri("https://localhost:7096/api");
     readonly HttpClient client;
 
-    public NotificationService(ILogger<NotificationService> logger, IServiceProvider serviceProvider)
+    public ServiceExpirationReminderNotification(ILogger<ServiceExpirationReminderNotification> logger, IServiceProvider serviceProvider)
     {
         _logger = logger;
         _serviceProvider = serviceProvider;
@@ -36,7 +36,7 @@ public class NotificationService : BackgroundService
             _logger.LogInformation("Checking for notifications at: {time}", DateTime.Now);
 
             // Trigger the notifications
-            await TriggerNotificationsAsync(stoppingToken);
+            await ServiceExpirationReminder(stoppingToken);
 
             // Wait for 2 minutes before checking again
             await Task.Delay(TimeSpan.FromSeconds(30), stoppingToken);
@@ -45,14 +45,14 @@ public class NotificationService : BackgroundService
         _logger.LogInformation("Notification Service stopped.");
     }
 
-    private async Task TriggerNotificationsAsync(CancellationToken stoppingToken)
+    private async Task ServiceExpirationReminder(CancellationToken stoppingToken)
     {
         using (var scope = _serviceProvider.CreateScope())
         {
             var dbContext = scope.ServiceProvider.GetRequiredService<GarageDbContext>(); // Access your DbContext
             var emailService = scope.ServiceProvider.GetRequiredService<IEmailService>(); // Access your email service
 
-            var notificationDate = DateTime.Today.AddYears(-1).AddDays(5);
+            var notificationDate = DateTime.Today.AddYears(-1).AddDays(0);
 
 
             string StoredProc = "exec GetCarServiceHistories @GarageID = 1, @NotificationDate = '" + notificationDate.ToString("yyyy-MM-dd") + "'";
@@ -78,7 +78,7 @@ public class NotificationService : BackgroundService
                 //Console.WriteLine(cleanJson);
 
                 // Send email notification
-                var emailContent = ComposeEmail(serviceItem);
+                var emailContent = ComposeServiceReminderEmail(serviceItem);
                 await emailService.SendEmailAsync(serviceItem.CustomerEmail, serviceItem.CustomerID, "Car Management Notification", emailContent, null);
 
                 // Mark notification as sent
@@ -95,7 +95,7 @@ public class NotificationService : BackgroundService
         }
     }
 
-    private static string ComposeEmail(ServiceHistory serviceHistory)
+    private static string ComposeServiceReminderEmail(ServiceHistory serviceHistory)
     {
         string formattedDate = serviceHistory.ServiceDate.HasValue
             ? serviceHistory.ServiceDate.Value.ToString("dd/MM/yyyy")
