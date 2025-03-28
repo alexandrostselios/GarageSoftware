@@ -370,6 +370,27 @@ else
                             { data: 'garageID' },
                             {
                                 data: null,
+                                    // render: function (data, type, row) {
+                                    //     let disableButtons = row.serviceAppointmentStatus == 2 || row.serviceAppointmentStatus == 3;
+    
+                                    //     return '<div class="btn-group" role="group">' +
+                                    //         '<a href="#" class="btn btn-edit" title="@Resource.GetKey("Edit")" id="btnEditServiceAppointment" data-id="' + row.id + '" >' +
+                                    //         '<i class="fa fa-pencil-square-o" style="color:blue"></i></a>' +
+
+                                    //         '<a href="#" class="btn btn-pending" title="@Resource.GetKey("Pending")" id="btnPendingServiceAppointment" data-id="' + row.id + '" >' +
+                                    //         '<i class="fa fa-clock-o"></i></a>' +
+
+                                    //         '<a href="#" class="btn btn-complete ' + (disableButtons ? 'disabled' : '') + '" title="@Resource.GetKey("Complete")" id="btnCompleteServiceAppointment" data-id="' + row.id + '" ' + 
+                                    //         (disableButtons ? 'aria-disabled="true"' : '') + '>' +
+                                    //         '<i class="fa fa-check-circle-o" style="color:green"></i></a>' +
+
+                                    //         '<a href="#" class="btn btn-cancel ' + (disableButtons ? 'disabled' : '') + '" title="@Resource.GetKey("Cancel")" id="btnCancelServiceAppointment" data-id="' + row.id + '" ' + 
+                                    //         (disableButtons ? 'aria-disabled="true"' : '') + '>' +
+                                    //         '<i class="fa fa-times" style="color:red"></i></a>' +
+
+                                    //         '</div>';
+                                    // },
+
                                 render: function (data, type, row) {
                                     return '<div class="btn-group" role="group"><a href="#" class="btn btn-edit" title="@Resource.GetKey("Edit")" id="btnEditServiceAppointment" data-id="' + row.id + '" ><i class="fa fa-pencil-square-o" style="color:blue"></i></a>'+
                                     '<a href="#" class="btn btn-pending" title="@Resource.GetKey("Pending")" id="btnPendingServiceAppointment" data-id="' + row.id + '" ><i class="fa fa-clock-o"></i></a>' +

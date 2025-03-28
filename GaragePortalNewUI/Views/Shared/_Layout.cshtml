@@ -72,63 +72,44 @@
                                 </a>
                             </li>
                         }
-                        @if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Admin.ToString() || @ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Employee.ToString()){
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="Users" asp-controller="Customer" asp-action="Customers">
-                                    <i class="fa fa-users"></i> @Resource.GetKey("Customers")
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="Users" asp-controller="Engineer" asp-action="Engineers">
-                                    <i class="fa fa-wrench"></i> @Resource.GetKey("Engineers")
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="Users" asp-controller="Employee" asp-action="Employees" asp-route-flag="0">
-                                    <i class="fas fa-user-cog"></i> @Resource.GetKey("Employees")
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="ServiceAppointment" asp-controller="ServiceAppointment" asp-action="ServiceAppointments">
-                                    <i class="fa fa-calendar"></i> @Resource.GetKey("List_Of_Service_Appointments")
-                                </a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <div class="dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown">
-                                        <i class="fa fa-user-circle"></i> @Resource.GetKey("My_Account")
-                                    </a>
-                                </div>
-                                <div class="dropdown-menu">
-                                    <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="MyProfile">
-                                        <i class="fa fa-user"></i> @Resource.GetKey("My_Profile")
-                                    </a>
-                                    <a class="nav-link" asp-area="Home" asp-controller="Home" asp-action="Settings">
-                                        <i class="fa fa-cog"></i> @Resource.GetKey("Settings")
-                                    </a>
-                                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">
-                                        <i class="fa fa-shield"></i> @Resource.GetKey("Privacy")
-                                    </a>
-                                </div>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="Settings" asp-controller="Settings" asp-action="Settings">
-                                    <i class="fa fa-cogs"></i> @Resource.GetKey("Settings")
-                                </a>
-                            </li>
-                        }
-                        else if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Customer.ToString())
+                        else
                         {
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="CustomerCars" asp-controller="CustomerCars" asp-action="ViewCustomerCars" asp-route-id="@ViewBag.ID">
-                                    <i class="fa fa-car"></i> @Resource.GetKey("List_Of_MyCars")
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="ServiceAppointment" asp-controller="ServiceAppointment" asp-action="ServiceAppointments">
-                                    <i class="fa fa-calendar"></i> @Resource.GetKey("List_Of_Service_Appointments")
-                                </a>
-                            </li>
+                            @if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Admin.ToString() || @ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Employee.ToString()){
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="Users" asp-controller="Customer" asp-action="Customers">
+                                        <i class="fa fa-users"></i> @Resource.GetKey("Customers")
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="Users" asp-controller="Engineer" asp-action="Engineers">
+                                        <i class="fa fa-wrench"></i> @Resource.GetKey("Engineers")
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="Users" asp-controller="Employee" asp-action="Employees" asp-route-flag="0">
+                                        <i class="fas fa-user-cog"></i> @Resource.GetKey("Employees")
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="ServiceAppointment" asp-controller="ServiceAppointment" asp-action="ServiceAppointments">
+                                        <i class="fa fa-calendar"></i> @Resource.GetKey("List_Of_Service_Appointments")
+                                    </a>
+                                </li>
+                            }
+                            else if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Customer.ToString())
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="CustomerCars" asp-controller="CustomerCars" asp-action="ViewCustomerCars" asp-route-id="@ViewBag.ID">
+                                        <i class="fa fa-car"></i> @Resource.GetKey("List_Of_MyCars")
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="ServiceAppointment" asp-controller="ServiceAppointment" asp-action="ServiceAppointments">
+                                        <i class="fa fa-calendar"></i> @Resource.GetKey("List_Of_Service_Appointments")
+                                    </a>
+                                </li>
+                                
+                            }
                             <li class="nav-item dropdown">
                                 <div class="dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown">
@@ -147,12 +128,19 @@
                                     </a>
                                 </div>
                             </li>
+                            @if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Admin.ToString() || @ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Employee.ToString()){
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="Settings" asp-controller="Settings" asp-action="Settings">
+                                        <i class="fa fa-cogs"></i> @Resource.GetKey("Settings")
+                                    </a>
+                                </li>
+                            }
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="Logout">
+                                    <i class="fa fa-sign-out"></i> @Resource.GetKey("Logout")
+                                </a>
+                            </li>
                         }
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="Logout">
-                                <i class="fa fa-sign-out"></i> @Resource.GetKey("Logout")
-                            </a>
-                        </li>
                     </ul>
                 </div>
 

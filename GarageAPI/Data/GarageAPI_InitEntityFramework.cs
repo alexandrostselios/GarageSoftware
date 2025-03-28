@@ -119,7 +119,7 @@
 //builder.Entity<CarModel>().HasData(new CarModel { ID = 52, ModelName = "Giulietta" });
 //builder.Entity<CarModel>().HasData(new CarModel { ID = 53, ModelName = "Giulia" });
 
-//builder.Entity<Users>().HasData(new Users { ID = 1, Name = "Alexandros", Surname = "Tselios", Email = "atselios@classter.com", Password = "1", UserType = 1, CreationDate = DateTime.Now, ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable });
+//builder.Entity<Users>().HasData(new Users { ID = 1, Name = "Alexandros", Surname = "Tselios", Email = "testCustomer@temp.com", Password = "1", UserType = 1, CreationDate = DateTime.Now, ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable });
 //builder.Entity<Users>().HasData(new Users { ID = 2, Name = "Efthumia", Surname = "Varvagianni", Email = "efi.vanni@gmail.com", Password = "f1234!", UserType = 1, CreationDate = DateTime.Now, ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable });
 //builder.Entity<Users>().HasData(new Users { ID = 3, Name = "Kostas", Surname = "Kitsikou", Email = "kkitsikou@hotmail.com", Password = "gafa#$#", UserType = 1, CreationDate = DateTime.Now, ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable });
 //builder.Entity<Users>().HasData(new Users { ID = 4, Name = "Marios", Surname = "Papadopoulos", Email = "mpapadopoulos@yahoo.gr", Password = "DfG34#$%^", UserType = 1, CreationDate = DateTime.Now, ModifiedDate = null, LastLoginDate = null, EnableAccess = Enum.EnableAccess.Enable });

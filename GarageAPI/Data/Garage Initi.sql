@@ -150,7 +150,7 @@ WHILE @I <= @CurrentYear
 --INSERT INTO CarModelManufacturerYear(CarManufacturerID,CarModelID,CarModelYearID) VALUES(24,16,62)
 --INSERT INTO CarModelManufacturerYear(CarManufacturerID,CarModelID,CarModelYearID) VALUES(24,17,63)
 
---insert into users values('alexandros','tselios','atselios@classter.com','1',1,getdate(),'0001-01-01 00:00:00.0000000','0001-01-01 00:00:00.0000000',1)
+--insert into users values('alexandros','tselios','testCustomer@temp.com','1',1,getdate(),'0001-01-01 00:00:00.0000000','0001-01-01 00:00:00.0000000',1)
 --insert into users values('Efthumia','Varvagianni','efi.vanni@gmail.com','ef1234!',2,getdate()+1,'0001-01-01 00:00:00.0000000','0001-01-01 00:00:00.0000000',1)
 --insert into users values('Kostas','Kitsikou','kkitsikou@hotmail.com','gafa#$#',2,getdate()+2,'0001-01-01 00:00:00.0000000','0001-01-01 00:00:00.0000000',1)
 --insert into users values('Marios','Papadopoulos','mpapadopoulos@yahoo.gr','DfG34#$%^',2,getdate()+3,'0001-01-01 00:00:00.0000000','0001-01-01 00:00:00.0000000',1)

@@ -167,7 +167,7 @@ namespace GarageAPI.Migrations
                 columns: new[] { "ID", "Email", "Password", "UserType", "CreationDate", "ModifiedDate", "LastLoginDate", "EnableAccess" }, // Specify column names here
                 values: new object[,]
                 {
-                    { 1L, "atselios@classter.com", "1", 1, new DateTime(2020, 1, 6, 14, 5, 14, 258, DateTimeKind.Unspecified), null, null, (int)Enum.EnableAccess.Enable },
+                    { 1L, "testCustomer@temp.com", "pass", 2, new DateTime(2020, 1, 6, 14, 5, 14, 258, DateTimeKind.Unspecified), null, null, (int)Enum.EnableAccess.Enable },
                     { 2L, "testCustomer1@temp.com", "pass01", 2, new DateTime(2021, 1, 7, 14, 5, 14, 258, DateTimeKind.Unspecified).AddDays(1), null, null, (int)Enum.EnableAccess.Enable,  },
                     { 3L, "testCustomer2@temp.com", "pass02", 2, new DateTime(2021, 1, 8, 14, 5, 14, 258, DateTimeKind.Unspecified).AddDays(2), null, null, (int)Enum.EnableAccess.Enable},
                     { 4L, "testCustomer3@temp.com", "pass02", 2, new DateTime(2021, 1, 9, 14, 5, 14, 258, DateTimeKind.Unspecified).AddDays(3), null, null, (int)Enum.EnableAccess.Enable,},

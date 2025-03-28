@@ -6700,13 +6700,13 @@ namespace GarageAPI.Migrations
                         {
                             ID = 1L,
                             CreationDate = new DateTime(2022, 1, 6, 14, 5, 14, 258, DateTimeKind.Unspecified),
-                            Email = "atselios@classter.com",
+                            Email = "testCustomer@temp.com",
                             EnableAccess = 1,
                             GarageID = 0L,
                             Name = "Alexandros",
-                            Password = "1",
+                            Password = "pass",
                             Surname = "Tselios",
-                            UserType = 1
+                            UserType = 2
                         },
                         new
                         {

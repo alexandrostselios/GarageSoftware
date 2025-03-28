@@ -215,7 +215,7 @@
                 //    columns: new[] { "ID", "CreationDate", "Email", "EnableAccess", "LastLoginDate", "ModifiedDate", "Name", "Password", "Surname", "UserType", "GarageID" },
                 //    values: new object[,]
                 //    {
-                //                    { 1L, new DateTime(2021, 1, 25, 10, 04, 5, 768, DateTimeKind.Local).AddTicks(127), "atselios@classter.com", 1, new DateTime(2023, 1, 27, 15, 37, 7, 125, DateTimeKind.Local).AddTicks(342), null, "Alexandros", "1", "Tselios", 1L,1L },
+                //                    { 1L, new DateTime(2021, 1, 25, 10, 04, 5, 768, DateTimeKind.Local).AddTicks(127), "testCustomer@temp.com", 1, new DateTime(2023, 1, 27, 15, 37, 7, 125, DateTimeKind.Local).AddTicks(342), null, "Alexandros", "1", "Tselios", 1L,1L },
                 //                    { 2L, new DateTime(2021, 1, 26, 12, 46, 7, 456, DateTimeKind.Local).AddTicks(144), "efi.vanni@gmail.com", 1, new DateTime(2022, 11, 15, 13, 26, 8, 256, DateTimeKind.Local).AddTicks(699), null, "Efthumia", "f1234!", "Varvagianni", 1L,1L },
                 //                    { 3L, new DateTime(2022, 9, 30, 16, 56, 3, 125, DateTimeKind.Local).AddTicks(156), "kkitsikou@hotmail.com", 1, new DateTime(2022, 7, 9, 12, 05, 4, 368, DateTimeKind.Local).AddTicks(456), null, "Kostas", "gafa#$#", "Kitsikou", 1L,2L },
                 //                    { 4L, new DateTime(2022, 12, 16, 20, 00, 1, 929, DateTimeKind.Local).AddTicks(169), "mpapadopoulos@yahoo.gr", 1, new DateTime(2022, 6, 4, 22, 00, 1, 789, DateTimeKind.Local).AddTicks(768), null, "Marios", "DfG34#$%^", "Papadopoulos", 1L, 3L }

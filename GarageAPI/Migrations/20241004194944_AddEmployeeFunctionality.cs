@@ -45,8 +45,8 @@ namespace GarageAPI.Migrations
                 columns: new[] { "ID", "Email", "Password", "UserType", "CreationDate", "ModifiedDate", "LastLoginDate", "EnableAccess" }, // Specify column names here
                 values: new object[,]
                 {
-                    { 30L, "testEmployee1@temp.com", "e1", 1, new DateTime(2020, 1, 6, 14, 5, 14, 258, DateTimeKind.Unspecified), null, null, (int)Enum.EnableAccess.Enable },
-                    { 31L, "testEmployee2@temp.com", "e2", 4, new DateTime(2021, 1, 7, 14, 5, 14, 258, DateTimeKind.Unspecified).AddDays(1), null, null, (int)Enum.EnableAccess.Enable}
+                    { 30L, "admin@garage.com", "a1", 1, new DateTime(2020, 1, 6, 14, 5, 14, 258, DateTimeKind.Unspecified), null, null, (int)Enum.EnableAccess.Enable },
+                    { 31L, "testEmployee1@temp.com", "e1", 4, new DateTime(2021, 1, 7, 14, 5, 14, 258, DateTimeKind.Unspecified).AddDays(1), null, null, (int)Enum.EnableAccess.Enable}
                 });
 
             migrationBuilder.InsertData(
@@ -54,8 +54,8 @@ namespace GarageAPI.Migrations
                 columns: new[] { "EmployeeID", "EmployeeSurname", "EmployeeName", "EmployeeEmail", "CreationDate", "ModifiedDate", "GarageID", "UserID", "EmployeePhoto", "EmployeeHomePhone", "EmployeeMobilePhone" },
                 values: new object[,]
                 {
-                    { 1L, "Test1", "Employee1", "testEmployee1@temp.com", new DateTime(2021, 1, 6, 14, 5, 14, 258, DateTimeKind.Unspecified).AddDays(1), null, 1L, 30L, null, "2510123456", "6945012343" },
-                    { 2L, "Test2", "Employee2", "testEmployee2@temp.com", new DateTime(2024, 1, 7, 14, 5, 14, 258, DateTimeKind.Unspecified).AddDays(19), null, 1L, 31L, null, null, "6943012569" }
+                    { 1L, "Admin", "Garage", "admin@garage.com", new DateTime(2021, 1, 6, 14, 5, 14, 258, DateTimeKind.Unspecified).AddDays(1), null, 1L, 30L, null, "2510123456", "6945012343" },
+                    { 2L, "Test2", "Employee2", "testEmployee1@temp.com", new DateTime(2024, 1, 7, 14, 5, 14, 258, DateTimeKind.Unspecified).AddDays(19), null, 1L, 31L, null, null, "6943012569" }
                 });
         }
 

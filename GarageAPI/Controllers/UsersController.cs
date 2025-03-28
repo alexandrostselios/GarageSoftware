@@ -278,7 +278,7 @@ namespace GarageAPI.Controllers
         [Route("api/SendEmailToUsers")]
         public async Task<IActionResult> SendEmailToUsers(Email email)//, string subject, string message)
         {
-            List<string> recepients = new List<string>{ "alexandrostselios@gmail.com","atselios@classter.com" };
+            List<string> recepients = new List<string>{ "alexandrostselios@gmail.com","testCustomer@temp.com" };
             List<Email> emailList = new List<Email>();
             var user = await dbContext.Users.FindAsync(email.ReceiverID);
             for (int i = 0; i < recepients.Count; i++)
