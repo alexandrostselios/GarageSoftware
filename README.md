@@ -1,11 +1,11 @@
-Admin Credentials:
+<b><i>Customer Credentials:</i></b>
 
-Username: admin@garage.com
+<b>Username:</b> admin@garage.com
 
-Password: 1
+<b>Password:</b> 1
 
-Customer Credentials:
+<b><i>Customer Credentials:</i></b>
 
-Username: testCustomer1@temp.com
+<b>Username:</b> testCustomer1@temp.com
 
-Password: pass01
+<b>Password:</b> pass01
