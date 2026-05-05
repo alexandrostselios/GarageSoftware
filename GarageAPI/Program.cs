@@ -1,4 +1,4 @@
-using DinkToPdf.Contracts;
+﻿using DinkToPdf.Contracts;
 using DinkToPdf;
 using GarageAPI;
 using GarageAPI.Controllers;
@@ -49,6 +49,13 @@ builder.Services.AddCors(p => p.AddPolicy("corspolicy",build =>
 }));
 
 var app = builder.Build();
+
+// ✅ Automatically apply EF Core migrations
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<GarageAPIDbContext>();
+    db.Database.Migrate();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment() || app.Environment.IsProduction())

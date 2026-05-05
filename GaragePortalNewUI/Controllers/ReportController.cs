@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace GaragePortalNewUI.Controllers
 {
@@ -28,6 +29,33 @@ namespace GaragePortalNewUI.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+
+
+        // https://localhost:5000/Report/Download?garageID=1&template=customers
+        // https://localhost:44348/report/pdf?garageID=1&template=Customers
+
+        public async Task<IActionResult> Download(long garageID, string template)
+        {
+            using var client = new HttpClient();
+            client.BaseAddress = new Uri(@Resources.SettingsResources.ReportUri);
+
+            // Build URL with query parameters
+            var url = $"report/pdf?garageID={garageID}&template={Uri.EscapeDataString(template)}";
+
+            var response = await client.GetAsync(url);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                // Handle error, maybe return an error view or message
+                return StatusCode((int)response.StatusCode, "Could not generate report PDF.");
+            }
+
+            // Read the PDF bytes from the response
+            var pdfBytes = await response.Content.ReadAsByteArrayAsync();
+
+            // Return the PDF file to the browser
+            return File(pdfBytes, "application/pdf", $"{template}.pdf");
         }
 
         public IActionResult Print()

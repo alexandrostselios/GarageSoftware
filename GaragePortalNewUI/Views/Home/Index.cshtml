@@ -3,66 +3,122 @@
 }
 
 @inject LanguageService Resource
+@using System.Web
+
+
+
 
 
 @if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Admin.ToString())
 {
-    <p>
-        <button class="btn btn-sm btn-primary m-2" id="btnQuickAddCarServiceHistory" data-bs-toggle="ajax-modal" data-bs-target="#QuickAddCarServiceHistory" data-url="@Url.Action("QuickCreateUserModelServiceHistoryPartial","CustomerCars")">@Resource.GetKey("Quick_Add_Service_History")</button>
-    </p>
+
     <div class="container-fluid">
-        <div class="row d-flex justify-content-center pt-5  h-100">
-            @*<button class="btn btn-primary" id="btnQuickAddCarServiceHistory">Quick Service Add</button>*@
+        <div class="row d-flex justify-content-center pt-5 h-100">
             <div id="quickAddCarServiceHistoryDIV"></div>
         </div>
     </div>
 
-    <div class="form-row">
-        <div class="form-group col-sm-6">
-            <br><br>
-            @using (Html.BeginForm("ViewCarDetails", "UserModels", FormMethod.Get))
-            {
-                <table>
-                    <tr>
-                        <td>
-                            @Html.Partial("../UserModels/_SearchUserModelsPartialView")
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            @Html.TextBox("searchValue",null, new {Class = "form-control",id="quickServiceHistorySearch",placeholder=@Resource.GetKey("Enter_Details_for_Quick_Service_History_Search")})
-                        </td>
-                        <td>
-                            <input type="submit" id="Search" value="@Resource.GetKey("Search")" class="btn btn-success" />
-                        </td>
-                    </tr>
+    @Html.Partial("~/PartialViews/_ServiceAppointmentCancelVerificationPartialView.cshtml")
 
-                </table>
-            }
+    <div id="addServiceAppointmentDIV"></div>
+    <div id="editServiceAppointmentDIV"></div>
+    <div id="cancelServiceAppointmentDIV"></div>
+
+    @* ORIGINAL DATATABLE COMMENTED OUT *@
+    @*
+<div class="form-row">
+    <div class="form-group col-sm-14">
+        <button class="btn btn-sm btn-primary m-2" id="btnAddServiceAppointment" data-bs-toggle="ajax-modal" data-bs-target="#AddServiceAppointment" data-url="@Url.Action("CreateServiceAppointmentPartial","ServiceAppointment")">@Resource.GetKey("Add_Service_Appointment_Form")</button>
+
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <b style="color: black; font-family: Arial;">@Resource.GetKey("Today_Appointments_List")  (<span style="text-decoration: underline;">@Resource.GetKey("Total_Appointments_Today")</span> <span id="appointmentCount">0</span>)</b>
+            <input type="text" id="customSearchBox" placeholder="@Resource.GetKey("Search")" style="max-width: 250px;" />
         </div>
 
-        <div class="form-group col-sm-6">
-            <br><br>
-            @using (Html.BeginForm("Customers", "Users", FormMethod.Get))
-            {
-                <table>
-                    <tr>
-                        <td>
-                            @Html.Partial("../Users/_SearchPartialView")
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            @Html.TextBox("searchValue",null, new {Class = "form-control",placeholder=@Resource.GetKey("Enter_Details_for_Quick_Search")})
-                        </td>
-                        <td>
-                            <input type="submit" id="Search" value="@Resource.GetKey("Search")" class="btn btn-success" />
-                        </td>
-                    </tr>
-                </table>
-            }
+        <table id="dashboardServiceAppointmentsTable" class="table table-striped" style="display: none">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>@Resource.GetKey("Customer_Name_Surname")</th>
+                    <th>@Resource.GetKey("Customer CarID")</th>
+                    <th>@Resource.GetKey("Model_Manufacturer")</th>
+                    <th>@Resource.GetKey("Model")</th>
+                    <th style="min-width: 100px;">@Resource.GetKey("Licence_Plate")</th>
+                    <th>@Resource.GetKey("VIN")</th>
+                    <th>@Resource.GetKey("Color")</th>
+                    <th>@Resource.GetKey("Kilometer")</th>
+                    <th>@Resource.GetKey("Service_Appointment_Hour")</th>
+                    <th style="min-width: 300px;">@Resource.GetKey("Service_Appointment_Comments")</th>
+                    <th>serviceAppointmentStatus</th>
+                    <th>GarageID</th>
+                    <th>@Resource.GetKey("Service_Appointment_Actions")</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+*@
+    <div class="container-fluid">
+    <!-- PREFERRED 2-COLUMN LAYOUT -->
+    <div class="row mt-4">
+        <!-- LEFT SIDE: BUTTON + FORMS -->
+        <div class="col-md-4">
+            <p>
+                <button class="btn btn-sm btn-primary mb-3"
+                        id="btnQuickAddCarServiceHistory"
+                        data-bs-toggle="ajax-modal"
+                        data-bs-target="#QuickAddCarServiceHistory"
+                        data-url="@Url.Action("QuickCreateUserModelServiceHistoryPartial", "CustomerCars")">
+                    @Resource.GetKey("Quick_Add_Service_History")
+                </button>
+            </p>
+
+            <!-- First search form -->
+            @* <div class="mb-4">
+                @using (Html.BeginForm("ViewCarDetails", "UserModels", FormMethod.Get))
+                {
+                    <div class="mb-2">
+                        @Html.Partial("../UserModels/_SearchUserModelsPartialView")
+                    </div>
+                    <div class="d-flex gap-2">
+                        @Html.TextBox("searchValue", null, new
+                            {
+                                @class = "form-control",
+                                id = "quickServiceHistorySearch",
+                                placeholder = @Resource.GetKey("Enter_Details_for_Quick_Service_History_Search")
+                            })
+                        <input type="submit" id="Search" value="@Resource.GetKey("Search")" class="btn btn-success" />
+                    </div>
+                }
+            </div> *@
+
+            <!-- Second search form -->
+           @*  <div>
+                @using (Html.BeginForm("Customers", "Users", FormMethod.Get))
+                {
+                    <div class="mb-2">
+                        @Html.Partial("../Users/_SearchPartialView")
+                    </div>
+                    <div class="d-flex gap-2">
+                        @Html.TextBox("searchValue", null, new
+                            {
+                                @class = "form-control",
+                                placeholder = @Resource.GetKey("Enter_Details_for_Quick_Search")
+                            })
+                        <input type="submit" id="Search" value="@Resource.GetKey("Search")" class="btn btn-success" />
+                    </div>
+                }
+            </div> *@
+        </div>
+
+        <!-- RIGHT SIDE: CALENDAR -->
+        <div class="col-md-8 position-relative">
+            <div id="calendar" style="position: absolute; right: 100px; width: 700px; height: 100%;"></div>
         </div>
     </div>
+    </div>
+
 }else{
     <div class="text-center">
         <h1 class="display-4">@Resource.GetKey("Welcome")</h1>
@@ -73,9 +129,145 @@
 
 @section scripts{
     <script type="text/javascript">
-        $(document).ready(function () {
-            $('#myTable').dataTable();
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendar');
+            if (!calendarEl) return;
+            var today = '@Html.Raw(HttpUtility.JavaScriptStringEncode(Resource.GetKey("Home")))';
+            // First create the calendar instance
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                locale: 'el',
+                initialView: 'timeGridWeek',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                buttonText: {
+                    today: '@Html.Raw(HttpUtility.JavaScriptStringEncode(Resource.GetKey("Calendar_Today")))',
+                    month: '@Html.Raw(HttpUtility.JavaScriptStringEncode(Resource.GetKey("Calendar_Month")))',
+                    week: '@Html.Raw(HttpUtility.JavaScriptStringEncode(Resource.GetKey("Calendar_Week")))',
+                    day: '@Html.Raw(HttpUtility.JavaScriptStringEncode(Resource.GetKey("Calendar_Day")))'
+                },
+                selectable: true,
+                // 🔄 Trigger re-fetch on view change
+                datesSet: function (info) {
+                    calendar.refetchEvents(); // Real events from your controller
+
+                    // First remove previous dummy "allday-number" events only
+                    calendar.getEvents().forEach(e => {
+                        if (e.extendedProps && e.extendedProps.isDummy) {
+                            e.remove();
+                        }
+                    });
+
+                    // Then add new dummy events
+                    addAllDayNumbers(info.view);
+                }
+                ,
+                //Custom name. For later with literal
+                allDayContent: function (arg) {
+                    // Only show custom text in week view
+                    if (arg.view.type != 'dayGridMonth') {
+                        return { html: '<center><b>@Html.Raw(HttpUtility.JavaScriptStringEncode(Resource.GetKey("All_Day")))</b></center>' };
+                    }
+
+                    // Default for other views
+                    return null;
+                },
+                eventDidMount: function (info) {
+                    if (info.event.extendedProps.isDummy) {
+                        return; // suppress tooltip
+                    }
+                    var tooltipContent =
+                        `<strong>ID:</strong> ${info.event.id}<br>` +
+                        `<strong>@Html.Raw(HttpUtility.JavaScriptStringEncode(Resource.GetKey("Customer_Name_Surname"))):</strong> ${info.event.extendedProps.customer}<br>` +
+                        `<strong>@Html.Raw(HttpUtility.JavaScriptStringEncode(Resource.GetKey("Customer_Car"))):</strong> ${info.event.extendedProps.car}<br>` +
+                        `<strong>@Html.Raw(HttpUtility.JavaScriptStringEncode(Resource.GetKey("Kilometer"))):</strong> ${info.event.extendedProps.kilometer}<br>` +
+                        `<strong>@Html.Raw(HttpUtility.JavaScriptStringEncode(Resource.GetKey("Service_Appointment_Comments"))):</strong> ${info.event.title}<br>`;
+
+                    tippy(info.el, {
+                        content: tooltipContent,
+                        allowHTML: true,
+                        placement: 'top',
+                        theme: 'light',
+                    });
+
+                    // Ensure text is black
+                    var mainEl = info.el.querySelector('.fc-event-main');
+                    if (mainEl) {
+                        mainEl.style.setProperty('color', 'black', 'important');
+                    }
+                }
+            });
+
+            // // Add dummy all-day events to show '5' under each day in week view
+            function addAllDayNumbers(view) {
+                //console.log("Type: " + view.type);
+                if (view.type === 'dayGridMonth') return;
+
+                let garageId = @ViewBag.GarageID; // or get dynamically if needed
+                const baseUrl = '@Resources.SettingsResources.Uri'
+                var url = null;
+                if (view.type === 'timeGridWeek') {
+                    const startDate = new Date(view.currentStart);
+                    const endDate = new Date(view.currentEnd - 1);
+
+                    url = `${baseUrl}/GetDailyAppointmentCounts/${garageId}?start=${startDate.toISOString()}&end=${endDate.toISOString()}`;
+                } else {
+                    const date = new Date(view.currentStart);
+                    const formatUTCDate = (date) => {
+                        const year = date.getUTCFullYear();
+                        const month = `${date.getUTCMonth() + 1}`.padStart(2, '0');
+                        const day = `${date.getUTCDate()+1}`.padStart(2, '0');
+                        return `${year}-${month}-${day}`;
+                    };
+                    const formattedDate = formatUTCDate(date);
+
+                    url = `${baseUrl}/GetDailyAppointmentCounts/${garageId}?start=${formattedDate}&end=${formattedDate}`;
+                }
+                fetch(url)
+                    .then(res => res.json())
+                    .then(data => {
+                        data.forEach(day => {
+                            calendar.addEvent({
+                                title: '@Html.Raw(HttpUtility.JavaScriptStringEncode(Resource.GetKey("Total"))): (' + day.count.toString() + ')',
+                                start: day.date,
+                                allDay: true,
+                                display: 'auto',
+                                backgroundColor: 'transparent',
+                                borderColor: 'transparent',
+                                textColor: '#000',
+                                className: 'allday-number',
+                                extendedProps: {
+                                    isDummy: true
+                                }
+                            });
+                        });
+                    });
+                
+            }
+            // Now add event source dynamically with a function for extraParams
+            calendar.addEventSource({
+                url: '@Url.Action("GetServiceAppointmentsJSON", "ServiceAppointment")',
+                method: 'GET',
+                extraParams: function () {
+                    return {
+                        customerID: 0,
+                        menu: 0,
+                        monthView: calendar.view && calendar.view.type === 'dayGridMonth' ? 0 : 1
+                    };
+                },
+                failure: function () {
+                    alert('Error fetching events!');
+                }
+            });
+
+            calendar.render();
         });
+
+
+
         //Show Add Make Modal
         $(function () {
             var QuickAddCarServiceHistoryElement = $('#quickAddCarServiceHistoryDIV');
@@ -101,5 +293,278 @@
             })
 
         })
+
+        var table;
+        var originalRowColors = [];
+        // Get the Greek value for "All" and store it in a JavaScript variable
+        var allText = '@Html.Raw(Resource.GetKey("All"))';  // Ensuring proper handling of Greek characters
+        var customerUserType = '@ViewBag.UserType';
+        console.log("CustomerID: " + customerUserType);
+        if (customerUserType === "Admin" || customerUserType === "Employee") {
+            $(function () {
+                $('#dashboardServiceAppointmentsTable tbody').empty();
+                $.get('@Url.Action("GetServiceAppointments", "ServiceAppointment")', { customerID: 0, menu: 0}, function (data) {
+                    // Clear existing rows
+                    $('#dashboardServiceAppointmentsTable tbody').empty();
+                    console.log(data);
+                    $('#appointmentCount').text(data.length);
+                    table = $('#dashboardServiceAppointmentsTable').DataTable({
+                        dom: "<'row'<'col-sm-6'><'col-sm-6 d-flex'>>" +
+                            "<'row'<'col-sm-12'tr>>" +
+                            "<'row'<'col-sm-5'><'col-sm-1'><'col-sm-6'p>>",
+                        initComplete: function () {
+                            // Add spacing between "Show x entries" and "Search" elements
+                            $('.dataTables_length').css('margin-right', '20px');
+                        },
+                        // other options...
+                        scrollY: '180px', // Adjust height to fit 3 rows
+                        scrollCollapse: true,
+                        paging: false, // optional: remove pagination
+                        order: [[9, 'asc']],
+                        // rest of your config...
+                        data: data,
+                        columns: [
+                            { data: 'id' },
+                            { data: 'customer' },
+                            { data: 'customerCarID' },
+                            { data: 'manufacturerName' },
+                            { data: 'modelName' },
+                            { data: 'licencePlate' },
+                            { data: 'vin' },
+                            { data: 'color' },
+                            { data: 'kilometer' },
+                            { data: 'serviceAppointmentDate',
+                               render: function (data, type, row) {
+                                if (!data) return '';
+
+                                let dateObj = new Date(data);
+
+                                if (type === 'sort' || type === 'type') {
+                                    // Return sortable value (e.g., 14:30 as 14.5)
+                                    return dateObj.getHours() * 60 + dateObj.getMinutes();
+                                }
+
+                                // Otherwise, show nicely formatted time
+                                return dateObj.toLocaleTimeString([], {
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                    hour12: false
+                                    });
+                                }
+                            },
+                            { data: 'serviceAppointmentComments' },
+                            { data: 'serviceAppointmentStatus' },
+                            { data: 'garageID' },
+                            {
+                                data: null,
+                                // render: function (data, type, row) {
+                                //     let disableButtons = row.serviceAppointmentStatus == 2 || row.serviceAppointmentStatus == 3;
+
+                                //     return '<div class="btn-group" role="group">' +
+                                //         '<a href="#" class="btn btn-edit" title="@Resource.GetKey("Edit")" id="btnEditServiceAppointment" data-id="' + row.id + '" >' +
+                                //         '<i class="fa fa-pencil-square-o" style="color:blue"></i></a>' +
+
+                                //         '<a href="#" class="btn btn-pending" title="@Resource.GetKey("Pending")" id="btnPendingServiceAppointment" data-id="' + row.id + '" >' +
+                                //         '<i class="fa fa-clock-o"></i></a>' +
+
+                                //         '<a href="#" class="btn btn-complete ' + (disableButtons ? 'disabled' : '') + '" title="@Resource.GetKey("Complete")" id="btnCompleteServiceAppointment" data-id="' + row.id + '" ' +
+                                //         (disableButtons ? 'aria-disabled="true"' : '') + '>' +
+                                //         '<i class="fa fa-check-circle-o" style="color:green"></i></a>' +
+
+                                //         '<a href="#" class="btn btn-cancel ' + (disableButtons ? 'disabled' : '') + '" title="@Resource.GetKey("Cancel")" id="btnCancelServiceAppointment" data-id="' + row.id + '" ' +
+                                //         (disableButtons ? 'aria-disabled="true"' : '') + '>' +
+                                //         '<i class="fa fa-times" style="color:red"></i></a>' +
+
+                                //         '</div>';
+                                // },
+
+                                render: function (data, type, row) {
+                                    return '<div class="btn-group" role="group"><a href="#" class="btn btn-edit" title="@Resource.GetKey("Edit")" id="btnEditServiceAppointment" data-id="' + row.id + '" ><i class="fa fa-pencil-square-o" style="color:blue"></i></a>' +
+                                        '<a href="#" class="btn btn-pending" title="@Resource.GetKey("Pending")" id="btnPendingServiceAppointment" data-id="' + row.id + '" ><i class="fa fa-clock-o"></i></a>' +
+                                        '<a href="#" class="btn btn-complete" title="@Resource.GetKey("Complete")" id="btnCompleteServiceAppointment" data-id="' + row.id + '" ><i class="fa fa-check-circle-o" style="color:green"></i></a>' +
+                                        '<a href="#" class="btn btn-cancel" title="@Resource.GetKey("Cancel")" id="btnCancelServiceAppointment" data-id="' + row.id + '" ><i class="fa fa-times" style="color:red"></i></a>' +
+
+                                        '</div>';
+                                },
+                                "width": "150px"
+                            }
+                        ],
+                        "columnDefs": [
+                            {
+                                "targets": [0, 2, 6, 7, 11, 12],
+                                "visible": false
+                            },
+                            {
+                                "targets": [0, 2, 3, 4, 5, 6, 7, 8, 10, 12, 13],
+                                "orderable": false
+                            }
+                        ],
+                        // select: { style: 'multi' },
+                        "rowCallback": function (row, data) {
+                            var serviceAppointmentStatus = data.serviceAppointmentStatus;
+                            console.log(serviceAppointmentStatus);
+                            if (serviceAppointmentStatus === 1) {
+                                //console.log("2");
+                                $(row).css('background-color', '#FAFCFE');
+                            } else if (serviceAppointmentStatus === 2) {
+                                // console.log("3");
+                                $(row).css('background-color', '#f0be63'); //#eb6534
+                                //disable service icon btnAddCarServiceHistory
+                            } else if (serviceAppointmentStatus === 3) {
+                                //console.log("Other");
+                                $(row).css('background-color', '#95d479');
+                            }
+                            originalRowColors.push($(row).css('background-color'));
+                            $('td', row).css('vertical-align', 'middle'); // For vertical middle allignment
+                        },
+                        "language": {
+                            "lengthMenu": "@Resource.GetKey("Show_DataTable") _MENU_ @Resource.GetKey("Entries_Per_Page")",
+                            "zeroRecords": "@Resource.GetKey("No_Matching_Records_Found_DataTable")",
+                            "info": "@Resource.GetKey("Show_DataTable") _START_ @Resource.GetKey("To_DataTable") _END_ @Resource.GetKey("Of_DataTable") _TOTAL_ @Resource.GetKey("Entries_DataTable")",
+                            "infoEmpty": "@Resource.GetKey("Showing_Empty_DataTable")",
+                            "infoFiltered": "(@Resource.GetKey("Filtered_From_DataTable") _MAX_ @Resource.GetKey("Total_DataTable") @Resource.GetKey("Entries_DataTable"))",
+                            "search": "@Resource.GetKey("Search"):",
+                            "select": {
+                                rows: {
+                                    _: '%d @Resource.GetKey("Rows_Selected")',
+                                    0: '',
+                                    1: '@Resource.GetKey("One_Row_Selected")'
+                                }
+                            },
+                            "paginate": {
+                                "first": "First",
+                                "last": "Last",
+                                "next": "@Resource.GetKey("Next_DataTable")",
+                                "previous": "@Resource.GetKey("Previous_DataTable")"
+                            }
+                        },
+                        "lengthMenu": [[10, 25, 50, 100, -1],  // Array for custom entries in the dropdown (can add more or less)
+                        [10, 25, 50, 100, allText]]  // This will display 'All' instead of -1
+                    });
+                });
+
+                // Disable because of calendar
+                //$('#dashboardServiceAppointmentsTable').show();
+
+                // $('#dashboardServiceAppointmentsTable tbody').on('click', 'tr', function () {
+                //     // Toggle selected class
+                //     $(this).toggleClass('selected');
+                //     var rowIndex = $(this).index(); // Get the index of the clicked row
+                //     if ($(this).hasClass('selected')) {
+                //         console.log("Selected");
+                //         $(this).css('background-color', '#34baeb');
+                //     } else {
+                //         console.log("Unselected");
+                //         $(this).css('background-color', originalRowColors[rowIndex]);
+                //     }
+                // });
+            });
+
+            // Link custom search box
+            $('#customSearchBox').on('keyup', function () {
+                table.search(this.value).draw();
+            });
+        }
+
+        // Handle edit button click
+        $('#dashboardServiceAppointmentsTable tbody').on('click', 'a.btn-edit', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            // Get the DataTables row associated with the clicked edit button
+            var rowData = $('#dashboardServiceAppointmentsTable').DataTable().row($(this).closest('tr')).data();
+            // Retrieve the customerID value from the row data
+            var id = rowData.id
+            var customerID = rowData.customerID
+            var customerCarID = rowData.customerCarID
+            // console.log("ID: " + id);
+            // console.log("Customer ID: " + customerID);
+            // console.log("Customer Car ID: " + customerCarID);
+            var url = "@Url.Action("EditServiceAppointmentPartial", "ServiceAppointment")" + '/?id=' + id + '&&customerID=' + customerID + '&&customerCarID=' + customerCarID + '&&garageID=' + @ViewBag.GarageID + '&&menu=' + 1
+                // Load partial view into the container
+                $.get(url, function (response) {
+                    $('#editServiceAppointmentDIV').html(response);
+                    $('#editServiceAppointmentDIV').find('.modal').modal('show');
+                });
+        });
+
+        // Handle pending button click
+        $('#dashboardServiceAppointmentsTable tbody').on('click', 'a.btn-pending', function (e) {
+            var serviceAppointmentId = $(this).data("id");
+            var type = 1;
+            var garageId = @ViewBag.GarageID;
+
+            $.ajax({
+                url: "/ServiceAppointment/UpdateServiceAppointmentStatus",
+                type: "POST",
+                data: { ServiceAppointmentID: serviceAppointmentId, type: type, garageID: garageId },
+                success: function (response) {
+                    if (response.success) {
+                        // ✅ Refresh the whole page to reload data
+                        location.reload();
+                    } else {
+                        alert("Update failed: " + response.message);
+                    }
+                },
+                error: function () {
+                    alert("Error updating appointment.");
+                }
+            });
+        });
+
+        // Handle complete button click
+        $('#dashboardServiceAppointmentsTable tbody').on('click', 'a.btn-complete', function (e) {
+            var serviceAppointmentId = $(this).data("id");
+            var type = 3;
+            var garageId = @ViewBag.GarageID;
+
+            $.ajax({
+                url: "/ServiceAppointment/UpdateServiceAppointmentStatus",
+                type: "POST",
+                data: { ServiceAppointmentID: serviceAppointmentId, type: type, garageID: garageId },
+                success: function (response) {
+                    if (response.success) {
+                        // ✅ Refresh the whole page to reload data
+                        location.reload();
+                    } else {
+                        alert("Update failed: " + response.message);
+                    }
+                },
+                error: function () {
+                    alert("Error updating appointment.");
+                }
+            });
+        });
+
+        let serviceAppointmentIdToCancel = null;
+
+        $('#dashboardServiceAppointmentsTable tbody').on('click', 'a.btn-cancel', function (e) {
+            e.preventDefault(); // prevent default behavior
+            serviceAppointmentIdToCancel = $(this).data("id");
+            $('#cancelConfirmModal').modal('show');
+        });
+
+        $('#confirmCancelBtn').on('click', function () {
+            var type = 2;
+            var garageId = @ViewBag.GarageID;
+
+            $.ajax({
+                url: "/ServiceAppointment/UpdateServiceAppointmentStatus",
+                type: "POST",
+                data: { ServiceAppointmentID: serviceAppointmentIdToCancel, type: type, garageID: garageId },
+                success: function (response) {
+                    $('#cancelConfirmModal').modal('hide'); // Hide modal
+
+                    if (response.success) {
+                        location.reload(); // Reload the page
+                    } else {
+                        alert("Update failed: " + response.message);
+                    }
+                },
+                error: function () {
+                    $('#cancelConfirmModal').modal('hide');
+                    alert("Error updating appointment.");
+                }
+            });
+        });
     </script>
 }

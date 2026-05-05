@@ -1,5 +1,6 @@
 ﻿using GaragePortalNewUI.Enum;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GaragePortalNewUI.ViewModels
 {
@@ -16,5 +17,7 @@ namespace GaragePortalNewUI.ViewModels
         public long Kilometer { get; set; }
 
         public long GarageID { get; set; }
+
+        public long? Menu { get; set; }
     }
 }

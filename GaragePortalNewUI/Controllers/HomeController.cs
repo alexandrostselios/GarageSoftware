@@ -7,26 +7,29 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Net.Http;
 using Microsoft.AspNetCore.Localization;
 using GaragePortalNewUI.Enum;
 using System.Threading.Tasks;
 using System.IO;
 using OfficeOpenXml;
+using Microsoft.Extensions.Caching.Memory;
+using GaragePortalNewUI.ViewModels;
+using System.Net.Http;
 
 namespace GaragePortalNewUI.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private bool isProduction = true;
+        private bool isProduction = false;
         private bool isCustomer = false;
 
         readonly Uri baseAddress = new Uri(@Resources.SettingsResources.Uri);
         readonly HttpClient client = new HttpClient();
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IMemoryCache memoryCache)
         {
+            client.BaseAddress = baseAddress;
             _logger = logger;
         }
 
@@ -34,7 +37,8 @@ namespace GaragePortalNewUI.Controllers
         {
             /* REMOVE IN PRODUCTION */
 
-            if(!isProduction && !isCustomer) { 
+            if (!isProduction && !isCustomer) {
+               
                 SetSessionPropertiesAdmin();
             }
             else if (!isProduction && isCustomer)
@@ -50,36 +54,88 @@ namespace GaragePortalNewUI.Controllers
 
             /* REMOVE IN PRODUCTION */
             GetSessionProperties();
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            GetSessionProperties();
-            IEnumerable<UserModels> userModels = null;
-            using (var client = new HttpClient())
+            IEnumerable<ServiceAppointmentViewModel> serviceAppointments = null;
+            var responseTask = client.GetAsync(client.BaseAddress);
+            using (client)
             {
-                Uri baseAddress = new Uri("https://localhost:7096/api");
-                client.BaseAddress = baseAddress;
-                var responseUserModels = client.GetAsync(client.BaseAddress + "/GetUserModelsByUserID/1");
-                responseUserModels.Wait();
-                var resultUserModels = responseUserModels.Result;
-                if (resultUserModels.IsSuccessStatusCode)
+                responseTask = client.GetAsync(client.BaseAddress + "/GetServiceAppointmentsToListLiteral/" + ViewBag.GarageID + "/0");
+                responseTask.Wait();
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
                 {
-                    var readTaskUserModels = resultUserModels.Content.ReadAsAsync<IList<UserModels>>();
-                    readTaskUserModels.Wait();
-                    userModels = readTaskUserModels.Result;
-
+                    var readTask = result.Content.ReadAsAsync<IList<ServiceAppointmentViewModel>>();
+                    readTask.Wait();
+                    serviceAppointments = readTask.Result;
                 }
-                else //web api sent error response 
+                else
                 {
-                    //log response status here..
-                    userModels = Enumerable.Empty<UserModels>();
+                    serviceAppointments = Enumerable.Empty<ServiceAppointmentViewModel>();
                     ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
                 }
             }
-            return View(userModels);
+
+            var viewModel = new DashboardViewModel
+            {
+                ServiceAppointments = serviceAppointments.Where(x => x.ServiceAppointmentDate.Date == DateTime.Now.Date).ToList()
+            };
+
+            return View(viewModel);
+            //return View();
         }
+
+        //public IActionResult Privacy()
+        //{
+        //    GetSessionProperties();
+        //    IEnumerable<UserModels> userModels = null;
+        //    using (var client = new HttpClient())
+        //    {
+        //        Uri baseAddress = new Uri("https://localhost:7096/api");
+        //        client.BaseAddress = baseAddress;
+        //        var responseUserModels = client.GetAsync(client.BaseAddress + "/GetUserModelsByUserID/1");
+        //        responseUserModels.Wait();
+        //        var resultUserModels = responseUserModels.Result;
+        //        if (resultUserModels.IsSuccessStatusCode)
+        //        {
+        //            var readTaskUserModels = resultUserModels.Content.ReadAsAsync<IList<UserModels>>();
+        //            readTaskUserModels.Wait();
+        //            userModels = readTaskUserModels.Result;
+
+        //        }
+        //        else //web api sent error response 
+        //        {
+        //            //log response status here..
+        //            userModels = Enumerable.Empty<UserModels>();
+        //            ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+        //        }
+        //    }
+        //    return View(userModels);
+        //}
+
+        public async Task<IActionResult> Privacy()
+        {
+            long garageID = 1;
+            string template = "customers";
+            using var client = new HttpClient();
+            client.BaseAddress = new Uri(@Resources.SettingsResources.ReportUri);
+
+            // Build URL with query parameters
+            var url = $"report/pdf?garageID={garageID}&template={Uri.EscapeDataString(template)}";
+
+            var response = await client.GetAsync(url);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                // Handle error, maybe return an error view or message
+                return StatusCode((int)response.StatusCode, "Could not generate report PDF.");
+            }
+
+            // Read the PDF bytes from the response
+            var pdfBytes = await response.Content.ReadAsByteArrayAsync();
+
+            // Return the PDF file to the browser
+            return File(pdfBytes, "application/pdf", $"{template}_Report_{garageID}.pdf");
+        }
+
 
         public IActionResult Settings()
         {
@@ -114,7 +170,6 @@ namespace GaragePortalNewUI.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
 
         /* REMOVE IN PRODUCTION */
 

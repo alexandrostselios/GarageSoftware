@@ -68,7 +68,18 @@ namespace Resources {
                 return ResourceManager.GetString("Uri", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to https://localhost:7096/api.
+        /// </summary>
+        public static string ReportUri
+        {
+            get
+            {
+                return ResourceManager.GetString("ReportUri", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to http://alefhome.ddns.net:8082/api.
         /// </summary>

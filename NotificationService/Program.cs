@@ -15,7 +15,7 @@ var host = Host.CreateDefaultBuilder(args)
 
         // Add notification service
         services.AddHostedService<ServiceExpirationReminderNotification>();
-        services.AddHostedService<ServiceAppointmentReminderNotification>();
+        //services.AddHostedService<ServiceAppointmentReminderNotification>();
 
     })
     .Build();

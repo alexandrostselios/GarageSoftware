@@ -20,7 +20,14 @@ namespace GarageAPI.Controllers
         [Route("api/GetDefinition")]
         public async Task<IActionResult> GetDefinition()
         {
-            return Ok(await dbContext.Report.Where(x=> x.ID == 1).ToListAsync());
+            return Ok(await dbContext.ReportDefinition.Where(x=> x.ID == 1).ToListAsync());
+        }
+
+        [HttpGet]
+        [Route("api/GetDefinitionByReportName/{reportName}/{templateType:long}")]
+        public async Task<IActionResult> GetDefinitionByReportName(string reportName, long templateType)
+        {
+            return Ok(await dbContext.ReportDefinition.Where(x => x.ReportName == reportName && x.TemplateType == templateType && x.InUse == 1).ToListAsync());
         }
     }
 }

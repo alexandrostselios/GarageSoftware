@@ -57,10 +57,10 @@ namespace GarageAPI.Migrations
                 principalColumn: "ID",
                 onDelete: ReferentialAction.Cascade);
 
-            migrationBuilder.Sql("INSERT INTO [dbo].[ServiceAppointment]([CustomerID],  [CustomerCarID],  [ServiceAppointmentDate],  [ServiceAppointmentComments], [ServiceAppointmentStatus], [Kilometer], [GarageID]) VALUES (1,  1, '2024-01-27 08:30:00',  'General check', 1, 165708 ,1);");
-            migrationBuilder.Sql("INSERT INTO [dbo].[ServiceAppointment]([CustomerID],  [CustomerCarID],  [ServiceAppointmentDate],  [ServiceAppointmentComments], [ServiceAppointmentStatus], [Kilometer], [GarageID]) VALUES (1,  2, '2024-01-24 10:45:00',  'Check Engine light come up', 2, 35652 ,1);");
-            migrationBuilder.Sql("INSERT INTO [dbo].[ServiceAppointment]([CustomerID],  [CustomerCarID],  [ServiceAppointmentDate],  [ServiceAppointmentComments], [ServiceAppointmentStatus], [Kilometer], [GarageID]) VALUES (1,  2, '2024-02-15 10:45:00',  'Yearly Service', 1, 47230 ,1);");
-            migrationBuilder.Sql("INSERT INTO [dbo].[ServiceAppointment]([CustomerID],  [CustomerCarID],  [ServiceAppointmentDate],  [ServiceAppointmentComments], [ServiceAppointmentStatus], [Kilometer], [GarageID]) VALUES (2,  5, '2024-01-30 08:00:00',  'Yearly Service and break change', 3, 70253 ,1);");
+            migrationBuilder.Sql("INSERT INTO [dbo].[ServiceAppointment]([CustomerID],  [CustomerCarID],  [ServiceAppointmentDate],  [ServiceAppointmentComments], [ServiceAppointmentStatus], [Kilometer], [GarageID]) VALUES (1,  1, GETDATE(),  'General check', 1, 165708 ,1);");
+            migrationBuilder.Sql("INSERT INTO [dbo].[ServiceAppointment]([CustomerID],  [CustomerCarID],  [ServiceAppointmentDate],  [ServiceAppointmentComments], [ServiceAppointmentStatus], [Kilometer], [GarageID]) VALUES (1,  2, GETDATE(),  'Check Engine light come up', 2, 35652 ,1);");
+            migrationBuilder.Sql("INSERT INTO [dbo].[ServiceAppointment]([CustomerID],  [CustomerCarID],  [ServiceAppointmentDate],  [ServiceAppointmentComments], [ServiceAppointmentStatus], [Kilometer], [GarageID]) VALUES (1,  2, GETDATE()+1,  'Yearly Service', 1, 47230 ,1);");
+            migrationBuilder.Sql("INSERT INTO [dbo].[ServiceAppointment]([CustomerID],  [CustomerCarID],  [ServiceAppointmentDate],  [ServiceAppointmentComments], [ServiceAppointmentStatus], [Kilometer], [GarageID]) VALUES (2,  5, GETDATE()+2,  'Yearly Service and break change', 3, 70253 ,1);");
 
             var addGetServiceAppointmentsToListLiteral = @"
                 CREATE PROCEDURE [dbo].[GetServiceAppointmentsToListLiteral]

@@ -747,7 +747,88 @@
   <data name="Mobile_Phone" xml:space="preserve">
     <value />
   </data>
-  <data name="String1" xml:space="preserve">
+  <data name="Information" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Garage_VATOffice" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Garage_VATNumber" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Garage_LegalName" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Garage_Description" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Garage_PhoneNumber" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Garage_Email" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Garage_Website" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Garage_Country" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Garage_City" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Garage_ZipCode" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Garage_Address" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Garage_Region" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Garage_Information" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Save_Garage_Details" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Service_Appointment_Actions" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Today_Appointments_List" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Total_Appointments_Today" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Service_Appointment_Hour" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Garage_Details_Saved" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Delete_Confirmation" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Pending" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Calendar_Week" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Calendar_Today" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Calendar_Day" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Calendar_Month" xml:space="preserve">
+    <value />
+  </data>
+  <data name="All_Day" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Cancel_Confirmation" xml:space="preserve">
     <value />
   </data>
 </root>

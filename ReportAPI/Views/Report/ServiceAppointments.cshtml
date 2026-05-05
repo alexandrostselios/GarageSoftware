@@ -1,0 +1,54 @@
+﻿@model IEnumerable<ReportAPI.Models.ServiceAppointment>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Customers</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: lightgreen;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Customer</th>
+                <th>Manufacturer Name</th>
+                <th>Model Name</th>
+                <th>Licence Plate</th>
+                <th>Kilometer</th>
+                <th>Date</th>
+                <th>Comments</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var serviceAppointment in Model)
+            {
+                <tr>
+                    <td>@serviceAppointment.ID</td>
+                    <td>@serviceAppointment.Customer</td>
+                    <td>@serviceAppointment.ManufacturerName</td>
+                    <td>@serviceAppointment.ModelName</td>
+                    <td>@serviceAppointment.LicencePlate</td>
+                    <td>@serviceAppointment.Kilometer</td>
+                    <td>@serviceAppointment.ServiceAppointmentDate</td>
+                    <td>@serviceAppointment.ServiceAppointmentComments</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

@@ -36,7 +36,7 @@ namespace GaragePortalNewUI.Controllers
                 HttpContext.Session.SetString("SuccessMessage", "null");
             }
             GetSessionProperties();
-            IEnumerable<ServiceAppointmentViewModel> serviceAppointments = GetServiceAppointments(0);
+            IEnumerable<ServiceAppointmentViewModel> serviceAppointments = GetServiceAppointments(0,1);
             return View(serviceAppointments);
         }
 
@@ -68,14 +68,14 @@ namespace GaragePortalNewUI.Controllers
             return View(serviceAppointments);
         }
 
-        public IEnumerable<ServiceAppointmentViewModel> GetServiceAppointments(long customerID)
+        public IEnumerable<ServiceAppointmentViewModel> GetServiceAppointments(long customerID, long? menu)
         {
             GetSessionProperties();
             IEnumerable<ServiceAppointmentViewModel> serviceAppointments = null;
             var responseTask = client.GetAsync(client.BaseAddress);
             using (client)
             {
-                responseTask = client.GetAsync(client.BaseAddress + "/GetServiceAppointmentsToListLiteral/" + ViewBag.GarageID + "/" + customerID);
+                responseTask = client.GetAsync(client.BaseAddress + "/GetServiceAppointmentsToListLiteral/" + ViewBag.GarageID + "/" + customerID + "/" + menu);
                 responseTask.Wait();
                 var result = responseTask.Result;
                 if (result.IsSuccessStatusCode)
@@ -92,6 +92,57 @@ namespace GaragePortalNewUI.Controllers
             }
 
             return serviceAppointments;
+        }
+
+        public ActionResult GetServiceAppointmentsJSON(long customerID, long? menu, long? monthView)
+        {
+            GetSessionProperties();
+            IEnumerable<ServiceAppointmentViewModel> serviceAppointments = null;
+            var responseTask = client.GetAsync(client.BaseAddress);
+            using (client)
+            {
+                responseTask = client.GetAsync(client.BaseAddress + "/GetServiceAppointmentsToListLiteral/" + ViewBag.GarageID + "/" + customerID + "/" + menu);
+                responseTask.Wait();
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<IList<ServiceAppointmentViewModel>>();
+                    readTask.Wait();
+                    serviceAppointments = readTask.Result;
+                }
+                else
+                {
+                    serviceAppointments = Enumerable.Empty<ServiceAppointmentViewModel>();
+                    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+                }
+            }
+
+            // Map to FullCalendar event format
+            var calendarEvents = serviceAppointments.Select(a => new
+            {
+                id = a.ID,
+                customer = a.Customer,
+                car = a.ManufacturerName + " " + a.ModelName + " (" + a.LicencePlate+ ")",
+                kilometer = a.Kilometer,
+                title = a.ServiceAppointmentComments, // or whatever title you want to show
+                start = monthView == 0
+                    ? a.ServiceAppointmentDate.Date.ToString("yyyy-MM-dd")
+                    : a.ServiceAppointmentDate.ToString("yyyy-MM-ddTHH:mm:ss"),
+
+                end = monthView == 0
+                    ? a.ServiceAppointmentDate.Date.AddDays(1).ToString("yyyy-MM-dd")
+                    : a.ServiceAppointmentDate.ToString("yyyy-MM-ddTHH:mm:ss"),
+
+                //start = a.ServiceAppointmentDate.ToString("yyyy-MM-ddTHH:mm:ss"), // ISO 8601 format
+                //end = monthView == 0 ? a.ServiceAppointmentDate.Date.AddDays(1).ToString("yyyy-MM-dd") : a.ServiceAppointmentDate.ToString("yyyy-MM-ddTHH:mm:ss"),
+                //end = a.ServiceAppointmentDate.AddMilliseconds(1).ToString("yyyy-MM-ddTHH:mm:ss"),
+                allDay = monthView == 0 ? true : false,
+                color = a.ServiceAppointmentStatus == ServiceAppointmentStatus.Pending ? "#42cbf5" :
+                        a.ServiceAppointmentStatus == ServiceAppointmentStatus.Cancelled ? "#f0be63" :
+                        "#95d479"
+            });
+
+            return new JsonResult(calendarEvents);
         }
 
         public IActionResult CreateServiceAppointmentPartial(long? customerID, long? customerCarID)
@@ -132,7 +183,7 @@ namespace GaragePortalNewUI.Controllers
             return PartialView("_CreateCustomerPartialView", addServiceAppointmentViewModel);
         }
 
-        public IActionResult EditServiceAppointmentPartial(long id, long customerID, long customerCarID, long garageID)
+        public IActionResult EditServiceAppointmentPartial(long id, long customerID, long customerCarID, long garageID, long? menu)
         {
             HttpContext.Session.SetString("CustomerUserID", customerID.ToString());
             HttpContext.Session.SetString("CustomerCarID", customerCarID.ToString());
@@ -145,12 +196,13 @@ namespace GaragePortalNewUI.Controllers
             var readTask = result.Content.ReadAsAsync<ServiceAppointmentViewModel>();
             readTask.Wait();
             serviceAppointment = readTask.Result;
+            serviceAppointment.Menu = menu;
             return PartialView("_EditServiceAppointmentPartialView", serviceAppointment);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditServiceAppointment(long ID, [Bind("ID", "ServiceAppointmentDate", "ServiceAppointmentComments", "ServiceAppointmentStatus", "Kilometer", "GarageID")] UpdateServiceAppointmentViewModel editServiceAppointment)
+        public async Task<IActionResult> EditServiceAppointment(long ID, [Bind("ID", "ServiceAppointmentDate", "ServiceAppointmentComments", "ServiceAppointmentStatus", "Kilometer", "GarageID", "Menu")] UpdateServiceAppointmentViewModel editServiceAppointment)
         {
             if (ID != editServiceAppointment.ID)
             {
@@ -158,8 +210,14 @@ namespace GaragePortalNewUI.Controllers
             }
 
             HttpResponseMessage response = client.PutAsJsonAsync(client.BaseAddress + "/UpdateServiceAppointment/" + editServiceAppointment.ID, editServiceAppointment).Result;
-
-            return RedirectToAction(nameof(ServiceAppointments));
+            if(editServiceAppointment.Menu == 0 || editServiceAppointment.Menu is null)
+            {
+                return RedirectToAction(nameof(ServiceAppointments));
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         [HttpPost]

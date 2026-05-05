@@ -1,0 +1,24 @@
+﻿@using GaragePortalNewUI.Models;
+@inject LanguageService Resource
+
+<!-- Cancel Confirmation Modal -->
+<div class="modal fade" id="cancelConfirmModal" tabindex="-1" aria-labelledby="cancelConfirmLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+@*             <div class="modal-header">
+                <h5 class="modal-title" id="cancelConfirmLabel">Confirm Cancellation</h5>
+            </div> *@
+            <div class="modal-body">
+                @Resource.GetKey("Cancel_Confirmation")
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">@Resource.GetKey("Close")</button>
+                <button type="button" class="btn btn-danger" id="confirmCancelBtn">@Resource.GetKey("Cancel")</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

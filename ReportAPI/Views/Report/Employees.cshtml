@@ -1,0 +1,51 @@
+﻿@using System.Collections.Generic
+@model IEnumerable<ReportAPI.Models.Employee>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Employees</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Mobile</th>
+                <th>Email</th>
+                <th>Comment</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in Model)
+            {
+                <tr>
+                    <td>@employee.EmployeeID</td>
+                    <td>@employee.EmployeeName</td>
+                    <td>@employee.EmployeeSurname</td>
+                    <td>@employee.EmployeeMobilePhone</td>
+                    <td>@employee.EmployeeEmail</td>
+                    <td>@employee.EmployeeComment</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

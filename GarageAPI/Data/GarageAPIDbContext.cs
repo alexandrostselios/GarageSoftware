@@ -15,6 +15,7 @@ using GarageAPI.Models.CustomerCars;
 using System.Reflection.Emit;
 using GarageAPI.Models.User.Employees;
 using GarageAPI.Models.ServiceAppointment;
+using GarageAPI.Models.AppInformation;
 
 namespace GarageAPI.Data
 {
@@ -53,14 +54,17 @@ namespace GarageAPI.Data
         public DbSet<ServiceHistoryItems> ServiceHistoryItems { get; set; }
         public DbSet<ServiceHistoryItemsDTO> ServiceHistoryItemsDTO { get; set; }
         public DbSet<ServiceHistoryWithItemsDTO> ServiceHistoryWithItemsDTO { get; set; }
-        public DbSet<Report> Report { get; set; }
+        public DbSet<ReportDefinition> ReportDefinition { get; set; }
         public DbSet<Customer> Customer { get; set; }
         public DbSet<Engineer> Engineer { get; set; }
         public DbSet<EngineerSpecialities> EngineerSpecialities { get; set; }
         public DbSet<Employee> Employee { get; set; }
         public DbSet<ServiceAppointment> ServiceAppointment { get; set; }
-
         public DbSet<ServiceAppointmentViewModel> ServiceAppointmentViewModel { get; set; }
+        public DbSet<AppInformation> AppInformation { get; set; }
+        public DbSet<TaxOffice> TaxOffices { get; set; }
+
+
 
         private void SetCarManufacturerData(ModelBuilder builder)
         {

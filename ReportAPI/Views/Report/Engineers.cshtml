@@ -1,0 +1,67 @@
+﻿@using System.Collections.Generic
+@using System.Linq
+@model IEnumerable<ReportAPI.Models.Engineer>
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Engineers</title>
+        <style>
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+            th, td {
+                border: 1px solid #ccc;
+                padding: 8px;
+                text-align: center;
+            }
+            th {
+                background-color: yellow;
+            }
+        </style>
+    </head>
+
+    <body>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Home Phone</th>
+                    <th>Mobile Phone</th>
+                    <th>Email</th>
+                    <th>Comments</th>
+                    <th>Specialities</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var engineer in Model)
+                {
+                    <tr>
+                        <td>@engineer.EngineerID</td>
+                        <td>@engineer.EngineerName</td>
+                        <td>@engineer.EngineerSurname</td>
+                        <td>@engineer.EngineerHomePhone</td>
+                        <td>@engineer.EngineerMobilePhone</td>
+                        <td>@engineer.EngineerEmail</td>
+                        <td>@engineer.EngineerComment</td>
+                        <td>
+                            @foreach (var speciality in engineer.EngineerSpecialities)
+                            {
+                                <span>@speciality.Speciality</span>
+                                @if (!speciality.Equals(engineer.EngineerSpecialities.Last()))
+                                {
+                                        <span>, </span>
+                                }
+                            }
+                            @(engineer.EngineerSpecialities.Count == 0 ? "-" : "")
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </body>
+</html>

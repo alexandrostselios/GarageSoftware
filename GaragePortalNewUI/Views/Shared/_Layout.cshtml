@@ -1,4 +1,8 @@
-﻿﻿<!DOCTYPE html>
+﻿@using GaragePortalNewUI.Helpers
+@using GaragePortalNewUI.Models.AppInformation
+
+
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8" />
@@ -15,13 +19,9 @@
 
 
         
-        @* Multi Select select2*@
-        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-        @*DropDown Menus Appearance*@
-        @*<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">*@
-        @*DataTables*@
-@*        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css">*@
+    @* Multi Select select2*@
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+      
     <!-- DataTables CSS -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
     <!-- DataTables Select extension CSS -->
@@ -30,119 +30,56 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedheader/3.1.9/css/fixedHeader.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/scroller/2.0.6/css/scroller.dataTables.min.css">
 
+    <!-- FullCalendar CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet" />
+
+    <!-- Tippy.js CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMkM9z0yI4NjcU8T2FQ4BzFJ8VcdT4B9F6/ozf" crossorigin="anonymous">
 
 
     </head>
     @inject LanguageService Resource
+
     <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <!-- Logo and brand on the left -->
-                <a class="navbar-brand d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
-                    <img src="/favicon.png" alt="Logo" width="25" height="25">
-                    <span class="ml-2">Alex Garage</span>
-                </a>
 
-                <!-- Toggle button for small screens -->
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+        <header>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container-fluid">
+                    <!-- Logo and brand on the left -->
+                    <a class="navbar-brand d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
+                        <img src="/favicon.png" alt="Logo" width="25" height="25">
+                        <span class="ml-2">@((Context.Items["AppTitle"] ?? "Default 11"))</span>
+                    </a>
 
-                <!-- Center the menu items -->
-                <div class="collapse navbar-collapse justify-content-center">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
-                                <i class="fa fa-fw fa-home"></i> @Resource.GetKey("Home")
+                    <!-- Your existing toggle button and other header content -->
+                </div>
+                @if (ViewBag.UserType != null || ViewBag.UserType != GaragePortalNewUI.Enum.UserType.Guest.ToString())
+                {
+                    <li class="nav-item dropdown">
+                        <div class="dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown">
+                                <i class="fa fa-user-circle"></i> @Resource.GetKey("My_Account")
                             </a>
-                        </li>
-                        @if (@ViewBag.UserType == null || @ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Guest.ToString())
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="Login">
-                                    <i class="fa fa-fw fa-sign-in"></i> @Resource.GetKey("Login")
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item @(Html.IsActive("Users", "MyProfile"))" asp-area="Users" asp-controller="Users" asp-action="MyProfile">
+                                    <i class="fa fa-user"></i> @Resource.GetKey("My_Profile")
                                 </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="Create">
-                                    <i class="fa fa-user-plus"></i> @Resource.GetKey("Register")
+                                <a class="dropdown-item @(Html.IsActive("Home", "Settings"))" asp-area="Home" asp-controller="Home" asp-action="Settings">
+                                    <i class="fa fa-cog"></i> @Resource.GetKey("Settings")
                                 </a>
-                            </li>
-                        }
-                        else
-                        {
-                            @if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Admin.ToString() || @ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Employee.ToString()){
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="Users" asp-controller="Customer" asp-action="Customers">
-                                        <i class="fa fa-users"></i> @Resource.GetKey("Customers")
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="Users" asp-controller="Engineer" asp-action="Engineers">
-                                        <i class="fa fa-wrench"></i> @Resource.GetKey("Engineers")
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="Users" asp-controller="Employee" asp-action="Employees" asp-route-flag="0">
-                                        <i class="fas fa-user-cog"></i> @Resource.GetKey("Employees")
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="ServiceAppointment" asp-controller="ServiceAppointment" asp-action="ServiceAppointments">
-                                        <i class="fa fa-calendar"></i> @Resource.GetKey("List_Of_Service_Appointments")
-                                    </a>
-                                </li>
-                            }
-                            else if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Customer.ToString())
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="CustomerCars" asp-controller="CustomerCars" asp-action="ViewCustomerCars" asp-route-id="@ViewBag.ID">
-                                        <i class="fa fa-car"></i> @Resource.GetKey("List_Of_MyCars")
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="ServiceAppointment" asp-controller="ServiceAppointment" asp-action="ServiceAppointments">
-                                        <i class="fa fa-calendar"></i> @Resource.GetKey("List_Of_Service_Appointments")
-                                    </a>
-                                </li>
-                                
-                            }
-                            <li class="nav-item dropdown">
-                                <div class="dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown">
-                                        <i class="fa fa-user-circle"></i> @Resource.GetKey("My_Account")
-                                    </a>
-                                </div>
-                                <div class="dropdown-menu">
-                                    <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="MyProfile">
-                                        <i class="fa fa-user"></i> @Resource.GetKey("My_Profile")
-                                    </a>
-                                    <a class="nav-link" asp-area="Home" asp-controller="Home" asp-action="Settings">
-                                        <i class="fa fa-cog"></i> @Resource.GetKey("Settings")
-                                    </a>
-                                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">
-                                        <i class="fa fa-shield"></i> @Resource.GetKey("Privacy")
-                                    </a>
-                                </div>
-                            </li>
-                            @if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Admin.ToString() || @ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Employee.ToString()){
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="Settings" asp-controller="Settings" asp-action="Settings">
-                                        <i class="fa fa-cogs"></i> @Resource.GetKey("Settings")
-                                    </a>
-                                </li>
-                            }
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="Users" asp-controller="Users" asp-action="Logout">
+                                <a class="dropdown-item @(Html.IsActive("", "Privacy"))" asp-area="" asp-controller="Home" asp-action="Privacy">
+                                    <i class="fa fa-shield"></i> @Resource.GetKey("Privacy")
+                                </a>
+
+                                <a class="dropdown-item @(Html.IsActive("", "Logout"))" asp-area="Users" asp-controller="Users" asp-action="Logout">
                                     <i class="fa fa-sign-out"></i> @Resource.GetKey("Logout")
                                 </a>
-                            </li>
-                        }
-                    </ul>
-                </div>
+                            </div>
+                        </div>
+                    </li>
+                }
 
                 <!-- Right side (language dropdown) -->
                 <ul class="navbar-nav">
@@ -152,7 +89,8 @@
                             {
                                 <span class="flag-icon flag-icon-gb"></span> @ViewBag.Language
                             }
-                            else if (ViewBag.Culture == "el-GR"){
+                            else if (ViewBag.Culture == "el-GR")
+                            {
                                 <span class="flag-icon flag-icon-gr"></span> @ViewBag.Language
                             }
                             else if (ViewBag.Culture == "de-DE")
@@ -167,65 +105,186 @@
                         </div>
                     </li>
                 </ul>
-            </div>
+            </nav>
+        </header>
+
+        <!-- Sidebar navigation outside header -->
+        <nav class="sidebar bg-light border-right vh-100 position-fixed" style="width: 250px; top: 56px; left: 0; overflow-y: auto;">
+            <ul class="nav flex-column p-2">
+                <li class="nav-item">
+                    <a class="nav-link @(Html.IsActive("Home", "Index"))" asp-area="" asp-controller="Home" asp-action="Index">
+                        <i class="fa fa-fw fa-home"></i> @Resource.GetKey("Home")
+                    </a>
+                </li>
+
+                @if (ViewBag.UserType == null || ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Guest.ToString())
+                {
+                    <li class="nav-item">
+                        <a class="nav-link @(Html.IsActive("Users", "Login"))" asp-area="Users" asp-controller="Users" asp-action="Login">
+                            <i class="fa fa-fw fa-sign-in"></i> @Resource.GetKey("Login")
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(Html.IsActive("Users", "Create"))" asp-area="Users" asp-controller="Users" asp-action="Create">
+                            <i class="fa fa-user-plus"></i> @Resource.GetKey("Register")
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    @if (ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Admin.ToString() || ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Employee.ToString())
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link @(Html.IsActive("Customer", "Customers"))" asp-area="Users" asp-controller="Customer" asp-action="Customers">
+                                <i class="fa fa-users"></i> @Resource.GetKey("Customers")
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(Html.IsActive("Engineer", "Engineers"))" asp-area="Users" asp-controller="Engineer" asp-action="Engineers">
+                                <i class="fa fa-wrench"></i> @Resource.GetKey("Engineers")
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(Html.IsActive("Employee", "Employees"))" asp-area="Users" asp-controller="Employee" asp-action="Employees" asp-route-flag="0">
+                                <i class="fas fa-user-cog"></i> @Resource.GetKey("Employees")
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(Html.IsActive("ServiceAppointment", "ServiceAppointments"))" asp-area="ServiceAppointment" asp-controller="ServiceAppointment" asp-action="ServiceAppointments">
+                                <i class="fa fa-calendar"></i> @Resource.GetKey("List_Of_Service_Appointments")
+                            </a>
+                        </li>
+                    }
+                    else if (ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Customer.ToString())
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link @(Html.IsActive("CustomerCars", "ViewCustomerCars"))" asp-area="CustomerCars" asp-controller="CustomerCars" asp-action="ViewCustomerCars" asp-route-id="@ViewBag.ID">
+                                <i class="fa fa-car"></i> @Resource.GetKey("List_Of_MyCars")
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(Html.IsActive("ServiceAppointment", "ServiceAppointments"))" asp-area="ServiceAppointment" asp-controller="ServiceAppointment" asp-action="ServiceAppointments">
+                                <i class="fa fa-calendar"></i> @Resource.GetKey("List_Of_Service_Appointments")
+                            </a>
+                        </li>
+                    }
+                    @if (ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Admin.ToString() || ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Employee.ToString())
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link @(Html.IsActive("Settings", "Settings"))" asp-area="Settings" asp-controller="Settings" asp-action="Settings">
+                                <i class="fa fa-cogs"></i> @Resource.GetKey("Settings")
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(Html.IsActive("Settings", "GarageInformation"))" asp-area="Settings" asp-controller="Settings" asp-action="GarageInformation">
+                                <i class="fa fa-info-circle"></i> @Resource.GetKey("Information")
+                            </a>
+                        </li>
+                    }
+                }
+            </ul>
+       
         </nav>
-    </header>
 
-
-        <div class="container">
+        <div class="main-content" style="margin-left: 300px; padding: 1rem;">
             <main role="main" class="pb-3">
                 @RenderBody()
             </main>
         </div>
 
         <footer class="border-top footer text-muted">
-            <div class="container">
-                <center>&copy; 2022 - Garage Management Software - <a class="af" asp-area="" asp-controller="Home" asp-action="Privacy">@Resource.GetKey("Privacy")</a></center>
-            </div>
+            <div class="container" style="display: flex; justify-content: center; gap: 10px;">
+                <span>&copy; 2022 - Garage Management Software -</span>
+            <span style="display: inline;">
+                <a class="af" asp-area="" asp-controller="Home" asp-action="Privacy">@Resource.GetKey("Privacy")</a><span class="af"> | Version: @(Html.GetVersion())</span>
+            </span>
+        </div>
         </footer>
+    <!-- jQuery - ONLY ONCE -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/js/JavaScript.js" asp-append-version="true"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajax-unobtrusive/3.2.6/jquery.unobtrusive-ajax.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
+    <!-- jQuery UI (just one version) -->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Popper (redundant if using Bootstrap 4.6 bundle, but keep for legacy support) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js" defer></script>
-    @*DataTables*@
-    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>*@
-    <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
-    @*DataTables*@
 
-    @*Excel Import*@
+    <!-- Moment.js (FullCalendar requirement) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+    <!-- FullCalendar -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.17/index.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/locales-all.global.min.js"></script>
+
+
+    <!-- Popper.js (dependency of Tippy.js) -->
+<script src="https://unpkg.com/%40popperjs/core@2"></script>
+
+
+<!-- Tippy.js JS -->
+<script src="https://unpkg.com/tippy.js@6"></script>
+
+    <!-- Select2 -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js" defer></script>
+
+    <!-- DataTables -->
+    <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
+    <script src="https://cdn.datatables.net/scroller/2.0.6/js/dataTables.scroller.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/3.1.9/js/dataTables.fixedHeader.min.js"></script>
+
+    <!-- Excel/PPTX Gen -->
     <script src="https://cdn.jsdelivr.net/gh/gitbrent/pptxgenjs@3.12.0/libs/jszip.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/gitbrent/pptxgenjs@3.12.0/dist/pptxgen.min.js"></script>
-    @*Excel Import*@
-
-    @*Custom Date Format*@
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    @*Custom Date Format*@
-    <!-- Include DataTables Buttons JavaScript -->
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
-    <!-- Include DataTables Select JavaScript -->
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
-    <!-- Include DataTables Buttons HTML5 Export JavaScript -->
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
-    <!-- Include DataTables Buttons Print JavaScript -->
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
-    <!-- Include XLSX for Excel Export -->
-@*    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.0/xlsx.full.min.js"></script>*@
-    <!-- Fixed Header for Datatable-->
-    <script src="https://cdn.datatables.net/scroller/2.0.6/js/dataTables.scroller.min.js"></script>
-
-    <script type="text/javascript" src="https://cdn.datatables.net/fixedheader/3.1.9/js/dataTables.fixedHeader.min.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.0/xlsx.full.min.js"></script>
 
+    <!-- Unobtrusive AJAX -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajax-unobtrusive/3.2.6/jquery.unobtrusive-ajax.min.js"></script>
 
-    @await RenderSectionAsync("Scripts", required: false)
+    <!-- Site-wide JS -->
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/JavaScript.js" asp-append-version="true"></script>
+
+    
+
+        @await RenderSectionAsync("Scripts", required: false)
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // Find the current active link (you can add a class "active" server-side or client-side)
+                const activeLink = document.querySelector('.nav-link.active');
+
+                document.querySelectorAll('.nav-link').forEach((link) => {
+                    link.addEventListener('mouseenter', () => {
+                        if (link !== activeLink) {
+                            link.style.color = '#0366d6';
+                            link.style.textDecoration = 'none';
+                        }
+                    });
+
+                    link.addEventListener('mouseleave', () => {
+                        if (link !== activeLink) {
+                            link.style.color = 'grey';
+                            link.style.textDecoration = 'none';
+                        }
+                    });
+                });
+
+                // Set the active link color to blue permanently
+                if (activeLink) {
+                    activeLink.style.color = '#0366d6';
+                    activeLink.style.textDecoration = 'none';
+                    activeLink.style.fontWeight = 'bold';  // optional to highlight active
+                }
+            });
+        </script>
+
+
     </body>
 </html>

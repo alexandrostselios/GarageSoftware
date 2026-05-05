@@ -1,0 +1,131 @@
+﻿@model GaragePortalNewUI.Models.GarageDetails
+@inject LanguageService Resource
+@using Newtonsoft.Json;
+@using GaragePortalNewUI.Models;
+
+@{
+    ViewData["Title"] = @Resource.GetKey("Settings");
+}
+
+
+<div class="container mt-4">
+        @Html.Partial("~/PartialViews/_SuccessGarageDetailsSavePartialView.cshtml")
+@*     <button class="btn btn-sm btn-success m-2" id="btnAddServiceItem" data-bs-toggle="ajax-modal" data-bs-target="#addServiceItem" data-url="@Url.Action("AddServiceItemPartial", "ServiceItems")">@Resource.GetKey("Save_Garage_Details")</button> *@
+    <button type="submit" value="Create" class="btn btn-sm btn-success m-2" id="saveGarageDetailsButton" data-bs-toggle="ajax-modal" >@Resource.GetKey("Save_Garage_Details")</button>
+
+    <div class="card shadow-sm">
+        <div class="card-header text-white bg-primary">
+            <h5 class="mb-0">@Resource.GetKey("Garage_Information")</h5>
+        </div>
+        <form id="garageDetailsForm" method="post" asp-action="EditGarageDetails" asp-controller="GarageDetails" enctype="multipart/form-data">
+            <div class="card-body p-0">
+                <table id="garageInformationTable" class="table table-hover mb-0">
+                    <tbody>
+                        <input type="hidden" asp-for="ID" value="@Model.ID" />
+                        <input type="hidden" asp-for="isActive" value="@Model.isActive" />
+                        <input type="hidden" asp-for="Domain" value="@Model.Domain" />
+                        <tr>
+                            <td class="fw-bold">@Resource.GetKey("Garage_Description")</td>
+                            <td>
+                                <input type="text" class="form-control rounded" value="@Model?.Description" placeholder="Enter Descrption" disabled />
+                                <input type="hidden" name="Description" value="@Model?.Description" />
+                            </td>
+                            <td class="fw-bold">@Resource.GetKey("Garage_LegalName")</td>
+                            <td>
+                                <input type="text" class="form-control rounded" value="@Model?.LegalName" placeholder="Enter Legal Name" disabled />
+                                <input type="hidden" name="LegalName" value="@Model?.LegalName" />
+                            </td>
+                       
+                        </tr>
+                        <tr>
+                            <td class="fw-bold">@Resource.GetKey("Garage_VATNumber")</td>
+                            <td>
+                                <input type="text" class="form-control rounded" value="@Model?.VATNumber" placeholder="Enter VATNumber" disabled />
+                                <input type="hidden" name="VATNumber" value="@Model?.VATNumber" />
+                            </td>
+                            <td class="fw-bold">@Resource.GetKey("Garage_VATOffice")</td>
+                            <td>
+                                <input type="text" class="form-control rounded" value="@Model?.VATOffice" placeholder="Enter VAT Office" disabled />
+                                <input type="hidden" name="VATOffice" value="@Model?.VATOffice" />
+                            </td>
+                         </tr>
+                        <tr>
+                        <tr>
+                            <td class="fw-bold">@Resource.GetKey("Garage_PhoneNumber")</td>
+                            <td><input asp-for="PhoneNumber" type="text" class="form-control rounded" value="@Model?.PhoneNumber" N /A"" placeholder="Enter Phone Number" /></td>
+                            <td class="fw-bold">@Resource.GetKey("Garage_Email")</td>
+                            <td><input asp-for="Email" type="text" class="form-control rounded" value="@Model?.Email" N /A"" placeholder="Enter Email" /></td>
+                        </tr>
+                        <tr>
+                        <tr>
+                            <td class="fw-bold">@Resource.GetKey("Garage_Website")</td>
+                            <td><input asp-for="Website" type="text" class="form-control rounded" value="@Model?.Website" N /A"" placeholder="Enter Website" /></td>
+                            <td class="fw-bold">@Resource.GetKey("Garage_Country")</td>
+                            <td><input asp-for="Country" type="text" class="form-control rounded" value="@Model?.Country" N /A"" placeholder="Enter Country" /></td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold">@Resource.GetKey("Garage_Region")</td>
+                            <td><input asp-for="Region" type="text" class="form-control rounded" value="@Model?.Region" N /A"" placeholder="Enter Region" /></td>
+                            <td class="fw-bold">@Resource.GetKey("Garage_City")</td>
+                            <td><input asp-for="City" type="text" class="form-control rounded" value="@Model?.City" N /A"" placeholder="Enter City" /></td>
+
+                        </tr>
+                        <tr>
+                            <td class="fw-bold">@Resource.GetKey("Garage_Address")</td>
+                            <td><input asp-for="Address" type="text" class="form-control rounded" value="@Model?.Address" N /A"" placeholder="Enter Address" /></td>
+                            <td class="fw-bold">@Resource.GetKey("Garage_ZipCode")</td>
+                            <td><input asp-for="ZipCode" type="text" class="form-control rounded" value="@Model?.ZipCode" N /A"" placeholder="Enter Zip Code" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+@section scripts{
+    <script type="text/javascript">
+        $("#saveGarageDetailsButton").on("click", function (e) {
+            e.preventDefault();
+
+            // Collect all form data
+            var formData = new FormData(document.getElementById("garageDetailsForm"));
+            formData.forEach(function (value, key) {
+                console.log(key + ": " + value);
+            }); 
+            $.ajax({
+                url: '/GarageDetails/EditGarageDetails',
+                type: 'POST',
+                data: formData,
+                processData: false, // Prevent jQuery from processing the data
+                contentType: false, // Prevent jQuery from setting content-type
+                success: function (response) {
+                   // alert("Garage Details saved successfully!");
+                    $(document).ready(function () {
+                        $('#successGarageDetailsSaveModal').modal('show');
+                        $('#successGarageDetailsSaveModal').on('shown.bs.modal', function () {
+                            // Get the modal dialog
+                            var modalDialog = $(this).find('.modal-dialog');
+                            // Calculate top margin for centering
+                            var marginTop = ($(window).height() - modalDialog.outerHeight()) / 2;
+                            // Set the top margin
+                            modalDialog.css('margin-top', marginTop);
+                            $(document).on('keydown.successModal', function (e) {
+                                if (e.key === "Enter") {
+                                    $('#successGarageDetailsSaveModal').modal('hide');
+                                    SetViewBag(); // Your callback
+                                }
+                            });
+                        });
+                    });
+                },
+                error: function (xhr, status, error) {
+                    alert("Failed to save details: " + xhr.responseText);
+                }
+            });
+        });  
+    </script>
+}

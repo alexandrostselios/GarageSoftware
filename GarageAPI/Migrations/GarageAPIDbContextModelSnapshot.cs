@@ -22,6 +22,31 @@ namespace GarageAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("GarageAPI.Models.AppInformation.AppInformation", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<long>("GarageID")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("MajorIncrementalNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("MinorIncrementalNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("PublishDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("AppInformation");
+                });
+
             modelBuilder.Entity("GarageAPI.Models.CarEngineTypes.CarFuelType", b =>
                 {
                     b.Property<long>("ID")
@@ -311,12 +336,51 @@ namespace GarageAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
 
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Domain")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LegalName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifyDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Region")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VATNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VATOffice")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Website")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ZipCode")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("isActive")
@@ -327,7 +391,7 @@ namespace GarageAPI.Migrations
                     b.ToTable("GarageDetails");
                 });
 
-            modelBuilder.Entity("GarageAPI.Models.Report", b =>
+            modelBuilder.Entity("GarageAPI.Models.ReportDefinition", b =>
                 {
                     b.Property<long>("ID")
                         .ValueGeneratedOnAdd()
@@ -342,9 +406,19 @@ namespace GarageAPI.Migrations
                     b.Property<DateTime?>("InsertDate")
                         .HasColumnType("datetime");
 
+                    b.Property<string>("ReportName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("TemplateType")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("inUse")
+                        .HasColumnType("bigint");
+
                     b.HasKey("ID");
 
-                    b.ToTable("Report");
+                    b.ToTable("ReportDefinition");
                 });
 
             modelBuilder.Entity("GarageAPI.Models.Service.ServiceHistory", b =>
@@ -654,6 +728,9 @@ namespace GarageAPI.Migrations
                     b.Property<long>("GarageID")
                         .HasColumnType("bigint");
 
+                    b.Property<long>("Kilometer")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("ServiceAppointmentComments")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -702,6 +779,41 @@ namespace GarageAPI.Migrations
                     b.HasIndex("InsertUserID");
 
                     b.ToTable("Settings");
+                });
+
+            modelBuilder.Entity("GarageAPI.Models.TaxOffice", b =>
+                {
+                    b.Property<long>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("GarageID")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ZipCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("TaxOffices");
                 });
 
             modelBuilder.Entity("GarageAPI.Models.User.Customers.Customer", b =>
@@ -939,6 +1051,64 @@ namespace GarageAPI.Migrations
                         .HasColumnType("int");
 
                     b.ToTable("UsersDTO");
+                });
+
+            modelBuilder.Entity("ServiceAppointmentViewModel", b =>
+                {
+                    b.Property<long>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
+
+                    b.Property<int>("Color")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Customer")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CustomerCarID")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("CustomerID")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("GarageID")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("Kilometer")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("LicencePlate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ManufacturerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ModelName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ServiceAppointmentComments")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ServiceAppointmentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ServiceAppointmentStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("VIN")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("ServiceAppointmentViewModel");
                 });
 
             modelBuilder.Entity("GarageAPI.Models.CarModelManufacturerYear", b =>

@@ -7,14 +7,20 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace GarageAPI.Models
 {
-    public class Report
+    public class ReportDefinition
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long ID { get; set; }
+
+        public string ReportName { get; set; }
+
+        public long TemplateType { get; set; }
 
         public string Definition { get; set; }
 
         [Column(TypeName = "datetime")]
         public DateTime? InsertDate { get; set; }
+
+        public long InUse { get; set; }
     }
 }

@@ -31,7 +31,9 @@ body {
 
 /* Provide sufficient contrast against white background */
 a {
-    color: #0366d6;
+    color: grey;
+    text-decoration: none;
+    /*color: #0366d6;*/
 }
 
 .btn-primary {
@@ -41,7 +43,8 @@ a {
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-    color: #fff;
+    color: red;
+    /*background-color: yellow;*/
     background-color: #1b6ec2;
     border-color: #1861ac;
 }
@@ -513,4 +516,67 @@ table.dataTable tbody > tr.selected, table.dataTable tbody > tr > .selected {
 
 #engineersTable .buttons-cell {
     vertical-align: middle;
+}
+
+/* Override all anchor tags inside a .nav */
+.nav-link:hover {
+    color: red !important;
+    text-decoration: none !important;
+}
+
+/* Make dropdown menu part of normal document flow */
+/* Make dropdown-menu part of normal flow */
+.sidebar .nav-item.dropdown > .dropdown-menu {
+    position: static !important; /* remove absolute */
+    display: none;
+    margin-left: 1.5rem; /* indent submenu */
+    margin-top: 0.5rem;
+    padding-left: 0;
+    box-shadow: none !important; /* no shadow */
+}
+
+/* Show submenu on hover */
+.sidebar .submenu {
+    padding-left: 15px;
+    margin-top: 0;
+}
+
+.sidebar .submenu .dropdown-item {
+    display: block;
+    padding: 0.25rem 0;
+    color: #000;
+    text-decoration: none;
+}
+
+
+#calendar {
+    max-width: 900px;
+    margin: 40px auto;
+    height: 600px;
+}
+
+.fc-event .fc-event-main {
+    color: black !important;
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0 !important;
+    }
+}
+
+
+.custom-all-day-number {
+    padding-top: 4px;
+    position: center;
+}
+
+.fc .fc-daygrid-event.allday-number {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    font-weight: bold;
+    white-space: normal; /* allows wrapping */
 }

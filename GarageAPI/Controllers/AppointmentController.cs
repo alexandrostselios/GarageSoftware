@@ -27,11 +27,11 @@ namespace GarageAPI.Controllers
         }
 
         [HttpGet]
-        [Route("api/GetServiceAppointmentsToListLiteral/{garageID:long}/{customerID:long}")]
-        public async Task<IActionResult> GetServiceAppointmentsToListLiteral(long garageID, long customerID)
+        [Route("api/GetServiceAppointmentsToListLiteral/{garageID:long}/{customerID:long}/{menu:long}")]
+        public async Task<IActionResult> GetServiceAppointmentsToListLiteral(long garageID, long customerID, long? menu)
         {
             IQueryable<ServiceAppointmentViewModel> query;
-            if (customerID == 0)
+            if (customerID == 0 && menu == 0)
             {
                  query = from serviceAppointment in dbContext.ServiceAppointment
                             join customerCar in dbContext.CustomerCars
@@ -45,7 +45,8 @@ namespace GarageAPI.Controllers
                             join carModel in dbContext.CarModels
                             on carModelManufacturerYear.CarModelID equals carModel.ID
                             where serviceAppointment.GarageID == garageID
-                            select new ServiceAppointmentViewModel
+                            //&& serviceAppointment.ServiceAppointmentDate.Date == DateTime.Now.Date //Disable because of Calendar
+                         select new ServiceAppointmentViewModel
                             {
                                 ID = serviceAppointment.ID,
                                 ServiceAppointmentDate = serviceAppointment.ServiceAppointmentDate,
@@ -62,6 +63,38 @@ namespace GarageAPI.Controllers
                                 Kilometer = serviceAppointment.Kilometer,
                                 GarageID = customerCar.GarageID
                             };
+            }
+            else if (customerID == 0)
+            {
+                query = from serviceAppointment in dbContext.ServiceAppointment
+                        join customerCar in dbContext.CustomerCars
+                        on serviceAppointment.CustomerCarID equals customerCar.ID
+                        join customer in dbContext.Customer
+                        on customerCar.Customer.CustomerID equals customer.CustomerID
+                        join carModelManufacturerYear in dbContext.CarModelManufacturerYear
+                        on customerCar.ModelManufacturerYear.ID equals carModelManufacturerYear.ID
+                        join carManufacturer in dbContext.CarManufacturer
+                        on carModelManufacturerYear.CarManufacturerID equals carManufacturer.ID
+                        join carModel in dbContext.CarModels
+                        on carModelManufacturerYear.CarModelID equals carModel.ID
+                        where serviceAppointment.GarageID == garageID
+                        select new ServiceAppointmentViewModel
+                        {
+                            ID = serviceAppointment.ID,
+                            ServiceAppointmentDate = serviceAppointment.ServiceAppointmentDate,
+                            ServiceAppointmentComments = serviceAppointment.ServiceAppointmentComments,
+                            ServiceAppointmentStatus = serviceAppointment.ServiceAppointmentStatus,
+                            CustomerID = customer.CustomerID,
+                            CustomerCarID = customerCar.ID,
+                            Customer = customer.CustomerSurname + ' ' + customer.CustomerName,
+                            ManufacturerName = carManufacturer.ManufacturerName,
+                            ModelName = carModel.ModelName,
+                            LicencePlate = customerCar.LicencePlate,
+                            VIN = customerCar.VIN,
+                            Color = (Enum.Colors)customerCar.Color,
+                            Kilometer = serviceAppointment.Kilometer,
+                            GarageID = customerCar.GarageID
+                        };
             }
             else
             {
@@ -98,7 +131,8 @@ namespace GarageAPI.Controllers
             }
             
 
-            var serviceAppointmentViewModels = await query.ToListAsync();
+            var serviceAppointmentViewModels = await query
+                .ToListAsync();
 
             if (serviceAppointmentViewModels.Any())
             {
@@ -116,6 +150,27 @@ namespace GarageAPI.Controllers
             //}
             //return Ok(serviceAppointments);
         }
+
+
+        [HttpGet]
+        [Route("api/GetDailyAppointmentCounts/{garageID:long}")]
+        public async Task<IActionResult> GetDailyAppointmentCounts(long garageID, DateTime start, DateTime end)
+        {
+            var dailyCounts = await dbContext.ServiceAppointment
+                .Where(sa => sa.GarageID == garageID &&
+                             sa.ServiceAppointmentDate.Date >= start.Date
+                             && sa.ServiceAppointmentDate.Date <= end.Date)
+                .GroupBy(sa => sa.ServiceAppointmentDate.Date)
+                .Select(g => new
+                {
+                    date = g.Key.ToString("yyyy-MM-dd"),
+                    count = g.Count()
+                })
+                .ToListAsync();
+            var test = dailyCounts;
+            return Ok(test);
+        }
+
 
         [HttpGet]
         [Route("api/GetServiceAppointmentByID/{id:long}")]

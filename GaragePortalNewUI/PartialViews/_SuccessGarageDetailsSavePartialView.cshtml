@@ -1,0 +1,17 @@
+﻿@using GaragePortalNewUI.Models;
+@inject LanguageService Resource
+
+<div class="modal fade" id="successGarageDetailsSaveModal" tabindex="-1" role="dialog" aria-labelledby="successGarageDetailsSaveModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <center><p>@Resource.GetKey("Garage_Details_Saved")</p></center>
+                <center><button type="button" class="btn btn-success" data-dismiss="modal" onclick="SetViewBag()">OK</button></center>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

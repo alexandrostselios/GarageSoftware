@@ -32,5 +32,7 @@ namespace GaragePortalNewUI.ViewModels
         public long? Kilometer { get; set; }
 
         public long GarageID { get; set; }
+
+        public long? Menu { get; set; }
     }
 }

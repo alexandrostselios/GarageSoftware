@@ -146,4 +146,19 @@
   <data name="List_Of_Service_Appointments" xml:space="preserve">
     <value />
   </data>
+  <data name="Garage_Description" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Garage_LegalName" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Garage_VATNumber" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Garage_VATOffice" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ReportUri" xml:space="preserve">
+    <value>https://localhost:44348/</value>
+  </data>
 </root>

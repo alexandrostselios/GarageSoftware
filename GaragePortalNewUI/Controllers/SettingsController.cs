@@ -28,6 +28,26 @@ namespace GaragePortalNewUI.Models
             return View();
         }
 
+        public async Task<IActionResult> GarageInformation()
+        {
+            GetSessionProperties();
+            // Fetch data from the API
+            var response = await client.GetAsync("api/GetGarageDetails");
+
+            if (response.IsSuccessStatusCode)
+            {
+                // Deserialize the response into a list of GarageDetails
+                var garageDetailsList = await response.Content.ReadAsAsync<List<GarageDetails>>();
+
+                // Assuming you want the first item in the list, or handle appropriately if the list is empty
+                var garageDetails = garageDetailsList.FirstOrDefault();
+
+                // Pass the fetched data as the model to the view
+                return View(garageDetails);
+            }
+            return View();
+        }
+
         public ActionResult SettingsPartialView(long id)
         {
             GetSessionProperties();

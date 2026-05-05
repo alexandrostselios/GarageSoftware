@@ -2,11 +2,13 @@ using DinkToPdf;
 using DinkToPdf.Contracts;
 using GaragePortalNewUI.Controllers;
 using GaragePortalNewUI.Models;
+using GaragePortalNewUI.Models.AppInformation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -19,6 +21,7 @@ using System.Net;
 using System.Net.Http;
 using System.Reflection;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 //using Microsoft.AspNetCore.Authentication.Google;
 //using Microsoft.AspNetCore.Authentication.Cookies;
 //using Microsoft.AspNetCore.Authentication;
@@ -30,6 +33,7 @@ namespace GaragePortalNewUI
         readonly Uri baseAddress = new Uri(@Resources.SettingsResources.Uri);
         //readonly Uri baseAddress = new Uri(@Resources.SettingsResources.UriProduction);
         readonly HttpClient client = new HttpClient();
+        private readonly IMemoryCache _memoryCache;
 
         public Startup(IConfiguration configuration)
         {
@@ -46,6 +50,8 @@ namespace GaragePortalNewUI
 
             client.BaseAddress = baseAddress;
             IEnumerable<Settings> settings = null;
+            IEnumerable<GarageDetails> garageDetails = null;
+            
             using (client)
             {
                 var responseTask = client.GetAsync(client.BaseAddress + "/GetSettings");
@@ -59,9 +65,9 @@ namespace GaragePortalNewUI
                 }
             }
 
-            var lang = settings.FirstOrDefault(x => x.Description == "Language").Value;
+            services.AddMemoryCache();  // <--- Add this line
 
-            //var lang = "el-GR";
+            var lang = settings.FirstOrDefault(x => x.Description == "Language").Value;
 
             ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, errors) =>
             {
@@ -126,6 +132,7 @@ namespace GaragePortalNewUI
             //    app.UseHsts();
             //}
 
+
             app.UseDeveloperExceptionPage();
             app.UseHsts();
 
@@ -138,6 +145,8 @@ namespace GaragePortalNewUI
             app.UseSession();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            app.UseMiddleware<AppTitleMiddleware>(); // Have the title from Database
 
             app.UseRouting();
 

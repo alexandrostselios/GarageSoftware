@@ -908,4 +908,88 @@
   <data name="Mobile_Phone" xml:space="preserve">
     <value>Κινητό Τηλέφωνο</value>
   </data>
+  <data name="Information" xml:space="preserve">
+    <value>Πληροφορίες</value>
+  </data>
+  <data name="Garage_VATOffice" xml:space="preserve">
+    <value>Δ.Ο.Υ.</value>
+  </data>
+  <data name="Garage_VATNumber" xml:space="preserve">
+    <value>Α.Φ.Μ.</value>
+  </data>
+  <data name="Garage_LegalName" xml:space="preserve">
+    <value>Νομική Περιγραφή</value>
+  </data>
+  <data name="Garage_Description" xml:space="preserve">
+    <value>Περιγραφή</value>
+  </data>
+  <data name="Garage_PhoneNumber" xml:space="preserve">
+    <value>Σταθερό Τηλέφωνο</value>
+  </data>
+  <data name="Garage_Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Garage_Website" xml:space="preserve">
+    <value>Ιστοσελίδα</value>
+  </data>
+  <data name="Garage_Country" xml:space="preserve">
+    <value>Χώρα</value>
+  </data>
+  <data name="Garage_City" xml:space="preserve">
+    <value>Πόλη</value>
+  </data>
+  <data name="Garage_ZipCode" xml:space="preserve">
+    <value>Τ.Κ.</value>
+  </data>
+  <data name="Garage_Address" xml:space="preserve">
+    <value>Διεύθυνση</value>
+  </data>
+  <data name="Garage_Region" xml:space="preserve">
+    <value>Περιφέρεια</value>
+  </data>
+  <data name="Garage_Information" xml:space="preserve">
+    <value>Πληροφορίες</value>
+  </data>
+  <data name="Save_Garage_Details" xml:space="preserve">
+    <value>Αποθήκευση</value>
+  </data>
+  <data name="Service_Appointment_Actions" xml:space="preserve">
+    <value>Ενέργειες</value>
+  </data>
+  <data name="Today_Appointments_List" xml:space="preserve">
+    <value>Λίστα Ημερήσιων Ραντεβού</value>
+  </data>
+  <data name="Total_Appointments_Today" xml:space="preserve">
+    <value>Σύνολο:</value>
+  </data>
+  <data name="Service_Appointment_Hour" xml:space="preserve">
+    <value>Ώρα</value>
+  </data>
+  <data name="Garage_Details_Saved" xml:space="preserve">
+    <value>Οι αλλαγές αποθηκεύτηκαν επιτυχώς</value>
+  </data>
+  <data name="Delete_Confirmation" xml:space="preserve">
+    <value>Είστε σιγουρος ότι θέλετε να προχωρήσετε στη διαγραφή;</value>
+  </data>
+  <data name="Pending" xml:space="preserve">
+    <value>Εκκρεμεί</value>
+  </data>
+  <data name="Calendar_Week" xml:space="preserve">
+    <value>Εβδομάδα</value>
+  </data>
+  <data name="Calendar_Today" xml:space="preserve">
+    <value>Σήμερα</value>
+  </data>
+  <data name="Calendar_Day" xml:space="preserve">
+    <value>Ημέρα</value>
+  </data>
+  <data name="Calendar_Month" xml:space="preserve">
+    <value>Μήνας</value>
+  </data>
+  <data name="All_Day" xml:space="preserve">
+    <value>Όλη Μέρα</value>
+  </data>
+  <data name="Cancel_Confirmation" xml:space="preserve">
+    <value>Είστε σιγουρος ότι θέλετε να προχωρήσετε στην ακύρωση;</value>
+  </data>
 </root>

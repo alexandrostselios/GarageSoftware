@@ -1,0 +1,22 @@
+﻿@model IEnumerable<ReportAPI.Models.Customer>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Report</title>
+</head>
+<body>
+    <table>
+        @foreach (var customer in Model)
+        {
+            <tr>
+                <td>@customer.CustomerID</td>
+                <td>@customer.CustomerName</td>
+                <td>@customer.CustomerSurname</td>
+            </tr>
+        }
+    </table>
+
+</body>
+</html>

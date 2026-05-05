@@ -66,7 +66,7 @@
                     @Resource.GetKey("UserType")
                 </th>*@
                 <th class="all">
-
+                    @Resource.GetKey("Service_Appointment_Actions")
                 </th>
                 <th class="all">
 
@@ -257,7 +257,7 @@
                             },
                             action: function (e, dt, button, config) {
                                 // Set window location to the download endpoint
-                                window.location.href = '/PdfCreator/CreatePDF?entityType=3';
+                                window.location.href = '/Report/Download?garageID=1&template=Engineers';
                             }
                         },
                         {

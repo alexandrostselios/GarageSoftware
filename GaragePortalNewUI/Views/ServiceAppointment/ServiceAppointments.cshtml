@@ -8,12 +8,15 @@
 @if (@ViewBag.UserType == GaragePortalNewUI.Enum.UserType.Admin.ToString())
 {
     @Html.Partial("~/PartialViews/_ServiceAppointmentsColorsExplanationPartialView.cshtml")
+    @Html.Partial("~/PartialViews/_ServiceAppointmentCancelVerificationPartialView.cshtml")
     //@Html.Partial("~/PartialViews/_SuccessUserCreationPartialView.cshtml")
     //@Html.Partial("~/PartialViews/_FailedUserCreationPartialView.cshtml")
 
     <button class="btn btn-sm btn-primary m-2" id="btnAddServiceAppointment" data-bs-toggle="ajax-modal" data-bs-target="#AddServiceAppointment" data-url="@Url.Action("CreateServiceAppointmentPartial")">@Resource.GetKey("Add_Service_Appointment_Form")</button>
     <div id="addServiceAppointmentDIV"></div>
     <div id="editServiceAppointmentDIV"></div>
+    <div id="cancelServiceAppointmentDIV"></div>
+
     <br>
     <br>
     <table id="serviceAppointmentsTable" class="table table-striped" style="display: none">
@@ -123,7 +126,7 @@ else
                     GarageID
                 </th>
                 <th class="all">
-
+                    @Resource.GetKey("Service_Appointment_Actions")
                 </th>
             </tr>
         </thead>
@@ -183,7 +186,7 @@ else
         if(customerUserType === "Admin" || customerUserType === "Employee"){
             $(function () {
                 $('#serviceAppointmentsTable tbody').empty();
-                $.get('@Url.Action("GetServiceAppointments", "ServiceAppointment")',  { customerID: 0 },function (data) {
+                $.get('@Url.Action("GetServiceAppointments", "ServiceAppointment")', { customerID: 0, menu: 1},function (data) {
                     // Clear existing rows
                     $('#serviceAppointmentsTable tbody').empty();
                     // Iterate through the data and append rows to the table
@@ -329,7 +332,7 @@ else
                                 },
                                 action: function (e, dt, button, config) {
                                     // Set window location to the download endpoint
-                                    window.location.href = '/PdfCreator/CreatePDF?entityType=3';
+                                    window.location.href = '/Report/Download?garageID=1&template=ServiceAppointments';
                                 }
                             },
                             {
@@ -771,7 +774,7 @@ else
             // console.log("ID: " + id);
             // console.log("Customer ID: " + customerID);
             // console.log("Customer Car ID: " + customerCarID);
-            var url = "@Url.Action("EditServiceAppointmentPartial", "ServiceAppointment")" + '/?id=' + id + '&&customerID=' + customerID + '&&customerCarID=' + customerCarID + '&&garageID=' + @ViewBag.GarageID 
+            var url = "@Url.Action("EditServiceAppointmentPartial", "ServiceAppointment")" + '/?id=' + id + '&&customerID=' + customerID + '&&customerCarID=' + customerCarID + '&&garageID=' + @ViewBag.GarageID + '&&menu=' + 0
                 // Load partial view into the container
                 $.get(url, function (response) {
                     $('#editServiceAppointmentDIV').html(response);
@@ -791,7 +794,7 @@ else
             // console.log("ID: " + id);
             // console.log("Customer ID: " + customerID);
             // console.log("Customer Car ID: " + customerCarID);
-            var url = "@Url.Action("EditServiceAppointmentPartial", "ServiceAppointment")" + '/?id=' + id + '&&customerID=' + customerID + '&&customerCarID=' + customerCarID + '&&garageID=' + @ViewBag.GarageID 
+            var url = "@Url.Action("EditServiceAppointmentPartial", "ServiceAppointment")" + '/?id=' + id + '&&customerID=' + customerID + '&&customerCarID=' + customerCarID + '&&garageID=' + @ViewBag.GarageID  + '&&menu=' + 0
                 // Load partial view into the container
                 $.get(url, function (response) {
                     $('#editServiceAppointmentDIV').html(response);
@@ -848,51 +851,82 @@ else
         });
 
         // Handle cancel button click
+        let serviceAppointmentIdToCancel = null;
+
         $('#serviceAppointmentsTable tbody').on('click', 'a.btn-cancel', function (e) {
-            var serviceAppointmentId = $(this).data("id");
+            e.preventDefault(); // prevent default behavior
+            serviceAppointmentIdToCancel = $(this).data("id");
+            $('#cancelConfirmModal').modal('show');
+        });
+
+        $('#confirmCancelBtn').on('click', function () {
             var type = 2;
             var garageId = @ViewBag.GarageID;
 
-             $.ajax({
+            $.ajax({
                 url: "/ServiceAppointment/UpdateServiceAppointmentStatus",
                 type: "POST",
-                data: { ServiceAppointmentID: serviceAppointmentId, type: type, garageID: garageId },
+                data: { ServiceAppointmentID: serviceAppointmentIdToCancel, type: type, garageID: garageId },
                 success: function (response) {
+                    $('#cancelConfirmModal').modal('hide'); // Hide modal
+
                     if (response.success) {
-                        // ✅ Refresh the whole page to reload data
-                        location.reload();
+                        location.reload(); // Reload the page
                     } else {
                         alert("Update failed: " + response.message);
                     }
                 },
                 error: function () {
+                    $('#cancelConfirmModal').modal('hide');
                     alert("Error updating appointment.");
                 }
             });
         });
+        // $('#serviceAppointmentsTable tbody').on('click', 'a.btn-cancel', function (e) {
+        //     var serviceAppointmentId = $(this).data("id");
+        //     var type = 2;
+        //     var garageId = @ViewBag.GarageID;
 
-        $('#customerServiceAppointmentsTable tbody').on('click', 'a.btn-cancel', function (e) {
-            var serviceAppointmentId = $(this).data("id");
-            var type = 2;
-            var garageId = @ViewBag.GarageID;
+        //      $.ajax({
+        //         url: "/ServiceAppointment/UpdateServiceAppointmentStatus",
+        //         type: "POST",
+        //         data: { ServiceAppointmentID: serviceAppointmentId, type: type, garageID: garageId },
+        //         success: function (response) {
+        //             if (response.success) {
+        //                 // ✅ Refresh the whole page to reload data
+        //                 location.reload();
+        //             } else {
+        //                 alert("Update failed: " + response.message);
+        //             }
+        //         },
+        //         error: function () {
+        //             alert("Error updating appointment.");
+        //         }
+        //     });
+        // });
 
-             $.ajax({
-                url: "/ServiceAppointment/UpdateServiceAppointmentStatus",
-                type: "POST",
-                data: { ServiceAppointmentID: serviceAppointmentId, type: type, garageID: garageId },
-                success: function (response) {
-                    if (response.success) {
-                        // ✅ Refresh the whole page to reload data
-                        location.reload();
-                    } else {
-                        alert("Update failed: " + response.message);
-                    }
-                },
-                error: function () {
-                    alert("Error updating appointment.");
-                }
-            });
-        });
+        // $('#customerServiceAppointmentsTable tbody').on('click', 'a.btn-cancel', function (e) {
+        //     var serviceAppointmentId = $(this).data("id");
+        //     var type = 2;
+        //     var garageId = @ViewBag.GarageID;
+
+        //      $.ajax({
+        //         url: "/ServiceAppointment/UpdateServiceAppointmentStatus",
+        //         type: "POST",
+        //         data: { ServiceAppointmentID: serviceAppointmentId, type: type, garageID: garageId },
+        //         success: function (response) {
+        //             if (response.success) {
+        //                 // ✅ Refresh the whole page to reload data
+        //                 location.reload();
+        //             } else {
+        //                 alert("Update failed: " + response.message);
+        //             }
+        //         },
+        //         error: function () {
+        //             alert("Error updating appointment.");
+        //         }
+        //     });
+        // });
 
          $(function () {
             var addaddServiceAppointmentDIVElement = $('#addServiceAppointmentDIV');

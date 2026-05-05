@@ -24,6 +24,13 @@
     <br>
     <div id="customersPlaceHolder"></div>
 
+    <div id="loadingSpinner" style="display: none;">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+
     <table id="customersTable" class="table table-striped" style="display: none">
         <thead>
             <tr>
@@ -61,16 +68,16 @@
                     @Resource.GetKey("Creation_Date")
                 </th>
                 <th class="all">
-
+                    @Resource.GetKey("Service_Appointment_Actions")
+                </th>
+                <th class="all">
+                    
                 </th>
                 <th class="all">
 
                 </th>
                 <th class="all">
-
-                </th>
-                <th class="all">
-
+                    
                 </th>
             </tr>
         </thead>
@@ -276,9 +283,11 @@ else
                                     trigger: 'hover' // Show tooltip on hover
                                 });
                             },
+
+                            // Default action
                             action: function (e, dt, button, config) {
                                 // Set window location to the download endpoint
-                                window.location.href = '/PdfCreator/CreatePDF?entityType=2';
+                                window.location.href = '/Report/Download?garageID=1&template=Customers';
                             }
                         },
                         {
